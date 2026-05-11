@@ -170,6 +170,57 @@ nav a.active::after {
 }
 .naver-search-btn:hover { background:var(--naver-green-dark); }
 
+/* Hero 캐치프레이즈 (퀵 숏컷 대체) */
+.hero-catchphrase {
+  margin: 28px auto 16px;
+  text-align: center;
+  max-width: 640px;
+  animation: fadeInUp 0.7s ease 0.2s both;
+}
+.hc-main {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.hc-em {
+  color: var(--naver-green);
+  position: relative;
+  display: inline-block;
+}
+.hc-em::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 2px;
+  height: 8px;
+  background: var(--naver-green-light);
+  z-index: -1;
+  border-radius: 4px;
+}
+.hc-sub {
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+.hc-keywords {
+  display: flex; justify-content: center; gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+}
+.hc-keywords span {
+  color: var(--naver-green-dark);
+  font-weight: 700;
+  background: var(--naver-green-light);
+  padding: 5px 12px;
+  border-radius: 14px;
+}
+.hc-keywords span:nth-child(2) { color: var(--c-blue-dark); background: var(--c-blue-light); }
+.hc-keywords span:nth-child(3) { color: var(--c-amber-dark); background: var(--c-amber-light); }
+.hc-keywords span:nth-child(4) { color: #6020a8; background: #f0e6ff; }
+
 /* Quick shortcuts (services grid) */
 .quick-shortcuts {
   display:flex; flex-wrap:wrap; justify-content:center;

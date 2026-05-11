@@ -780,12 +780,8 @@ function showProgramDetail(key) {
   const tier = getTier();
   const canAccess = (tier === 'admin' || tier === 'premium');
   const linkHtml = canAccess
-    ? `<div class="access-buttons">
-         <a href="${esc(data.link)}" target="_blank" class="btn btn-primary detail-link-btn"
-            onclick="return programLinkClick(event, '${key}');">📖 ${esc(data.name)} 접속하기 →</a>
-         <button class="btn btn-outline btn-sm" onclick="copyProgramUrl('${key}')" title="새 탭이 빈 화면(about:blank)으로 뜨면 이 버튼으로 URL 복사 후 주소창에 붙여넣으세요">📋 URL 복사</button>
-       </div>
-       <p class="access-note">💡 브라우저가 HTTP 링크를 차단할 경우, [URL 복사] 후 새 탭 주소창에 붙여넣어 주세요.</p>`
+    ? `<a href="${esc(data.link)}" target="_blank" class="btn btn-primary detail-link-btn"
+         onclick="if(typeof logActivity==='function') logActivity('프로그램 접속: ${key}');">📖 ${esc(data.name)} 접속하기 →</a>`
     : `<div class="locked-link">
          <button class="btn btn-outline detail-link-btn" disabled>🔒 ${esc(data.name)} — 정회원 전용</button>
          <p class="locked-msg">💎 <b>정회원 또는 관리자</b>만 이 프로그램을 이용할 수 있습니다.<br>

@@ -753,8 +753,8 @@ function showProgramDetail(key) {
   document.getElementById('programList').style.display = 'none';
   document.getElementById('programDetail').style.display = 'block';
 
-  // 개발중 (link 없음) → 간단한 안내만 표시
-  if (!data.link) {
+  // 개발중 (link 없음 또는 placeholder '#') → 간단한 안내만 표시
+  if (!data.link || data.link === '#') {
     document.getElementById('programDetailContent').innerHTML = `
       <div class="detail-card">
         <div class="detail-header">

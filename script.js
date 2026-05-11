@@ -1481,7 +1481,7 @@ const lawData = [
   {
     name: '소방기본법',
     color: '#03c75a',
-    desc: '소방활동·소방기관의 설치·운영 등 기본 사항',
+    desc: '소방활동·소방기관의 설치·운영 등 기본 사항 (1958년 제정, 현행)',
     items: [
       { type: '법', label: '소방기본법', url: 'https://www.law.go.kr/법령/소방기본법' },
       { type: '시행령', label: '소방기본법 시행령', url: 'https://www.law.go.kr/법령/소방기본법시행령' },
@@ -1491,7 +1491,7 @@ const lawData = [
   {
     name: '소방시설법',
     color: '#0068c3',
-    desc: '소방시설 설치·관리에 관한 법률',
+    desc: '소방시설 설치·관리에 관한 법률 (2022.12.1 분법 시행)',
     items: [
       { type: '법', label: '소방시설 설치 및 관리에 관한 법률', url: 'https://www.law.go.kr/법령/소방시설설치및관리에관한법률' },
       { type: '시행령', label: '소방시설법 시행령', url: 'https://www.law.go.kr/법령/소방시설설치및관리에관한법률시행령' },
@@ -1501,7 +1501,7 @@ const lawData = [
   {
     name: '화재예방법',
     color: '#f5a623',
-    desc: '화재의 예방 및 안전관리에 관한 법률',
+    desc: '화재의 예방 및 안전관리에 관한 법률 (2022.12.1 신설)',
     items: [
       { type: '법', label: '화재의 예방 및 안전관리에 관한 법률', url: 'https://www.law.go.kr/법령/화재의예방및안전관리에관한법률' },
       { type: '시행령', label: '화재예방법 시행령', url: 'https://www.law.go.kr/법령/화재의예방및안전관리에관한법률시행령' },
@@ -1511,55 +1511,146 @@ const lawData = [
   {
     name: '공사업법',
     color: '#9333ea',
-    desc: '소방시설공사업에 관한 법률',
+    desc: '소방시설공사업에 관한 법률 — 등록·시공·감리·하자보수',
     items: [
       { type: '법', label: '소방시설공사업법', url: 'https://www.law.go.kr/법령/소방시설공사업법' },
       { type: '시행령', label: '소방시설공사업법 시행령', url: 'https://www.law.go.kr/법령/소방시설공사업법시행령' },
       { type: '시행규칙', label: '소방시설공사업법 시행규칙', url: 'https://www.law.go.kr/법령/소방시설공사업법시행규칙' }
     ]
+  },
+  {
+    name: '위험물안전관리법',
+    color: '#0d9488',
+    desc: '위험물의 저장·취급·운반 안전관리 (지정수량·옥내·옥외저장소)',
+    items: [
+      { type: '법', label: '위험물안전관리법', url: 'https://www.law.go.kr/법령/위험물안전관리법' },
+      { type: '시행령', label: '위험물안전관리법 시행령', url: 'https://www.law.go.kr/법령/위험물안전관리법시행령' },
+      { type: '시행규칙', label: '위험물안전관리법 시행규칙', url: 'https://www.law.go.kr/법령/위험물안전관리법시행규칙' }
+    ]
+  },
+  {
+    name: '다중이용업소법',
+    color: '#6366f1',
+    desc: '다중이용업소 안전관리에 관한 특별법 (PC방·노래방·찜질방 등)',
+    items: [
+      { type: '법', label: '다중이용업소의 안전관리에 관한 특별법', url: 'https://www.law.go.kr/법령/다중이용업소의안전관리에관한특별법' },
+      { type: '시행령', label: '다중이용업소법 시행령', url: 'https://www.law.go.kr/법령/다중이용업소의안전관리에관한특별법시행령' },
+      { type: '시행규칙', label: '다중이용업소법 시행규칙', url: 'https://www.law.go.kr/법령/다중이용업소의안전관리에관한특별법시행규칙' }
+    ]
   }
 ];
 
+// 소방 관계법령 (건축 관련 — 소방시설 설계 시 참조 필수)
+const relatedLawData = [
+  {
+    name: '건축법',
+    color: '#0d9488',
+    desc: '건축물 대지·구조·설비 기준 — 소방시설 설계의 기초',
+    items: [
+      { type: '법', label: '건축법', url: 'https://www.law.go.kr/법령/건축법' },
+      { type: '시행령', label: '건축법 시행령', url: 'https://www.law.go.kr/법령/건축법시행령' },
+      { type: '시행규칙', label: '건축법 시행규칙', url: 'https://www.law.go.kr/법령/건축법시행규칙' }
+    ]
+  },
+  {
+    name: '피난·방화구조 규칙',
+    color: '#9333ea',
+    desc: '건축물의 피난·방화구조 등의 기준 — 방화문·방화구획·피난계단',
+    items: [
+      { type: '규칙', label: '건축물의 피난·방화구조 등의 기준에 관한 규칙', url: 'https://www.law.go.kr/법령/건축물의피난·방화구조등의기준에관한규칙' }
+    ]
+  },
+  {
+    name: '건축 설비기준 규칙',
+    color: '#0068c3',
+    desc: '건축물의 설비기준 등에 관한 규칙 — 환기·배연·승강기·정화조',
+    items: [
+      { type: '규칙', label: '건축물의 설비기준 등에 관한 규칙', url: 'https://www.law.go.kr/법령/건축물의설비기준등에관한규칙' }
+    ]
+  }
+];
+
+// 구법(폐지) — 시점법 판단 시 참조
+const oldLawData = [
+  { name: '소방시설 설치·유지 및 안전관리에 관한 법률 (구법)',
+    note: '2022.12.1 폐지 → "소방시설법" + "화재예방법"으로 분리·승계',
+    url: 'https://www.law.go.kr/법령/소방시설설치유지및안전관리에관한법률' },
+  { name: '구 소방법 (1958~2003)',
+    note: '2003년 소방기본법·소방시설법·공사업법·위험물법으로 분리되면서 폐지',
+    url: 'https://www.law.go.kr/lsInfoP.do?efYd=20030629&lsiSeq=24559' },
+  { name: '소방시설 설치·유지법 시행령 (제23272호, 2012)',
+    note: '2012.2.7 개정본 — 2010~2014년 허가 건축물 적용 기준',
+    url: 'https://www.law.go.kr' },
+  { name: '소방시설 설치·유지법 시행령 (제26033호, 2015)',
+    note: '2015.1.6 개정본 — 2015~2017년 허가 건축물 적용 기준',
+    url: 'https://www.law.go.kr' }
+];
+
 const ruleData = [
-  { cat: '소방관서 업무관련', items: [
-    { name: '소방시설 자체점검사항 등에 관한 고시', url: 'https://www.law.go.kr' },
-    { name: '소방용품의 품질관리 등에 관한 규칙', url: 'https://www.law.go.kr' },
+  { cat: '기술기준 (점검·시공)', items: [
+    { name: '소방기술기준에 관한 규칙', url: 'https://www.law.go.kr/법령/소방기술기준에관한규칙' },
+    { name: '소방시설 자체점검사항 등에 관한 고시', url: 'https://www.law.go.kr/행정규칙/소방시설자체점검사항등에관한고시' },
     { name: '특정소방대상물의 안전관리에 관한 고시', url: 'https://www.law.go.kr' }
   ]},
-  { cat: '소방 경력관련', items: [
+  { cat: '제품·형식승인', items: [
+    { name: '감지기의 형식승인 및 제품검사의 기술기준', url: 'https://www.law.go.kr/행정규칙/감지기의형식승인및제품검사의기술기준' },
+    { name: '소방용품의 품질관리 등에 관한 규칙', url: 'https://www.law.go.kr/법령/소방용품의품질관리등에관한규칙' }
+  ]},
+  { cat: '경력·자격·교육', items: [
     { name: '소방기술자 실무교육에 관한 규정', url: 'https://www.law.go.kr' },
     { name: '소방시설관리사 시험 시행규칙', url: 'https://www.law.go.kr' }
   ]}
 ];
 
-function renderLaws() {
-  const grid = document.getElementById('lawMainGrid');
-  if (!grid) return;
-  grid.innerHTML = lawData.map(law => `
+function renderLawCardGrid(host, dataArr) {
+  if (!host) return;
+  host.innerHTML = dataArr.map(law => `
     <div class="law-card" style="--law-color:${law.color}">
       <div class="law-card-header">
-        <h4>${law.name}</h4>
-        <span>${law.desc}</span>
+        <h4>${esc(law.name)}</h4>
+        <span>${esc(law.desc)}</span>
       </div>
       <div class="law-links">
         ${law.items.map(item => `
-          <a href="${item.url}" target="_blank" class="law-link" title="${esc(item.label)}">
-            <span class="ll-type">${item.type}</span>
+          <a href="${esc(item.url)}" target="_blank" rel="noopener" class="law-link" title="${esc(item.label)}">
+            <span class="ll-type">${esc(item.type)}</span>
             <span class="ll-arrow">↗</span>
           </a>`).join('')}
       </div>
     </div>
   `).join('');
+}
 
-  const list = document.getElementById('lawRuleList');
-  list.innerHTML = ruleData.map(g => `
-    <div class="rule-group">
-      <h5>📌 ${g.cat}</h5>
-      <ul>
-        ${g.items.map(r => `<li><a href="${r.url}" target="_blank">${esc(r.name)} <span class="rule-ext">↗</span></a></li>`).join('')}
-      </ul>
-    </div>
-  `).join('');
+function renderLaws() {
+  // 주요 법령 (6개)
+  renderLawCardGrid(document.getElementById('lawMainGrid'), lawData);
+
+  // 관계법령 (건축 관련)
+  renderLawCardGrid(document.getElementById('lawRelatedGrid'), relatedLawData);
+
+  // 행정규칙
+  const ruleList = document.getElementById('lawRuleList');
+  if (ruleList) {
+    ruleList.innerHTML = ruleData.map(g => `
+      <div class="rule-group">
+        <h5>📌 ${esc(g.cat)}</h5>
+        <ul>
+          ${g.items.map(r => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.name)} <span class="rule-ext">↗</span></a></li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+  }
+
+  // 구법 (시점법 참조)
+  const oldList = document.getElementById('lawOldList');
+  if (oldList) {
+    oldList.innerHTML = oldLawData.map(o => `
+      <div class="old-law-item">
+        <a href="${esc(o.url)}" target="_blank" rel="noopener" class="old-law-name">${esc(o.name)} <span class="rule-ext">↗</span></a>
+        <p class="old-law-note">${esc(o.note)}</p>
+      </div>
+    `).join('');
+  }
 }
 
 // --- 기술자료 ---

@@ -413,8 +413,10 @@
           <aside class="kfma-side">
             <h4>법령 카테고리</h4>
             <ul class="side-menu">
-              <li><a href="#law-main" class="active">소방 관련 법령</a></li>
-              <li><a href="#law-rule">소방 관련 행정규칙</a></li>
+              <li><a href="#law-main" class="active">소방 주요 법령</a></li>
+              <li><a href="#law-related">관계법령 (건축)</a></li>
+              <li><a href="#law-rule">행정규칙 / 기술기준</a></li>
+              <li><a href="#law-old">구법 (시점법 판단)</a></li>
               <li><a href="https://www.law.go.kr" target="_blank">국가법령정보센터 ↗</a></li>
               <li><a href="https://www.nfa.go.kr" target="_blank">소방청 ↗</a></li>
             </ul>
@@ -424,22 +426,40 @@
           </aside>
 
           <div class="kfma-content">
-            <!-- 소방 관련 법령 -->
+            <!-- 소방 주요 법령 -->
             <div class="kfma-block" id="law-main">
               <div class="kfma-block-header">
-                <h3>📕 소방 관련 법령</h3>
+                <h3>📕 소방 주요 법령</h3>
                 <span class="kfma-sub">법 · 시행령 · 시행규칙 (3단 구조)</span>
               </div>
               <div class="law-grid" id="lawMainGrid"></div>
             </div>
 
-            <!-- 행정규칙 -->
+            <!-- 관계법령 (건축 관련) -->
+            <div class="kfma-block" id="law-related">
+              <div class="kfma-block-header">
+                <h3>📗 관계법령 (건축 관련)</h3>
+                <span class="kfma-sub">소방시설 설계 시 함께 참조하는 건축 관련 법령</span>
+              </div>
+              <div class="law-grid" id="lawRelatedGrid"></div>
+            </div>
+
+            <!-- 행정규칙 / 기술기준 -->
             <div class="kfma-block" id="law-rule">
               <div class="kfma-block-header">
-                <h3>📘 소방 관련 행정규칙</h3>
-                <span class="kfma-sub">고시 · 훈령 · 예규</span>
+                <h3>📘 행정규칙 · 기술기준</h3>
+                <span class="kfma-sub">고시 · 훈령 · 형식승인 기준</span>
               </div>
               <div class="rule-list" id="lawRuleList"></div>
+            </div>
+
+            <!-- 구법 (시점법 판단) -->
+            <div class="kfma-block" id="law-old">
+              <div class="kfma-block-header">
+                <h3>📜 구법 · 폐지법령</h3>
+                <span class="kfma-sub">건축 허가일 기준의 시점법 판단 시 참조</span>
+              </div>
+              <div class="old-law-list" id="lawOldList"></div>
             </div>
           </div>
         </div>

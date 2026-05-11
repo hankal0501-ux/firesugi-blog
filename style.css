@@ -1243,6 +1243,38 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
 .ll-arrow { opacity:0.5; }
 .law-link:hover .ll-arrow { opacity:1; }
 
+/* 구법 (폐지) 리스트 */
+.old-law-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.old-law-item {
+  padding: 14px 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--text-muted);
+  border-radius: 6px;
+  transition: var(--transition);
+}
+.old-law-item:hover {
+  border-left-color: var(--c-amber-dark);
+  background: #fff;
+}
+.old-law-name {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+.old-law-name:hover { color: var(--c-blue-dark); text-decoration: underline; }
+.old-law-note {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 6px;
+}
+
 /* 행정규칙 그룹 */
 .rule-list { display:flex; flex-direction:column; gap:14px; }
 .rule-group {

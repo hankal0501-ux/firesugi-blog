@@ -24,6 +24,45 @@ function isAdmin(user) {
   const dbUser = getUsers().find(x => x.id === u.id);
   return !!(dbUser && dbUser.role === 'admin');
 }
+
+// 등급 (관리자 > 정회원 > 일반)
+const TIER_META = {
+  admin:   { icon: '👑', label: '관리자', short: 'ADMIN',   cssClass: 'tier-admin' },
+  premium: { icon: '💎', label: '정회원', short: 'PREMIUM', cssClass: 'tier-premium' },
+  user:    { icon: '👤', label: '일반',   short: 'USER',    cssClass: 'tier-user' }
+};
+function getTier(user) {
+  const u = user || getCurrentUser();
+  if (!u) return 'user';
+  const db = getUsers().find(x => x.id === u.id);
+  if (!db) return 'user';
+  if (db.role === 'admin') return 'admin';
+  if (db.tier === 'premium') return 'premium';
+  return 'user';
+}
+function adminSetTier(id, newTier) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  const me = getCurrentUser();
+  if (me && me.id === id && newTier !== 'admin') return alert('본인 등급은 변경할 수 없습니다.');
+  if (!['admin', 'premium', 'user'].includes(newTier)) return;
+  const users = getUsers();
+  const u = users.find(x => x.id === id);
+  if (!u) return;
+  if (newTier === 'admin') {
+    u.role = 'admin';
+    delete u.tier;
+  } else {
+    u.role = 'user';
+    if (newTier === 'premium') u.tier = 'premium';
+    else delete u.tier;
+  }
+  saveUsers(users);
+  logActivity(`등급변경: ${id} → ${TIER_META[newTier].label}`, me.id);
+  if (typeof renderMembers === 'function') renderMembers();
+  if (typeof renderMyArea === 'function') renderMyArea();
+  // 본인 등급이 바뀌면 헤더도 갱신
+  if (me && me.id === id) updateAuthUI();
+}
 function logout() {
   const u = getCurrentUser();
   if (u) logActivity('로그아웃', u.id);
@@ -160,12 +199,19 @@ function updateAuthUI() {
   const loginBtn = document.getElementById('authLoginBtn');
   const userInfo = document.getElementById('authUserInfo');
   const userName = document.getElementById('authUserName');
+  const tierPill = document.getElementById('authTierPill');
   const adminLinks = document.querySelectorAll('.admin-only');
 
   if (user) {
     loginBtn.style.display = 'none';
     userInfo.style.display = 'flex';
-    userName.textContent = user.id + (isAdmin(user) ? ' 👑' : '');
+    const tier = getTier(user);
+    const meta = TIER_META[tier];
+    if (tierPill) {
+      tierPill.className = 'tier-pill ' + meta.cssClass;
+      tierPill.textContent = meta.icon + ' ' + meta.label;
+    }
+    if (userName) userName.textContent = user.id;
   } else {
     loginBtn.style.display = 'inline-flex';
     userInfo.style.display = 'none';

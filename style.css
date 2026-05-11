@@ -99,6 +99,70 @@ nav a.active::after {
 .auth-area { display:flex; align-items:center; gap:6px; flex-shrink:0; white-space:nowrap; }
 .user-info { display:flex; align-items:center; gap:8px; }
 .user-badge { color:var(--naver-green); font-size:0.82rem; font-weight:600; white-space:nowrap; }
+.user-name-text { font-size:0.88rem; font-weight:700; color:var(--text-primary); white-space:nowrap; }
+
+/* === 등급 뱃지 (관리자·정회원·일반) === */
+.tier-pill {
+  display:inline-flex; align-items:center; gap:4px;
+  padding:4px 11px; border-radius:14px;
+  font-size:0.78rem; font-weight:800;
+  white-space:nowrap;
+  border:1.5px solid transparent;
+  letter-spacing:0.2px;
+}
+.tier-admin {
+  background: var(--c-amber-light) !important;
+  color: var(--c-amber-dark) !important;
+  border-color: #f0c060 !important;
+}
+.tier-premium {
+  background: var(--c-blue-light) !important;
+  color: var(--c-blue-dark) !important;
+  border-color: #93b5e8 !important;
+}
+.tier-user {
+  background: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border) !important;
+}
+
+/* 등급 변경 셀렉트 */
+.tier-select {
+  padding: 4px 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 5px;
+  font-size: 0.74rem;
+  font-family: inherit;
+  background: #fff;
+  cursor: pointer;
+}
+.tier-select:focus { outline: none; border-color: var(--naver-green); }
+
+/* 잠긴 프로그램 링크 */
+.locked-link {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  text-align: center;
+}
+.detail-link-btn[disabled] {
+  background: var(--bg-secondary) !important;
+  color: var(--text-muted) !important;
+  border: 1px solid var(--border-strong) !important;
+  cursor: not-allowed !important;
+}
+.locked-msg {
+  margin-top: 12px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.locked-msg a {
+  color: var(--c-blue-dark);
+  font-weight: 700;
+  text-decoration: underline;
+}
 .btn-sm { padding:6px 12px; font-size:0.78rem; border-radius:6px; white-space:nowrap; }
 
 /* ===== TAB PAGES ===== */
@@ -220,6 +284,61 @@ nav a.active::after {
 .hc-keywords span:nth-child(2) { color: var(--c-blue-dark); background: var(--c-blue-light); }
 .hc-keywords span:nth-child(3) { color: var(--c-amber-dark); background: var(--c-amber-light); }
 .hc-keywords span:nth-child(4) { color: #6020a8; background: #f0e6ff; }
+
+/* === 홈 화면 — 최근 게시판 글 위젯 === */
+.home-board {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.hb-item {
+  display: flex; flex-direction: column;
+  gap: 6px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.hb-item:last-child { border-bottom: none; }
+.hb-item:hover { background: var(--naver-green-light); }
+.hb-title {
+  font-size: 1rem; font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.hb-lock { color: var(--c-amber-dark); margin-right: 2px; }
+.hb-tag-bot {
+  display: inline-block; margin-left: 6px;
+  padding: 1px 6px; border-radius: 3px;
+  background: var(--c-blue-light); color: var(--c-blue-dark);
+  font-size: 0.7rem; font-weight: 800;
+  vertical-align: middle;
+}
+.hb-meta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  font-size: 0.78rem; color: var(--text-muted);
+}
+.hb-author {
+  color: var(--naver-green-dark); font-weight: 700;
+}
+.hb-date, .hb-views, .hb-comments { color: var(--text-muted); }
+.home-board-empty {
+  text-align: center; padding: 48px 20px;
+  background: #fff;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 880px; margin: 0 auto;
+}
+.home-board-footer {
+  text-align: center;
+  margin-top: 18px;
+}
 
 /* Quick shortcuts (services grid) */
 .quick-shortcuts {

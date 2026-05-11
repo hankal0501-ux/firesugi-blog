@@ -13,6 +13,7 @@ function showTab(tabName) {
   if (navLink) navLink.classList.add('active');
   // Reset program detail on tab switch + 동적 렌더
   if (tabName === 'programs') { hideProgramDetail(); renderPrograms(); }
+  if (tabName === 'home') renderHomeBoard();
   if (tabName === 'dashboard') renderDashboard();
   if (tabName === 'laws') renderLaws();
   if (tabName === 'tech') renderTech();
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStats();
   // Board
   renderBoard();
+  renderHomeBoard();
   // Reveal animations
   initReveal();
   // Back to Top
@@ -175,6 +177,43 @@ function renderBoard() {
   }).join('');
 }
 
+// 홈 화면 — 최근 게시판 글 5건 위젯
+function renderHomeBoard() {
+  const host = document.getElementById('homeBoardList');
+  if (!host) return;
+  const posts = getPosts().sort((a, b) => b.id - a.id).slice(0, 5);
+  const me = getCurrentUser();
+  if (!posts.length) {
+    host.innerHTML = `
+      <div class="home-board-empty">
+        📭 아직 게시글이 없습니다.
+        <button class="btn btn-primary btn-sm" style="margin-top:12px;" onclick="showTab('board'); setTimeout(()=>toggleWriteForm(), 100);">✏️ 첫 글 쓰기</button>
+      </div>`;
+    return;
+  }
+  host.innerHTML = posts.map(p => {
+    const isSecret = p.secret;
+    const canView = !isSecret || (me && me.id === p.author);
+    const title = isSecret
+      ? `<span class="hb-lock">🔒</span> ${canView ? esc(p.title) : '비밀글입니다'}`
+      : esc(p.title);
+    const isBot = p.author === 'FireSugi-Bot' || p.autoWritten;
+    const onclickAction = canView
+      ? `showTab('board'); setTimeout(()=>viewPost(${p.id}), 80);`
+      : `alert('🔒 비밀글은 작성자만 볼 수 있습니다.');`;
+    return `
+      <div class="hb-item" onclick="${onclickAction}">
+        <div class="hb-title">${title}${isBot ? ' <span class="hb-tag-bot">🤖 AUTO</span>' : ''}</div>
+        <div class="hb-meta">
+          <span class="hb-author">${esc(p.author)}</span>
+          <span class="hb-date">${p.date}</span>
+          <span class="hb-views">👁 ${p.views || 0}</span>
+          ${(p.comments || []).length ? `<span class="hb-comments">💬 ${p.comments.length}</span>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
 function searchBoard() {
   boardSearchQuery = document.getElementById('boardSearchInput').value.trim();
   boardDisplayCount = 5; // Reset count on search
@@ -211,6 +250,7 @@ function submitPost() {
   document.getElementById('postSecret').checked = false;
   toggleWriteForm();
   renderBoard();
+  renderHomeBoard();
 }
 
 function viewPost(id) {
@@ -677,18 +717,27 @@ function showProgramDetail(key) {
     return;
   }
 
-  // 개발 완료 → 전체 내용 표시
-  const linkHtml = `<a href="${data.link}" target="_blank" class="detail-link">🔗 프로그램 바로가기 →</a>`;
+  // 개발 완료 → 전체 내용 표시 (링크는 정회원/관리자만)
+  const tier = getTier();
+  const canAccess = (tier === 'admin' || tier === 'premium');
+  const linkHtml = canAccess
+    ? `<button class="btn btn-primary detail-link-btn" onclick="openProgramLink('${key}')">📖 ${esc(data.name)} 접속하기 →</button>`
+    : `<div class="locked-link">
+         <button class="btn btn-outline detail-link-btn" onclick="openProgramLink('${key}')" disabled>🔒 ${esc(data.name)} — 정회원 전용</button>
+         <p class="locked-msg">💎 <b>정회원 또는 관리자</b>만 이 프로그램을 이용할 수 있습니다.<br>
+         <a href="#" onclick="event.preventDefault(); showTab('members-info');">회원정보 페이지</a>에서 관리자에게 정회원 승급을 요청하세요.</p>
+       </div>`;
 
   // 메타 정보 (버전, 플랫폼, 기술스택, 워크플로우)
   const hasUrl = data.link && data.link !== '#';
+  const accessLabel = hasUrl ? '🔒 정회원 / 관리자 전용' : '⏳ 배포 대기 중';
   const metaHtml = (data.version || data.platform || data.techStack || data.workflow) ? `
     <div class="detail-meta-row">
       ${data.version ? `<span class="detail-meta"><b>버전</b> ${esc(data.version)}</span>` : ''}
       ${data.platform ? `<span class="detail-meta"><b>플랫폼</b> ${esc(data.platform)}</span>` : ''}
       ${data.techStack ? `<span class="detail-meta"><b>기술</b> ${esc(data.techStack)}</span>` : ''}
       ${data.workflow ? `<span class="detail-meta"><b>흐름</b> ${esc(data.workflow)}</span>` : ''}
-      ${hasUrl ? `<span class="detail-meta"><b>URL</b> <a href="${data.link}" target="_blank" style="color:var(--text-primary);text-decoration:underline;">${esc(data.link.replace(/^https?:\/\//, ''))}</a></span>` : '<span class="detail-meta"><b>URL</b> <em style="color:var(--text-muted);">배포 대기 중</em></span>'}
+      <span class="detail-meta"><b>접속</b> <em style="color:var(--text-muted);">${accessLabel}</em></span>
     </div>` : '';
 
   // 스크린샷 갤러리 (localStorage 우선, 기본값 fallback)
@@ -765,6 +814,23 @@ function showProgramDetail(key) {
 function hideProgramDetail() {
   document.getElementById('programList').style.display = 'block';
   document.getElementById('programDetail').style.display = 'none';
+}
+
+// 프로그램 링크 클릭 핸들러 — 정회원/관리자만 통과
+function openProgramLink(key) {
+  const data = programData[key];
+  if (!data) return;
+  if (!data.link || data.link === '#') {
+    alert('⏳ 아직 배포되지 않은 프로그램입니다.');
+    return;
+  }
+  const tier = getTier();
+  if (tier !== 'admin' && tier !== 'premium') {
+    alert('🔒 정회원 또는 관리자만 이용할 수 있습니다.\n\n[회원정보] → 관리자에게 정회원 승급을 요청하세요.');
+    return;
+  }
+  window.open(data.link, '_blank', 'noopener,noreferrer');
+  if (typeof logActivity === 'function') logActivity('프로그램 접속: ' + key);
 }
 
 // ===== REVEAL ANIMATION =====
@@ -1757,9 +1823,9 @@ function renderMembers() {
     const lastSeen = onlineMap[u.id];
     const isOnline = lastSeen && (now - lastSeen) < 5 * 60 * 1000;
     const lastLoginStr = u.lastLogin ? formatRel(u.lastLogin) : '—';
-    const roleBadge = u.role === 'admin'
-      ? '<span class="badge badge-admin">👑 관리자</span>'
-      : '<span class="badge badge-user">일반</span>';
+    const userTier = u.role === 'admin' ? 'admin' : (u.tier === 'premium' ? 'premium' : 'user');
+    const tMeta = TIER_META[userTier];
+    const roleBadge = `<span class="tier-pill ${tMeta.cssClass}">${tMeta.icon} ${tMeta.label}</span>`;
     const statusBadge = u.banned
       ? '<span class="badge badge-banned">🚫 차단</span>'
       : (isOnline ? '<span class="badge badge-online">🟢 온라인</span>' : '<span class="badge badge-offline">오프라인</span>');
@@ -1782,7 +1848,11 @@ function renderMembers() {
       const actions = isMe
         ? '<span style="color:var(--text-muted); font-size:0.8rem;">본인</span>'
         : `
-          <button class="btn-mini" onclick="adminToggleRole('${esc(u.id)}')" title="관리자 토글">${u.role === 'admin' ? '강등' : '승급'}</button>
+          <select class="tier-select" onchange="adminSetTier('${esc(u.id)}', this.value)" title="등급 변경">
+            <option value="admin" ${userTier === 'admin' ? 'selected' : ''}>👑 관리자</option>
+            <option value="premium" ${userTier === 'premium' ? 'selected' : ''}>💎 정회원</option>
+            <option value="user" ${userTier === 'user' ? 'selected' : ''}>👤 일반</option>
+          </select>
           <button class="btn-mini ${u.banned ? 'btn-mini-warn' : ''}" onclick="adminToggleBan('${esc(u.id)}')">${u.banned ? '차단해제' : '차단'}</button>
           <button class="btn-mini btn-mini-danger" onclick="adminDeleteUser('${esc(u.id)}')">삭제</button>
         `;

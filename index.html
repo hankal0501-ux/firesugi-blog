@@ -32,7 +32,8 @@
       <div class="auth-area">
         <button class="btn btn-outline btn-sm" id="authLoginBtn" onclick="showLoginModal()">로그인</button>
         <div class="user-info" id="authUserInfo" style="display:none;">
-          <span class="user-badge"><span id="authUserName"></span></span>
+          <span class="tier-pill" id="authTierPill"></span>
+          <span class="user-name-text" id="authUserName"></span>
           <button class="btn btn-outline btn-sm" onclick="logout()">로그아웃</button>
         </div>
       </div>
@@ -161,6 +162,21 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 최근 게시판 글 (홈 첫 화면 위젯) -->
+    <section class="tab-section reveal">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">💬 Board</div>
+          <h2>최근 게시판 글</h2>
+          <p>회원들이 나누는 따끈따끈한 소방안전 이야기와 질문들. 마음에 드는 글이 있으면 클릭해서 자세히 읽어보세요.</p>
+        </div>
+        <div class="home-board" id="homeBoardList"></div>
+        <div class="home-board-footer">
+          <button class="btn btn-outline" onclick="showTab('board')">전체 게시판 보기 →</button>
         </div>
       </div>
     </section>

@@ -242,8 +242,9 @@ function doSignup() {
   const now = new Date();
   const joinDate = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
 
-  // 첫 가입자 또는 id === 'admin' 이면 관리자
-  const role = (users.length === 0 || id.toLowerCase() === 'admin') ? 'admin' : 'user';
+  // 첫 가입자(봇 계정 제외) 또는 id === 'admin' 이면 관리자
+  const realUserCount = users.filter(u => !u.id.toLowerCase().includes('bot')).length;
+  const role = (realUserCount === 0 || id.toLowerCase() === 'admin') ? 'admin' : 'user';
   const newUser = { id, pw, joinDate, role, banned: false, lastLogin: Date.now() };
   users.push(newUser);
   saveUsers(users);
@@ -303,13 +304,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // 기존 사용자 데이터 마이그레이션 (role/banned 필드 보강)
   const users = getUsers();
   let dirty = false;
-  users.forEach((u, i) => {
+  users.forEach((u) => {
     if (u.role === undefined) {
-      u.role = (i === 0 || u.id.toLowerCase() === 'admin') ? 'admin' : 'user';
+      u.role = (u.id.toLowerCase() === 'admin') ? 'admin' : 'user';
       dirty = true;
     }
     if (u.banned === undefined) { u.banned = false; dirty = true; }
   });
+  // 관리자가 없는데 실제 회원(봇 제외)이 있으면 → 첫 실제 회원을 자동 승급
+  const realUsers = users.filter(u => !u.id.toLowerCase().includes('bot'));
+  const hasAdmin = users.some(u => u.role === 'admin');
+  if (!hasAdmin && realUsers.length > 0) {
+    realUsers[0].role = 'admin';
+    console.log('🛡 관리자 자동 승급:', realUsers[0].id);
+    dirty = true;
+  }
   if (dirty) saveUsers(users);
 
   updateAuthUI();

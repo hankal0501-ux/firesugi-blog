@@ -887,7 +887,15 @@ function openProgramLink(key) {
     alert('🔒 정회원 또는 관리자만 이용할 수 있습니다.\n\n[회원정보] → 관리자에게 정회원 승급을 요청하세요.');
     return;
   }
-  window.open(data.link, '_blank', 'noopener,noreferrer');
+  // <a> 태그 click 방식 — window.open()보다 안정적 (about:blank 방지)
+  const a = document.createElement('a');
+  a.href = data.link;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => document.body.removeChild(a), 100);
   if (typeof logActivity === 'function') logActivity('프로그램 접속: ' + key);
 }
 

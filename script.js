@@ -453,8 +453,8 @@ const programData = {
       '6. [법령 본문 검색]에서 법·령·규칙·별표 + 연도 필터로 2,161건 즉시 검색.',
       '7. [DB 실시간 현황]에서 인덱싱 파일 18,899건과 카테고리별 청크 분포 확인.'
     ],
-    link: 'https://firelaw.duckdns.org/',
-    version: 'DB 909MB · FTS5 인덱스',
+    link: null,
+    version: 'DB 909MB · FTS5 인덱스 (준비 중)',
     platform: '브라우저 (PC·태블릿)',
     techStack: 'SQLite FTS5 · 자동 인덱싱 (15초 주기) · 카테고리별 청크 검색',
     workflow: '카테고리 선택 → 키워드/연도 검색 → 본문·인용 즉시 열람'

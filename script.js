@@ -336,7 +336,7 @@ const programData = {
       '8. "모른다" 또는 "중요"로 분류한 카드는 나중에 반복 학습합니다.',
       '9. 자주 쓴다면 "홈 화면에 추가" 안내의 [설치]를 눌러 앱처럼 사용하세요.'
     ],
-    link: 'https://finest-wit-matt-blair.trycloudflare.com/viewer.html',
+    link: 'https://nftc-cards.vercel.app',
     version: 'NFTC 2026 · PWA 지원',
     platform: '브라우저 (PC·모바일) · 홈 화면 설치 가능',
     screenshots: [

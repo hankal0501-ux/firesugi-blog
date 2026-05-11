@@ -1529,11 +1529,6 @@ const ruleData = [
   { cat: '소방 경력관련', items: [
     { name: '소방기술자 실무교육에 관한 규정', url: 'https://www.law.go.kr' },
     { name: '소방시설관리사 시험 시행규칙', url: 'https://www.law.go.kr' }
-  ]},
-  { cat: '협회 관련 고시', items: [
-    { name: '한국소방시설관리협회 정관', url: '#' },
-    { name: '점검대가 산정기준', url: '#' },
-    { name: '회원사 등록 및 관리 규정', url: '#' }
   ]}
 ];
 

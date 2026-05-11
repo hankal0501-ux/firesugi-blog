@@ -780,8 +780,12 @@ function showProgramDetail(key) {
   const tier = getTier();
   const canAccess = (tier === 'admin' || tier === 'premium');
   const linkHtml = canAccess
-    ? `<a href="${esc(data.link)}" target="_blank" rel="noopener" class="btn btn-primary detail-link-btn"
-         onclick="if(typeof logActivity==='function') logActivity('프로그램 접속: ${key}');">📖 ${esc(data.name)} 접속하기 →</a>`
+    ? `<div class="access-buttons">
+         <a href="${esc(data.link)}" target="_blank" class="btn btn-primary detail-link-btn"
+            onclick="return programLinkClick(event, '${key}');">📖 ${esc(data.name)} 접속하기 →</a>
+         <button class="btn btn-outline btn-sm" onclick="copyProgramUrl('${key}')" title="새 탭이 빈 화면(about:blank)으로 뜨면 이 버튼으로 URL 복사 후 주소창에 붙여넣으세요">📋 URL 복사</button>
+       </div>
+       <p class="access-note">💡 브라우저가 HTTP 링크를 차단할 경우, [URL 복사] 후 새 탭 주소창에 붙여넣어 주세요.</p>`
     : `<div class="locked-link">
          <button class="btn btn-outline detail-link-btn" disabled>🔒 ${esc(data.name)} — 정회원 전용</button>
          <p class="locked-msg">💎 <b>정회원 또는 관리자</b>만 이 프로그램을 이용할 수 있습니다.<br>
@@ -874,6 +878,59 @@ function showProgramDetail(key) {
 function hideProgramDetail() {
   document.getElementById('programList').style.display = 'block';
   document.getElementById('programDetail').style.display = 'none';
+}
+
+// <a> 클릭 핸들러 — 활동 로그 + 차단 시 URL 복사 폴백
+function programLinkClick(event, key) {
+  const data = programData[key];
+  if (!data || !data.link) {
+    event.preventDefault();
+    alert('⏳ URL이 설정되지 않았습니다.');
+    return false;
+  }
+  if (typeof logActivity === 'function') logActivity('프로그램 접속: ' + key);
+  // 기본 동작(target=_blank로 새 탭 열기) 그대로 진행 — return true
+  // 만약 새 탭이 about:blank로 열려도 사용자가 URL을 알 수 있도록 클립보드 복사 시도
+  try {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(data.link).catch(() => {});
+    }
+  } catch (e) {}
+  return true;
+}
+
+// URL 복사 — 새 탭 차단 시 폴백
+function copyProgramUrl(key) {
+  const data = programData[key];
+  if (!data || !data.link) return alert('URL이 설정되지 않았습니다.');
+  const tier = getTier();
+  if (tier !== 'admin' && tier !== 'premium') {
+    return alert('🔒 정회원 또는 관리자만 이용할 수 있습니다.');
+  }
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(data.link).then(() => {
+        alert('📋 URL 복사 완료!\n\n' + data.link + '\n\n새 탭을 열고 주소창에 붙여넣기(Ctrl+V) 후 Enter 하세요.');
+      }, () => fallbackCopy(data.link));
+    } else {
+      fallbackCopy(data.link);
+    }
+  } catch (e) {
+    fallbackCopy(data.link);
+  }
+}
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+  alert(ok
+    ? '📋 URL 복사 완료!\n\n' + text + '\n\n새 탭 주소창에 붙여넣기(Ctrl+V) 후 Enter 하세요.'
+    : '⚠️ 복사 실패. 아래 URL을 직접 복사하세요:\n\n' + text);
 }
 
 // 프로그램 링크 클릭 핸들러 — 정회원/관리자만 통과

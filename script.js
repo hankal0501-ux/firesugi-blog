@@ -437,26 +437,60 @@ const programData = {
     link: null
   },
   law: {
-    icon: '⚖️', name: '법률 공부하기', tag: '법률DB',
-    desc: '소방기본법, 소방시설법 등 관련 법률을 시대별로 비교 분석하는 도구입니다.',
+    icon: '⚖️', name: '소방법령 DB 허브', tag: '통합 지식DB',
+    desc: '소방 관련 모든 법령·고시·질의응답·매뉴얼을 한 곳에 통합한 지식 데이터베이스. 카테고리별 청크 분포: 소방관련법령 49,846 · 설비연혁 39,716 · 메뉴얼·해설서 15,998 · 화재안전기준 7,660 · 질의응답자료집 2,385 등 총 192,920건의 법령 텍스트 조각을 즉시 검색·열람할 수 있습니다.',
     features: [
-      { title: '📚 소방 법률DB', desc: '소방기본법·소방시설법·화재예방법·공사업법 전문 수록' },
-      { title: '🔍 조문 검색', desc: '키워드로 관련 조문 즉시 검색·하이라이트' },
-      { title: '📅 시대별 비교', desc: '법률 개정 이력을 시대별로 비교 분석' }
+      { title: '📚 소방청 공식 자료 통합', desc: '질의응답·고시·지침·해설서·매뉴얼·형식승인기준·업무처리지침·소방법규용어집까지 한 화면에서 검색.' },
+      { title: '⏰ 설비연혁 39,716건', desc: '시설별 법령 변경 연혁을 연도별로 추적. 당시법 판정 시 근거자료로 즉시 인용 가능.' },
+      { title: '🔄 15초 자동 갱신 · FTS5', desc: '15초마다 DB 현황 자동 갱신. SQLite FTS5 전문검색으로 법령 본문 즉시 hit.' }
     ],
-    howto: ['1. 학습할 법률을 선택합니다.','2. 조문을 순서대로 읽거나 키워드 검색합니다.','3. 시대별 비교로 개정 내역을 확인합니다.','4. 중요 조문에 메모를 남겨 복습합니다.'],
-    link: null
+    howto: [
+      '1. 소방법령 DB 허브에 접속해 카테고리(소방시설종합·시설조회·게시판)를 선택합니다.',
+      '2. [소방법령정보센터]에서 건축물대장 기반 당시법 통합 검토.',
+      '3. [당시법·소방시설]에서 허가일 기준 적용 판정.',
+      '4. [점검시 중점체크사항]에서 현장 점검 기록·결과 관리.',
+      '5. [소방청 질의응답]에서 공식 질의응답·법령 해석 사례 조회.',
+      '6. [법령 본문 검색]에서 법·령·규칙·별표 + 연도 필터로 2,161건 즉시 검색.',
+      '7. [DB 실시간 현황]에서 인덱싱 파일 18,899건과 카테고리별 청크 분포 확인.'
+    ],
+    link: 'https://firelaw.duckdns.org/',
+    version: 'DB 909MB · FTS5 인덱스',
+    platform: '브라우저 (PC·태블릿)',
+    techStack: 'SQLite FTS5 · 자동 인덱싱 (15초 주기) · 카테고리별 청크 검색',
+    workflow: '카테고리 선택 → 키워드/연도 검색 → 본문·인용 즉시 열람'
   },
   historical: {
-    icon: '🏛️', name: '역사적 법률 판단', tag: '시대별분석',
-    desc: '건축 허가일 기준으로 적용되는 소방법령을 자동 판단하는 엔진입니다.',
+    featured: true,
+    crown: '👑',
+    stars: '⭐⭐⭐',
+    ribbonText: '👑 CORE · AI 메인 시스템 ⭐',
+    icon: '👑', name: '소방시설 종합조회 시스템', tag: '🏆 AI 핵심',
+    desc: '건축물대장 PDF 한 장으로 허가일 기준의 당시법과 현행법을 동시에 적용해 소방시설 설치의무를 자동 판정하는 AI 시스템. SQLite FTS5 기반 909MB DB(법령텍스트 192,920건·PDF/MD 18,899건)로 1958년 구 소방법부터 현행 NFTC 통합본까지 전체 소방법령을 망라합니다.',
     features: [
-      { title: '📅 Era A~J (10개 시대)', desc: '1964년부터 현행까지 소방법령 변천을 10개 시대로 자동 분류' },
-      { title: '🏗️ 허가일 기반 판단', desc: '건축 허가일·용도·규모만 입력하면 적용 법령이 자동 결정' },
-      { title: '📊 현행·당시 비교', desc: '현행 기준과 허가 당시 기준을 나란히 비교해 소급 적용 여부 판정' }
+      { title: '🏛️ 당시법·현행법 자동 판정', desc: '건축물대장 허가일을 자동 추출 → 그 시점의 소방법(법·시행령·시행규칙·NFTC)을 매칭 + 강화기준(현행) 동시 비교로 소급여부 판정.' },
+      { title: '🤖 AI 도우미 + FTS5 본문 검색', desc: '법령 본문 2,161건 즉시 검색 + AI가 자연어 질의에 답변. 소방청 질의응답·고시·매뉴얼 49,846건 통합 인덱싱.' },
+      { title: '📊 시설별 자동 분류', desc: '시설을 소화설비·경보설비·피난구조·소화활동설비·기타 5개로 자동 분류하고 설치의무·자체점검 대상 자동 표시.' }
     ],
-    howto: ['1. 건축물의 허가일(준공일)을 입력합니다.','2. 건물 용도와 규모를 선택합니다.','3. 해당 시대의 적용 법령이 자동 판단됩니다.','4. 현행 기준과의 비교 리포트를 확인합니다.'],
-    link: null
+    howto: [
+      '1. 사이트 접속 후 좌측 [건축물대장 파일 업로드] 영역에 PDF 파일을 끌어다 놓거나 클릭해 선택합니다.',
+      '2. 자동 추출 결과(종류·명칭·연면적·허가일·지상층·지하층·층별 용도면적)를 확인하고 필요시 수정합니다.',
+      '3. 하단 [⚡ 소방시설 자동 판정] 버튼을 클릭합니다.',
+      '4. 중앙 패널에 [강화기준 — 신규 허가 시 적용] / [당시 소방시설] 카드가 동시에 표시됩니다.',
+      '5. 좌상단 탭에서 원하는 모드 선택: ① 시설조회 ② 개정연혁 ③ 설치판정 ④ AI 도우미 ⑤ 당시법 판정 ⑥ 당시법 시설 ⑦ 시설별 기준.',
+      '6. 우측 [보고서 표시창]에서 시설별 자체점검 분류를 확인하고 PDF 출력하거나 점검 지적서로 연계합니다.',
+      '7. AI 도우미 탭에서 자연어로 질문 → 관련 법령·고시·매뉴얼이 인용과 함께 답변됩니다.'
+    ],
+    link: 'https://firelaw.duckdns.org/fire-facility-concept.html',
+    version: 'v1.4.0 (24remte-control)',
+    platform: '브라우저 (PC 권장) · SQLite FTS5 백엔드',
+    techStack: 'SQLite FTS5 + 909MB DB · PDF 자동추출 · LLM(AI 도우미)',
+    workflow: '건축물대장 PDF 업로드 → 자동 추출 → 허가일 기반 당시법·현행법 동시 판정 → 시설별 분류 리포트',
+    screenshots: [
+      { url: 'screenshots/firelaw-main.png',
+        caption: '① 메인 화면 — 건축물대장 업로드 + 강화기준 vs 당시법 비교 (7개 탭: 시설조회·개정연혁·설치판정·AI도우미·당시법판정·당시법시설·시설별기준)' },
+      { url: 'screenshots/firelaw-db.png',
+        caption: '② DB 실시간 현황 — 법령텍스트 192,920건·PDF/MD 18,899건·909MB (소방관련법령 49,846 / 설비연혁 39,716 / 메뉴얼·해설서 15,998 / 화재안전기준 7,660 등)' }
+    ]
   },
   calculators: {
     icon: '🧮', name: '소방 수리학 계산기', tag: '설계지원',
@@ -636,17 +670,41 @@ function renderPrograms() {
   const hidden = getHiddenPrograms();
   const admin = isAdmin();
 
-  // 표시할 프로그램
-  const visible = Object.entries(programData).filter(([k]) => !hidden.includes(k));
+  // 표시할 프로그램 — featured 우선
+  const visible = Object.entries(programData)
+    .filter(([k]) => !hidden.includes(k))
+    .sort(([, a], [, b]) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 
   grid.innerHTML = visible.map(([key, p]) => {
-    const isDone = !!p.link;
+    const isDone = !!p.link && p.link !== '#';
+    const isFeatured = !!p.featured;
     const statusBadge = isDone
       ? '<span class="prog-status prog-done">완료</span>'
       : '<span class="prog-status prog-dev">개발중</span>';
     const desc = isDone
       ? `<p>${esc(p.desc)}</p>`
       : `<p class="prog-dev-msg">현재 개발 중입니다. 곧 공개 예정.</p>`;
+
+    if (isFeatured) {
+      return `
+        <div class="program-card is-featured ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
+          <div class="featured-ribbon">${esc(p.ribbonText || '👑 CORE · AI 메인 ⭐')}</div>
+          <div class="featured-stars">${p.stars || '⭐⭐⭐'}</div>
+          <div class="prog-header">
+            <h3>${p.crown ? p.crown + ' ' : ''}<span class="featured-name">${esc(p.name)}</span> ${p.stars || ''}</h3>
+            ${statusBadge}
+          </div>
+          ${desc}
+          <div class="featured-tags">
+            <span class="ft-ai">🤖 AI</span>
+            <span class="ft-core">⭐ 핵심</span>
+            <span class="ft-main">🏆 메인</span>
+            <span class="ft-crown">👑 CORE</span>
+          </div>
+          <span class="card-tag">${esc(p.tag)}</span>
+        </div>`;
+    }
+
     return `
       <div class="program-card ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
         <div class="card-icon">${p.icon}</div>

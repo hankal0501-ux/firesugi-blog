@@ -452,6 +452,120 @@ nav a.active::after { display:none; }
 .program-card:hover::before { transform:scaleX(1); }
 .card-icon { display:none; }
 
+/* === FEATURED (CORE AI) 프로그램 카드 — 화려한 장식 === */
+.program-card.is-featured {
+  grid-column: 1 / -1;  /* 전체 너비 차지 */
+  background:
+    linear-gradient(135deg, rgba(245,166,35,0.08) 0%, rgba(255,255,255,1) 30%, rgba(3,199,90,0.06) 70%, rgba(28,92,214,0.06) 100%);
+  border: 2px solid var(--c-amber);
+  position: relative;
+  overflow: visible;
+  padding: 32px 28px 26px;
+  box-shadow: 0 8px 28px rgba(245,166,35,0.18);
+  margin-top: 14px;
+  animation: featuredGlow 3s ease-in-out infinite;
+}
+@keyframes featuredGlow {
+  0%, 100% { box-shadow: 0 8px 28px rgba(245,166,35,0.18); }
+  50% { box-shadow: 0 12px 36px rgba(245,166,35,0.32); }
+}
+.program-card.is-featured::before {
+  display: block !important;
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: linear-gradient(90deg, var(--c-amber), var(--naver-green), var(--c-blue), var(--c-amber));
+  background-size: 200% 100%;
+  transform: scaleX(1) !important;
+  animation: rainbowSlide 4s linear infinite;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+@keyframes rainbowSlide {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.featured-ribbon {
+  position: absolute;
+  top: -16px; left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 24px;
+  background: linear-gradient(90deg, var(--c-amber-dark) 0%, #f5a623 50%, var(--c-amber-dark) 100%);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(245,166,35,0.5);
+  white-space: nowrap;
+  z-index: 2;
+}
+.featured-ribbon::before,
+.featured-ribbon::after {
+  content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+  width: 8px; height: 8px;
+  background: var(--c-amber-dark);
+  border-radius: 50%;
+}
+.featured-ribbon::before { left: -3px; }
+.featured-ribbon::after { right: -3px; }
+
+.featured-stars {
+  position: absolute;
+  top: 12px; right: 16px;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  filter: drop-shadow(0 1px 2px rgba(245,166,35,0.4));
+}
+
+.is-featured .prog-header h3 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  margin-bottom: 0;
+}
+.is-featured .featured-name {
+  background: linear-gradient(90deg, var(--c-amber-dark), #d97706, var(--naver-green-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.is-featured > p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 12px 0 14px;
+  color: var(--text-primary);
+}
+
+.featured-tags {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin: 6px 0 12px;
+}
+.featured-tags span {
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  border: 1.5px solid;
+  letter-spacing: 0.3px;
+}
+.ft-ai    { background: var(--c-blue-light);     color: var(--c-blue-dark);     border-color: var(--c-blue); }
+.ft-core  { background: var(--c-amber-light);    color: var(--c-amber-dark);    border-color: var(--c-amber); }
+.ft-main  { background: var(--naver-green-light); color: var(--naver-green-dark); border-color: var(--naver-green); }
+.ft-crown { background: #f0e6ff;                 color: #6020a8;                 border-color: #b89af0; }
+
+/* Featured 카드 호버 효과 강화 */
+.program-card.is-featured:hover {
+  transform: translateY(-4px) scale(1.005);
+  box-shadow: 0 16px 40px rgba(245,166,35,0.32);
+}
+
+@media (max-width: 700px) {
+  .program-card.is-featured { padding: 28px 18px 18px; }
+  .is-featured .prog-header h3 { font-size: 1.1rem; }
+  .featured-ribbon { font-size: 0.72rem; padding: 6px 16px; }
+}
+
 /* === 프로그램 개발중 / 완료 표시 === */
 .prog-header {
   display:flex; align-items:center; gap:8px;

@@ -135,17 +135,6 @@ nav a.active::after { display:none !important; content:none !important; }
 }
 .tier-select:focus { outline: none; border-color: var(--naver-green); }
 
-/* 접속 버튼 + URL 복사 폴백 */
-.access-buttons {
-  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-}
-.access-note {
-  margin-top: 10px !important;
-  font-size: 0.8rem !important;
-  color: var(--text-muted) !important;
-  line-height: 1.6;
-}
-
 /* 잠긴 프로그램 링크 */
 .locked-link {
   background: var(--bg-secondary);

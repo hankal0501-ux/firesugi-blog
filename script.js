@@ -776,13 +776,14 @@ function showProgramDetail(key) {
     return;
   }
 
-  // 개발 완료 → 전체 내용 표시 (링크는 정회원/관리자만)
+  // 개발 완료 → 전체 내용 표시 (링크는 정회원/관리자만 활성화)
   const tier = getTier();
   const canAccess = (tier === 'admin' || tier === 'premium');
   const linkHtml = canAccess
-    ? `<button class="btn btn-primary detail-link-btn" onclick="openProgramLink('${key}')">📖 ${esc(data.name)} 접속하기 →</button>`
+    ? `<a href="${esc(data.link)}" target="_blank" rel="noopener" class="btn btn-primary detail-link-btn"
+         onclick="if(typeof logActivity==='function') logActivity('프로그램 접속: ${key}');">📖 ${esc(data.name)} 접속하기 →</a>`
     : `<div class="locked-link">
-         <button class="btn btn-outline detail-link-btn" onclick="openProgramLink('${key}')" disabled>🔒 ${esc(data.name)} — 정회원 전용</button>
+         <button class="btn btn-outline detail-link-btn" disabled>🔒 ${esc(data.name)} — 정회원 전용</button>
          <p class="locked-msg">💎 <b>정회원 또는 관리자</b>만 이 프로그램을 이용할 수 있습니다.<br>
          <a href="#" onclick="event.preventDefault(); showTab('members-info');">회원정보 페이지</a>에서 관리자에게 정회원 승급을 요청하세요.</p>
        </div>`;

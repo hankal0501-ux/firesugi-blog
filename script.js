@@ -1,0 +1,1996 @@
+// ===== TAB SYSTEM =====
+function showTab(tabName) {
+  // 관리자 전용 탭 가드 (접속상황판만)
+  if (tabName === 'dashboard' && !isAdmin()) {
+    alert('🔒 관리자 전용 페이지입니다.');
+    return;
+  }
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  const tab = document.getElementById('tab-' + tabName);
+  if (tab) { tab.classList.add('active'); window.scrollTo(0, 0); }
+  const navLink = document.querySelector(`nav a[data-tab="${tabName}"]`);
+  if (navLink) navLink.classList.add('active');
+  // Reset program detail on tab switch + 동적 렌더
+  if (tabName === 'programs') { hideProgramDetail(); renderPrograms(); }
+  if (tabName === 'dashboard') renderDashboard();
+  if (tabName === 'laws') renderLaws();
+  if (tabName === 'tech') renderTech();
+  if (tabName === 'forms') renderForms();
+  if (tabName === 'news') { renderNews(); renderBlogRefs(); }
+  if (tabName === 'members-info') { renderMyArea(); renderMembers(); }
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  // Header scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+  // Mobile nav
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('nav');
+  if (toggle) {
+    toggle.addEventListener('click', () => nav.classList.toggle('open'));
+    document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+  }
+  // Particles & Stats
+  createParticles();
+  initStats();
+  // Board
+  renderBoard();
+  // Reveal animations
+  initReveal();
+  // Back to Top
+  initBackToTop();
+  // 카테고리 탭 바인딩 (KFMA 스타일 게시판)
+  bindCategoryTabs();
+  // 일일 뉴스 자동수집 (로컬 풀 - 백업)
+  autoAddDailyNews();
+  // 원격 news.json 페치 (GitHub Actions 자동수집 결과)
+  fetchRemoteNews();
+  // 자동 글쓰기 — 일일 1회
+  autoWriteDailyIfDue();
+});
+
+// ===== REMOTE NEWS FETCH (GitHub Actions 결과 가져오기) =====
+async function fetchRemoteNews() {
+  try {
+    // 캐시 무효화를 위해 timestamp 쿼리
+    const res = await fetch('news.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) return;
+    const remote = await res.json();
+    if (!Array.isArray(remote) || !remote.length) return;
+
+    const local = getNews();
+    const localUrls = new Set(local.map(n => n.url).filter(Boolean));
+    const localTitles = new Set(local.map(n => n.title));
+
+    const newOnes = remote.filter(r =>
+      r.url && !localUrls.has(r.url) && !localTitles.has(r.title)
+    );
+    if (!newOnes.length) return;
+
+    // 기존 isNew 해제 → 신규만 NEW
+    local.forEach(n => { n.isNew = false; });
+    const merged = [...newOnes.map(n => ({ ...n, isNew: true })), ...local].slice(0, 200);
+    saveNews(merged);
+
+    console.log(`🤖 원격에서 신규 뉴스 ${newOnes.length}건 동기화`);
+    if (typeof renderNews === 'function' &&
+        document.getElementById('tab-news')?.classList.contains('active')) {
+      renderNews();
+    }
+  } catch (e) {
+    // file:// 로 열거나 news.json 없으면 조용히 무시
+    console.log('ℹ️  원격 뉴스 동기화 스킵:', e.message);
+  }
+}
+
+// ===== PARTICLES =====
+function createParticles() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  const colors = ['#ff6b35','#e63946','#ffba08','#f77f00'];
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    const size = Math.random() * 4 + 2;
+    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;bottom:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*6+4}s;animation-delay:${Math.random()*6}s;`;
+    hero.appendChild(p);
+  }
+}
+
+// ===== STATS =====
+function initStats() {
+  const els = document.querySelectorAll('.stat-number');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateNum(e.target); obs.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  els.forEach(el => obs.observe(el));
+}
+function animateNum(el) {
+  const end = parseInt(el.dataset.target), suffix = el.dataset.suffix || '';
+  const start = performance.now();
+  (function update(now) {
+    const p = Math.min((now - start) / 2000, 1);
+    el.textContent = Math.floor(end * (1 - Math.pow(1 - p, 3))) + suffix;
+    if (p < 1) requestAnimationFrame(update);
+  })(start);
+}
+
+// ===== BOARD SYSTEM =====
+let currentPostId = null;
+let boardSearchQuery = '';
+let boardDisplayCount = 5; // Initial number of posts to show
+
+function getPosts() { return JSON.parse(localStorage.getItem('fireSugiBoardPosts') || '[]'); }
+function savePosts(posts) { localStorage.setItem('fireSugiBoardPosts', JSON.stringify(posts)); }
+
+function renderBoard() {
+  const allPosts = getPosts().sort((a, b) => b.id - a.id);
+  const filteredPosts = allPosts.filter(p => 
+    p.title.toLowerCase().includes(boardSearchQuery.toLowerCase()) || 
+    p.content.toLowerCase().includes(boardSearchQuery.toLowerCase()) ||
+    p.author.toLowerCase().includes(boardSearchQuery.toLowerCase())
+  );
+  
+  const tbody = document.getElementById('boardBody');
+  const empty = document.getElementById('boardEmpty');
+  const table = document.getElementById('boardTable');
+  const pagination = document.getElementById('boardPagination');
+  
+  document.getElementById('boardCount').textContent = filteredPosts.length;
+  
+  if (!filteredPosts.length) { 
+    table.style.display = 'none'; 
+    empty.style.display = 'block'; 
+    pagination.style.display = 'none';
+    return; 
+  }
+  
+  table.style.display = 'table'; 
+  empty.style.display = 'none';
+  
+  const displayPosts = filteredPosts.slice(0, boardDisplayCount);
+  pagination.style.display = filteredPosts.length > boardDisplayCount ? 'block' : 'none';
+  
+  const user = getCurrentUser();
+  tbody.innerHTML = displayPosts.map((post) => {
+    const isSecret = post.secret;
+    const canView = !isSecret || (user && (user.id === post.author));
+    const isBot = post.author === BOT_AUTHOR || post.autoWritten;
+    const isNeighborPost = user && typeof isNeighbor === 'function' && isNeighbor(post.author);
+    const titleHtml = isSecret
+      ? `<span class="secret-icon">🔒</span>${canView ? esc(post.title) : '비밀글입니다.'}`
+      : esc(post.title);
+    const authorHtml = `${esc(post.author)}${isBot ? ' <span class="bot-tag">🤖</span>' : ''}${isNeighborPost ? ' <span class="nb-tag" title="이웃">🤝</span>' : ''}`;
+    return `<tr onclick="${canView ? `viewPost(${post.id})` : `alert('비밀글은 작성자만 볼 수 있습니다.')`}">
+      <td class="col-no" style="text-align:center;">${allPosts.indexOf(post) + 1}</td>
+      <td class="col-title td-title">${titleHtml}</td>
+      <td class="col-author">${authorHtml}</td>
+      <td class="col-date" style="color:var(--text-secondary);font-size:0.85rem;">${post.date}</td>
+      <td class="col-views" style="text-align:center;">${post.views || 0}</td>
+    </tr>`;
+  }).join('');
+}
+
+function searchBoard() {
+  boardSearchQuery = document.getElementById('boardSearchInput').value.trim();
+  boardDisplayCount = 5; // Reset count on search
+  renderBoard();
+}
+
+function loadMorePosts() {
+  boardDisplayCount += 5;
+  renderBoard();
+}
+
+function toggleWriteForm() {
+  const user = getCurrentUser();
+  if (!user) { alert('로그인이 필요합니다.'); showLoginModal(); return; }
+  const f = document.getElementById('writeForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+function submitPost() {
+  const user = getCurrentUser();
+  if (!user) return;
+  const title = document.getElementById('postTitle').value.trim();
+  const content = document.getElementById('postContent').value.trim();
+  const secret = document.getElementById('postSecret').checked;
+  if (!title || !content) { alert('제목과 내용을 입력하세요.'); return; }
+  const posts = getPosts();
+  const now = new Date();
+  const date = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+  posts.push({ id: Date.now(), author: user.id, title, content, date, views: 0, secret, comments: [] });
+  savePosts(posts);
+  logActivity('글작성: ' + title.slice(0, 30), user.id);
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postContent').value = '';
+  document.getElementById('postSecret').checked = false;
+  toggleWriteForm();
+  renderBoard();
+}
+
+function viewPost(id) {
+  const posts = getPosts();
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+  post.views = (post.views || 0) + 1;
+  savePosts(posts); renderBoard();
+  currentPostId = id;
+  document.getElementById('modalTitle').textContent = post.title;
+  document.getElementById('modalAuthor').textContent = '✍️ ' + post.author;
+  document.getElementById('modalDate').textContent = '📅 ' + post.date;
+  document.getElementById('modalViews').textContent = '👁️ 조회 ' + post.views;
+  document.getElementById('modalBody').textContent = post.content;
+  document.getElementById('modalCategory').textContent = post.secret ? '🔒 비밀글' : '자유게시판';
+  renderComments(post);
+  document.getElementById('postModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closePostModal() {
+  document.getElementById('postModal').style.display = 'none';
+  document.body.style.overflow = '';
+  currentPostId = null;
+}
+
+function deletePost() {
+  if (!currentPostId) return;
+  const user = getCurrentUser();
+  const posts = getPosts();
+  const post = posts.find(p => p.id === currentPostId);
+  if (post && user && user.id !== post.author) { alert('작성자만 삭제할 수 있습니다.'); return; }
+  if (!confirm('삭제하시겠습니까?')) return;
+  savePosts(posts.filter(p => p.id !== currentPostId));
+  closePostModal(); renderBoard();
+}
+
+// ===== COMMENTS =====
+function renderComments(post) {
+  const list = document.getElementById('commentsList');
+  const comments = post.comments || [];
+  list.innerHTML = comments.length
+    ? comments.map(c => `<div class="comment-item"><div class="comment-header"><span class="comment-author">👤 ${esc(c.author)}</span><span class="comment-date">${c.date}</span></div><div class="comment-text">${esc(c.text)}</div></div>`).join('')
+    : '<p style="color:var(--text-secondary);font-size:0.85rem;text-align:center;padding:16px;">아직 댓글이 없습니다.</p>';
+}
+
+function submitComment() {
+  const user = getCurrentUser();
+  if (!user) { alert('로그인이 필요합니다.'); showLoginModal(); return; }
+  const input = document.getElementById('commentInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const posts = getPosts();
+  const post = posts.find(p => p.id === currentPostId);
+  if (!post) return;
+  if (!post.comments) post.comments = [];
+  const now = new Date();
+  const date = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  post.comments.push({ author: user.id, text, date });
+  savePosts(posts);
+  input.value = '';
+  renderComments(post);
+}
+
+// ===== PROGRAM DETAIL =====
+const programData = {
+  nftc: {
+    icon: '📖', name: '화재안전기준 공부하기 (NFTC 학습카드)', tag: '교육',
+    desc: 'NFPC/NFTC 화재안전기준을 플래시카드 형태로 학습하는 프로그램입니다. 비밀번호 보호로 회원만 접근 가능하며, 한 번 입력하면 같은 기기에서 다시 묻지 않습니다. 6단계 암기 평가와 반복 학습 기능으로 효율적인 시험 대비가 가능합니다.',
+    features: [
+      { title: '📇 플래시카드 학습', desc: 'NFTC 101~501 전 기준 조문을 카드 형태로 제시. 좌측 ☰ 메뉴에서 학습할 기준 선택.' },
+      { title: '🎨 6단계 평가', desc: '모른다 · 중요 · 기억 · 메모 · 무시 · 안다 — 하단 컬러 버튼으로 카드별 암기 상태 평가 후 반복 학습.' },
+      { title: '🏠 PWA 설치', desc: '"홈 화면에 추가" 안내에서 [설치] 클릭 시 앱처럼 홈 화면 실행 + 비밀번호도 기억해 즉시 접속.' }
+    ],
+    howto: [
+      '1. 아래 "프로그램 바로가기" 링크를 클릭해 접속합니다.',
+      '2. 비밀번호 입력 화면에서 받은 패스워드("nftc2026")를 입력하고 [확인]을 누릅니다.',
+      '3. 같은 기기에서는 다음부터 비밀번호를 다시 묻지 않습니다.',
+      '4. 상단 셀렉터 또는 좌측 ☰ 메뉴를 열어 학습할 화재안전기준(NFTC 101~501) 중 하나를 선택합니다.',
+      '5. 플래시카드가 표시되면 조문 내용을 읽고 이해합니다. 핵심 키워드는 노란/파란 하이라이트로 표시됩니다.',
+      '6. 하단의 6개 컬러 버튼으로 평가: ❌ 모른다 / ⭐ 중요 / ✓ 기억 / 📝 메모 / 🚫 무시 / ✅ 안다',
+      '7. 우측 상단의 페이지 번호(예: 1/14 전체 35)로 진행 상황을 확인합니다.',
+      '8. "모른다" 또는 "중요"로 분류한 카드는 나중에 반복 학습합니다.',
+      '9. 자주 쓴다면 "홈 화면에 추가" 안내의 [설치]를 눌러 앱처럼 사용하세요.'
+    ],
+    link: 'https://finest-wit-matt-blair.trycloudflare.com/viewer.html',
+    version: 'NFTC 2026 · PWA 지원',
+    platform: '브라우저 (PC·모바일) · 홈 화면 설치 가능',
+    screenshots: [
+      { url: 'screenshots/nftc-login.png',
+        caption: '① 접근 비밀번호 입력 — 받은 패스워드를 입력하면 같은 기기에서 다시 묻지 않음' },
+      { url: 'screenshots/nftc-flashcard.png',
+        caption: '② 플래시카드 본 화면 — 조문 + 진행률(1/14) + 하단 6단계 평가 버튼 + PWA 설치 안내' }
+    ]
+  },
+  recorder: {
+    icon: '🎙️', name: '녹음 기록기 (Voice Memo)', tag: '음성·사진 기록',
+    desc: '점검 현장에서 음성 녹음, 사진 첨부, 표 형식 메모 작성, 카카오톡 공유까지 한 번에 처리하는 모바일 최적화 도구입니다. 별도 설치 없이 브라우저에서 바로 사용할 수 있습니다.',
+    features: [
+      { title: '🎤 원버튼 음성 녹음', desc: '화면 상단의 🎤 버튼으로 즉시 녹음 시작/정지. 녹음 파일이 메모와 함께 저장됩니다.' },
+      { title: '📊 표 형식 + 사진 첨부', desc: '행·열을 추가해 점검 기록을 표로 정리하고, 📷 카메라 또는 🖼 사진첩에서 현장 사진을 직접 첨부.' },
+      { title: '💾 폴더 저장 + 💬 카톡 공유', desc: '기기의 원하는 폴더에 저장 후, 카카오톡으로 팀·고객에게 현장에서 즉시 공유.' }
+    ],
+    howto: [
+      '1. 스마트폰 브라우저에서 voice-memo URL에 접속합니다 (즐겨찾기·홈 추가 권장).',
+      '2. 🆕 버튼으로 새 메모를 시작합니다. 필요시 행·열을 추가해 표 구조를 만듭니다.',
+      '3. 🎤 버튼을 눌러 점검 내용을 음성으로 녹음합니다. 다시 누르면 정지.',
+      '4. 📷 카메라 또는 🖼 사진첩 버튼으로 현장 사진을 첨부합니다.',
+      '5. 표의 각 셀에 점검 결과·코멘트를 직접 입력하거나 음성으로 받아쓰기 합니다.',
+      '6. 💾 저장 버튼 → 파일명 입력 → 저장 폴더 선택 → "✅ 이 폴더에 저장" 클릭.',
+      '7. 💬 카카오톡 공유로 팀에 즉시 전송하거나 📥 기기에 저장으로 PC 동기화.'
+    ],
+    link: 'https://hankal0501-ux.github.io/voice-memo/',
+    version: 'ver.P8462',
+    platform: '모바일·데스크탑 (브라우저)',
+    screenshots: [
+      { url: 'https://image.thum.io/get/width/800/crop/600/https://hankal0501-ux.github.io/voice-memo/',
+        caption: '메인 화면 — 표 형식 메모 작성 + 상단 🆕📂💾🎤 컨트롤' },
+      { url: 'https://image.thum.io/get/width/400/crop/700/viewportWidth/400/https://hankal0501-ux.github.io/voice-memo/',
+        caption: '모바일 화면 — 스마트폰 점검 현장 최적화' }
+    ]
+  },
+  pdfconverter: {
+    icon: '📄', name: '점검 보고서 PDF 변환', tag: 'ZIP → PDF',
+    desc: '녹음 기록기로 작성·저장한 ZIP 파일을 자동으로 PDF 보고서(텍스트·표 포함)와 사진 ZIP으로 분리 변환하는 도구입니다. 여러 개의 ZIP을 한 번에 처리하며, 모든 변환이 브라우저에서 직접 수행돼 파일이 외부로 전송되지 않습니다.',
+    features: [
+      { title: '📦 ZIP 일괄 변환', desc: '여러 개 ZIP을 한 번에 선택해서 동시 변환. 점검 건이 누적된 경우 일괄 처리 가능.' },
+      { title: '📄 PDF + 사진 ZIP 분리', desc: 'jsPDF·autotable 기반 텍스트·표 PDF 보고서 + 첨부 사진은 별도 ZIP으로 분리 출력.' },
+      { title: '⚡ 100% 브라우저 처리', desc: '서버 없이 클라이언트에서 직접 처리 — 민감한 점검자료가 외부로 전송되지 않아 보안 확보.' }
+    ],
+    howto: [
+      '1. 녹음 기록기(Voice Memo)에서 점검 메모를 작성·저장하여 ZIP 파일을 만듭니다.',
+      '2. 본 PDF 변환 도구 URL에 접속합니다 (또는 index.html 파일을 더블클릭).',
+      '3. "여기를 눌러 ZIP 파일 선택" 영역을 클릭하여 변환할 ZIP 파일을 선택합니다 — 여러 개 동시 선택 가능.',
+      '4. "PDF 변환 시작" 버튼이 활성화되면 클릭합니다.',
+      '5. 자동으로 PDF 파일(텍스트·표)과 사진 ZIP 파일이 각각 생성되어 다운로드 폴더에 저장됩니다.',
+      '6. 생성된 PDF를 점검 보고서로 제출하거나, 카카오톡·이메일로 공유하여 팀·고객에게 즉시 전달합니다.',
+      '7. 사진 ZIP은 별도로 증빙자료로 보관하거나, 필요 시 PDF에 첨부합니다.'
+    ],
+    link: '#',
+    version: 'v2026.04.10e',
+    platform: '브라우저 (PC·태블릿·스마트폰)',
+    techStack: 'jsPDF + jspdf-autotable + html2canvas + JSZip',
+    workflow: '녹음 기록기 → ZIP 저장 → 본 도구로 변환 → PDF 보고서 + 사진 ZIP'
+  },
+  video: {
+    icon: '🎬', name: '반복 학습 플레이어 (Repeat Player)', tag: '학습도구',
+    desc: '교육 영상·외국어 강의·소방 안전교육 영상을 문장 단위로 무한 반복 재생하는 모바일 최적화 플레이어입니다. 로컬 파일(mp4·mkv·webm·mov)과 YouTube URL 모두 지원하며, 최근 영상 목록과 자동재생으로 학습 흐름이 끊기지 않습니다.',
+    features: [
+      { title: '🎬 파일·YouTube 모두 지원', desc: '폰의 갤러리·다운로드 폴더에서 영상 파일(mp4·mkv·webm·mov) 선택 또는 YouTube URL 붙여넣기 — 다운로드 없이 스트리밍 재생.' },
+      { title: '🔁 반복 횟수 선택', desc: '없음 · 2x · 3x · 5x · ∞(무한반복) 5단계로 학습 강도 조절. 외국어 문장·소방 안전수칙 암기에 효과적.' },
+      { title: '📚 최근 영상 + 자동재생', desc: '최근 재생한 영상 목록 자동 저장. 자동재생 ON 시 학습이 끊기지 않고 다음 영상으로 자동 진행.' }
+    ],
+    howto: [
+      '1. 스마트폰 브라우저에서 repeat-player URL에 접속합니다 (즐겨찾기·홈 추가 권장).',
+      '2. 학습 영상을 불러옵니다 — (A) 영상 파일 선택 버튼으로 폰 안의 파일 선택, 또는 (B) YouTube 영상 URL을 입력창에 붙여넣기.',
+      '3. 영상이 로드되면 재생 컨트롤(홈·이전·▶ 재생·다음)이 표시됩니다.',
+      '4. 반복 설정 버튼에서 횟수를 선택합니다: 없음 / 2x / 3x / 5x / ∞ (무한).',
+      '5. 재생 버튼을 누르면 설정한 횟수만큼 자동 반복됩니다.',
+      '6. 여러 영상을 이어 학습하려면 [자동 재생 ON] 토글을 켜 두세요.',
+      '7. 화면 하단에 현재 재생 시간(0:00)이 표시되고, 최근 본 영상은 목록에서 다시 선택 가능합니다.'
+    ],
+    link: 'https://hankal0501-ux.github.io/repeat-player/',
+    version: 'Mobile 전용',
+    platform: '모바일 브라우저 (안드로이드·iOS)',
+    techStack: '로컬 파일 재생 + YouTube 스트리밍',
+    workflow: '파일/URL 선택 → 반복 횟수 설정 → 재생 → 자동 다음 영상',
+    screenshots: [
+      { url: 'screenshots/repeat-main.png',
+        caption: '① 메인 화면 — 영상 파일 선택 + YouTube URL 입력 + 반복 횟수 버튼 (없음/2x/3x/5x/∞)' },
+      { url: 'screenshots/repeat-playing.png',
+        caption: '② 재생 중 화면 — 홈·이전·재생·다음 컨트롤 + 자동재생 토글 + 현재 시간 표시' }
+    ]
+  },
+  firesugi: {
+    icon: '📋', name: '점검 지적서 (Fire-Sugi)', tag: 'AI 분석',
+    desc: '소방시설 점검 결과를 자동으로 분석하고 지적사항을 생성하는 핵심 프로그램입니다.',
+    features: [
+      { title: '🤖 Gemini AI OCR', desc: 'Gemini API로 수기 메모·사진을 자동 인식해 텍스트로 변환' },
+      { title: '⚖️ 법종 자동 판단', desc: '시설 유형별로 적용되는 화재안전기준·법종을 자동 매칭' },
+      { title: '📊 지적서 자동 생성', desc: '규격에 맞는 점검 지적서를 즉시 작성·출력' }
+    ],
+    howto: ['1. 점검 대상 건물 정보를 입력합니다.','2. 수기 메모 또는 사진을 촬영/업로드합니다.','3. AI가 자동으로 지적사항을 분석합니다.','4. 생성된 지적서를 검토하고 출력합니다.'],
+    link: null
+  },
+  law: {
+    icon: '⚖️', name: '법률 공부하기', tag: '법률DB',
+    desc: '소방기본법, 소방시설법 등 관련 법률을 시대별로 비교 분석하는 도구입니다.',
+    features: [
+      { title: '📚 소방 법률DB', desc: '소방기본법·소방시설법·화재예방법·공사업법 전문 수록' },
+      { title: '🔍 조문 검색', desc: '키워드로 관련 조문 즉시 검색·하이라이트' },
+      { title: '📅 시대별 비교', desc: '법률 개정 이력을 시대별로 비교 분석' }
+    ],
+    howto: ['1. 학습할 법률을 선택합니다.','2. 조문을 순서대로 읽거나 키워드 검색합니다.','3. 시대별 비교로 개정 내역을 확인합니다.','4. 중요 조문에 메모를 남겨 복습합니다.'],
+    link: null
+  },
+  historical: {
+    icon: '🏛️', name: '역사적 법률 판단', tag: '시대별분석',
+    desc: '건축 허가일 기준으로 적용되는 소방법령을 자동 판단하는 엔진입니다.',
+    features: [
+      { title: '📅 Era A~J (10개 시대)', desc: '1964년부터 현행까지 소방법령 변천을 10개 시대로 자동 분류' },
+      { title: '🏗️ 허가일 기반 판단', desc: '건축 허가일·용도·규모만 입력하면 적용 법령이 자동 결정' },
+      { title: '📊 현행·당시 비교', desc: '현행 기준과 허가 당시 기준을 나란히 비교해 소급 적용 여부 판정' }
+    ],
+    howto: ['1. 건축물의 허가일(준공일)을 입력합니다.','2. 건물 용도와 규모를 선택합니다.','3. 해당 시대의 적용 법령이 자동 판단됩니다.','4. 현행 기준과의 비교 리포트를 확인합니다.'],
+    link: null
+  },
+  calculators: {
+    icon: '🧮', name: '소방 수리학 계산기', tag: '설계지원',
+    desc: '펌프 용량, 배관 마찰손실 등 소방 수리학 계산을 지원합니다.',
+    features: [
+      { title: '🌊 헤젠-윌리엄스', desc: '배관 마찰손실 자동 계산' },
+      { title: '💨 가스계 농도', desc: '할로겐화합물 및 불활성기체 소화설비 설계농도 계산' },
+      { title: '⚡ 수동 계산 모드', desc: '다양한 공식을 활용한 자유로운 수치 대입' }
+    ],
+    howto: ['1. 계산할 항목(마찰손실/농도 등)을 선택합니다.','2. 요구되는 수치(유량, 길이, 관경 등)를 입력합니다.','3. 결과값과 함께 풀이 과정을 확인합니다.'],
+    link: null
+  }
+};
+
+// ===== 프로그램 숨김(삭제) / 복원 =====
+const HIDDEN_PROGS_KEY = 'fireSugiHiddenPrograms';
+
+function getHiddenPrograms() {
+  return JSON.parse(localStorage.getItem(HIDDEN_PROGS_KEY) || '[]');
+}
+function saveHiddenPrograms(arr) {
+  localStorage.setItem(HIDDEN_PROGS_KEY, JSON.stringify(arr));
+}
+function deleteProgram(key) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  const prog = programData[key];
+  if (!prog) return;
+  if (!confirm(`"${prog.name}" 을(를) 목록에서 삭제하시겠습니까?\n\n데이터는 보존되며, 프로그램 목록 하단의 [복원] 버튼으로 되돌릴 수 있습니다.`)) return;
+  const arr = getHiddenPrograms();
+  if (!arr.includes(key)) arr.push(key);
+  saveHiddenPrograms(arr);
+  if (typeof logActivity === 'function') logActivity('프로그램 삭제: ' + key);
+  hideProgramDetail();
+  renderPrograms();
+}
+function restoreProgram(key) {
+  if (!isAdmin()) return;
+  const arr = getHiddenPrograms().filter(k => k !== key);
+  saveHiddenPrograms(arr);
+  if (typeof logActivity === 'function') logActivity('프로그램 복원: ' + key);
+  renderPrograms();
+}
+function restoreAllPrograms() {
+  if (!isAdmin()) return;
+  if (!confirm('삭제된 모든 프로그램을 복원하시겠습니까?')) return;
+  saveHiddenPrograms([]);
+  renderPrograms();
+}
+
+// ===== 프로그램 스크린샷 관리 (관리자가 직접 추가·교체·삭제) =====
+const SCREENSHOTS_KEY = (key) => `fireSugiShots_${key}`;
+
+function getProgramScreenshots(progKey) {
+  const stored = localStorage.getItem(SCREENSHOTS_KEY(progKey));
+  if (stored) {
+    try { return JSON.parse(stored); } catch (e) {}
+  }
+  return (programData[progKey] && programData[progKey].screenshots) || [];
+}
+function saveProgramScreenshots(progKey, arr) {
+  try {
+    localStorage.setItem(SCREENSHOTS_KEY(progKey), JSON.stringify(arr));
+  } catch (e) {
+    alert('⚠️ 저장 실패: ' + e.message + '\n\n사진이 너무 큽니다. 압축된 이미지(<1MB)를 사용해 주세요.');
+  }
+}
+
+// 파일 → DataURL 변환
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// 사진 추가 (input file 트리거)
+function triggerAddScreenshot(progKey) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 3 * 1024 * 1024) {
+      if (!confirm(`⚠️ 파일이 ${(file.size/1024/1024).toFixed(1)}MB로 큽니다.\nlocalStorage 용량 초과 위험. 계속하시겠습니까?`)) return;
+    }
+    const caption = prompt('캡션(설명):', file.name.replace(/\.[^.]+$/, '')) || '';
+    try {
+      const url = await readFileAsDataURL(file);
+      const arr = getProgramScreenshots(progKey);
+      arr.push({ url, caption, custom: true, fileName: file.name });
+      saveProgramScreenshots(progKey, arr);
+      if (typeof logActivity === 'function') logActivity('사진 추가: ' + progKey);
+      showProgramDetail(progKey);
+    } catch (err) {
+      alert('읽기 실패: ' + err.message);
+    }
+  };
+  input.click();
+}
+
+// 사진 교체 (특정 인덱스의 사진을 새 파일로 덮어쓰기)
+function triggerReplaceScreenshot(progKey, index) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const url = await readFileAsDataURL(file);
+      const arr = getProgramScreenshots(progKey);
+      if (!arr[index]) return;
+      arr[index].url = url;
+      arr[index].custom = true;
+      arr[index].fileName = file.name;
+      saveProgramScreenshots(progKey, arr);
+      if (typeof logActivity === 'function') logActivity('사진 교체: ' + progKey + '[' + index + ']');
+      showProgramDetail(progKey);
+    } catch (err) {
+      alert('읽기 실패: ' + err.message);
+    }
+  };
+  input.click();
+}
+
+// 사진 삭제
+function deleteScreenshot(progKey, index) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  if (!confirm('이 스크린샷을 삭제하시겠습니까?')) return;
+  const arr = getProgramScreenshots(progKey);
+  arr.splice(index, 1);
+  saveProgramScreenshots(progKey, arr);
+  if (typeof logActivity === 'function') logActivity('사진 삭제: ' + progKey + '[' + index + ']');
+  showProgramDetail(progKey);
+}
+
+// 캡션 수정
+function editScreenshotCaption(progKey, index) {
+  if (!isAdmin()) return;
+  const arr = getProgramScreenshots(progKey);
+  if (!arr[index]) return;
+  const newCap = prompt('새 캡션:', arr[index].caption || '');
+  if (newCap === null) return;
+  arr[index].caption = newCap;
+  saveProgramScreenshots(progKey, arr);
+  showProgramDetail(progKey);
+}
+
+// 순서 변경 (앞으로/뒤로)
+function moveScreenshot(progKey, index, dir) {
+  if (!isAdmin()) return;
+  const arr = getProgramScreenshots(progKey);
+  const target = index + dir;
+  if (target < 0 || target >= arr.length) return;
+  [arr[index], arr[target]] = [arr[target], arr[index]];
+  saveProgramScreenshots(progKey, arr);
+  showProgramDetail(progKey);
+}
+
+// 기본값으로 복원
+function resetProgramScreenshots(progKey) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  if (!confirm('이 프로그램의 모든 사진을 초기값으로 되돌리시겠습니까?\n(추가/교체한 사진은 모두 사라집니다.)')) return;
+  localStorage.removeItem(SCREENSHOTS_KEY(progKey));
+  if (typeof logActivity === 'function') logActivity('사진 초기화: ' + progKey);
+  showProgramDetail(progKey);
+}
+
+function renderPrograms() {
+  const grid = document.getElementById('programsGrid');
+  if (!grid) return;
+  const hidden = getHiddenPrograms();
+  const admin = isAdmin();
+
+  // 표시할 프로그램
+  const visible = Object.entries(programData).filter(([k]) => !hidden.includes(k));
+
+  grid.innerHTML = visible.map(([key, p]) => {
+    const isDone = !!p.link;
+    const statusBadge = isDone
+      ? '<span class="prog-status prog-done">완료</span>'
+      : '<span class="prog-status prog-dev">개발중</span>';
+    const desc = isDone
+      ? `<p>${esc(p.desc)}</p>`
+      : `<p class="prog-dev-msg">현재 개발 중입니다. 곧 공개 예정.</p>`;
+    return `
+      <div class="program-card ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
+        <div class="card-icon">${p.icon}</div>
+        <div class="prog-header">
+          <h3>${esc(p.name)}</h3>
+          ${statusBadge}
+        </div>
+        ${desc}
+        <span class="card-tag">${esc(p.tag)}</span>
+      </div>`;
+  }).join('');
+
+  // 관리자 + 삭제된 프로그램 있으면 휴지통 영역 표시
+  const trashHost = document.getElementById('programTrash');
+  if (trashHost) {
+    if (admin && hidden.length) {
+      trashHost.style.display = 'block';
+      trashHost.innerHTML = `
+        <div class="trash-header">
+          <h3>🗑 삭제된 프로그램 (${hidden.length}건)</h3>
+          <button class="btn btn-outline btn-sm" onclick="restoreAllPrograms()">↺ 전체 복원</button>
+        </div>
+        <div class="trash-list">
+          ${hidden.map(k => {
+            const p = programData[k];
+            if (!p) return '';
+            return `
+              <div class="trash-item">
+                <span class="trash-name">${esc(p.name)}</span>
+                <span class="trash-tag">${esc(p.tag)}</span>
+                <button class="btn-mini" onclick="restoreProgram('${k}')">↺ 복원</button>
+              </div>`;
+          }).join('')}
+        </div>`;
+    } else {
+      trashHost.style.display = 'none';
+      trashHost.innerHTML = '';
+    }
+  }
+}
+
+function showProgramDetail(key) {
+  const data = programData[key];
+  if (!data) return;
+  document.getElementById('programList').style.display = 'none';
+  document.getElementById('programDetail').style.display = 'block';
+
+  // 개발중 (link 없음) → 간단한 안내만 표시
+  if (!data.link) {
+    document.getElementById('programDetailContent').innerHTML = `
+      <div class="detail-card">
+        <div class="detail-header">
+          <div class="detail-icon">${data.icon}</div>
+          <div>
+            <h2>${esc(data.name)}</h2>
+            <span class="card-tag">${esc(data.tag)}</span>
+            <span class="prog-status prog-dev" style="margin-left:8px;">개발중</span>
+          </div>
+        </div>
+        <div class="dev-placeholder">
+          <div class="dev-icon">🚧</div>
+          <h3>현재 개발 중인 프로그램입니다</h3>
+          <p>완성 후 상세 기능과 사용 방법, 접속 링크를 공개할 예정입니다.</p>
+          <p class="dev-sub">진행 상황은 <a href="#" onclick="hideProgramDetail(); showTab('records'); return false;">기록</a> 탭 또는 <a href="#" onclick="hideProgramDetail(); showTab('news'); return false;">최신 뉴스 검색</a> 탭에서 확인해 주세요.</p>
+        </div>
+      </div>`;
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  // 개발 완료 → 전체 내용 표시
+  const linkHtml = `<a href="${data.link}" target="_blank" class="detail-link">🔗 프로그램 바로가기 →</a>`;
+
+  // 메타 정보 (버전, 플랫폼, 기술스택, 워크플로우)
+  const hasUrl = data.link && data.link !== '#';
+  const metaHtml = (data.version || data.platform || data.techStack || data.workflow) ? `
+    <div class="detail-meta-row">
+      ${data.version ? `<span class="detail-meta"><b>버전</b> ${esc(data.version)}</span>` : ''}
+      ${data.platform ? `<span class="detail-meta"><b>플랫폼</b> ${esc(data.platform)}</span>` : ''}
+      ${data.techStack ? `<span class="detail-meta"><b>기술</b> ${esc(data.techStack)}</span>` : ''}
+      ${data.workflow ? `<span class="detail-meta"><b>흐름</b> ${esc(data.workflow)}</span>` : ''}
+      ${hasUrl ? `<span class="detail-meta"><b>URL</b> <a href="${data.link}" target="_blank" style="color:var(--text-primary);text-decoration:underline;">${esc(data.link.replace(/^https?:\/\//, ''))}</a></span>` : '<span class="detail-meta"><b>URL</b> <em style="color:var(--text-muted);">배포 대기 중</em></span>'}
+    </div>` : '';
+
+  // 스크린샷 갤러리 (localStorage 우선, 기본값 fallback)
+  const screenshots = getProgramScreenshots(key);
+  const admin = isAdmin();
+  const screenshotsHtml = `
+    <div class="detail-section">
+      <h3>📸 스크린샷
+        ${admin ? `<span class="ss-admin-controls">
+          <button class="btn-mini" onclick="triggerAddScreenshot('${key}')">📤 사진 추가</button>
+          <button class="btn-mini btn-mini-warn" onclick="resetProgramScreenshots('${key}')">↺ 초기값 복원</button>
+        </span>` : ''}
+      </h3>
+      ${screenshots.length ? `
+        <div class="screenshots-grid">
+          ${screenshots.map((s, i) => `
+            <figure class="screenshot-item">
+              <a href="${esc(s.url)}" target="_blank">
+                <img src="${esc(s.url)}" alt="${esc(s.caption || '스크린샷')}" loading="lazy"
+                     onerror="this.parentElement.parentElement.querySelector('.screenshot-fallback').style.display='flex'; this.style.display='none';">
+                <div class="screenshot-fallback" style="display:none;">
+                  <span>📷</span><span>이미지 없음</span>
+                  <small>${esc(s.url)}<br>${esc(s.caption || '')}</small>
+                </div>
+              </a>
+              <figcaption>
+                ${esc(s.caption || '(캡션 없음)')}
+                ${s.custom ? '<span class="ss-tag-custom">사용자 추가</span>' : ''}
+              </figcaption>
+              ${admin ? `<div class="ss-admin-row">
+                <button class="btn-mini" onclick="triggerReplaceScreenshot('${key}', ${i})" title="교체">🔁 교체</button>
+                <button class="btn-mini" onclick="editScreenshotCaption('${key}', ${i})" title="캡션 수정">✏️ 캡션</button>
+                <button class="btn-mini" onclick="moveScreenshot('${key}', ${i}, -1)" title="앞으로" ${i === 0 ? 'disabled' : ''}>◀</button>
+                <button class="btn-mini" onclick="moveScreenshot('${key}', ${i}, 1)" title="뒤로" ${i === screenshots.length - 1 ? 'disabled' : ''}>▶</button>
+                <button class="btn-mini btn-mini-danger" onclick="deleteScreenshot('${key}', ${i})" title="삭제">🗑</button>
+              </div>` : ''}
+            </figure>
+          `).join('')}
+        </div>` : `
+        <div class="screenshot-empty">
+          📷 등록된 스크린샷이 없습니다.
+          ${admin ? '<br><button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="triggerAddScreenshot(\'' + key + '\')">📤 첫 사진 추가</button>' : ''}
+        </div>`}
+      ${admin ? '<p class="screenshot-note">※ 관리자: 사진을 추가/교체/삭제할 수 있습니다. 이미지는 브라우저(localStorage)에 저장되며, 파일은 3MB 이하 권장.</p>' : ''}
+    </div>`;
+
+  document.getElementById('programDetailContent').innerHTML = `
+    <div class="detail-card">
+      <div class="detail-header">
+        <div class="detail-icon">${data.icon}</div>
+        <div>
+          <h2>${esc(data.name)}</h2>
+          <span class="card-tag">${esc(data.tag)}</span>
+          <span class="prog-status prog-done" style="margin-left:8px;">완료</span>
+        </div>
+      </div>
+      ${metaHtml}
+      <div class="detail-section"><h3>📌 소개</h3><p>${esc(data.desc)}</p></div>
+      ${screenshotsHtml}
+      <div class="detail-section"><h3>⚡ 주요 기능</h3><div class="feature-grid">${data.features.map(f => `<div class="feature-item"><h4>${esc(f.title)}</h4><p>${esc(f.desc)}</p></div>`).join('')}</div></div>
+      <div class="detail-section"><h3>📖 사용 매뉴얼</h3><ol class="howto-list">${data.howto.map(s => `<li>${esc(s.replace(/^\d+\.\s*/, ''))}</li>`).join('')}</ol></div>
+      <div class="detail-section"><h3>🔗 접속 / 바로가기</h3>${linkHtml}</div>
+      ${admin ? `<div class="detail-section detail-admin-zone">
+        <h3>🛡 관리자 영역</h3>
+        <div class="admin-actions-row">
+          <button class="btn btn-outline btn-sm" onclick="deleteProgram('${key}')">🗑 이 프로그램 목록에서 삭제</button>
+          <span style="color:var(--text-muted); font-size:0.82rem;">삭제 후 [AI 프로그램] 탭 하단의 [복원]으로 되돌릴 수 있습니다.</span>
+        </div>
+      </div>` : ''}
+    </div>`;
+  window.scrollTo(0, 0);
+}
+
+function hideProgramDetail() {
+  document.getElementById('programList').style.display = 'block';
+  document.getElementById('programDetail').style.display = 'none';
+}
+
+// ===== REVEAL ANIMATION =====
+function initReveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('active');
+        // Once active, we don't need to observe it anymore
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+}
+
+// ===== BACK TO TOP =====
+function initBackToTop() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  });
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// ===================================================================
+// AUTO-POST SYSTEM (봇 자동 글쓰기 — 게시판에 매일 1건 자동 등록)
+// ===================================================================
+const AUTOPOST_KEY = 'fireSugiAutoPostLast';
+const BOT_AUTHOR = 'FireSugi-Bot';
+
+const AUTO_POST_POOL = [
+  { title: '오늘의 학습 — NFTC 103 스프링클러설비',
+    content: `📌 NFTC 103 스프링클러설비 핵심 정리\n\n▸ 헤드 설치 간격: 3.2~4.5m (장방형 배치 시 대각거리 5m 이내)\n▸ 가지배관 헤드 수: 8개 이하\n▸ 송수구 설치: 65mm 쌍구형, 지면 0.5~1m 높이\n▸ 수원량: 헤드 수 × 80L/min × 20분\n\n자체점검 시 자주 지적되는 사항:\n1. 헤드 페인트 칠 (필히 교체)\n2. 송수구 캡 분실\n3. 압력계·유수검지장치 시험 누락` },
+  { title: '점검 메모 — 자동화재탐지설비 작동기능시험',
+    content: `🔍 NFTC 203 작동기능시험 절차\n\n1. 수신기 → 동작시험 스위치 ON\n2. 회로별 시험버튼 순차 작동\n3. 지구표시등·주음향장치 정상 점등 확인\n4. 비화재보 시 즉시 복구\n\n주의: 시험 중에는 수신기 스위치를 반드시 시험 위치로 두고, 종료 후 복구하지 않으면 실제 화재 시 작동하지 않을 수 있음.` },
+  { title: '법령 변경 — 화재안전기준 통합본 적용 시점',
+    content: `⚖️ NFPC/NFTC 통합 체계 전환\n\n▸ 시행: 2026년 1월 1일\n▸ 적용 대상: 신축·증축·용도변경 시점부터\n▸ 기존 건물: 종전 NFSC 기준 유지 (소급 X)\n\n공사업자·관리업자 모두 통합본 숙지 필수. 별표 번호와 일부 수치 기준이 변경됐으니 점검표·계약서 양식도 갱신해야 함.` },
+  { title: '사례 분석 — 물류창고 화재 원인과 교훈',
+    content: `📦 최근 발생한 물류창고 화재 분석\n\n원인: 적치 높이 초과 → 스프링클러 헤드 차단\n결과: 초기 진압 실패, 전소\n\n교훈:\n• 적치 높이 = 헤드 직하 0.6m 이상 이격\n• 폭 1.2m 이상 통로 확보\n• 분기별 적치 상태 사진 점검 필수\n• 자동화재탐지·스프링클러 인터록 점검` },
+  { title: '실무 팁 — 점검 지적서 작성 노하우',
+    content: `📝 효율적인 지적서 작성 5단계\n\n1. 사진 + 위치(층/실명) 명시\n2. 위반 법조문 정확히 인용 (예: NFTC 103 2.7.1)\n3. 시정 기한 명시 (경미: 30일, 중대: 즉시)\n4. 조치 방법 구체적 제시\n5. 재점검 일자 합의\n\nFire-Sugi 자동 분석을 활용하면 1~2단계가 자동화돼 작성 시간이 80% 단축됩니다.` },
+  { title: '안전 점검 — 겨울철 난방기구 화재 예방',
+    content: `❄️ 겨울철 화재 다발 원인\n\n1위: 전기장판 (단선·노후)\n2위: 전기히터 (가연물 근접)\n3위: 가스보일러 (배기구 막힘)\n\n예방:\n• KS·KC 인증품 사용\n• 외출 시 전원 차단\n• 멀티탭 문어발 금지\n• 보일러 배기구 주변 1m 이내 가연물 제거` },
+  { title: '교육 자료 — 의용소방대 기본 교육 정리',
+    content: `🎓 의용소방대원 기본 과정\n\n▸ 화재 진압 절차: 인명구조 → 연소 확대 차단 → 소화\n▸ 호스 전개: 굴절 최소화, 30m 단위 결합\n▸ 응급처치: 심폐소생술 30:2 비율\n▸ 무전기 사용: 코드네임·간결한 보고\n\n2026년 표준교재 개정판이 5년 만에 발행됐으니 교육 시 신판으로 진행 권장.` },
+  { title: 'AI 도구 활용 — Gemini API로 점검 메모 변환',
+    content: `🤖 Fire-Sugi의 Gemini OCR 활용법\n\n수기 메모 사진 → 즉시 텍스트 변환 → 법규 자동 매칭 → 지적서 초안 생성\n\n사용 팁:\n• 메모는 검은 펜으로, 한 장에 한 항목\n• 사진 촬영 시 정면·플래시 켜기\n• 변환 후 항목별 검수 필수\n• 법조문 자동 인용은 90%+ 정확도` },
+  { title: '연구 노트 — 리튬배터리 화재 진압 신기술',
+    content: `🔋 리튬이온 배터리 화재 특성\n\n• 열폭주(thermal runaway) 시 자체 산소 공급\n• 일반 ABC 소화기 효과 제한적\n• 침수조(water immersion) 진압이 가장 효과적\n\n신기술:\n• 리튬 전용 D급 소화기\n• 진압포(fire blanket) 차폐\n• 격리 컨테이너로 외부 이송 후 침수` },
+  { title: '월간 리포트 — 우리 동네 화재 통계',
+    content: `📊 최근 한 달 통계 (가상 데이터)\n\n• 화재 건수: 142건 (전월比 -8%)\n• 인명피해: 사망 0, 부상 3\n• 주요 원인: 전기 32%, 부주의 28%, 방화 5%\n• 대응시간 평균: 5분 42초\n\n주거지역 비주거지 비율 7:3, 주거지 화재의 60%가 야간(22~05시) 발생.` },
+  { title: '점검 체크리스트 — 옥내소화전설비',
+    content: `✅ NFTC 102 옥내소화전 자체점검\n\n□ 함 표지판·축광 표시\n□ 호스·관창 결속·고정\n□ 노즐 막힘·변형\n□ 펌프 자동기동 (방수압 0.17MPa 이상)\n□ 토출량 130L/min 이상\n□ 수원량 충분 (130L/min × 20분 × 헤드수)\n\n2.5MPa 초과 시 감압장치 또는 호스밸브 분리 필수.` },
+  { title: '소화기 종류와 적용 화재 정리',
+    content: `🧯 소화기 분류\n\n• A급 (일반): 종이·목재·섬유 → 분말·물·강화액\n• B급 (유류): 휘발유·기름 → 분말·CO2·포\n• C급 (전기): 누전·합선 → CO2·분말·청정약제\n• D급 (금속): 마그네슘·리튬 → 전용 D급 약제\n• K급 (식용유): 주방 → 강화액·K급 전용\n\n다중이용시설은 A·B·C 겸용 분말 + 식당은 K급 추가.` },
+  { title: '소방시설관리사 시험 대비 — 빈출 키워드',
+    content: `📚 2026 시험 출제 동향\n\n빈출 분야:\n• 화재안전기준 통합본 (NFPC/NFTC)\n• 자체점검 제도 개편\n• 위험물 안전관리법 개정\n• 다중이용업소 안전기준\n\n실무사례 비중이 확대됐으니 사고사례·판례·점검 실제 사진을 기출 문제와 연결해 학습 권장.` },
+  { title: '사고 처벌 사례 — 부실점검 행정처분',
+    content: `⚖️ 최근 부실점검 처벌 사례\n\n사례1: 점검 미실시 위반 → 영업정지 1개월\n사례2: 허위 점검결과 보고 → 등록취소 + 과태료 1,000만원\n사례3: 안전관리자 미선임 → 200만원 과태료\n\n2026년 개정 시행규칙으로 부실점검 처벌이 강화됐고, 점검대장은 5년 보관 의무.` },
+  { title: '화재 예방 — 다중이용업소 운영자가 꼭 알아야 할 5가지',
+    content: `🏬 다중이용업소 안전 5계명\n\n1. 비상구 폐쇄·잠금 절대 금지\n2. 영업 중 자동화재탐지·스프링클러 작동 가능 상태 유지\n3. 가연성 인테리어 (스티로폼 등) 사용 금지\n4. 분기별 자체점검·연 1회 종합점검 필수\n5. 야간영업장은 비상조명·유도등 자동전환 점검\n\n위반 시 영업정지·과태료. 인명피해 시 형사처벌까지.` }
+];
+
+function getRecentBotPosts() {
+  return getPosts().filter(p => p.author === BOT_AUTHOR);
+}
+
+// 봇 계정 자동 보장 (없으면 생성)
+function ensureBotAccount() {
+  const users = getUsers();
+  if (!users.find(u => u.id === BOT_AUTHOR)) {
+    const now = new Date();
+    const joinDate = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+    users.push({
+      id: BOT_AUTHOR,
+      pw: '__bot_' + Date.now(),  // 사람이 로그인 못 하도록 임의 PW
+      joinDate, role: 'user', banned: false, lastLogin: null
+    });
+    saveUsers(users);
+  }
+}
+
+function autoWritePost() {
+  ensureBotAccount();
+  const usedTitles = new Set(getRecentBotPosts().map(p => p.title));
+  const unused = AUTO_POST_POOL.filter(t => !usedTitles.has(t.title));
+  const pool = unused.length ? unused : AUTO_POST_POOL;
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+
+  const posts = getPosts();
+  const now = new Date();
+  const date = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+
+  const newPost = {
+    id: Date.now() + Math.floor(Math.random() * 1000),
+    author: BOT_AUTHOR,
+    title: '🤖 ' + pick.title,
+    content: pick.content + '\n\n———\n🤖 본 글은 Fire-Sugi 자동 글쓰기로 생성됐습니다.',
+    date,
+    views: 0,
+    secret: false,
+    comments: [],
+    autoWritten: true
+  };
+  posts.push(newPost);
+  savePosts(posts);
+
+  if (typeof logActivity === 'function') logActivity('자동글: ' + pick.title.slice(0, 30));
+  if (typeof renderBoard === 'function') renderBoard();
+  return newPost;
+}
+
+// 일일 1회 자동 글쓰기 (페이지 방문 시 트리거)
+function autoWriteDailyIfDue() {
+  const last = localStorage.getItem(AUTOPOST_KEY);
+  const today = (() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  })();
+  if (last === today) return false;
+  const post = autoWritePost();
+  localStorage.setItem(AUTOPOST_KEY, today);
+  console.log('🤖 자동 글 작성 완료:', post.title);
+  return true;
+}
+
+// 관리자: 즉시 N건 생성 (테스트용)
+function adminAutoWriteBatch(count) {
+  if (!isAdmin()) return alert('관리자만 사용할 수 있습니다.');
+  const n = Math.max(1, Math.min(20, parseInt(count) || 1));
+  const created = [];
+  for (let i = 0; i < n; i++) {
+    created.push(autoWritePost());
+  }
+  alert(`✅ 자동 글 ${created.length}건 작성 완료\n\n` +
+    created.map((p, i) => `${i+1}. ${p.title}`).join('\n'));
+  return created;
+}
+
+// ===================================================================
+// NEWS SYSTEM (일일 자동 수집 + 관리자 수동등록)
+// ===================================================================
+const NEWS_KEY = 'fireSugiNews';
+const NEWS_LAST_AUTO = 'fireSugiNewsLastAuto';
+
+// 큐레이션된 뉴스 풀 — 자동수집 시 순차 사용
+// query 필드: 네이버 뉴스 실시간 검색에 사용 → 클릭 시 해당 키워드의 최신 실제 기사 목록으로 직행
+const NEWS_POOL = [
+  { source:'소방청', emoji:'🏛️', topic:'정책',
+    title:'2026년 화재안전기준 통합본(NFPC/NFTC) 시행',
+    summary:'소방청은 종전 NFSC(국가화재안전기준) 체계를 NFPC(성능기준)와 NFTC(기술기준)로 이원화한 통합 체계를 2026년 1월 1일부터 본격 시행한다고 밝혔다. 신축·증축·용도변경 시점부터 신기준이 적용되며, 기존 건물은 종전 기준 유지(소급 X). 별표 번호와 일부 수치 기준이 변경돼 점검표·계약서·교육자료 갱신이 필요하다. 소방시설관리사·공사업자·관리업자는 통합본 숙지 필수. 자세한 개정 사항과 경과조치는 소방청 화재안전기준 통합본 PDF에서 확인 가능.',
+    query:'2026 화재안전기준 NFPC NFTC 시행' },
+  { source:'소방신문', emoji:'❄️', topic:'사고',
+    title:'겨울철 난방기구 화재 전년比 30% 급증',
+    summary:'전국 소방서 집계 결과 12월~2월 사이 발생한 난방기구 관련 화재가 전년 동기 대비 30% 증가했다. 1위 원인은 전기장판 단선·노후 사용(42%), 2위는 전기히터 가연물 근접(28%), 3위는 가스보일러 배기구 막힘(15%). 사망자의 70%가 야간 취침 중 발생했으며, 평균 진화시간은 7분 12초로 일반 화재 대비 30% 길었다. 소방당국은 KS·KC 인증품 사용, 외출 시 전원 차단, 보일러 배기구 1m 이내 가연물 제거를 강력 권고했다.',
+    query:'겨울철 난방기구 화재 전기장판' },
+  { source:'소방청', emoji:'🏢', topic:'정책',
+    title:'노후 아파트 스프링클러 설치 지원사업 본격 시행',
+    summary:'1992년 12월 31일 이전 준공된 노후 아파트(전국 약 18만 세대)의 스프링클러 설치비를 정부가 50%까지 지원하는 사업이 본격 시행된다. 세대당 평균 250만원 한도이며, 입주자 의결을 거친 단지부터 신청 가능. 우선순위는 고층(15층 이상) → 중층(10~14층) → 저층 순. 지자체별 접수창구와 신청 자격 요건이 공고됐고, 현장조사·설계·시공·완공검사까지 평균 4~6개월 소요 예상. 대상 단지는 한국소방안전원 홈페이지에서 조회 가능.',
+    query:'노후 아파트 스프링클러 설치 지원' },
+  { source:'소방방재신문', emoji:'⚡', topic:'기술',
+    title:'전기차 화재 진압 매뉴얼 개정 — 침수조 활용 표준화',
+    summary:'리튬이온 배터리 특성을 고려한 전기차 화재 진압 매뉴얼 개정판이 공개됐다. 핵심은 (1) 일반 ABC 소화기 효과 제한적, (2) 열폭주(thermal runaway) 발생 시 1,200℃까지 상승, (3) 침수조(water immersion) 진압 또는 격리 컨테이너 이송이 가장 효과적이라는 점. 대당 진압에 필요한 물량은 30,000~110,000L로 일반 차량 화재의 30배에 달한다. 전국 주요 소방서에 전용 침수조 1,200대를 단계적으로 보급할 계획이며, 인명구조 우선·연소확대 차단·소화 순서를 표준화했다.',
+    query:'전기차 화재 진압 매뉴얼 침수조' },
+  { source:'행정안전부', emoji:'📋', topic:'정책',
+    title:'소방시설 자체점검 제도 개편 — 부실점검 처벌 강화',
+    summary:'행정안전부는 소방시설 자체점검 제도 개선안을 입법예고했다. 주요 내용은 (1) 점검자의 책임 강화 — 부실점검 시 등록취소까지 가능, (2) 점검대장 5년 보관 및 전산 등록 의무화, (3) 점검결과 허위보고 시 영업정지 1개월~과태료 1,000만원, (4) 안전관리자 미선임 시 200만원 과태료. 또한 분기별 자체점검 + 연 1회 종합점검 체계가 확정됐고, 다중이용시설은 점검주기가 단축된다. 시행은 공포 후 6개월 경과 시점.',
+    query:'소방시설 자체점검 부실점검 처벌' },
+  { source:'한국소방안전원', emoji:'🎓', topic:'교육',
+    title:'2026년 소방안전관리자 강습교육 연간 일정 공고',
+    summary:'한국소방안전원은 특급·1급·2급·3급 소방안전관리자 강습교육 2026년 연간 일정을 공고했다. 특급(80시간/30만원), 1급(40시간/15만원), 2급(20시간/8만원), 3급(8시간/4만원)으로 구성되며, 온라인 사전 신청 후 지정 교육원에서 대면 수강. 코로나 이후 일부 과정은 온라인 병행 운영. 합격률은 평균 87%이며, 미수료 시 6개월 이내 보충교육 가능. 신청은 안전원 홈페이지(kfsi.or.kr)에서 선착순 접수.',
+    query:'2026 소방안전관리자 강습교육 일정' },
+  { source:'소방청', emoji:'🔍', topic:'정책',
+    title:'2025년 4분기 화재안전조사 결과 공개 — 부적합률 8.2%',
+    summary:'소방청이 전국 다중이용업소 12,400개소를 대상으로 실시한 2025년 4분기 화재안전조사 결과 부적합 비율이 8.2%로 전년 동기 대비 1.5%p 감소했다. 주요 부적합 사항은 (1) 비상구 폐쇄·잠금(34%), (2) 자동화재탐지설비 정비불량(22%), (3) 소화기 비치불량(18%), (4) 임시소방시설 미설치(15%). 부적합 시설에는 시정명령 후 재점검을 진행하며, 미시정 시 영업정지·과태료 부과. 업종별로는 PC방·노래방의 부적합률이 가장 높았다.',
+    query:'화재안전조사 결과 다중이용업소 부적합' },
+  { source:'서울소방재난본부', emoji:'⛪', topic:'점검',
+    title:'서울 종교시설 1,250개소 화재안전특별점검 시행',
+    summary:'서울소방재난본부는 시내 종교시설 1,250개소를 대상으로 11월부터 12월까지 화재안전특별점검을 시행한다. 점검항목은 자동화재탐지·스프링클러·간이스프링클러·피난계단·비상조명·유도등 등. 자체점검 결과가 부실하거나 시정 미이행 시 행정처분(과태료 또는 영업정지) 예정. 특히 신도 100명 이상이 모이는 대형 종교시설과 지하·고층 종교시설을 우선 점검. 위반사항이 적발된 시설은 즉시 시정명령 후 재방문 점검.',
+    query:'서울 종교시설 화재안전특별점검' },
+  { source:'소방청', emoji:'📝', topic:'시험',
+    title:'소방시설관리사 시험 출제기준 개편 — 실무사례 비중 확대',
+    summary:'소방청은 2026년 시행 소방시설관리사 시험부터 출제기준을 개편한다고 밝혔다. 주요 변경점은 (1) NFPC/NFTC 통합 화재안전기준 100% 반영, (2) 실무사례·판례 비중 30%로 확대, (3) 점검 실무 사진·도면 분석 문제 신설, (4) 자체점검 부실 사례 분석 신규. 1차(객관식)와 2차(논술)로 구성되며, 합격률은 최근 5년 평균 14.3%. 응시 자격과 시험 일정은 한국소방안전원에서 공고.',
+    query:'소방시설관리사 시험 출제기준 개편' },
+  { source:'소방신문', emoji:'🔋', topic:'기술',
+    title:'리튬배터리 화재 대응 신기술 — 전국 소방서에 D급 소화기 보급',
+    summary:'소방청은 리튬이온·리튬폴리머 배터리 전용 D급 소화기 및 진압포(fire blanket)를 전국 소방서에 단계적으로 보급한다고 밝혔다. 우선 보급 대상은 ESS(에너지저장장치) 화재 위험 지역과 전기차 충전소 인접 119안전센터 200곳. 기존 ABC 분말소화기로는 리튬 화재 진압이 사실상 불가능해 인명·재산 피해 확대를 막기 어려웠다는 지적이 반영됐다. 1단계 보급 1,500대, 2단계 추가 3,000대 예정.',
+    query:'리튬배터리 화재 D급 소화기 진압포' },
+  { source:'소방방재신문', emoji:'🏬', topic:'정책',
+    title:'다중이용업소 안전관리 강화 — 자동화재탐지·간이스프링클러 의무 확대',
+    summary:'다중이용업소(PC방·노래방·찜질방·고시원·산후조리원 등)에 대한 안전관리 기준이 대폭 강화된다. 주요 내용은 (1) 자동화재탐지설비 의무 대상 확대 — 영업장 면적 100㎡ 이상으로 하향, (2) 간이스프링클러 의무 — 지하 영업장 전체 + 2층 이상 노래방·찜질방, (3) 임시소방시설 점검주기 단축(분기 → 격월), (4) 비상구 자동개방 시스템 의무화. 신규 영업장은 즉시, 기존 영업장은 1년 유예.',
+    query:'다중이용업소 안전관리 자동화재탐지 간이스프링클러' },
+  { source:'경기소방재난본부', emoji:'⛽', topic:'정책',
+    title:'경기도, 가스누출 자동차단 시스템 의무화 조례 발의',
+    summary:'경기도의회는 도내 신축 다중이용시설에 가스누출 자동차단 시스템 설치를 의무화하는 조례안을 발의했다. 적용 대상은 영업장 면적 100㎡ 이상 음식점, 호텔·콘도 주방, 공동주택 단지내 상가 등. 가스누출 감지 시 자동으로 밸브를 차단하고 119에 자동신고하는 IoT 기반 시스템으로, 가구당 설치비 30~50만원 수준. 경기도는 우선 도내 학교 급식실·노유자시설 1,200곳에 시범 설치 예정.',
+    query:'경기도 가스누출 자동차단 시스템 의무화' },
+  { source:'행정안전부', emoji:'⚖️', topic:'정책',
+    title:'화재예방 및 안전관리법 시행규칙 개정 공포',
+    summary:'행정안전부는 화재의 예방 및 안전관리에 관한 법률 시행규칙 개정안을 공포했다. 핵심 변경사항은 (1) 화재예방안전진단 대상 확대 — 대형 병원·요양시설·복합쇼핑몰 추가, (2) 자체소방대 편성 기준 변경 — 위험물 지정수량 1,000배 이상 사업장으로 강화, (3) 안전관리자 선임 자격 명확화, (4) 안전관리계획서 매년 갱신 의무화. 시행은 공포일로부터 3개월 경과 시점이며, 기존 시설은 6개월 유예기간 부여.',
+    query:'화재예방 안전관리법 시행규칙 개정' },
+  { source:'소방청', emoji:'📱', topic:'기술',
+    title:'119안전신고 앱 전면 개편 — 영상신고·위치자동전송 기능 추가',
+    summary:'소방청은 119안전신고 앱을 전면 개편해 신규 기능을 추가했다. 새 기능은 (1) GPS 위치정보 자동전송 — 신고 즉시 좌표를 119상황실에 송신, (2) 영상신고 — 30초까지 실시간 영상 전송 가능, (3) 청각장애인 수어상담 — 화상통화로 119상담사와 직접 수어 소통, (4) 다국어 자동통역(영·중·일·베트남어 4개 언어). 안드로이드·iOS 모두 지원하며 무료 다운로드. 첫 달 다운로드 50만건 돌파.',
+    query:'119안전신고 앱 영상신고 위치전송' },
+  { source:'소방신문', emoji:'📦', topic:'사고',
+    title:'대형 물류창고 화재 방지 가이드라인 — 적치·방화구획·자동소화 표준',
+    summary:'최근 3년간 발생한 대형 물류창고 화재 분석 결과, 60% 이상이 적치 높이 초과로 인한 스프링클러 작동 실패가 원인이었다. 새 가이드라인의 핵심은 (1) 적치 높이 = 헤드 직하 0.6m 이상 이격 강제, (2) 통로 폭 1.2m 이상 확보, (3) 1,000㎡ 이상 시설 자동방화셔터 의무, (4) 분기별 적치상태 사진점검 보고. 자동화재탐지 + 스프링클러 인터록 시스템도 권장. 위반 적발 시 업무정지·벌금 부과.',
+    query:'물류창고 화재 가이드라인 적치 방화구획' },
+  { source:'소방청', emoji:'🤖', topic:'기술',
+    title:'AI 기반 화재예측 시스템 5개 지자체 시범운영 시작',
+    summary:'소방청은 기상·건축물·과거 화재이력·인구밀도 데이터를 학습한 AI 화재예측 시스템을 서울·부산·인천·대구·광주 등 5개 광역지자체에서 시범운영한다. 시간대별·지역별 화재 발생 확률을 0~100%로 예측해 119안전센터에 실시간 표시, 고위험 지역에 인력·장비를 사전 배치한다. 1년 시범 후 효과 검증을 거쳐 전국 확대 예정. 머신러닝 정확도는 현재 78%이며, 데이터 누적으로 매년 개선될 전망.',
+    query:'AI 화재예측 시스템 시범운영' },
+  { source:'한국소방안전원', emoji:'📚', topic:'교육',
+    title:'의용소방대 표준교재 5년 만에 개정 — 디지털 장비 사용법 추가',
+    summary:'한국소방안전원은 의용소방대원 기본·전문 교육과정 표준교재 개정판을 발행했다. 5년 만의 전면 개정으로 (1) 2026 화재안전기준 통합본 반영, (2) 드론·열화상 카메라 등 디지털 장비 사용법, (3) 리튬배터리·전기차 화재 대응, (4) 외상성 응급처치 절차 업데이트가 추가됐다. 전국 의용소방대원 약 9만명에게 배포되며, 분기별 보수교육에서 활용. PDF는 안전원 홈페이지에서 무료 다운로드.',
+    query:'의용소방대 표준교재 개정' },
+  { source:'소방방재신문', emoji:'👥', topic:'정책',
+    title:'노유자시설 피난약자 보호 기준 강화 — 자동화재속보 의무 확대',
+    summary:'어린이집·요양원·장애인거주시설 등 피난약자 시설의 안전기준이 대폭 강화된다. 신설 의무사항은 (1) 자동화재속보설비 의무 — 30인 이상 모든 시설, (2) 간이스프링클러 의무 — 2층 이상 시설, (3) 대피공간(refuge area) 설치 — 100인 이상 시설, (4) 휠체어 피난로 폭 1.5m 이상 확보, (5) 피난약자 1인당 보호인력 비율 명시. 신축은 즉시, 기존 시설은 2년 이내 보강 완료.',
+    query:'노유자시설 피난약자 자동화재속보 간이스프링클러' },
+  { source:'소방청', emoji:'🚑', topic:'장비',
+    title:'119구급차에 첨단의료장비 도입 확대',
+    summary:'소방청은 전국 119구급차 약 1,800대에 첨단 응급의료장비를 단계적으로 보급한다. 핵심 장비는 (1) 12-Lead 심전도 자동분석기 — 심근경색 조기 진단, (2) 자동흉부압박기(LUCAS·AutoPulse) — 이송 중 CPR 지속, (3) 휴대용 인공호흡기, (4) 비디오 후두경. 기존 장비 대비 환자 생존율이 1.8배 개선된다는 연구결과 반영. 1차 보급 600대(2026년), 2차 1,200대(2027년) 예정.',
+    query:'119구급차 첨단의료장비 자동흉부압박기 심전도' },
+  { source:'서울소방재난본부', emoji:'🚇', topic:'점검',
+    title:'서울 지하철 1~9호선 모든 역사 소방시설 일제점검',
+    summary:'서울소방재난본부는 1~9호선 모든 지하철 역사 326개소의 소방시설 일제점검을 실시한다. 점검 항목은 자동화재탐지·스프링클러·제연설비·연결살수·비상조명·유도등·피난통로·휠체어 리프트 등. 결과는 분기별로 시민에게 공개되며, 부적합 사항은 운영기관에 즉시 시정 요구. 특히 환승역과 지하 5층 이상 깊이의 역사를 우선 점검. 화재 발생 시 대규모 인명피해 우려 때문에 안전관리 강화 차원.',
+    query:'서울 지하철 역사 소방시설 일제점검' },
+  { source:'소방신문', emoji:'☀️', topic:'분석',
+    title:'신재생에너지 설비 화재 통계 분석 — 설계·시공 결함이 70%',
+    summary:'한국화재보험협회와 소방청이 공동 발표한 보고서에 따르면 최근 5년간 태양광·풍력·ESS 등 신재생에너지 설비 화재 1,247건 중 약 70%가 설계·시공 단계의 결함으로 발생했다. 주요 원인은 (1) 인버터 과열·노후, (2) 배선 접속부 발열, (3) 배터리 셀 불량, (4) 환기 부족. 이에 따라 설치 단계 안전 검사를 강화하고, 연 2회 이상 정기점검 의무화 추진. 보고서 전문은 소방청 홈페이지에서 다운로드.',
+    query:'신재생에너지 태양광 ESS 화재 통계' },
+  { source:'소방청', emoji:'💼', topic:'행정',
+    title:'소방기술자 경력관리 전산시스템 전면 개편 — 종이서류 폐지',
+    summary:'소방청은 소방기술자 경력 등록·증빙 절차를 100% 온라인화한 새 전산시스템을 가동했다. 기존에 종이로 제출하던 경력증명서·재직증명서 등이 모두 전자문서로 대체되며, 협회·소속기관에서 직접 입력·인증하는 방식. 처리기간이 평균 14일에서 3일로 단축됐고, 위변조 방지를 위해 블록체인 기반 인증 도입. 기존 등록자는 자동 마이그레이션되며, 신규 등록자는 본인인증 후 즉시 발급 가능.',
+    query:'소방기술자 경력관리 전산시스템 개편' },
+  { source:'행정안전부', emoji:'🛢️', topic:'정책',
+    title:'위험물 안전관리법 시행령 개정 — 옥외저장소 안전거리 강화',
+    summary:'행정안전부는 위험물 안전관리법 시행령 개정안을 공포했다. 주요 변경사항은 (1) 일부 위험물의 지정수량 기준 조정 — 4류 위험물 중 일부 하향, (2) 옥외저장소 안전거리 강화 — 학교·병원으로부터 50m → 100m, (3) 위험물 운반 차량 표시 의무화 — 차체 양측 위험물 종류 명기, (4) 자체소방대 편성 기준 강화. 시행 후 6개월 이내 기존 시설도 보강 완료해야 함.',
+    query:'위험물 안전관리법 시행령 옥외저장소' },
+  { source:'소방청', emoji:'🏥', topic:'정책',
+    title:'화재예방안전진단 대상 확대 — 대형 병원·복합쇼핑몰 포함',
+    summary:'소방청은 화재예방안전진단 의무 대상을 대폭 확대한다고 밝혔다. 신규 포함 대상은 (1) 500병상 이상 종합병원, (2) 200인 이상 요양시설, (3) 연면적 30,000㎡ 이상 복합쇼핑몰, (4) 50층 이상 초고층 건축물. 진단은 정량적 위험도 평가·소방시설 점검·피난계획 검토·인명대피시뮬레이션 등을 포함하며, 5년마다 갱신 의무. 첫 진단은 2026년 상반기 시작 예정.',
+    query:'화재예방안전진단 대상 확대 병원 쇼핑몰' },
+  { source:'소방신문', emoji:'🧯', topic:'분석',
+    title:'전국 가정용 소화기 보급률 60% 돌파 — 2030년 80% 목표',
+    summary:'소방청 발표에 따르면 전국 가정용 소화기 보급률이 처음으로 60%를 넘어섰다. 지자체별로는 서울 71%, 부산 65%, 광주 58% 순. 정부는 2030년까지 80% 달성을 목표로 (1) 신축 주택 의무 비치, (2) 노후 주택 무료 보급사업, (3) 학교 안전교육 시 가정용 소화기 사용법 교육 강화 등을 추진한다. 가정용 소화기는 1.5kg ABC 분말 또는 강화액 권장, 5년마다 점검·교체 필요.',
+    query:'가정용 소화기 보급률 통계' },
+  { source:'소방청', emoji:'🚁', topic:'장비',
+    title:'산불 진화 헬기 운영 매뉴얼 표준화 — 광역 공동대응 체계 정비',
+    summary:'소방청은 전국 산불 진화 헬기의 운영·정비·인력교대·연료보급·통신 매뉴얼을 표준화했다. 광역 공동대응 체계도 정비해 산림청·지자체·소방청 헬기가 동일 절차로 협력 가능하도록 했다. 또한 야간 산불 대응을 위해 적외선 카메라 장착 헬기 12대를 추가 도입하고, 조종사·정비사 통합교육을 매년 2회 시행. 매뉴얼 준수 시 진화 효율이 평균 25% 향상될 것으로 예상.',
+    query:'산불 진화 헬기 매뉴얼 광역 공동대응' },
+  { source:'한국소방안전원', emoji:'🎯', topic:'시험',
+    title:'위험물기능사 시험제도 개편 — CBT 도입·실기 비중 확대',
+    summary:'한국소방안전원은 위험물기능사 시험제도를 개편한다. 주요 변경은 (1) 필기시험 CBT(Computer Based Test) 도입 — 종이시험 폐지, (2) 실기시험 비중 40 → 60% 확대, (3) 작업형 실기에 위험물 누출 대응 시나리오 추가, (4) 합격기준 명확화 — 필기·실기 각 60점 이상. 응시료도 합리화돼 평균 5만원 수준. 첫 시행은 2026년 2회 시험부터 적용.',
+    query:'위험물기능사 시험 CBT 실기' },
+  { source:'경기소방재난본부', emoji:'🔋', topic:'정책',
+    title:'경기도 ESS(에너지저장장치) 화재 안전기준 대폭 강화',
+    summary:'경기도는 도내 ESS 시설의 안전기준을 대폭 강화하는 조례를 시행한다. 핵심 내용은 (1) ESS 컨테이너 간 이격거리 3m → 6m로 확대, (2) 자동소화장치(전용 D급) 의무 설치, (3) 24시간 원격 모니터링 시스템 의무화, (4) 분기별 셀 단위 점검 의무, (5) 화재 발생 시 즉시 격리 가능한 자동차단 시스템. 도내 약 320개 ESS 시설이 적용 대상이며, 위반 시 운영정지·과태료 부과.',
+    query:'경기도 ESS 에너지저장장치 화재 안전기준' },
+  { source:'소방방재신문', emoji:'📉', topic:'분석',
+    title:'도시가스 사고 30% 감소 — 안전관리 강화 정책 효과 입증',
+    summary:'한국가스안전공사 발표에 따르면 도시가스 사고가 전년 대비 30% 감소한 것으로 나타났다. 주요 감소 요인은 (1) 노후 배관 교체 사업 확대, (2) 가스누출 자동차단 시스템 보급, (3) 사용자 안전교육 강화, (4) 정기점검 주기 단축. 사고 유형별로는 노후 호스 파손이 가장 많이 줄었고(-45%), 보일러 가스 누출 사고도 감소(-32%). 다만 전기차 충전소 인근 가스 사고는 전년 대비 증가해 추가 안전대책 필요.',
+    query:'도시가스 사고 감소 안전관리' },
+  { source:'소방청', emoji:'👨‍🚒', topic:'행정',
+    title:'2026년 소방공무원 신규 채용 12% 확대 — 구급·특수구조 보강',
+    summary:'소방청은 2026년 소방공무원 신규 채용 인원을 전년 대비 12% 확대한다고 발표했다. 총 채용 규모는 약 3,400명으로, 구급대원·특수구조대(수난·산악·고층) 인력 보강이 중점. 응시 자격은 만 18~40세, 신체검사 기준 충족, 한국사·영어 능력 인증 필수. 시험은 필기(과목별 객관식) → 체력 → 면접 순. 합격자는 중앙소방학교에서 24주 신임교육 후 임용. 자세한 일정은 소방청 홈페이지 공고.',
+    query:'2026 소방공무원 채용 구급대원' }
+];
+
+// 풀 항목의 url을 동적 생성 — 항상 네이버 뉴스 실시간 검색 결과(실제 기사)로 직행
+function newsItemUrl(item) {
+  // 우선순위 1: query (큐레이션 풀의 검색어) → 검색 URL
+  if (item.query) {
+    return `https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(item.query)}&sort=1`;
+  }
+  // 우선순위 2: 명시된 url이 '홈페이지'가 아니라 '실제 기사 URL'이면 사용
+  // (관리자가 수동 등록 시 입력한 article URL)
+  if (item.url && /^https?:\/\//.test(item.url) && !isHomepageUrl(item.url)) {
+    return item.url;
+  }
+  // 우선순위 3: 제목으로 네이버 뉴스 검색 → 실제 기사 결과
+  return `https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(item.title)}&sort=1`;
+}
+
+// URL이 홈페이지(루트)인지 감지 — path가 없거나 '/' 뿐이면 홈페이지로 간주
+function isHomepageUrl(url) {
+  try {
+    const u = new URL(url);
+    const path = u.pathname.replace(/\/$/, '');
+    return path === '' || path.length < 3;  // 빈 path 또는 너무 짧으면 홈페이지
+  } catch (e) {
+    return false;
+  }
+}
+
+// ───── 참고 블로그 / 사이트 큐레이션 ─────
+const BLOG_REFS = [
+  { name:'소방청 공식 블로그', tag:'정부', host:'blog.naver.com',
+    desc:'소방청에서 직접 운영하는 공식 블로그. 보도자료, 안전 캠페인, 화재 예방 가이드, 통계 등을 정기적으로 게시.',
+    url:'https://blog.naver.com/119_blog' },
+  { name:'한국소방안전원', tag:'협회', host:'kfsi.or.kr',
+    desc:'소방안전관리자 강습교육·시험·자격관리를 담당하는 공공기관. 교재·교육일정·법령해설 자료가 풍부.',
+    url:'https://www.kfsi.or.kr' },
+  { name:'한국화재보험협회 (KFPA)', tag:'협회', host:'kfpa.or.kr',
+    desc:'화재보험·방재 기술 연구소 운영. 화재 통계 분석, 위험성 평가, 손해예방 기술자료 무료 공개.',
+    url:'https://www.kfpa.or.kr' },
+  { name:'국가화재정보시스템 (NFDS)', tag:'데이터', host:'nfds.go.kr',
+    desc:'전국 화재 발생 통계, 원인 분석, 시간대·지역별 데이터를 시각화로 제공. 점검·연구 시 필수 출처.',
+    url:'https://www.nfds.go.kr' },
+  { name:'소방신문 (FPN)', tag:'언론', host:'fpn119.co.kr',
+    desc:'소방·안전 분야 전문 언론. 정책·사고·기술·인물 인터뷰까지 폭넓은 취재. 매일 업데이트.',
+    url:'https://www.fpn119.co.kr' },
+  { name:'한국소방시설협회', tag:'협회', host:'kfica.or.kr',
+    desc:'소방시설 점검·공사·관리 업체의 협회. 점검 표준·기술 가이드·계약서 양식 제공.',
+    url:'https://www.kfica.or.kr' },
+  { name:'행정안전부 안전한국', tag:'정부', host:'safekorea.go.kr',
+    desc:'국민재난안전포털. 화재·재난 행동요령, 대피소 위치, 재난문자 이력, 안전교육 콘텐츠 제공.',
+    url:'https://www.safekorea.go.kr' },
+  { name:'네이버 카페 — 소방기술', tag:'커뮤니티', host:'cafe.naver.com',
+    desc:'소방기술사·관리사·실무자들이 모인 대형 커뮤니티. 시험 후기·실무 Q&A·구인구직 활발.',
+    url:'https://cafe.naver.com/firetech' }
+];
+
+function renderBlogRefs() {
+  const grid = document.getElementById('blogRefsGrid');
+  if (!grid) return;
+  grid.innerHTML = BLOG_REFS.map(b => `
+    <a href="${esc(b.url)}" target="_blank" rel="noopener" class="blog-ref-card">
+      <div class="brc-top">
+        <span class="brc-tag">${esc(b.tag)}</span>
+        <span class="brc-host">${esc(b.host)}</span>
+      </div>
+      <div class="brc-name">${esc(b.name)}</div>
+      <div class="brc-desc">${esc(b.desc)}</div>
+      <div class="brc-link">방문하기 →</div>
+    </a>
+  `).join('');
+}
+
+const SOURCE_COLORS = {
+  '소방청': '#1e5fa8',
+  '행정안전부': '#0068c3',
+  '소방신문': '#c93030',
+  '소방방재신문': '#a85020',
+  '한국소방안전원': '#6020a8',
+  '서울소방재난본부': '#02a64a',
+  '경기소방재난본부': '#02a64a',
+  '기타': '#666666'
+};
+function sourceColor(src) { return SOURCE_COLORS[src] || '#666'; }
+
+function getNews() {
+  const v = localStorage.getItem(NEWS_KEY);
+  if (v) return JSON.parse(v);
+  return seedInitialNews();
+}
+function saveNews(arr) { localStorage.setItem(NEWS_KEY, JSON.stringify(arr)); }
+
+function seedInitialNews() {
+  // 첫 방문 시 최근 5건을 5일치 날짜로 시드
+  const seed = NEWS_POOL.slice(0, 5).map((item, i) => ({
+    ...item,
+    image: item.emoji,
+    id: Date.now() - i * 86400000,
+    date: dateNDaysAgo(i),
+    autoAdded: true,
+    isNew: i === 0
+  }));
+  saveNews(seed);
+  localStorage.setItem(NEWS_LAST_AUTO, todayStr());
+  return seed;
+}
+
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+}
+function dateNDaysAgo(n) {
+  const d = new Date(); d.setDate(d.getDate() - n);
+  return `${d.getFullYear()}.${pad2(d.getMonth()+1)}.${pad2(d.getDate())}`;
+}
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+// 매일 1회 자동 추가 (페이지 방문 시 트리거)
+function autoAddDailyNews() {
+  const last = localStorage.getItem(NEWS_LAST_AUTO);
+  if (last === todayStr()) return false;
+
+  const news = getNews();
+  const usedTitles = new Set(news.map(n => n.title));
+  const unused = NEWS_POOL.filter(p => !usedTitles.has(p.title));
+  const pick = unused.length ? unused[Math.floor(Math.random() * unused.length)]
+                              : NEWS_POOL[Math.floor(Math.random() * NEWS_POOL.length)];
+
+  // 기존 isNew 모두 해제
+  news.forEach(n => n.isNew = false);
+
+  news.unshift({
+    ...pick,
+    image: pick.emoji,
+    id: Date.now(),
+    date: `${new Date().getFullYear()}.${pad2(new Date().getMonth()+1)}.${pad2(new Date().getDate())}`,
+    autoAdded: true,
+    isNew: true
+  });
+  saveNews(news);
+  localStorage.setItem(NEWS_LAST_AUTO, todayStr());
+  if (typeof logActivity === 'function') logActivity('뉴스 자동수집: ' + pick.title.slice(0, 30));
+  return true;
+}
+
+let currentNewsFilter = 'all'; // 'all' | source 이름 | 'topic:최신기술' 등
+function setNewsFilter(filter) {
+  currentNewsFilter = filter;
+  document.querySelectorAll('#newsFilterTabs .kfma-tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.src === filter)
+  );
+  renderNews();
+}
+
+const TOPIC_META = {
+  '최신기술':   { emoji:'🚀', color:'#0068c3', label:'최신기술' },
+  '논문연구':   { emoji:'📚', color:'#6020a8', label:'논문·연구' },
+  '사고처벌':   { emoji:'⚖️', color:'#c93030', label:'사고·처벌' }
+};
+
+function renderNews() {
+  const news = getNews();
+  const q = (document.getElementById('newsSearchInput')?.value || '').trim().toLowerCase();
+  const filtered = news.filter(n => {
+    if (currentNewsFilter !== 'all') {
+      if (currentNewsFilter.startsWith('topic:')) {
+        if (n.topic !== currentNewsFilter.slice(6)) return false;
+      } else if (n.source !== currentNewsFilter) return false;
+    }
+    if (q && !n.title.toLowerCase().includes(q) && !n.summary.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  const countEl = document.getElementById('newsCount');
+  const lastEl = document.getElementById('newsLastUpdate');
+  if (countEl) countEl.textContent = filtered.length;
+  if (lastEl) lastEl.textContent = localStorage.getItem(NEWS_LAST_AUTO) || '-';
+
+  const list = document.getElementById('newsListGrid');
+  if (!list) return;
+  if (!filtered.length) {
+    list.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:48px; color:var(--text-muted);">📭 검색 결과가 없습니다.</div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(n => {
+    const topicMeta = TOPIC_META[n.topic];
+    const color = topicMeta ? topicMeta.color : sourceColor(n.source);
+    const thumbEmoji = topicMeta ? topicMeta.emoji : (n.image || n.emoji || '📰');
+    const topicBadge = topicMeta
+      ? `<span class="topic-chip" style="background:${color};">${topicMeta.emoji} ${topicMeta.label}</span>`
+      : '';
+    return `
+    <article class="news-card-naver">
+      <div class="news-thumb-naver" style="background:linear-gradient(135deg, ${color}22, ${color}11); border-bottom:3px solid ${color};">
+        <span class="news-emoji">${thumbEmoji}</span>
+        ${n.autoAdded ? '<span class="news-auto-badge">🤖 자동</span>' : ''}
+      </div>
+      <div class="news-card-body" onclick="showNewsDetail('${n.id}')" style="cursor:pointer;">
+        <div class="news-card-meta">
+          ${topicBadge}
+          <span class="news-source-chip" style="background:${color}cc;">${esc(n.source)}</span>
+          ${n.isNew ? '<span class="badge-new">NEW</span>' : ''}
+        </div>
+        <h3 class="news-card-title">${esc(n.title)}</h3>
+        <p class="news-card-summary">${esc(n.summary)}</p>
+        <div class="news-card-footer" onclick="event.stopPropagation();">
+          <span class="news-card-date">📅 ${n.date}</span>
+          <a href="#" onclick="event.preventDefault(); event.stopPropagation(); showNewsDetail('${n.id}'); return false;" class="news-card-link">📖 자세히 보기</a>
+          <a href="${esc(newsItemUrl(n))}" target="_blank" rel="noopener" class="news-card-link" onclick="event.stopPropagation();">원문 ↗</a>
+          ${isAdmin() ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteNews(${n.id})" title="삭제">🗑</button>` : ''}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+// ===== 뉴스 상세 보기 모달 =====
+function showNewsDetail(id) {
+  const news = getNews();
+  const n = news.find(x => String(x.id) === String(id));
+  if (!n) return;
+
+  const topicMeta = TOPIC_META[n.topic];
+  const color = topicMeta ? topicMeta.color : sourceColor(n.source);
+  const topicBadge = topicMeta
+    ? `<span class="topic-chip" style="background:${color};">${topicMeta.label}</span>`
+    : '';
+
+  document.getElementById('newsModalMeta').innerHTML = `
+    ${topicBadge}
+    <span class="news-source-chip" style="background:${color}cc;">${esc(n.source)}</span>
+    ${n.autoAdded ? '<span class="news-modal-tag">🤖 자동수집</span>' : ''}
+    ${n.isNew ? '<span class="badge-new">NEW</span>' : ''}
+  `;
+  document.getElementById('newsModalTitle').textContent = n.title;
+  document.getElementById('newsModalInfo').innerHTML = `
+    <span><b>출처</b> ${esc(n.source)}</span>
+    <span><b>등록일</b> ${esc(n.date || '-')}</span>
+    ${n.topic ? `<span><b>주제</b> ${esc(n.topic)}</span>` : ''}
+    ${n.collectedAt ? `<span><b>수집</b> ${formatTs ? formatTs(new Date(n.collectedAt).getTime()) : n.collectedAt.slice(0,10)}</span>` : ''}
+  `;
+  document.getElementById('newsModalBody').innerHTML = formatNewsContent(n.summary || '');
+  document.getElementById('newsModalLink').href = newsItemUrl(n);
+  document.getElementById('newsModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeNewsModal() {
+  document.getElementById('newsModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// 요약 텍스트를 구조화된 HTML로 변환 — 번호 패턴, 불릿, 단락 자동 감지
+function formatNewsContent(text) {
+  if (!text) return '<p class="empty">요약이 없습니다.</p>';
+
+  // 1) "(1) ..., (2) ..., (3) ..." 번호 패턴 감지
+  const numberedMatch = text.match(/\(\d+\)/g);
+  if (numberedMatch && numberedMatch.length >= 2) {
+    const parts = text.split(/(?=\(\d+\))/g);
+    const intro = parts[0].trim();
+    const items = parts.slice(1).map(s => s.replace(/^\(\d+\)\s*/, '').replace(/[,，]\s*$/, '').trim()).filter(Boolean);
+    return `
+      ${intro ? `<p class="lead">${esc(intro)}</p>` : ''}
+      <ol class="news-list">${items.map(s => `<li>${highlightKeyTerms(esc(s))}</li>`).join('')}</ol>
+    `;
+  }
+
+  // 2) "▸" 또는 "•" 또는 "·" 불릿 감지
+  if (/[▸•]/g.test(text)) {
+    const parts = text.split(/[▸•]/).map(s => s.trim()).filter(Boolean);
+    if (parts.length >= 2) {
+      const intro = parts[0];
+      const items = parts.slice(1);
+      return `
+        ${intro ? `<p class="lead">${esc(intro)}</p>` : ''}
+        <ul class="news-list">${items.map(s => `<li>${highlightKeyTerms(esc(s))}</li>`).join('')}</ul>
+      `;
+    }
+  }
+
+  // 3) 콜론(":")으로 나뉜 패턴: "원인: 적치 ... / 결과: 전소 ..."
+  const colonGroups = text.split(/(?=(?:원인|결과|교훈|예방|핵심|주요|특징|효과|개정|시행)\s*:)/g);
+  if (colonGroups.length >= 2) {
+    return `<dl class="news-dl">${
+      colonGroups.map(g => {
+        const m = g.match(/^([가-힣\s]+):\s*(.*)$/);
+        if (m) return `<dt>${esc(m[1].trim())}</dt><dd>${highlightKeyTerms(esc(m[2].trim()))}</dd>`;
+        return `<dd class="dd-only">${highlightKeyTerms(esc(g.trim()))}</dd>`;
+      }).join('')
+    }</dl>`;
+  }
+
+  // 4) 기본: 단락 분할 (마침표·줄바꿈 기준 2~3문장씩 묶기)
+  const sentences = text.split(/(?<=[.。])\s+/).map(s => s.trim()).filter(Boolean);
+  if (sentences.length <= 2) {
+    return `<p>${highlightKeyTerms(esc(text))}</p>`;
+  }
+  // 3문장씩 묶기
+  const paras = [];
+  for (let i = 0; i < sentences.length; i += 3) {
+    paras.push(sentences.slice(i, i + 3).join(' '));
+  }
+  return paras.map(p => `<p>${highlightKeyTerms(esc(p))}</p>`).join('');
+}
+
+// 핵심 키워드 강조 (숫자·날짜·법령명 등)
+function highlightKeyTerms(html) {
+  return html
+    // 퍼센트, 배수 (예: 30%, 1.8배, 12%p)
+    .replace(/(\d+(?:\.\d+)?%p?|\d+(?:\.\d+)?배)/g, '<b class="kw-num">$1</b>')
+    // 년도 (예: 2026년, 1992년)
+    .replace(/(\d{4}년)/g, '<b class="kw-year">$1</b>')
+    // 금액 (예: 1,000만원, 200만원)
+    .replace(/(\d{1,3}(?:,\d{3})*만원)/g, '<b class="kw-money">$1</b>')
+    // 법령 약어 (NFTC, NFPC, NFSC + 번호)
+    .replace(/(NF[TPS]C\s*\d{3})/g, '<b class="kw-law">$1</b>');
+}
+
+function deleteNews(id) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  if (!confirm('이 뉴스를 삭제하시겠습니까?')) return;
+  saveNews(getNews().filter(n => n.id !== id));
+  if (typeof logActivity === 'function') logActivity('뉴스 삭제: id=' + id);
+  renderNews();
+}
+
+function toggleNewsAddForm() {
+  const f = document.getElementById('newsAddForm');
+  if (!f) return;
+  f.hidden = !f.hidden;
+}
+
+function manualAddNews() {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  const source = document.getElementById('newsAddSource').value;
+  const title = document.getElementById('newsAddTitle').value.trim();
+  const summary = document.getElementById('newsAddSummary').value.trim();
+  const url = document.getElementById('newsAddUrl').value.trim();
+  const emoji = document.getElementById('newsAddEmoji').value.trim() || '📰';
+  if (!title || !summary || !url) { alert('제목·요약·URL을 모두 입력하세요.'); return; }
+  if (!/^https?:\/\//.test(url)) { alert('URL은 http:// 또는 https://로 시작해야 합니다.'); return; }
+
+  const news = getNews();
+  news.forEach(n => n.isNew = false);
+  news.unshift({
+    id: Date.now(), source, title, summary, url, image: emoji, emoji,
+    date: `${new Date().getFullYear()}.${pad2(new Date().getMonth()+1)}.${pad2(new Date().getDate())}`,
+    autoAdded: false, isNew: true
+  });
+  saveNews(news);
+
+  document.getElementById('newsAddTitle').value = '';
+  document.getElementById('newsAddSummary').value = '';
+  document.getElementById('newsAddUrl').value = '';
+  document.getElementById('newsAddEmoji').value = '';
+  toggleNewsAddForm();
+  renderNews();
+  if (typeof logActivity === 'function') logActivity('뉴스 수동등록: ' + title.slice(0, 30));
+}
+
+function forceAutoCollect() {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  localStorage.removeItem(NEWS_LAST_AUTO);
+  const ok = autoAddDailyNews();
+  renderNews();
+  alert(ok ? '✅ 새 뉴스 1건이 추가됐습니다.' : '⚠️ 추가 가능한 뉴스가 없습니다.');
+}
+
+// ===== KFMA STYLE: LAWS / TECH / FORMS / MEMBER INFO =====
+
+// --- 법령 데이터 (국가법령정보센터 링크) ---
+const lawData = [
+  {
+    name: '소방기본법',
+    color: '#03c75a',
+    desc: '소방활동·소방기관의 설치·운영 등 기본 사항',
+    items: [
+      { type: '법', label: '소방기본법', url: 'https://www.law.go.kr/법령/소방기본법' },
+      { type: '시행령', label: '소방기본법 시행령', url: 'https://www.law.go.kr/법령/소방기본법시행령' },
+      { type: '시행규칙', label: '소방기본법 시행규칙', url: 'https://www.law.go.kr/법령/소방기본법시행규칙' }
+    ]
+  },
+  {
+    name: '소방시설법',
+    color: '#0068c3',
+    desc: '소방시설 설치·관리에 관한 법률',
+    items: [
+      { type: '법', label: '소방시설 설치 및 관리에 관한 법률', url: 'https://www.law.go.kr/법령/소방시설설치및관리에관한법률' },
+      { type: '시행령', label: '소방시설법 시행령', url: 'https://www.law.go.kr/법령/소방시설설치및관리에관한법률시행령' },
+      { type: '시행규칙', label: '소방시설법 시행규칙', url: 'https://www.law.go.kr/법령/소방시설설치및관리에관한법률시행규칙' }
+    ]
+  },
+  {
+    name: '화재예방법',
+    color: '#f5a623',
+    desc: '화재의 예방 및 안전관리에 관한 법률',
+    items: [
+      { type: '법', label: '화재의 예방 및 안전관리에 관한 법률', url: 'https://www.law.go.kr/법령/화재의예방및안전관리에관한법률' },
+      { type: '시행령', label: '화재예방법 시행령', url: 'https://www.law.go.kr/법령/화재의예방및안전관리에관한법률시행령' },
+      { type: '시행규칙', label: '화재예방법 시행규칙', url: 'https://www.law.go.kr/법령/화재의예방및안전관리에관한법률시행규칙' }
+    ]
+  },
+  {
+    name: '공사업법',
+    color: '#9333ea',
+    desc: '소방시설공사업에 관한 법률',
+    items: [
+      { type: '법', label: '소방시설공사업법', url: 'https://www.law.go.kr/법령/소방시설공사업법' },
+      { type: '시행령', label: '소방시설공사업법 시행령', url: 'https://www.law.go.kr/법령/소방시설공사업법시행령' },
+      { type: '시행규칙', label: '소방시설공사업법 시행규칙', url: 'https://www.law.go.kr/법령/소방시설공사업법시행규칙' }
+    ]
+  }
+];
+
+const ruleData = [
+  { cat: '소방관서 업무관련', items: [
+    { name: '소방시설 자체점검사항 등에 관한 고시', url: 'https://www.law.go.kr' },
+    { name: '소방용품의 품질관리 등에 관한 규칙', url: 'https://www.law.go.kr' },
+    { name: '특정소방대상물의 안전관리에 관한 고시', url: 'https://www.law.go.kr' }
+  ]},
+  { cat: '소방 경력관련', items: [
+    { name: '소방기술자 실무교육에 관한 규정', url: 'https://www.law.go.kr' },
+    { name: '소방시설관리사 시험 시행규칙', url: 'https://www.law.go.kr' }
+  ]},
+  { cat: '협회 관련 고시', items: [
+    { name: '한국소방시설관리협회 정관', url: '#' },
+    { name: '점검대가 산정기준', url: '#' },
+    { name: '회원사 등록 및 관리 규정', url: '#' }
+  ]}
+];
+
+function renderLaws() {
+  const grid = document.getElementById('lawMainGrid');
+  if (!grid) return;
+  grid.innerHTML = lawData.map(law => `
+    <div class="law-card" style="--law-color:${law.color}">
+      <div class="law-card-header">
+        <h4>${law.name}</h4>
+        <span>${law.desc}</span>
+      </div>
+      <div class="law-links">
+        ${law.items.map(item => `
+          <a href="${item.url}" target="_blank" class="law-link" title="${esc(item.label)}">
+            <span class="ll-type">${item.type}</span>
+            <span class="ll-arrow">↗</span>
+          </a>`).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  const list = document.getElementById('lawRuleList');
+  list.innerHTML = ruleData.map(g => `
+    <div class="rule-group">
+      <h5>📌 ${g.cat}</h5>
+      <ul>
+        ${g.items.map(r => `<li><a href="${r.url}" target="_blank">${esc(r.name)} <span class="rule-ext">↗</span></a></li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+// --- 기술자료 ---
+const techData = [
+  { id: 32, cat: '점검', title: 'NFTC 103 스프링클러설비 자체점검 체크리스트', file: 'PDF', date: '2026.05.08', views: 412, isNew: true },
+  { id: 31, cat: '해설', title: '2026년 화재안전기준 통합본 해설(개정사항 요약)', file: 'PDF', date: '2026.05.05', views: 891, isNew: true },
+  { id: 30, cat: '설계', title: '옥내소화전 토출량·양정 산정 예제', file: 'XLSX', date: '2026.04.28', views: 256, isNew: true },
+  { id: 29, cat: '시공', title: '내진설계 적용 배관 시공 표준 도면집', file: 'ZIP', date: '2026.04.20', views: 533 },
+  { id: 28, cat: '감리', title: '소방감리 일일점검표 양식(엑셀)', file: 'XLSX', date: '2026.04.15', views: 322 },
+  { id: 27, cat: '점검', title: '간이스프링클러설비 점검 매뉴얼 v3.2', file: 'PDF', date: '2026.04.10', views: 478 },
+  { id: 26, cat: '해설', title: 'NFPC 203 자동화재탐지설비 개정 해설', file: 'PDF', date: '2026.04.02', views: 612 },
+  { id: 25, cat: '설계', title: '제연설비 풍량·풍압 계산 가이드', file: 'PDF', date: '2026.03.28', views: 198 },
+  { id: 24, cat: '시공', title: '연결송수관설비 배관 시공기준 정리', file: 'PDF', date: '2026.03.22', views: 267 },
+  { id: 23, cat: '점검', title: '비상조명등·유도등 점검 사례집', file: 'PDF', date: '2026.03.15', views: 389 },
+  { id: 22, cat: '해설', title: '특정소방대상물 분류 기준 해설(별표2)', file: 'PDF', date: '2026.03.08', views: 745 },
+  { id: 21, cat: '감리', title: '준공검사 시 자주 지적되는 사항 TOP 20', file: 'PDF', date: '2026.02.28', views: 1024 }
+];
+let techFilter = 'all';
+function renderTech() {
+  const q = (document.getElementById('techSearchInput')?.value || '').trim().toLowerCase();
+  const filtered = techData.filter(t =>
+    (techFilter === 'all' || t.cat === techFilter) &&
+    (!q || t.title.toLowerCase().includes(q))
+  );
+  document.getElementById('techCount').textContent = filtered.length;
+  const tbody = document.getElementById('techBody');
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-muted);">📭 자료가 없습니다.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filtered.map((t, i) => `
+    <tr onclick="alert('📥 ${esc(t.title)} (${t.file}) — 회원 전용 자료입니다.')">
+      <td class="col-no" style="text-align:center; color:var(--text-muted);">${filtered.length - i}</td>
+      <td><span class="cat-chip cat-${cssCat(t.cat)}">${t.cat}</span></td>
+      <td class="td-title">
+        ${esc(t.title)}
+        ${t.isNew ? '<span class="badge-new">NEW</span>' : ''}
+      </td>
+      <td style="text-align:center;"><span class="file-badge file-${(t.file||'').toLowerCase()}">${t.file}</span></td>
+      <td style="color:var(--text-secondary); font-size:0.85rem;">${t.date}</td>
+      <td style="text-align:center;">${t.views.toLocaleString()}</td>
+    </tr>`).join('');
+}
+
+// --- 서식자료 ---
+const formData = [
+  { id: 24, cat: '점검표', title: '소방시설 자체점검 결과보고서 (2026 개정)', file: 'HWP', date: '2026.05.07', dl: 1240, isNew: true },
+  { id: 23, cat: '점검표', title: '소방안전관리자 업무수행 일지 양식', file: 'XLSX', date: '2026.05.01', dl: 856, isNew: true },
+  { id: 22, cat: '신고서', title: '소방시설공사업 등록사항 변경 신고서', file: 'HWP', date: '2026.04.25', dl: 432 },
+  { id: 21, cat: '신고서', title: '특정소방대상물 사용승인 동의 요청서', file: 'HWP', date: '2026.04.18', dl: 678 },
+  { id: 20, cat: '계약서', title: '소방시설 점검 표준계약서 (감리 포함)', file: 'DOCX', date: '2026.04.10', dl: 1532 },
+  { id: 19, cat: '계약서', title: '소방시설 유지관리 위탁계약서 표준안', file: 'DOCX', date: '2026.04.05', dl: 945 },
+  { id: 18, cat: '대장', title: '소방시설 점검대장 (월간/분기/반기/연간)', file: 'XLSX', date: '2026.03.28', dl: 2103 },
+  { id: 17, cat: '대장', title: '소방안전관리자 선임자 명부', file: 'XLSX', date: '2026.03.22', dl: 765 },
+  { id: 16, cat: '점검표', title: '간이스프링클러설비 자체점검표', file: 'HWP', date: '2026.03.15', dl: 1187 },
+  { id: 15, cat: '기타', title: '화재발생 통보·접수 표준 양식', file: 'HWP', date: '2026.03.08', dl: 423 },
+  { id: 14, cat: '신고서', title: '소방기술자 경력 신고서', file: 'HWP', date: '2026.02.28', dl: 612 },
+  { id: 13, cat: '기타', title: '피난·방화시설 정비계획 작성 양식', file: 'XLSX', date: '2026.02.20', dl: 388 }
+];
+let formFilter = 'all';
+function renderForms() {
+  const q = (document.getElementById('formSearchInput')?.value || '').trim().toLowerCase();
+  const filtered = formData.filter(f =>
+    (formFilter === 'all' || f.cat === formFilter) &&
+    (!q || f.title.toLowerCase().includes(q))
+  );
+  document.getElementById('formCount').textContent = filtered.length;
+  const tbody = document.getElementById('formBody');
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-muted);">📭 양식이 없습니다.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filtered.map((f, i) => `
+    <tr>
+      <td class="col-no" style="text-align:center; color:var(--text-muted);">${filtered.length - i}</td>
+      <td><span class="cat-chip cat-${cssCat(f.cat)}">${f.cat}</span></td>
+      <td class="td-title">
+        ${esc(f.title)}
+        ${f.isNew ? '<span class="badge-new">NEW</span>' : ''}
+      </td>
+      <td style="text-align:center;"><span class="file-badge file-${(f.file||'').toLowerCase()}">${f.file}</span></td>
+      <td style="color:var(--text-secondary); font-size:0.85rem;">${f.date}</td>
+      <td style="text-align:center;">
+        <button class="btn-mini btn-dl" onclick="downloadForm(${f.id})">⬇ 받기</button>
+      </td>
+    </tr>`).join('');
+}
+function downloadForm(id) {
+  const f = formData.find(x => x.id === id);
+  if (!f) return;
+  f.dl++;
+  alert(`📥 다운로드: ${f.title}\n파일형식: ${f.file}\n총 다운로드: ${f.dl.toLocaleString()}회\n\n※ 데모이며 실제 파일은 제공되지 않습니다.`);
+  if (typeof logActivity === 'function') logActivity('서식다운: ' + f.title.slice(0, 30));
+  renderForms();
+}
+
+function renderMyArea() {
+  const area = document.getElementById('miMyArea');
+  if (!area) return;
+  const u = getCurrentUser();
+  if (!u) {
+    area.innerHTML = `
+      <h3>👤 마이페이지</h3>
+      <div class="mi-empty">
+        <div style="font-size:2.4rem; margin-bottom:8px;">🔒</div>
+        <p>로그인 후 본인의 회원정보·이웃 새글을 확인할 수 있습니다.</p>
+        <button class="btn btn-primary" style="margin-top:12px;" onclick="showLoginModal()">🔑 로그인</button>
+      </div>`;
+    return;
+  }
+  const dbUser = getUsers().find(x => x.id === u.id) || {};
+  const posts = getPosts().filter(p => p.author === u.id);
+  const stats = getNeighborStats(u.id);
+  const grade = dbUser.role === 'admin' ? 'gold' : (posts.length >= 5 ? 'silver' : 'bronze');
+  const gradeName = grade === 'gold' ? '프리미엄/관리자' : (grade === 'silver' ? '정회원' : '일반회원');
+  const gradeIcon = grade === 'gold' ? '👑' : (grade === 'silver' ? '🥈' : '🥉');
+
+  area.innerHTML = `
+    <h3>👤 마이페이지</h3>
+    <div class="mi-profile">
+      <div class="mi-avatar">${u.id.charAt(0).toUpperCase()}</div>
+      <div class="mi-info">
+        <div class="mi-name">${esc(u.id)} <span class="grade-badge ${grade}">${gradeIcon} ${gradeName}</span></div>
+        <div class="mi-meta">가입일: ${dbUser.joinDate || '-'}</div>
+      </div>
+    </div>
+    <div class="mi-stats">
+      <div><div class="mi-num">${posts.length}</div><div class="mi-lab">작성한 글</div></div>
+      <div><div class="mi-num">${posts.reduce((s,p)=>s+(p.views||0),0)}</div><div class="mi-lab">총 조회수</div></div>
+      <div><div class="mi-num">${stats.following}</div><div class="mi-lab">🤝 내 이웃</div></div>
+      <div><div class="mi-num">${stats.followers}</div><div class="mi-lab">💚 나를 추가</div></div>
+    </div>
+    <div class="mi-actions">
+      <button class="btn btn-outline btn-sm" onclick="showTab('board')">📋 내 게시글 보기</button>
+      <button class="btn btn-outline btn-sm" onclick="showTab('board'); boardNeighborOnly=true; renderBoard();">🤝 이웃 글만</button>
+      ${dbUser.role === 'admin' ? '<button class="btn btn-primary btn-sm" onclick="showTab(\'dashboard\')">📊 상황판</button>' : ''}
+      <button class="btn btn-outline btn-sm" onclick="logout(); renderMyArea();">로그아웃</button>
+    </div>
+    <!-- 이웃 새글 위젯 -->
+    <div class="mi-neighbor-feed">
+      <div class="mnf-header">
+        <h4>🤝 이웃의 새글</h4>
+        <span class="mnf-count" id="mnfCount">0</span>
+      </div>
+      <div id="mnfList"></div>
+    </div>
+  `;
+  renderNeighborFeed();
+}
+
+function renderNeighborFeed() {
+  const list = document.getElementById('mnfList');
+  if (!list) return;
+  const me = getCurrentUser();
+  if (!me) return;
+
+  const myNeighbors = getMyNeighbors();
+  const neighborPosts = getPosts()
+    .filter(p => myNeighbors.includes(p.author))
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 8);
+
+  document.getElementById('mnfCount').textContent = neighborPosts.length;
+
+  if (!myNeighbors.length) {
+    list.innerHTML = `<div class="mnf-empty">
+      🌱 아직 추가한 이웃이 없습니다.<br>
+      <a href="#" onclick="document.getElementById('memberSearchInput')?.focus(); return false;" style="color:var(--naver-green);">아래 회원 현황</a>에서 이웃을 추가해 보세요.
+    </div>`;
+    return;
+  }
+  if (!neighborPosts.length) {
+    list.innerHTML = '<div class="mnf-empty">🤝 이웃은 있지만 아직 게시글이 없습니다.</div>';
+    return;
+  }
+
+  list.innerHTML = neighborPosts.map(p => `
+    <div class="mnf-item" onclick="showTab('board'); setTimeout(()=>viewPost(${p.id}), 50);">
+      <div class="mnf-avatar">${p.author.charAt(0).toUpperCase()}</div>
+      <div class="mnf-body">
+        <div class="mnf-title">${p.secret ? '🔒 ' : ''}${esc(p.title)}</div>
+        <div class="mnf-meta">
+          <span class="mnf-author">${esc(p.author)}</span>
+          <span class="mnf-date">${p.date}</span>
+          <span>👁 ${p.views || 0}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// 카테고리 탭 클릭 핸들러
+function bindCategoryTabs() {
+  document.querySelectorAll('#techCategoryTabs .kfma-tab').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('#techCategoryTabs .kfma-tab').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      techFilter = b.dataset.cat;
+      renderTech();
+    };
+  });
+  document.querySelectorAll('#formCategoryTabs .kfma-tab').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('#formCategoryTabs .kfma-tab').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      formFilter = b.dataset.cat;
+      renderForms();
+    };
+  });
+}
+
+function cssCat(cat) {
+  const map = { '점검':'check', '설계':'design', '시공':'build', '감리':'super', '해설':'guide',
+                '점검표':'check', '신고서':'report', '계약서':'contract', '대장':'ledger', '기타':'etc' };
+  return map[cat] || 'etc';
+}
+
+// ===== MEMBERS (통합: 일반 회원 목록 + 관리자 관리 기능) =====
+function renderMembers() {
+  const q = (document.getElementById('memberSearchInput')?.value || '').trim().toLowerCase();
+  const users = getUsers();
+  const posts = getPosts();
+  const onlineMap = getOnline();
+  const now = Date.now();
+  const admin = isAdmin();
+  const me = getCurrentUser();
+
+  const filtered = users.filter(u => !q || u.id.toLowerCase().includes(q));
+
+  // 상단 통계 (관리자만 DOM에 보임 — 비관리자에게는 .admin-only로 숨김)
+  if (document.getElementById('mTotal')) {
+    document.getElementById('mTotal').textContent = users.length;
+    document.getElementById('mAdmins').textContent = users.filter(u => u.role === 'admin').length;
+    document.getElementById('mBanned').textContent = users.filter(u => u.banned).length;
+    document.getElementById('mOnline').textContent = getOnlineUsers().length;
+  }
+  if (document.getElementById('memberCount')) {
+    document.getElementById('memberCount').textContent = filtered.length;
+  }
+
+  const tbody = document.getElementById('memberBody');
+  const empty = document.getElementById('memberEmpty');
+  const table = document.getElementById('memberTable');
+  if (!tbody) return;
+  if (!filtered.length) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  table.style.display = 'table';
+  empty.style.display = 'none';
+
+  tbody.innerHTML = filtered.map((u, i) => {
+    const postCount = posts.filter(p => p.author === u.id).length;
+    const isMe = me && me.id === u.id;
+    const lastSeen = onlineMap[u.id];
+    const isOnline = lastSeen && (now - lastSeen) < 5 * 60 * 1000;
+    const lastLoginStr = u.lastLogin ? formatRel(u.lastLogin) : '—';
+    const roleBadge = u.role === 'admin'
+      ? '<span class="badge badge-admin">👑 관리자</span>'
+      : '<span class="badge badge-user">일반</span>';
+    const statusBadge = u.banned
+      ? '<span class="badge badge-banned">🚫 차단</span>'
+      : (isOnline ? '<span class="badge badge-online">🟢 온라인</span>' : '<span class="badge badge-offline">오프라인</span>');
+
+    // 이웃 버튼 (로그인 + 본인 아닐 때만)
+    let neighborCell = '<td></td>';
+    if (me && !isMe) {
+      const isNB = isNeighbor(u.id);
+      neighborCell = `<td><button class="btn-neighbor ${isNB ? 'is-neighbor' : ''}" onclick="toggleNeighbor('${esc(u.id)}')">
+        ${isNB ? '✓ 이웃' : '+ 이웃추가'}
+      </button></td>`;
+    } else if (isMe) {
+      neighborCell = '<td><span style="color:var(--text-muted); font-size:0.78rem;">—</span></td>';
+    } else {
+      neighborCell = '<td><span style="color:var(--text-muted); font-size:0.78rem;">로그인 필요</span></td>';
+    }
+
+    let actionsCell = '';
+    if (admin) {
+      const actions = isMe
+        ? '<span style="color:var(--text-muted); font-size:0.8rem;">본인</span>'
+        : `
+          <button class="btn-mini" onclick="adminToggleRole('${esc(u.id)}')" title="관리자 토글">${u.role === 'admin' ? '강등' : '승급'}</button>
+          <button class="btn-mini ${u.banned ? 'btn-mini-warn' : ''}" onclick="adminToggleBan('${esc(u.id)}')">${u.banned ? '차단해제' : '차단'}</button>
+          <button class="btn-mini btn-mini-danger" onclick="adminDeleteUser('${esc(u.id)}')">삭제</button>
+        `;
+      actionsCell = `<td class="admin-only-cell"><div class="action-row">${actions}</div></td>`;
+    }
+
+    return `<tr>
+      <td class="col-no" style="text-align:center;">${i + 1}</td>
+      <td class="td-title">${esc(u.id)}${isMe ? ' <span style="color:var(--naver-green); font-size:0.75rem;">(나)</span>' : ''}</td>
+      <td style="color:var(--text-secondary); font-size:0.85rem;">${u.joinDate}</td>
+      <td style="color:var(--text-secondary); font-size:0.85rem;">${lastLoginStr}</td>
+      <td style="text-align:center;">${postCount}</td>
+      <td>${roleBadge}</td>
+      <td>${statusBadge}</td>
+      ${neighborCell}
+      ${actionsCell}
+    </tr>`;
+  }).join('');
+}
+
+// ===== DASHBOARD (admin) =====
+function renderDashboard() {
+  if (!isAdmin()) return;
+  const logs = getLogs();
+  const posts = getPosts();
+  const online = getOnlineUsers();
+  const now = Date.now();
+  const startOfDay = new Date(); startOfDay.setHours(0, 0, 0, 0);
+
+  // 통계
+  document.getElementById('dOnline').textContent = online.length;
+  document.getElementById('dPosts').textContent = posts.length;
+
+  const todayLogs = logs.filter(l => l.ts >= startOfDay.getTime());
+  const todayUsers = new Set(todayLogs.map(l => l.id)).size;
+  document.getElementById('dToday').textContent = todayUsers;
+  document.getElementById('dTodaySub').textContent = `로그 ${todayLogs.length}건`;
+
+  const weekStart = now - 7 * 24 * 60 * 60 * 1000;
+  const weekLogs = logs.filter(l => l.ts >= weekStart);
+  document.getElementById('dWeek').textContent = weekLogs.length;
+
+  document.getElementById('dPostsSub').textContent = `오늘 작성 ${todayLogs.filter(l => l.action.startsWith('글작성')).length}건`;
+  document.getElementById('dOnlineSub').textContent = online.length ? online.map(o => o.id).slice(0, 3).join(', ') + (online.length > 3 ? ' 외' : '') : '없음';
+
+  // 7일 차트
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i);
+    const next = d.getTime() + 24 * 60 * 60 * 1000;
+    const count = logs.filter(l => l.ts >= d.getTime() && l.ts < next).length;
+    days.push({ label: `${d.getMonth() + 1}/${d.getDate()}`, count });
+  }
+  const max = Math.max(1, ...days.map(d => d.count));
+  document.getElementById('dChart').innerHTML = days.map(d => {
+    const h = Math.round((d.count / max) * 100);
+    return `<div class="bar-col">
+      <div class="bar-value">${d.count}</div>
+      <div class="bar"><div class="bar-fill" style="height:${h}%"></div></div>
+      <div class="bar-label">${d.label}</div>
+    </div>`;
+  }).join('');
+
+  // 온라인 리스트
+  const onlineList = document.getElementById('dOnlineList');
+  onlineList.innerHTML = online.length
+    ? online.sort((a, b) => b.lastSeen - a.lastSeen).map(o =>
+        `<div class="online-row">
+          <span class="online-dot"></span>
+          <span class="online-id">${esc(o.id)}${isAdmin({id: o.id}) ? ' 👑' : ''}</span>
+          <span class="online-time">${formatRel(o.lastSeen)}</span>
+        </div>`).join('')
+    : '<div style="text-align:center; color:var(--text-muted); padding:24px; font-size:0.88rem;">현재 접속 중인 사용자가 없습니다.</div>';
+
+  // 로그 테이블
+  const filter = document.getElementById('dLogFilter')?.value || 'all';
+  const filtered = logs.slice().reverse().filter(l => {
+    if (filter === 'all') return true;
+    if (filter === '페이지') return l.action.startsWith('페이지');
+    if (filter === '글작성') return l.action.startsWith('글작성');
+    return l.action.startsWith(filter);
+  }).slice(0, 100);
+
+  const logBody = document.getElementById('dLogBody');
+  const logEmpty = document.getElementById('dLogEmpty');
+  if (!filtered.length) {
+    logBody.innerHTML = '';
+    logEmpty.style.display = 'block';
+  } else {
+    logEmpty.style.display = 'none';
+    logBody.innerHTML = filtered.map(l => {
+      const cls = logActionClass(l.action);
+      return `<tr>
+        <td style="color:var(--text-secondary); font-size:0.82rem;">${formatTs(l.ts)}</td>
+        <td class="td-title">${esc(l.id)}</td>
+        <td><span class="log-action ${cls}">${esc(l.action)}</span></td>
+        <td style="color:var(--text-muted); font-size:0.8rem;">${esc(l.ua || '-')}</td>
+      </tr>`;
+    }).join('');
+  }
+}
+
+function clearLogs() {
+  if (!isAdmin()) return;
+  if (!confirm('정말 모든 활동 로그를 삭제하시겠습니까?')) return;
+  saveLogs([]);
+  logActivity('로그 초기화');
+  renderDashboard();
+}
+
+function logActionClass(action) {
+  if (action.startsWith('로그인')) return 'log-login';
+  if (action.startsWith('로그아웃')) return 'log-logout';
+  if (action.startsWith('회원가입')) return 'log-signup';
+  if (action.startsWith('글작성')) return 'log-post';
+  if (action.startsWith('차단') || action.startsWith('회원삭제')) return 'log-warn';
+  if (action.startsWith('권한변경')) return 'log-admin';
+  return 'log-default';
+}
+
+function formatTs(ts) {
+  const d = new Date(ts);
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getMonth() + 1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+
+function formatRel(ts) {
+  const diff = Date.now() - ts;
+  if (diff < 60 * 1000) return '방금 전';
+  if (diff < 60 * 60 * 1000) return Math.floor(diff / 60000) + '분 전';
+  if (diff < 24 * 60 * 60 * 1000) return Math.floor(diff / 3600000) + '시간 전';
+  if (diff < 7 * 24 * 60 * 60 * 1000) return Math.floor(diff / 86400000) + '일 전';
+  return formatTs(ts);
+}
+
+// ===== GLOBAL SEARCH (Naver-style) =====
+function doGlobalSearch() {
+  const q = document.getElementById('globalSearchInput').value.trim();
+  const scope = document.getElementById('searchScope').value;
+  if (!q) {
+    document.getElementById('globalSearchInput').focus();
+    return;
+  }
+  const lower = q.toLowerCase();
+
+  // 1) 법령정보
+  if (scope === 'all' || scope === 'laws') {
+    const lawHit = lawData.some(l =>
+      l.name.toLowerCase().includes(lower) ||
+      l.desc.toLowerCase().includes(lower) ||
+      l.items.some(it => it.label.toLowerCase().includes(lower))
+    );
+    if (lawHit || scope === 'laws') { showTab('laws'); return; }
+  }
+  // 2) 기술자료
+  if (scope === 'all' || scope === 'tech') {
+    const techHit = techData.some(t => t.title.toLowerCase().includes(lower) || t.cat.toLowerCase().includes(lower));
+    if (techHit || scope === 'tech') {
+      showTab('tech');
+      const input = document.getElementById('techSearchInput');
+      if (input) { input.value = q; renderTech(); }
+      return;
+    }
+  }
+  // 3) 서식자료
+  if (scope === 'all' || scope === 'forms') {
+    const formHit = formData.some(f => f.title.toLowerCase().includes(lower) || f.cat.toLowerCase().includes(lower));
+    if (formHit || scope === 'forms') {
+      showTab('forms');
+      const input = document.getElementById('formSearchInput');
+      if (input) { input.value = q; renderForms(); }
+      return;
+    }
+  }
+  // 4) 프로그램
+  if (scope === 'all' || scope === 'programs') {
+    const hit = Object.entries(programData).find(([key, p]) =>
+      p.name.toLowerCase().includes(lower) ||
+      p.tag.toLowerCase().includes(lower) ||
+      p.desc.toLowerCase().includes(lower) ||
+      key.toLowerCase().includes(lower)
+    );
+    if (hit) {
+      showTab('programs');
+      showProgramDetail(hit[0]);
+      return;
+    }
+  }
+  // 5) 게시판
+  if (scope === 'board' || scope === 'all') {
+    const posts = getPosts().filter(p =>
+      p.title.toLowerCase().includes(lower) ||
+      p.content.toLowerCase().includes(lower)
+    );
+    if (posts.length || scope === 'board') {
+      showTab('board');
+      const input = document.getElementById('boardSearchInput');
+      if (input) { input.value = q; searchBoard(); }
+      return;
+    }
+  }
+  // 6) 직접 이동
+  if (scope === 'records') { showTab('records'); return; }
+  if (scope === 'news') { showTab('news'); return; }
+  // 매칭 없음
+  showTab('programs');
+  alert(`"${q}" 검색 결과가 없습니다.`);
+}
+
+// ===== UTILS =====
+function esc(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }

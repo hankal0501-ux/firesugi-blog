@@ -1,0 +1,42 @@
+name: 🤖 Daily News Collection
+
+on:
+  schedule:
+    # 매일 00:00 UTC = 09:00 KST 실행
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # GitHub Actions 페이지에서 수동 실행 가능
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Collect news from RSS feeds
+        run: node scripts/collect-news.js
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "fire-sugi-bot"
+          git config user.email "bot@firesugi.local"
+          git add news.json
+          if git diff --cached --quiet; then
+            echo "ℹ️  변경 없음 - 커밋 스킵"
+          else
+            COUNT=$(node -e "console.log(JSON.parse(require('fs').readFileSync('news.json')).length)")
+            git commit -m "🤖 daily news update ($(date -u +%Y-%m-%d) · 전체 ${COUNT}건)"
+            git push
+            echo "✅ 푸시 완료"
+          fi

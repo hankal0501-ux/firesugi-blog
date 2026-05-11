@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
+  <title>Fire-Sugi 소방안전 블로그</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-inner">
+      <a href="#" class="logo" onclick="showTab('home')">
+        <div class="logo-icon">🔥</div>
+        <span>Fire-Sugi</span>
+      </a>
+      <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+      <nav>
+        <a href="#" class="active" data-tab="home" onclick="showTab('home')">홈</a>
+        <a href="#" data-tab="programs" onclick="showTab('programs')">AI 프로그램</a>
+        <a href="#" data-tab="records" onclick="showTab('records')">기록</a>
+        <a href="#" data-tab="news" onclick="showTab('news')">최신 뉴스 검색</a>
+        <a href="#" data-tab="laws" onclick="showTab('laws')">법령정보</a>
+        <a href="#" data-tab="tech" onclick="showTab('tech')">기술자료</a>
+        <a href="#" data-tab="forms" onclick="showTab('forms')">서식자료</a>
+        <a href="#" data-tab="members-info" onclick="showTab('members-info')">회원정보</a>
+        <a href="#" data-tab="board" onclick="showTab('board')">게시판</a>
+        <a href="#" class="admin-only" data-tab="dashboard" onclick="showTab('dashboard')" style="display:none;">접속상황판</a>
+      </nav>
+      <div class="auth-area">
+        <button class="btn btn-outline btn-sm" id="authLoginBtn" onclick="showLoginModal()">로그인</button>
+        <div class="user-info" id="authUserInfo" style="display:none;">
+          <span class="user-badge"><span id="authUserName"></span></span>
+          <button class="btn btn-outline btn-sm" onclick="logout()">로그아웃</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== TAB: HOME ===================== -->
+  <div class="tab-page active" id="tab-home">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="naver-logo-big">
+          <span class="fire-emoji">🔥</span>
+          <span>Fire-<span class="green">Sugi</span></span>
+        </div>
+        <p class="hero-tagline">소방안전 AI 프로그램 · 법령 · 기록 · 기술자료</p>
+
+        <div class="quick-shortcuts">
+          <a class="quick-shortcut" onclick="showTab('laws')"><span class="qs-icon">⚖️</span>법령정보</a>
+          <a class="quick-shortcut" onclick="showTab('tech')"><span class="qs-icon">🛠️</span>기술자료</a>
+          <a class="quick-shortcut" onclick="showTab('forms')"><span class="qs-icon">📄</span>서식자료</a>
+          <a class="quick-shortcut" onclick="showTab('members-info')"><span class="qs-icon">🪪</span>회원정보</a>
+          <a class="quick-shortcut" onclick="showProgramDetail('firesugi')"><span class="qs-icon">📋</span>점검지적서</a>
+          <a class="quick-shortcut" onclick="showProgramDetail('nftc')"><span class="qs-icon">📖</span>화재안전기준</a>
+          <a class="quick-shortcut" onclick="showProgramDetail('historical')"><span class="qs-icon">🏛️</span>당시법판단</a>
+          <a class="quick-shortcut" onclick="showTab('board')"><span class="qs-icon">💬</span>게시판</a>
+        </div>
+
+        <div class="hero-stats">
+          <div><div class="stat-number" data-target="12" data-suffix="개">0</div><div class="stat-label">개발 프로그램</div></div>
+          <div><div class="stat-number" data-target="365" data-suffix="일">0</div><div class="stat-label">연구 기간</div></div>
+          <div><div class="stat-number" data-target="48" data-suffix="편">0</div><div class="stat-label">기록 게시물</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE STRENGTHS (Inspired by Skyz) -->
+    <section class="tab-section reveal">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">🚀 Strengths</div>
+          <h2>왜 Fire-Sugi 인가요?</h2>
+          <p>현장의 경험과 데이터 기술을 결합하여 최상의 솔루션을 제공합니다.</p>
+        </div>
+        <div class="programs-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+          <div class="strength-card">
+            <div class="step-number">01</div>
+            <h3>데이터 기반 법률 분석</h3>
+            <p>1964년부터 현재까지의 소방법 변천사를 데이터베이스화하여 건축 허가일 기준의 정확한 법적 판단을 제공합니다.</p>
+          </div>
+          <div class="strength-card">
+            <div class="step-number">02</div>
+            <h3>현장 맞춤형 AI 도구</h3>
+            <p>Gemini AI를 활용하여 현장의 수기 메모를 즉시 텍스트로 변환하고, 복잡한 점검 지적서를 자동 생성합니다.</p>
+          </div>
+          <div class="strength-card">
+            <div class="step-number">03</div>
+            <h3>사용자 중심 교육 도구</h3>
+            <p>난해한 화재안전기준을 플래시카드와 동영상 구간 반복 학습 도구로 변환하여 실질적인 암기를 돕습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS (Inspired by Skyz) -->
+    <section class="tab-section reveal">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">🛠️ Process</div>
+          <h2>연구 및 개발 프로세스</h2>
+          <p>철저한 분석과 검증을 통해 신뢰할 수 있는 정보를 제공합니다.</p>
+        </div>
+        <div class="process-timeline">
+          <div class="process-item">
+            <div class="process-dot"></div>
+            <div class="process-content">
+              <h3>01. 법령 및 데이터 수집</h3>
+              <p>최신 화재안전기준(NFPC/NFTC) 및 시대별 소방법 원문을 수집하고 구조화합니다.</p>
+            </div>
+          </div>
+          <div class="process-item">
+            <div class="process-dot"></div>
+            <div class="process-content">
+              <h3>02. 알고리즘 설계 및 구현</h3>
+              <p>수집된 데이터를 바탕으로 자동 판단 엔진 및 학습 프로그램을 개발합니다.</p>
+            </div>
+          </div>
+          <div class="process-item">
+            <div class="process-dot"></div>
+            <div class="process-content">
+              <h3>03. 현장 검증 및 피드백</h3>
+              <p>실제 점검 현장에서 프로그램을 테스트하고 사용자의 의견을 반영하여 고도화합니다.</p>
+            </div>
+          </div>
+          <div class="process-item">
+            <div class="process-dot"></div>
+            <div class="process-content">
+              <h3>04. 최종 배포 및 정보 공유</h3>
+              <p>완성된 프로그램과 연구 기록을 블로그를 통해 소방안전 전문가들과 공유합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROGRAM (New) -->
+    <section class="tab-section reveal">
+      <div class="section-inner">
+        <div class="featured-program">
+          <div class="featured-content">
+            <div class="tag">⭐ Best Tool</div>
+            <h2>가장 사랑받는 도구: <br><span class="gradient-text">Fire-Sugi 점검지적서</span></h2>
+            <p>수기 메모를 AI가 즉시 분석하여 법규에 맞는 지적사항을 생성합니다. 현장의 시간을 80% 단축하세요.</p>
+            <div class="featured-features">
+              <span>✓ Gemini AI 연동</span>
+              <span>✓ 실시간 법규 대조</span>
+              <span>✓ 모바일 최적화</span>
+            </div>
+            <button class="btn btn-primary" onclick="showProgramDetail('firesugi')">자세히 보기</button>
+          </div>
+          <div class="featured-image">
+            <div class="mockup-ui">
+              <div class="mockup-header"><div></div><div></div><div></div></div>
+              <div class="mockup-body">
+                <div class="mockup-line" style="width:60%"></div>
+                <div class="mockup-line" style="width:40%"></div>
+                <div class="mockup-box"></div>
+                <div class="mockup-line" style="width:80%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="tab-section reveal">
+      <div class="section-inner">
+        <div class="cta-section">
+          <h2>소방안전의 미래를 함께 만듭니다</h2>
+          <p>프로그램 사용 문의나 협업 제안은 언제든지 환영합니다.<br>현장의 지혜를 코드로 전환하는 여정에 동참하세요.</p>
+          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="showTab('board')">📬 문의하기</button>
+            <a href="mailto:contact@firesugi.com" class="btn btn-outline">📧 이메일 보내기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: PROGRAMS ===================== -->
+  <div class="tab-page" id="tab-programs">
+    <section class="tab-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">🛠️ Programs</div>
+          <h2>AI 프로그램</h2>
+          <p>소방 업무를 더 스마트하게. 직접 개발한 AI 기반 프로그램들을 소개합니다.</p>
+        </div>
+
+        <!-- 프로그램 상세 뷰 (기본 숨김) -->
+        <div id="programDetail" style="display:none;">
+          <button class="btn btn-outline" onclick="hideProgramDetail()" style="margin-bottom:24px;">← 목록으로</button>
+          <div id="programDetailContent"></div>
+        </div>
+
+        <!-- 프로그램 목록 (동적 렌더 — programData 기반) -->
+        <div id="programList">
+          <div class="programs-grid" id="programsGrid"></div>
+          <!-- 관리자 휴지통 (삭제된 프로그램) -->
+          <div id="programTrash" class="program-trash" style="display:none;"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: RECORDS ===================== -->
+  <div class="tab-page" id="tab-records">
+    <section class="tab-section reveal">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">📝 Records</div>
+          <h2>개발 기록</h2>
+          <p>프로그램 개발 과정과 소방안전 학습 기록을 공유합니다.</p>
+        </div>
+        <div class="blog-grid">
+          <div class="blog-card reveal">
+            <div class="blog-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">📋<div class="date-badge">2026.05.09</div></div>
+            <div class="blog-body">
+              <div class="category">개발일지</div>
+              <h3>Fire-Sugi v5 점검지적서 완성</h3>
+              <p>Gemini API를 활용한 수기 메모 OCR 변환과 법종 자동 판단 기능을 탑재했습니다.</p>
+              <div class="meta"><span>👁️ 128</span><span>💬 12</span></div>
+            </div>
+          </div>
+          <div class="blog-card reveal">
+            <div class="blog-thumb" style="background:linear-gradient(135deg,#2d1b69,#11998e);">⚖️<div class="date-badge">2026.04.15</div></div>
+            <div class="blog-body">
+              <div class="category">법률연구</div>
+              <h3>역사적 소방법령 시대 분류 (Era A~J)</h3>
+              <p>1964년부터 현행까지 소방시설 설치기준의 변천사를 10개 시시대 시대로 정리했습니다.</p>
+              <div class="meta"><span>👁️ 256</span><span>💬 24</span></div>
+            </div>
+          </div>
+          <div class="blog-card reveal">
+            <div class="blog-thumb" style="background:linear-gradient(135deg,#0f3443,#34e89e);">🎙️<div class="date-badge">2026.03.28</div></div>
+            <div class="blog-body">
+              <div class="category">프로그램</div>
+              <h3>녹음 기록기 베타 테스트 후기</h3>
+              <p>현장 점검에서 음성 메모를 활용한 결과와 개선사항을 정리합니다.</p>
+              <div class="meta"><span>👁️ 89</span><span>💬 7</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: NEWS ===================== -->
+  <div class="tab-page" id="tab-news">
+    <section class="tab-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">📢 News</div>
+          <h2>최신 뉴스 검색</h2>
+          <p>소방청·소방신문·방재신문 등 주요 출처의 최신 뉴스를 매일 1건씩 자동 수집합니다.</p>
+        </div>
+
+        <!-- 관리자 컨트롤 + 상태 -->
+        <div class="news-control">
+          <div class="news-status">
+            <span class="ns-item">📰 전체 <b id="newsCount">0</b>건</span>
+            <span class="ns-item">🤖 마지막 자동수집 <b id="newsLastUpdate">-</b></span>
+          </div>
+          <div class="news-actions admin-only" style="display:none;">
+            <button class="btn btn-outline btn-sm" onclick="forceAutoCollect()">🔄 지금 자동수집</button>
+            <button class="btn btn-primary btn-sm" onclick="toggleNewsAddForm()">✏️ 수동 등록</button>
+          </div>
+        </div>
+
+        <!-- 관리자 수동 등록 폼 (수동 등록 버튼 클릭 시에만 표시) -->
+        <div class="write-form admin-only" id="newsAddForm" hidden>
+          <div class="form-row">
+            <div class="form-group" style="flex:1;">
+              <label>출처</label>
+              <select id="newsAddSource" class="dash-select" style="width:100%;">
+                <option>소방청</option>
+                <option>소방신문</option>
+                <option>소방방재신문</option>
+                <option>행정안전부</option>
+                <option>한국소방안전원</option>
+                <option>서울소방재난본부</option>
+                <option>경기소방재난본부</option>
+                <option>기타</option>
+              </select>
+            </div>
+            <div class="form-group" style="width:100px;">
+              <label>이모지</label>
+              <input type="text" id="newsAddEmoji" placeholder="📰" maxlength="2">
+            </div>
+          </div>
+          <div class="form-group"><label>제목</label><input type="text" id="newsAddTitle" placeholder="뉴스 제목"></div>
+          <div class="form-group"><label>요약</label><textarea id="newsAddSummary" rows="3" placeholder="3~4줄 요약"></textarea></div>
+          <div class="form-group"><label>원문 URL</label><input type="text" id="newsAddUrl" placeholder="https://..."></div>
+          <div style="display:flex; gap:8px; justify-content:flex-end;">
+            <button class="btn btn-outline btn-sm" onclick="toggleNewsAddForm()">취소</button>
+            <button class="btn btn-primary btn-sm" onclick="manualAddNews()">📨 등록</button>
+          </div>
+        </div>
+
+        <!-- 토픽/출처 필터 + 검색 -->
+        <div class="kfma-tabs" id="newsFilterTabs">
+          <button class="kfma-tab active" data-src="all" onclick="setNewsFilter('all')">전체</button>
+          <button class="kfma-tab" data-src="topic:최신기술" onclick="setNewsFilter('topic:최신기술')">🚀 최신기술</button>
+          <button class="kfma-tab" data-src="topic:논문연구" onclick="setNewsFilter('topic:논문연구')">📚 논문·연구</button>
+          <button class="kfma-tab" data-src="topic:사고처벌" onclick="setNewsFilter('topic:사고처벌')">⚖️ 사고·처벌</button>
+          <button class="kfma-tab" data-src="소방청" onclick="setNewsFilter('소방청')">소방청</button>
+          <button class="kfma-tab" data-src="소방신문" onclick="setNewsFilter('소방신문')">소방신문</button>
+          <button class="kfma-tab" data-src="행정안전부" onclick="setNewsFilter('행정안전부')">행안부</button>
+        </div>
+        <div class="board-toolbar">
+          <div class="board-count"></div>
+          <div class="board-search">
+            <input type="text" id="newsSearchInput" placeholder="제목·내용 검색" onkeyup="renderNews()">
+            <button class="btn-search" onclick="renderNews()">🔍</button>
+          </div>
+        </div>
+
+        <!-- 뉴스 카드 그리드 -->
+        <div class="news-grid" id="newsListGrid"></div>
+
+        <!-- 참고 블로그 / 사이트 위젯 -->
+        <div class="blog-refs">
+          <div class="blog-refs-header">
+            <h3>소방 관련 블로그 · 참고 사이트</h3>
+            <span class="blog-refs-sub">실시간으로 최신 글을 확인하려면 각 사이트 방문</span>
+          </div>
+          <div class="blog-refs-grid" id="blogRefsGrid"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: BOARD ===================== -->
+  <div class="tab-page" id="tab-board">
+    <section class="tab-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">📋 Board</div>
+          <h2>자유 게시판</h2>
+          <p>소방안전에 대한 질문, 의견, 정보를 자유롭게 나눠주세요.</p>
+        </div>
+        <div class="board-container">
+          <div class="board-toolbar">
+            <div class="board-count">전체 <span id="boardCount">0</span>건</div>
+            <div class="board-search">
+              <input type="text" id="boardSearchInput" placeholder="검색어를 입력하세요..." onkeyup="if(event.key==='Enter')searchBoard()">
+              <button class="btn-search" onclick="searchBoard()">🔍</button>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="autoWritePost(); alert('✅ 자동글 1건 작성 완료'); renderBoard();">🤖 자동글 가져오기</button>
+            <button class="btn btn-outline btn-sm admin-only" style="display:none;" onclick="adminAutoWriteBatch(prompt('몇 건 만들까요? (1~20)', '5'))">⚡ 일괄 자동글</button>
+            <button class="btn btn-primary" onclick="toggleWriteForm()">✏️ 글쓰기</button>
+          </div>
+          <div class="write-form" id="writeForm" style="display:none;">
+            <div class="form-row">
+              <div class="form-group" style="flex:1;"><label>제목</label><input type="text" id="postTitle" placeholder="제목을 입력하세요"></div>
+            </div>
+            <div class="form-group"><label>내용</label><textarea id="postContent" placeholder="내용을 입력하세요" rows="6"></textarea></div>
+            <div class="form-row" style="justify-content:space-between; align-items:center;">
+              <label class="checkbox-label"><input type="checkbox" id="postSecret"> 🔒 비밀글</label>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-outline" onclick="toggleWriteForm()">취소</button>
+                <button class="btn btn-primary" onclick="submitPost()">📨 등록</button>
+              </div>
+            </div>
+          </div>
+          <div class="board-table-wrap">
+            <table class="board-table" id="boardTable">
+              <thead><tr><th class="col-no">번호</th><th class="col-title">제목</th><th class="col-author">작성자</th><th class="col-date">날짜</th><th class="col-views">조회</th></tr></thead>
+              <tbody id="boardBody"></tbody>
+            </table>
+          </div>
+          <div class="board-empty" id="boardEmpty">📭 아직 게시글이 없습니다. 첫 글을 작성해 보세요!</div>
+          <div class="board-pagination" id="boardPagination" style="display:none;">
+            <button class="btn btn-outline btn-sm" onclick="loadMorePosts()">더 보기 ↓</button>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: LAWS (법령정보) ===================== -->
+  <div class="tab-page" id="tab-laws">
+    <section class="tab-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">⚖️ Laws</div>
+          <h2>법령정보</h2>
+          <p>소방 관련 주요 법령(법·시행령·시행규칙)과 행정규칙을 한 곳에서 빠르게 확인하세요.</p>
+        </div>
+
+        <!-- 좌측 카테고리 + 우측 콘텐츠 -->
+        <div class="kfma-layout">
+          <aside class="kfma-side">
+            <h4>법령 카테고리</h4>
+            <ul class="side-menu">
+              <li><a href="#law-main" class="active">소방 관련 법령</a></li>
+              <li><a href="#law-rule">소방 관련 행정규칙</a></li>
+              <li><a href="https://www.law.go.kr" target="_blank">국가법령정보센터 ↗</a></li>
+              <li><a href="https://www.nfa.go.kr" target="_blank">소방청 ↗</a></li>
+            </ul>
+            <div class="side-tip">
+              💡 법령은 <b>국가법령정보센터</b>의 최신본으로 연결됩니다.
+            </div>
+          </aside>
+
+          <div class="kfma-content">
+            <!-- 소방 관련 법령 -->
+            <div class="kfma-block" id="law-main">
+              <div class="kfma-block-header">
+                <h3>📕 소방 관련 법령</h3>
+                <span class="kfma-sub">법 · 시행령 · 시행규칙 (3단 구조)</span>
+              </div>
+              <div class="law-grid" id="lawMainGrid"></div>
+            </div>
+
+            <!-- 행정규칙 -->
+            <div class="kfma-block" id="law-rule">
+              <div class="kfma-block-header">
+                <h3>📘 소방 관련 행정규칙</h3>
+                <span class="kfma-sub">고시 · 훈령 · 예규</span>
+              </div>
+              <div class="rule-list" id="lawRuleList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: TECH DATA (기술자료) ===================== -->
+  <div class="tab-page" id="tab-tech">
+    <section class="tab-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">🛠️ Tech Data</div>
+          <h2>기술자료</h2>
+          <p>화재안전기준 해설, 점검·설계·시공 기술자료를 게시판 형식으로 제공합니다.</p>
+        </div>
+
+        <div class="kfma-board">
+          <div class="kfma-tabs" id="techCategoryTabs">
+            <button class="kfma-tab active" data-cat="all">전체</button>
+            <button class="kfma-tab" data-cat="점검">점검</button>
+            <button class="kfma-tab" data-cat="설계">설계</button>
+            <button class="kfma-tab" data-cat="시공">시공</button>
+            <button class="kfma-tab" data-cat="감리">감리</button>
+            <button class="kfma-tab" data-cat="해설">기준해설</button>
+          </div>
+
+          <div class="board-toolbar">
+            <div class="board-count">전체 <span id="techCount">0</span>건</div>
+            <div class="board-search">
+              <input type="text" id="techSearchInput" placeholder="제목 검색" onkeyup="renderTech()">
+              <button class="btn-search" onclick="renderTech()">🔍</button>
+            </div>
+          </div>
+
+          <div class="board-table-wrap">
+            <table class="board-table kfma-table">
+              <thead><tr>
+                <th class="col-no">번호</th>
+                <th style="width:90px;">분류</th>
+                <th>제목</th>
+                <th style="width:60px; text-align:center;">첨부</th>
+                <th style="width:100px;">등록일</th>
+                <th style="width:60px; text-align:center;">조회</th>
+              </tr></thead>
+              <tbody id="techBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: FORMS (서식자료) ===================== -->
+  <div class="tab-page" id="tab-forms">
+    <section class="tab-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">📄 Forms</div>
+          <h2>서식자료</h2>
+          <p>점검표·신고서·계약서 등 자주 쓰는 양식을 다운로드 받을 수 있습니다.</p>
+        </div>
+
+        <div class="kfma-board">
+          <div class="kfma-tabs" id="formCategoryTabs">
+            <button class="kfma-tab active" data-cat="all">전체</button>
+            <button class="kfma-tab" data-cat="점검표">점검표</button>
+            <button class="kfma-tab" data-cat="신고서">신고서</button>
+            <button class="kfma-tab" data-cat="계약서">계약/약관</button>
+            <button class="kfma-tab" data-cat="대장">대장/명부</button>
+            <button class="kfma-tab" data-cat="기타">기타</button>
+          </div>
+
+          <div class="board-toolbar">
+            <div class="board-count">전체 <span id="formCount">0</span>건</div>
+            <div class="board-search">
+              <input type="text" id="formSearchInput" placeholder="양식명 검색" onkeyup="renderForms()">
+              <button class="btn-search" onclick="renderForms()">🔍</button>
+            </div>
+          </div>
+
+          <div class="board-table-wrap">
+            <table class="board-table kfma-table">
+              <thead><tr>
+                <th class="col-no">번호</th>
+                <th style="width:90px;">분류</th>
+                <th>양식명</th>
+                <th style="width:80px; text-align:center;">파일</th>
+                <th style="width:100px;">등록일</th>
+                <th style="width:80px; text-align:center;">다운</th>
+              </tr></thead>
+              <tbody id="formBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: MEMBER INFO (회원정보) ===================== -->
+  <div class="tab-page" id="tab-members-info">
+    <section class="tab-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">🪪 Membership</div>
+          <h2>회원정보</h2>
+          <p>Fire-Sugi 회원 가입 안내, 혜택, 마이페이지를 확인하세요.</p>
+        </div>
+
+        <div class="member-info-grid">
+          <!-- 좌: 마이페이지 또는 가입유도 -->
+          <div class="mi-card mi-mypage" id="miMyArea"></div>
+
+          <!-- 우: 회원 등급/혜택 -->
+          <div class="mi-card">
+            <h3>💎 회원 등급 · 혜택</h3>
+            <div class="grade-list">
+              <div class="grade-row">
+                <div class="grade-badge bronze">🥉 일반회원</div>
+                <ul>
+                  <li>모든 프로그램 무료 이용</li>
+                  <li>게시판 글쓰기·댓글</li>
+                  <li>화재안전기준 학습 도구</li>
+                </ul>
+              </div>
+              <div class="grade-row">
+                <div class="grade-badge silver">🥈 정회원</div>
+                <ul>
+                  <li>일반회원 혜택 + 기술자료 다운로드</li>
+                  <li>점검 지적서 자동생성 무제한</li>
+                  <li>월간 법령 업데이트 알림</li>
+                </ul>
+              </div>
+              <div class="grade-row">
+                <div class="grade-badge gold">👑 프리미엄</div>
+                <ul>
+                  <li>정회원 혜택 + 우선 기술지원</li>
+                  <li>맞춤형 양식 제작 요청</li>
+                  <li>1:1 법령 자문(분기 1회)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 통합 회원 현황 / 관리 -->
+        <div class="mi-card" style="margin-top:18px;">
+          <div class="kfma-block-header" style="margin-bottom:14px;">
+            <h3>👥 회원 현황</h3>
+            <span class="kfma-sub admin-only" style="display:none;">관리자: 권한 변경 · 차단 · 삭제 가능</span>
+          </div>
+
+          <!-- 관리자 통계 (관리자에게만 표시) -->
+          <div class="admin-stats admin-only" style="display:none;">
+            <div class="stat-box"><div class="sb-label">전체 회원</div><div class="sb-value" id="mTotal">0</div></div>
+            <div class="stat-box"><div class="sb-label">관리자</div><div class="sb-value" id="mAdmins">0</div></div>
+            <div class="stat-box"><div class="sb-label">차단된 회원</div><div class="sb-value danger" id="mBanned">0</div></div>
+            <div class="stat-box"><div class="sb-label">현재 온라인</div><div class="sb-value online" id="mOnline">0</div></div>
+          </div>
+
+          <div class="board-toolbar" style="margin-bottom:14px;">
+            <div class="board-count">전체 <span id="memberCount">0</span>명</div>
+            <div class="board-search">
+              <input type="text" id="memberSearchInput" placeholder="아이디로 검색" onkeyup="renderMembers()">
+              <button class="btn-search" onclick="renderMembers()">🔍</button>
+            </div>
+          </div>
+          <div class="board-table-wrap">
+            <table class="board-table kfma-table" id="memberTable">
+              <thead><tr>
+                <th class="col-no">번호</th>
+                <th>아이디</th>
+                <th style="width:100px;">가입일</th>
+                <th style="width:120px;">마지막 접속</th>
+                <th style="width:70px; text-align:center;">게시글</th>
+                <th style="width:90px;">역할</th>
+                <th style="width:90px;">상태</th>
+                <th style="width:90px;">이웃</th>
+                <th class="admin-only" style="display:none; width:200px;">관리</th>
+              </tr></thead>
+              <tbody id="memberBody"></tbody>
+            </table>
+          </div>
+          <div class="board-empty" id="memberEmpty" style="display:none;">📭 가입된 회원이 없습니다.</div>
+        </div>
+
+        <!-- 가입 절차 -->
+        <div class="mi-card" style="margin-top:18px;">
+          <h3>📝 가입 절차</h3>
+          <div class="signup-steps">
+            <div class="ss-step"><div class="ss-num">1</div><div><b>회원가입</b><p>아이디·비밀번호 입력 후 약관 동의</p></div></div>
+            <div class="ss-step"><div class="ss-num">2</div><div><b>등급 선택</b><p>일반/정회원/프리미엄 중 선택</p></div></div>
+            <div class="ss-step"><div class="ss-num">3</div><div><b>승인 대기</b><p>정회원 이상은 관리자 승인(평일 24시간 이내)</p></div></div>
+            <div class="ss-step"><div class="ss-num">4</div><div><b>이용 시작</b><p>모든 자료·도구 이용 가능</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== TAB: DASHBOARD (admin) ===================== -->
+  <div class="tab-page" id="tab-dashboard">
+    <section class="tab-section">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="tag">📊 Live Dashboard</div>
+          <h2>접속 상황판</h2>
+          <p>실시간 접속자 현황과 활동 로그를 확인합니다. (30초마다 자동 갱신)</p>
+        </div>
+
+        <div class="admin-stats">
+          <div class="stat-box accent">
+            <div class="sb-label">현재 온라인</div>
+            <div class="sb-value online" id="dOnline">0</div>
+            <div class="sb-sub" id="dOnlineSub">최근 5분 이내 활동</div>
+          </div>
+          <div class="stat-box">
+            <div class="sb-label">오늘 접속</div>
+            <div class="sb-value" id="dToday">0</div>
+            <div class="sb-sub" id="dTodaySub">오늘 활동 회원 수</div>
+          </div>
+          <div class="stat-box">
+            <div class="sb-label">7일 활동</div>
+            <div class="sb-value" id="dWeek">0</div>
+            <div class="sb-sub">최근 7일 로그 합계</div>
+          </div>
+          <div class="stat-box">
+            <div class="sb-label">총 게시글</div>
+            <div class="sb-value" id="dPosts">0</div>
+            <div class="sb-sub" id="dPostsSub">전체 게시글 수</div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- 7일 차트 -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3>📈 일자별 활동량 (최근 7일)</h3>
+              <button class="btn btn-outline btn-sm" onclick="renderDashboard()">↻ 새로고침</button>
+            </div>
+            <div class="bar-chart" id="dChart"></div>
+          </div>
+
+          <!-- 현재 온라인 사용자 -->
+          <div class="dash-card">
+            <div class="dash-card-header"><h3>🟢 현재 접속 중</h3></div>
+            <div id="dOnlineList" class="online-list"></div>
+          </div>
+
+          <!-- 최근 로그 -->
+          <div class="dash-card dash-full">
+            <div class="dash-card-header">
+              <h3>📜 최근 활동 로그</h3>
+              <div style="display:flex; gap:6px;">
+                <select id="dLogFilter" onchange="renderDashboard()" class="dash-select">
+                  <option value="all">전체</option>
+                  <option value="로그인">로그인</option>
+                  <option value="로그아웃">로그아웃</option>
+                  <option value="회원가입">회원가입</option>
+                  <option value="글작성">글작성</option>
+                  <option value="페이지">페이지접속</option>
+                </select>
+                <button class="btn btn-outline btn-sm" onclick="clearLogs()">🗑️ 로그 초기화</button>
+              </div>
+            </div>
+            <div class="board-table-wrap">
+              <table class="board-table">
+                <thead><tr>
+                  <th style="width:160px;">시각</th>
+                  <th style="width:120px;">아이디</th>
+                  <th>활동</th>
+                  <th style="width:100px;">브라우저</th>
+                </tr></thead>
+                <tbody id="dLogBody"></tbody>
+              </table>
+            </div>
+            <div class="board-empty" id="dLogEmpty" style="display:none;">📭 활동 로그가 없습니다.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== MODALS ===================== -->
+
+  <!-- 로그인 모달 -->
+  <div class="modal-overlay" id="loginModal" style="display:none;" onclick="if(event.target===this)hideLoginModal()">
+    <div class="modal-content modal-sm">
+      <button class="modal-close" onclick="hideLoginModal()">✕</button>
+      <div style="text-align:center; margin-bottom:24px;">
+        <div class="logo-icon" style="margin:0 auto 12px; width:48px; height:48px; font-size:1.5rem;">🔥</div>
+        <h2 style="font-size:1.3rem;">로그인</h2>
+      </div>
+      <div class="form-group"><label>아이디</label><input type="text" id="loginId" placeholder="아이디"></div>
+      <div class="form-group"><label>비밀번호</label><input type="password" id="loginPw" placeholder="비밀번호"></div>
+      <div class="form-error" id="loginError"></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doLogin()">로그인</button>
+      <div style="text-align:center; margin-top:16px;">
+        <span style="color:var(--text-secondary); font-size:0.85rem;">계정이 없으신가요?</span>
+        <a href="#" style="color:var(--accent); font-size:0.85rem; margin-left:8px;" onclick="showSignupModal()">회원가입</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 회원가입 모달 -->
+  <div class="modal-overlay" id="signupModal" style="display:none;" onclick="if(event.target===this)hideSignupModal()">
+    <div class="modal-content modal-sm">
+      <button class="modal-close" onclick="hideSignupModal()">✕</button>
+      <div style="text-align:center; margin-bottom:24px;">
+        <div class="logo-icon" style="margin:0 auto 12px; width:48px; height:48px; font-size:1.5rem;">🔥</div>
+        <h2 style="font-size:1.3rem;">회원가입</h2>
+      </div>
+      <div class="form-group"><label>아이디 <span style="color:var(--text-secondary);">(3자 이상)</span></label><input type="text" id="signupId" placeholder="아이디"></div>
+      <div class="form-group"><label>비밀번호 <span style="color:var(--text-secondary);">(4자 이상)</span></label><input type="password" id="signupPw" placeholder="비밀번호"></div>
+      <div class="form-group"><label>비밀번호 확인</label><input type="password" id="signupPw2" placeholder="비밀번호 확인"></div>
+      <div class="terms-box">
+        <h4>📜 이용약관</h4>
+        <div class="terms-scroll">본 블로그는 소방안전 관련 정보 공유를 목적으로 운영됩니다.
+1. 회원은 소방안전과 관련된 건전한 정보를 공유합니다.
+2. 타인을 비방하거나 허위 정보를 유포하지 않습니다.
+3. 게시물의 저작권은 작성자에게 있으며, 블로그 운영 목적에 한해 활용될 수 있습니다.
+4. 개인정보는 localStorage에 저장되며 외부로 전송되지 않습니다.
+5. 운영자는 부적절한 게시물을 삭제할 수 있습니다.</div>
+      </div>
+      <label class="checkbox-label" style="margin-bottom:16px;"><input type="checkbox" id="signupAgree"> 이용약관에 동의합니다.</label>
+      <div class="form-error" id="signupError"></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doSignup()">가입하기</button>
+    </div>
+  </div>
+
+  <!-- 뉴스 상세 보기 모달 -->
+  <div class="modal-overlay" id="newsModal" style="display:none;" onclick="if(event.target===this)closeNewsModal()">
+    <div class="modal-content news-modal-content">
+      <button class="modal-close" onclick="closeNewsModal()">✕</button>
+      <div class="news-modal-meta" id="newsModalMeta"></div>
+      <h2 id="newsModalTitle"></h2>
+      <div class="news-modal-info" id="newsModalInfo"></div>
+      <div class="news-modal-body" id="newsModalBody"></div>
+      <div class="news-modal-actions">
+        <a id="newsModalLink" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-sm">📰 원문 기사 보기 ↗</a>
+        <button class="btn btn-outline btn-sm" onclick="closeNewsModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 게시글 보기 모달 -->
+  <div class="modal-overlay" id="postModal" style="display:none;" onclick="if(event.target===this)closePostModal()">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closePostModal()">✕</button>
+      <div class="modal-category" id="modalCategory">자유게시판</div>
+      <h2 id="modalTitle"></h2>
+      <div class="modal-meta">
+        <span id="modalAuthor"></span>
+        <span id="modalDate"></span>
+        <span id="modalViews"></span>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <!-- 댓글 영역 -->
+      <div class="comments-section">
+        <h4>💬 댓글</h4>
+        <div id="commentsList"></div>
+        <div class="comment-write">
+          <textarea id="commentInput" placeholder="댓글을 입력하세요" rows="2"></textarea>
+          <button class="btn btn-primary btn-sm" onclick="submitComment()">등록</button>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:16px;">
+        <button class="btn btn-outline btn-sm" onclick="deletePost()">🗑️ 삭제</button>
+        <button class="btn btn-outline btn-sm" onclick="closePostModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="#" onclick="showTab('home')">홈</a>
+        <a href="#" onclick="showTab('programs')">AI 프로그램</a>
+        <a href="#" onclick="showTab('laws')">법령정보</a>
+        <a href="#" onclick="showTab('tech')">기술자료</a>
+        <a href="#" onclick="showTab('forms')">서식자료</a>
+        <a href="#" onclick="showTab('members-info')">회원정보</a>
+        <a href="#" onclick="showTab('records')">기록</a>
+        <a href="#" onclick="showTab('news')">최신 뉴스 검색</a>
+        <a href="#" onclick="showTab('board')">게시판</a>
+        <a href="#" class="admin-only" onclick="showTab('dashboard')" style="display:none;">접속상황판</a>
+      </div>
+      <p>© 2026 Fire-Sugi 소방안전 블로그. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

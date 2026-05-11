@@ -1,0 +1,16 @@
+{
+  "name": "fire-sugi-blog",
+  "version": "1.0.0",
+  "description": "Fire-Sugi 소방안전 블로그 - 자동 뉴스 수집",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "collect": "node scripts/collect-news.js"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.5.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

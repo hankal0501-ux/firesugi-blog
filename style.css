@@ -90,7 +90,7 @@ nav a.active {
   color:var(--naver-green);
   font-weight:700;
 }
-nav a.active::after { display:none; }
+nav a.active::after { display:none !important; content:none !important; }
 
 .nav-toggle { display:none; background:none; border:none; color:var(--text-primary); font-size:1.4rem; cursor:pointer; flex-shrink:0; }
 .auth-area { display:flex; align-items:center; gap:6px; flex-shrink:0; white-space:nowrap; }
@@ -989,7 +989,7 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
   nav { display:none; position:absolute; top:60px; left:0; right:0; background:#fff; flex-direction:column; padding:12px; border-bottom:1px solid var(--border); box-shadow:var(--shadow-md); }
   nav.open { display:flex; }
   nav a { padding:10px 14px; font-size:0.92rem; }
-  nav a.active::after { display:none; }
+  nav a.active::after { display:none !important; content:none !important; }
   .nav-toggle { display:block; }
   .auth-area { gap:4px; }
   .blog-grid { grid-template-columns:1fr; }
@@ -2039,9 +2039,8 @@ button, .btn, a.btn, .quick-shortcut, .kfma-tab,
   color: var(--c-blue) !important;
 }
 
-/* 헤더 네비 active 인디케이터 → 그린 */
+/* 헤더 네비 active 인디케이터 → 그린 (밑줄 없음) */
 nav a.active { color: var(--naver-green) !important; }
-nav a.active::after { background: var(--naver-green) !important; }
 nav a:hover { color: var(--naver-green-dark) !important; }
 
 /* 로고 아이콘 (헤더) → 그린 */

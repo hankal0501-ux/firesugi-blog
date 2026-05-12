@@ -1000,11 +1000,8 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
   nav a.active::after { left:8px; right:8px; }
 }
 @media (max-width:960px) {
-  nav { display:none; position:absolute; top:60px; left:0; right:0; background:#fff; flex-direction:column; padding:12px; border-bottom:1px solid var(--border); box-shadow:var(--shadow-md); }
-  nav.open { display:flex; }
-  nav a { padding:10px 14px; font-size:0.92rem; }
+  /* legacy 룰 정리 — 충돌 방지용 핵심만 유지 */
   nav a.active::after { display:none !important; content:none !important; }
-  .nav-toggle { display:block; }
   .auth-area { gap:4px; }
   .blog-grid { grid-template-columns:1fr; }
   .tab-section { padding:32px 14px; }
@@ -1728,8 +1725,8 @@ html { -webkit-text-size-adjust: 100%; }
   .law-card:hover { transform: none; }
 }
 
-/* === 휴대폰 (768px 이하) === */
-@media (max-width: 768px) {
+/* === 휴대폰·태블릿 (960px 이하) === */
+@media (max-width: 960px) {
   /* 기본 폰트·간격 축소 */
   body { font-size: 14px; }
 

@@ -151,6 +151,91 @@ function toggleNeighbor(targetId) {
   return added;
 }
 
+// ===== 관리자 데이터 백업·복원 (기기간 수동 동기화) =====
+function exportAllData() {
+  if (!isAdmin()) return alert('관리자만 사용할 수 있습니다.');
+  const data = {
+    exportedAt: new Date().toISOString(),
+    exportedBy: getCurrentUser()?.id || 'unknown',
+    version: 1,
+    users:      JSON.parse(localStorage.getItem('fireSugiUsers') || '[]'),
+    posts:      JSON.parse(localStorage.getItem('fireSugiBoardPosts') || '[]'),
+    accessLogs: JSON.parse(localStorage.getItem('fireSugiAccessLogs') || '[]'),
+    onlineMap:  JSON.parse(localStorage.getItem('fireSugiOnline') || '{}'),
+    anonVisits: JSON.parse(localStorage.getItem('fireSugiAnonVisits') || '[]'),
+    neighbors:  JSON.parse(localStorage.getItem('fireSugiNeighbors') || '{}'),
+    progClicks: JSON.parse(localStorage.getItem('fireSugiProgramClicks') || '{}'),
+    // 스크린샷도 백업 (모든 프로그램 키)
+    screenshots: Object.fromEntries(
+      Object.keys(localStorage)
+        .filter(k => k.startsWith('fireSugiShots_'))
+        .map(k => [k, JSON.parse(localStorage.getItem(k))])
+    )
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dateStr = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `firesugi-backup-${dateStr}.json`;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+  alert(`✅ 백업 완료!\n\n회원 ${data.users.length}명 · 게시글 ${data.posts.length}건 · 로그 ${data.accessLogs.length}건\n\n다른 기기에서 [📥 가져오기]로 복원할 수 있습니다.`);
+}
+
+function importAllData() {
+  if (!isAdmin()) return alert('관리자만 사용할 수 있습니다.');
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'application/json,.json';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      if (!data || !data.version) {
+        return alert('⚠️ 올바른 백업 파일이 아닙니다.');
+      }
+      if (!confirm(`📥 백업 가져오기\n\n원본: ${data.exportedBy} (${new Date(data.exportedAt).toLocaleString('ko')})\n회원: ${(data.users||[]).length}명\n게시글: ${(data.posts||[]).length}건\n\n현재 데이터에 [병합]합니다 (덮어쓰기 X, 중복은 자동 제거).\n계속하시겠습니까?`)) return;
+
+      // 병합: 기존 + 신규 (중복 ID·게시글ID는 신규 우선)
+      mergeArray('fireSugiUsers', data.users || [], 'id');
+      mergeArray('fireSugiBoardPosts', data.posts || [], 'id');
+      mergeArray('fireSugiAccessLogs', data.accessLogs || [], 'ts');
+      mergeArray('fireSugiAnonVisits', data.anonVisits || [], 'ts');
+      mergeObject('fireSugiOnline', data.onlineMap || {});
+      mergeObject('fireSugiNeighbors', data.neighbors || {});
+      mergeObject('fireSugiProgramClicks', data.progClicks || {});
+      // 스크린샷 병합
+      Object.entries(data.screenshots || {}).forEach(([k, v]) => {
+        if (v) localStorage.setItem(k, JSON.stringify(v));
+      });
+
+      logActivity('데이터 가져오기: ' + file.name);
+      alert(`✅ 가져오기 완료!\n\n페이지 새로고침합니다.`);
+      setTimeout(() => location.reload(), 800);
+    } catch (err) {
+      alert('❌ 가져오기 실패: ' + err.message);
+    }
+  };
+  input.click();
+}
+
+// 배열 병합 — key로 중복 제거 (신규 우선)
+function mergeArray(storageKey, newArr, idField) {
+  const existing = JSON.parse(localStorage.getItem(storageKey) || '[]');
+  const map = new Map();
+  existing.forEach(item => map.set(item[idField], item));
+  newArr.forEach(item => map.set(item[idField], item));  // 신규가 덮어씀
+  const merged = Array.from(map.values());
+  localStorage.setItem(storageKey, JSON.stringify(merged));
+}
+function mergeObject(storageKey, newObj) {
+  const existing = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  const merged = { ...existing, ...newObj };
+  localStorage.setItem(storageKey, JSON.stringify(merged));
+}
+
 // ===== 익명 방문(비로그인) 추적 =====
 const ANON_VISITS_KEY = 'fireSugiAnonVisits';
 const ANON_ID_KEY = 'fireSugiAnonId';

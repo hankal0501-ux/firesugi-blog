@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260512s">
+  <link rel="stylesheet" href="style.css?v=20260512t">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -683,6 +683,24 @@
           또는 Google Analytics 연동을 권장합니다.
         </p>
 
+        <!-- 데이터 백업·복원 (관리자 기기간 수동 동기화) -->
+        <div class="dash-card" style="margin-bottom:18px; background:linear-gradient(135deg,var(--c-amber-light),#fff);">
+          <div class="dash-card-header">
+            <h3>🔄 데이터 백업·복원 (기기간 동기화)</h3>
+          </div>
+          <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:12px; line-height:1.6;">
+            ℹ️ localStorage 한계 때문에 회원·게시글 데이터는 <b>이 브라우저에만</b> 저장됩니다.<br>
+            <b>📤 내보내기</b>로 JSON 파일 받고 → 다른 기기(모바일 등)에서 <b>📥 가져오기</b>하면 모든 회원·글이 옮겨집니다.
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="exportAllData()">📤 전체 데이터 내보내기 (JSON)</button>
+            <button class="btn btn-outline btn-sm" onclick="importAllData()">📥 다른 기기에서 가져오기</button>
+          </div>
+          <p style="font-size:0.78rem; color:var(--text-muted); margin-top:8px;">
+            포함: 회원·게시글·활동로그·익명방문·이웃관계·클릭통계·스크린샷
+          </p>
+        </div>
+
         <!-- 어제 활동 요약 -->
         <div class="dash-card" style="margin-bottom:18px;">
           <div class="dash-card-header">
@@ -885,7 +903,7 @@
 
   <a href="#" class="back-to-top" id="backToTop">↑</a>
 
-  <script src="auth.js?v=20260512s"></script>
-  <script src="script.js?v=20260512s"></script>
+  <script src="auth.js?v=20260512t"></script>
+  <script src="script.js?v=20260512t"></script>
 </body>
 </html>

@@ -1143,6 +1143,21 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
 }
 .anon-note a { color: var(--c-blue-dark); font-weight: 700; text-decoration: underline; }
 
+/* 관리자 전용 인라인 뱃지 (섹션 제목 옆) */
+.admin-badge-inline {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 10px;
+  background: var(--c-amber-light);
+  color: var(--c-amber-dark);
+  border: 1px solid #f0c060;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+
 /* ===== ADMIN: BADGES ===== */
 .badge {
   display:inline-block; padding:3px 10px;

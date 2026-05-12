@@ -1854,7 +1854,9 @@ function renderMyArea() {
     <div class="mi-actions">
       <button class="btn btn-outline btn-sm" onclick="showTab('board')">📋 내 게시글 보기</button>
       <button class="btn btn-outline btn-sm" onclick="showTab('board'); boardNeighborOnly=true; renderBoard();">🤝 이웃 글만</button>
-      ${dbUser.role === 'admin' ? '<button class="btn btn-primary btn-sm" onclick="showTab(\'dashboard\')">📊 상황판</button>' : ''}
+      ${dbUser.role === 'admin'
+        ? '<button class="btn btn-primary btn-sm" onclick="showTab(\'dashboard\')">📊 접속상황판</button>'
+        : '<button class="btn btn-outline btn-sm" onclick="tryAdminAuthorize()">🔑 관리자 인증</button>'}
       <button class="btn btn-outline btn-sm" onclick="logout(); renderMyArea();">로그아웃</button>
     </div>
     <!-- 이웃 새글 위젯 -->

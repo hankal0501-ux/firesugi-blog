@@ -1,6 +1,6 @@
 // ===== MEMBER SYSTEM (localStorage) =====
 const AUTH_KEY = 'fireSugiUsers';
-const SITE_OWNER_ID = 'hankal0501';  // 사이트 소유자 — 항상 관리자, 다른 사람은 절대 admin 안 됨
+const ADMIN_PASSWORD = 'firesugi-admin-2026';  // 관리자 비밀번호 — 이 값 입력 시에만 관리자 권한 부여
 const SESSION_KEY = 'fireSugiSession';
 const LOG_KEY = 'fireSugiAccessLogs';
 const ONLINE_KEY = 'fireSugiOnline';
@@ -317,22 +317,59 @@ function doSignup() {
   const now = new Date();
   const joinDate = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
 
-  // 사이트 소유자(SITE_OWNER_ID)만 관리자, 그 외 모든 회원은 일반(user)
-  const role = (id.toLowerCase() === SITE_OWNER_ID.toLowerCase()) ? 'admin' : 'user';
-  const newUser = { id, pw, joinDate, role, banned: false, lastLogin: Date.now() };
+  // 모든 신규 가입자는 자동으로 정회원(premium) 등급
+  // (관리자가 되려면 가입 후 [관리자 인증] 버튼으로 비밀번호 입력 필요)
+  const newUser = {
+    id, pw, joinDate,
+    role: 'user',
+    tier: 'premium',  // ← 정회원 자동 부여
+    banned: false,
+    lastLogin: Date.now()
+  };
   users.push(newUser);
   saveUsers(users);
 
   errEl.textContent = '';
   hideSignupModal();
-  setCurrentUser({ id, joinDate, role });
-  logActivity('회원가입' + (role === 'admin' ? ' (관리자)' : ''), id);
+  setCurrentUser({ id, joinDate, role: 'user', tier: 'premium' });
+  logActivity('회원가입 (정회원)', id);
   pingOnline();
   updateAuthUI();
   refreshMembersIfVisible();
-  alert(role === 'admin'
-    ? '🎉 회원가입 완료! 관리자 권한이 부여되었습니다.'
-    : '🎉 회원가입이 완료되었습니다!');
+  alert('🎉 회원가입 완료! 자동으로 💎 정회원 등급이 부여되었습니다.\n\n프로그램 접속·기록 다운로드 등 모든 회원 기능을 이용하실 수 있습니다.');
+}
+
+// 관리자 비밀번호 인증 — 로그인된 사용자가 비번 입력 시 관리자 승급
+function tryAdminAuthorize() {
+  const me = getCurrentUser();
+  if (!me) {
+    alert('🔑 관리자 인증은 로그인 후 가능합니다.');
+    showLoginModal();
+    return;
+  }
+  if (isAdmin()) {
+    alert('이미 관리자입니다. 👑');
+    return;
+  }
+  const pw = prompt('🔑 관리자 비밀번호를 입력하세요:');
+  if (pw === null || pw === '') return;
+  if (pw !== ADMIN_PASSWORD) {
+    alert('❌ 비밀번호가 일치하지 않습니다.');
+    logActivity('관리자 인증 실패', me.id);
+    return;
+  }
+  const users = getUsers();
+  const u = users.find(x => x.id === me.id);
+  if (!u) return alert('회원 정보를 찾을 수 없습니다.');
+  u.role = 'admin';
+  delete u.tier;  // admin이 되면 tier 무의미
+  saveUsers(users);
+  setCurrentUser({ ...me, role: 'admin' });
+  logActivity('🛡 관리자 인증 성공', me.id);
+  updateAuthUI();
+  refreshMembersIfVisible();
+  alert('✅ 관리자 인증 완료!\n\n잠시 후 페이지가 새로고침됩니다.');
+  setTimeout(() => location.reload(), 1500);
 }
 
 // ===== ADMIN ACTIONS =====
@@ -375,21 +412,14 @@ function adminDeleteUser(id) {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-  // 기존 사용자 데이터 마이그레이션 + 소유자만 admin 강제
+  // 기존 사용자 데이터 마이그레이션 — admin은 그대로, 일반회원은 자동 정회원 승급
   const users = getUsers();
   let dirty = false;
   users.forEach((u) => {
-    // SITE_OWNER만 admin, 나머지는 모두 user로 강제
-    const shouldBeAdmin = (u.id.toLowerCase() === SITE_OWNER_ID.toLowerCase());
-    if (shouldBeAdmin && u.role !== 'admin') {
-      u.role = 'admin';
-      dirty = true;
-    } else if (!shouldBeAdmin && u.role === 'admin') {
-      // 다른 사람이 admin이면 강등
-      u.role = 'user';
-      dirty = true;
-    } else if (u.role === undefined) {
-      u.role = 'user';
+    if (u.role === undefined) { u.role = 'user'; dirty = true; }
+    // 관리자가 아닌 모든 회원은 자동으로 정회원(premium) 등급
+    if (u.role !== 'admin' && u.tier !== 'premium') {
+      u.tier = 'premium';
       dirty = true;
     }
     if (u.banned === undefined) { u.banned = false; dirty = true; }

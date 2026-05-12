@@ -163,7 +163,11 @@ let boardSearchQuery = '';
 let boardDisplayCount = 5; // Initial number of posts to show
 
 function getPosts() { return JSON.parse(localStorage.getItem('fireSugiBoardPosts') || '[]'); }
-function savePosts(posts) { localStorage.setItem('fireSugiBoardPosts', JSON.stringify(posts)); }
+function savePosts(posts) {
+  localStorage.setItem('fireSugiBoardPosts', JSON.stringify(posts));
+  // Firestore 동기화 (실패해도 무시)
+  if (typeof fbPushAllPosts === 'function') fbPushAllPosts(posts).catch(() => {});
+}
 
 function renderBoard() {
   const allPosts = getPosts().sort((a, b) => b.id - a.id);
@@ -320,7 +324,10 @@ function deletePost() {
   const post = posts.find(p => p.id === currentPostId);
   if (post && user && user.id !== post.author) { alert('작성자만 삭제할 수 있습니다.'); return; }
   if (!confirm('삭제하시겠습니까?')) return;
+  const deletedId = currentPostId;
   savePosts(posts.filter(p => p.id !== currentPostId));
+  // Firestore에서도 삭제
+  if (typeof fbDeletePost === 'function') fbDeletePost(deletedId).catch(() => {});
   closePostModal(); renderBoard();
 }
 

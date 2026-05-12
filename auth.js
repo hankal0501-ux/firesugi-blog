@@ -12,6 +12,10 @@ function getUsers() {
 }
 function saveUsers(users) {
   localStorage.setItem(AUTH_KEY, JSON.stringify(users));
+  // Firestore 동기화 (자동·비동기, 실패해도 진행)
+  if (typeof fbPushAllUsers === 'function') {
+    fbPushAllUsers(users).catch(() => {});
+  }
 }
 function getCurrentUser() {
   // localStorage(기억하기 ON) 우선, 없으면 sessionStorage(기억하기 OFF)
@@ -525,6 +529,8 @@ function adminDeleteUser(id) {
   let users = getUsers();
   users = users.filter(x => x.id !== id);
   saveUsers(users);
+  // Firestore에서도 영구 삭제
+  if (typeof fbDeleteUser === 'function') fbDeleteUser(id).catch(() => {});
   removeOnline(id);
   logActivity(`회원삭제: ${id}`, me.id);
   if (typeof renderMembers === 'function') renderMembers();

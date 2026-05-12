@@ -13,6 +13,7 @@ function showTab(tabName) {
   if (navLink) navLink.classList.add('active');
   // Reset program detail on tab switch + 동적 렌더
   if (tabName === 'programs') { hideProgramDetail(); renderPrograms(); }
+  if (tabName === 'records') { hideProgramDetail(); renderPrograms(); }  // 개발중 프로그램 (formerly 기록)
   if (tabName === 'home') renderHomeBoard();
   if (tabName === 'dashboard') renderDashboard();
   if (tabName === 'laws') renderLaws();
@@ -673,58 +674,76 @@ function resetProgramScreenshots(progKey) {
   showProgramDetail(progKey);
 }
 
-function renderPrograms() {
-  const grid = document.getElementById('programsGrid');
-  if (!grid) return;
-  const hidden = getHiddenPrograms();
-  const admin = isAdmin();
+function renderProgramCardHtml(key, p) {
+  const isDone = !!p.link && p.link !== '#';
+  const isFeatured = !!p.featured;
+  const statusBadge = isDone
+    ? '<span class="prog-status prog-done">완료</span>'
+    : '<span class="prog-status prog-dev">개발중</span>';
+  const desc = isDone
+    ? `<p>${esc(p.desc)}</p>`
+    : `<p class="prog-dev-msg">현재 개발 중입니다. 곧 공개 예정.</p>`;
 
-  // 표시할 프로그램 — featured 우선
-  const visible = Object.entries(programData)
-    .filter(([k]) => !hidden.includes(k))
-    .sort(([, a], [, b]) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-
-  grid.innerHTML = visible.map(([key, p]) => {
-    const isDone = !!p.link && p.link !== '#';
-    const isFeatured = !!p.featured;
-    const statusBadge = isDone
-      ? '<span class="prog-status prog-done">완료</span>'
-      : '<span class="prog-status prog-dev">개발중</span>';
-    const desc = isDone
-      ? `<p>${esc(p.desc)}</p>`
-      : `<p class="prog-dev-msg">현재 개발 중입니다. 곧 공개 예정.</p>`;
-
-    if (isFeatured) {
-      return `
-        <div class="program-card is-featured ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
-          <div class="featured-ribbon">${esc(p.ribbonText || '👑 CORE · AI 메인 ⭐')}</div>
-          <div class="featured-stars">${p.stars || '⭐⭐⭐'}</div>
-          <div class="prog-header">
-            <h3>${p.crown ? p.crown + ' ' : ''}<span class="featured-name">${esc(p.name)}</span> ${p.stars || ''}</h3>
-            ${statusBadge}
-          </div>
-          ${desc}
-          <div class="featured-tags">
-            <span class="ft-ai">🤖 AI</span>
-            <span class="ft-core">⭐ 핵심</span>
-            <span class="ft-main">🏆 메인</span>
-            <span class="ft-crown">👑 CORE</span>
-          </div>
-          <span class="card-tag">${esc(p.tag)}</span>
-        </div>`;
-    }
-
+  if (isFeatured) {
     return `
-      <div class="program-card ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
-        <div class="card-icon">${p.icon}</div>
+      <div class="program-card is-featured ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
+        <div class="featured-ribbon">${esc(p.ribbonText || '👑 CORE · AI 메인 ⭐')}</div>
+        <div class="featured-stars">${p.stars || '⭐⭐⭐'}</div>
         <div class="prog-header">
-          <h3>${esc(p.name)}</h3>
+          <h3>${p.crown ? p.crown + ' ' : ''}<span class="featured-name">${esc(p.name)}</span> ${p.stars || ''}</h3>
           ${statusBadge}
         </div>
         ${desc}
+        <div class="featured-tags">
+          <span class="ft-ai">🤖 AI</span>
+          <span class="ft-core">⭐ 핵심</span>
+          <span class="ft-main">🏆 메인</span>
+          <span class="ft-crown">👑 CORE</span>
+        </div>
         <span class="card-tag">${esc(p.tag)}</span>
       </div>`;
-  }).join('');
+  }
+
+  return `
+    <div class="program-card ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
+      <div class="card-icon">${p.icon}</div>
+      <div class="prog-header">
+        <h3>${esc(p.name)}</h3>
+        ${statusBadge}
+      </div>
+      ${desc}
+      <span class="card-tag">${esc(p.tag)}</span>
+    </div>`;
+}
+
+function renderPrograms() {
+  const gridCompleted = document.getElementById('programsGrid');
+  const gridDev = document.getElementById('devProgramsGrid');
+  const hidden = getHiddenPrograms();
+  const admin = isAdmin();
+
+  // 완료/개발중 분리
+  const completed = [];
+  const devList = [];
+  Object.entries(programData).forEach(([k, p]) => {
+    if (hidden.includes(k)) return;
+    const isDone = !!p.link && p.link !== '#';
+    (isDone ? completed : devList).push([k, p]);
+  });
+
+  // 완료된 것 중 featured 우선
+  completed.sort(([, a], [, b]) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+
+  if (gridCompleted) {
+    gridCompleted.innerHTML = completed.length
+      ? completed.map(([k, p]) => renderProgramCardHtml(k, p)).join('')
+      : '<div class="empty-state">📭 완료된 프로그램이 없습니다.</div>';
+  }
+  if (gridDev) {
+    gridDev.innerHTML = devList.length
+      ? devList.map(([k, p]) => renderProgramCardHtml(k, p)).join('')
+      : '<div class="empty-state">🎉 개발중인 프로그램이 없습니다.</div>';
+  }
 
   // 관리자 + 삭제된 프로그램 있으면 휴지통 영역 표시
   const trashHost = document.getElementById('programTrash');

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260512g">
+  <link rel="stylesheet" href="style.css?v=20260512h">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -23,7 +23,7 @@
       <nav>
         <a href="#" class="active" data-tab="home" onclick="showTab('home')">홈</a>
         <a href="#" data-tab="programs" onclick="showTab('programs')">AI 프로그램</a>
-        <a href="#" data-tab="records" onclick="showTab('records')">기록</a>
+        <a href="#" data-tab="records" onclick="showTab('records')">개발중</a>
         <a href="#" data-tab="news" onclick="showTab('news')">최신 뉴스 검색</a>
         <a href="#" data-tab="laws" onclick="showTab('laws')">법령정보</a>
         <a href="#" data-tab="tech" onclick="showTab('tech')">기술자료</a>
@@ -225,44 +225,16 @@
     </section>
   </div>
 
-  <!-- ===================== TAB: RECORDS ===================== -->
+  <!-- ===================== TAB: 개발중 프로그램 (구 RECORDS) ===================== -->
   <div class="tab-page" id="tab-records">
-    <section class="tab-section reveal">
+    <section class="tab-section">
       <div class="section-inner">
         <div class="section-header">
-          <div class="tag">📝 Records</div>
-          <h2>개발 기록</h2>
-          <p>프로그램 개발 과정과 소방안전 학습 기록을 공유합니다.</p>
+          <div class="tag">🚧 In Development</div>
+          <h2>개발중 프로그램</h2>
+          <p>현재 개발 진행 중인 프로그램들입니다. 완성 후 [AI 프로그램] 탭으로 이동됩니다.</p>
         </div>
-        <div class="blog-grid">
-          <div class="blog-card reveal">
-            <div class="blog-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">📋<div class="date-badge">2026.05.09</div></div>
-            <div class="blog-body">
-              <div class="category">개발일지</div>
-              <h3>Fire-Sugi v5 점검지적서 완성</h3>
-              <p>Gemini API를 활용한 수기 메모 OCR 변환과 법종 자동 판단 기능을 탑재했습니다.</p>
-              <div class="meta"><span>👁️ 128</span><span>💬 12</span></div>
-            </div>
-          </div>
-          <div class="blog-card reveal">
-            <div class="blog-thumb" style="background:linear-gradient(135deg,#2d1b69,#11998e);">⚖️<div class="date-badge">2026.04.15</div></div>
-            <div class="blog-body">
-              <div class="category">법률연구</div>
-              <h3>역사적 소방법령 시대 분류 (Era A~J)</h3>
-              <p>1964년부터 현행까지 소방시설 설치기준의 변천사를 10개 시시대 시대로 정리했습니다.</p>
-              <div class="meta"><span>👁️ 256</span><span>💬 24</span></div>
-            </div>
-          </div>
-          <div class="blog-card reveal">
-            <div class="blog-thumb" style="background:linear-gradient(135deg,#0f3443,#34e89e);">🎙️<div class="date-badge">2026.03.28</div></div>
-            <div class="blog-body">
-              <div class="category">프로그램</div>
-              <h3>녹음 기록기 베타 테스트 후기</h3>
-              <p>현장 점검에서 음성 메모를 활용한 결과와 개선사항을 정리합니다.</p>
-              <div class="meta"><span>👁️ 89</span><span>💬 7</span></div>
-            </div>
-          </div>
-        </div>
+        <div class="programs-grid" id="devProgramsGrid"></div>
       </div>
     </section>
   </div>
@@ -899,7 +871,7 @@
         <a href="#" onclick="showTab('tech')">기술자료</a>
         <a href="#" onclick="showTab('forms')">서식자료</a>
         <a href="#" onclick="showTab('members-info')">회원정보</a>
-        <a href="#" onclick="showTab('records')">기록</a>
+        <a href="#" onclick="showTab('records')">개발중</a>
         <a href="#" onclick="showTab('news')">최신 뉴스 검색</a>
         <a href="#" onclick="showTab('board')">게시판</a>
         <a href="#" class="admin-only" onclick="showTab('dashboard')" style="display:none;">접속상황판</a>
@@ -910,7 +882,7 @@
 
   <a href="#" class="back-to-top" id="backToTop">↑</a>
 
-  <script src="auth.js?v=20260512g"></script>
-  <script src="script.js?v=20260512g"></script>
+  <script src="auth.js?v=20260512h"></script>
+  <script src="script.js?v=20260512h"></script>
 </body>
 </html>

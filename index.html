@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260511o">
+  <link rel="stylesheet" href="style.css?v=20260512a">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -675,17 +675,27 @@
 
         <div class="admin-stats">
           <div class="stat-box accent">
-            <div class="sb-label">현재 온라인</div>
+            <div class="sb-label">현재 온라인 (회원)</div>
             <div class="sb-value online" id="dOnline">0</div>
             <div class="sb-sub" id="dOnlineSub">최근 5분 이내 활동</div>
           </div>
           <div class="stat-box">
-            <div class="sb-label">오늘 접속</div>
+            <div class="sb-label">오늘 회원 접속</div>
             <div class="sb-value" id="dToday">0</div>
             <div class="sb-sub" id="dTodaySub">오늘 활동 회원 수</div>
           </div>
           <div class="stat-box">
-            <div class="sb-label">7일 활동</div>
+            <div class="sb-label">오늘 일반인 방문</div>
+            <div class="sb-value" id="dAnonToday">0</div>
+            <div class="sb-sub">비로그인 방문 (브라우저별)</div>
+          </div>
+          <div class="stat-box">
+            <div class="sb-label">7일 일반인</div>
+            <div class="sb-value" id="dAnonWeek">0</div>
+            <div class="sb-sub">최근 7일 익명 방문</div>
+          </div>
+          <div class="stat-box">
+            <div class="sb-label">7일 회원활동</div>
             <div class="sb-value" id="dWeek">0</div>
             <div class="sb-sub">최근 7일 로그 합계</div>
           </div>
@@ -695,6 +705,11 @@
             <div class="sb-sub" id="dPostsSub">전체 게시글 수</div>
           </div>
         </div>
+        <p class="anon-note">
+          ℹ️ <b>일반인 통계 한계</b>: localStorage 기반이라 <b>본인 브라우저 방문만</b> 집계됩니다.
+          전체 사이트 방문 통계는 <a href="https://github.com/hankal0501-ux/firesugi-blog/graphs/traffic" target="_blank">GitHub Traffic ↗</a>
+          또는 Google Analytics 연동을 권장합니다.
+        </p>
 
         <div class="dashboard-grid">
           <!-- 7일 차트 -->
@@ -857,7 +872,7 @@
 
   <a href="#" class="back-to-top" id="backToTop">↑</a>
 
-  <script src="auth.js?v=20260511o"></script>
-  <script src="script.js?v=20260511o"></script>
+  <script src="auth.js?v=20260512a"></script>
+  <script src="script.js?v=20260512a"></script>
 </body>
 </html>

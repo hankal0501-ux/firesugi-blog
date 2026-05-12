@@ -1131,6 +1131,18 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
 .sb-value.danger { color:var(--danger); }
 .sb-sub { font-size:0.76rem; color:var(--text-muted); margin-top:6px; }
 
+.anon-note {
+  margin: 8px 0 18px;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--c-blue);
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.anon-note a { color: var(--c-blue-dark); font-weight: 700; text-decoration: underline; }
+
 /* ===== ADMIN: BADGES ===== */
 .badge {
   display:inline-block; padding:3px 10px;

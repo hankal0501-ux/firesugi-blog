@@ -139,6 +139,34 @@ function toggleNeighbor(targetId) {
   return added;
 }
 
+// ===== 익명 방문(비로그인) 추적 =====
+const ANON_VISITS_KEY = 'fireSugiAnonVisits';
+const ANON_ID_KEY = 'fireSugiAnonId';
+
+function getAnonId() {
+  let id = localStorage.getItem(ANON_ID_KEY);
+  if (!id) {
+    id = 'anon_' + Math.random().toString(36).substring(2, 10);
+    localStorage.setItem(ANON_ID_KEY, id);
+  }
+  return id;
+}
+function getAnonVisits() {
+  return JSON.parse(localStorage.getItem(ANON_VISITS_KEY) || '[]');
+}
+function trackAnonVisit() {
+  if (getCurrentUser()) return; // 로그인된 경우는 기존 logActivity로 기록됨
+  const anonId = getAnonId();
+  const visits = getAnonVisits();
+  // 같은 anonId가 1시간 이내 방문 기록 있으면 스킵 (중복 방지)
+  const lastSame = visits.filter(v => v.anonId === anonId).pop();
+  if (lastSame && Date.now() - lastSame.ts < 60 * 60 * 1000) return;
+  visits.push({ ts: Date.now(), anonId, ua: getBrowserName() });
+  // 최대 500개 유지
+  if (visits.length > 500) visits.splice(0, visits.length - 500);
+  localStorage.setItem(ANON_VISITS_KEY, JSON.stringify(visits));
+}
+
 // ===== ACCESS LOG =====
 function getLogs() {
   return JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
@@ -387,10 +415,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   updateAuthUI();
-  // 페이지 진입 로그 (로그인 상태에서만)
+  // 페이지 진입 로그
   if (getCurrentUser()) {
     logActivity('페이지 접속');
     pingOnline();
+  } else {
+    trackAnonVisit();  // 비로그인 — 익명 방문 추적
   }
   // 30초마다 온라인 핑 + 상황판 갱신
   setInterval(() => {

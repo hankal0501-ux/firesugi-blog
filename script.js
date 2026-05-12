@@ -2049,6 +2049,18 @@ function renderDashboard() {
   const weekLogs = logs.filter(l => l.ts >= weekStart);
   document.getElementById('dWeek').textContent = weekLogs.length;
 
+  // 일반인(비로그인) 익명 방문 통계
+  const anonVisits = (typeof getAnonVisits === 'function') ? getAnonVisits() : [];
+  const anonToday = anonVisits.filter(v => v.ts >= startOfDay.getTime());
+  const anonWeek = anonVisits.filter(v => v.ts >= weekStart);
+  // 오늘 고유 익명 방문자 수 (anonId 기준 unique)
+  const anonTodayUnique = new Set(anonToday.map(v => v.anonId)).size;
+  const anonWeekUnique = new Set(anonWeek.map(v => v.anonId)).size;
+  const elAnonToday = document.getElementById('dAnonToday');
+  const elAnonWeek = document.getElementById('dAnonWeek');
+  if (elAnonToday) elAnonToday.textContent = anonTodayUnique;
+  if (elAnonWeek) elAnonWeek.textContent = anonWeekUnique;
+
   document.getElementById('dPostsSub').textContent = `오늘 작성 ${todayLogs.filter(l => l.action.startsWith('글작성')).length}건`;
   document.getElementById('dOnlineSub').textContent = online.length ? online.map(o => o.id).slice(0, 3).join(', ') + (online.length > 3 ? ' 외' : '') : '없음';
 

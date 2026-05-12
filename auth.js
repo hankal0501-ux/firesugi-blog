@@ -1,6 +1,7 @@
 // ===== MEMBER SYSTEM (localStorage) =====
 const AUTH_KEY = 'fireSugiUsers';
 const ADMIN_PASSWORD = 'firesugi-admin-2026';  // 관리자 비밀번호 — 이 값 입력 시에만 관리자 권한 부여
+const SITE_OWNER_ID = 'hankal0501';  // 사이트 소유자 — 유일한 관리자, 다른 사람은 절대 admin 안 됨
 const SESSION_KEY = 'fireSugiSession';
 const LOG_KEY = 'fireSugiAccessLogs';
 const ONLINE_KEY = 'fireSugiOnline';
@@ -441,15 +442,11 @@ function doSignup() {
   const now = new Date();
   const joinDate = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
 
-  // 모든 신규 가입자는 자동으로 정회원(premium) 등급
-  // (관리자가 되려면 가입 후 [관리자 인증] 버튼으로 비밀번호 입력 필요)
-  const newUser = {
-    id, pw, joinDate,
-    role: 'user',
-    tier: 'premium',  // ← 정회원 자동 부여
-    banned: false,
-    lastLogin: Date.now()
-  };
+  // hankal0501만 admin, 나머지 전원 정회원(premium)
+  const isOwner = id.toLowerCase() === SITE_OWNER_ID.toLowerCase();
+  const newUser = isOwner
+    ? { id, pw, joinDate, role: 'admin', banned: false, lastLogin: Date.now() }
+    : { id, pw, joinDate, role: 'user', tier: 'premium', banned: false, lastLogin: Date.now() };
   users.push(newUser);
   saveUsers(users);
 
@@ -538,15 +535,18 @@ function adminDeleteUser(id) {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-  // 기존 사용자 데이터 마이그레이션 — admin은 그대로, 일반회원은 자동 정회원 승급
+  // 기존 사용자 마이그레이션 — hankal0501만 admin, 나머지 전원 정회원 강제
   const users = getUsers();
   let dirty = false;
   users.forEach((u) => {
-    if (u.role === undefined) { u.role = 'user'; dirty = true; }
-    // 관리자가 아닌 모든 회원은 자동으로 정회원(premium) 등급
-    if (u.role !== 'admin' && u.tier !== 'premium') {
-      u.tier = 'premium';
-      dirty = true;
+    const isOwner = u.id && u.id.toLowerCase() === SITE_OWNER_ID.toLowerCase();
+    if (isOwner) {
+      if (u.role !== 'admin') { u.role = 'admin'; dirty = true; }
+      if (u.tier) { delete u.tier; dirty = true; }
+    } else {
+      if (u.role === 'admin') { u.role = 'user'; dirty = true; }  // 다른 관리자는 강등
+      if (u.role === undefined) { u.role = 'user'; dirty = true; }
+      if (u.tier !== 'premium') { u.tier = 'premium'; dirty = true; }
     }
     if (u.banned === undefined) { u.banned = false; dirty = true; }
   });

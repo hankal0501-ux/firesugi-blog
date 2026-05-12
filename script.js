@@ -104,8 +104,35 @@ function createParticles() {
 }
 
 // ===== STATS =====
+function getStatValue(key) {
+  switch (key) {
+    case 'programs':
+      // 숨겨진 프로그램 제외한 실제 프로그램 수
+      const hidden = (typeof getHiddenPrograms === 'function') ? getHiddenPrograms() : [];
+      return Object.keys(programData).filter(k => !hidden.includes(k)).length;
+    case 'laws':
+      // 주요 법령(lawData) + 관계법령(relatedLawData) 합산
+      const main = (typeof lawData !== 'undefined') ? lawData.length : 0;
+      const related = (typeof relatedLawData !== 'undefined') ? relatedLawData.length : 0;
+      return main + related;
+    case 'posts':
+      // 게시판 글 수
+      return (typeof getPosts === 'function') ? getPosts().length : 0;
+    default:
+      return 0;
+  }
+}
+
 function initStats() {
   const els = document.querySelectorAll('.stat-number');
+  // data-key 기반으로 실제 값을 data-target에 반영
+  els.forEach(el => {
+    const key = el.dataset.key;
+    if (key) {
+      const val = getStatValue(key);
+      el.dataset.target = String(val);
+    }
+  });
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { animateNum(e.target); obs.unobserve(e.target); } });
   }, { threshold: 0.5 });

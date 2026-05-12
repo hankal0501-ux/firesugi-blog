@@ -1753,7 +1753,7 @@ html { -webkit-text-size-adjust: 100%; }
   /* 햄버거 토글 숨김 — 메뉴 항상 표시 */
   .nav-toggle { display: none !important; }
 
-  /* 네비 — 2번째 행 강제 (flex-basis 100%로 줄바꿈) */
+  /* 네비 — 2~3행 자동 줄바꿈 (스크롤 없이 모든 메뉴 표시) */
   nav {
     display: flex !important;
     position: static !important;
@@ -1761,28 +1761,24 @@ html { -webkit-text-size-adjust: 100%; }
     width: 100% !important;
     order: 3;
     flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden;
-    padding: 0 0 4px !important;
-    margin: 4px -12px 0 -12px;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    flex-wrap: wrap !important;   /* 가로 줄바꿈 허용 */
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 4px 0 0 0;
     border: none !important;
     box-shadow: none !important;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
     gap: 6px;
     background: transparent;
+    justify-content: flex-start;
+    row-gap: 6px;
   }
-  nav::-webkit-scrollbar { display: none; }
   nav a {
     flex: 0 0 auto;
-    padding: 7px 14px !important;
-    font-size: 0.84rem !important;
+    padding: 6px 12px !important;
+    font-size: 0.82rem !important;
     border: 1px solid var(--border) !important;
     border-bottom: 1px solid var(--border) !important;
-    border-radius: 18px !important;
+    border-radius: 16px !important;
     background: var(--bg-secondary);
     white-space: nowrap;
     font-weight: 600;
@@ -1793,8 +1789,8 @@ html { -webkit-text-size-adjust: 100%; }
     border-color: var(--naver-green) !important;
   }
 
-  /* 헤더가 2행이라 콘텐츠 padding-top 증가 */
-  .tab-page { padding-top: 100px; }
+  /* 헤더가 2~3행이라 콘텐츠 padding-top 동적 확보 */
+  .tab-page { padding-top: 140px; }
 
   /* Hero 영역 컴팩트 */
   .hero { padding: 36px 16px 28px !important; }

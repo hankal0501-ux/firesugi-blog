@@ -1251,7 +1251,18 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
 .badge-banned { background:#ffe0e0; color:var(--danger); border:1px solid #ffb4b4; }
 
 /* ===== ADMIN: MINI BUTTONS ===== */
-.action-row { display:flex; gap:4px; flex-wrap:wrap; }
+.action-row {
+  display:flex;
+  gap:4px;
+  flex-wrap:nowrap;
+  align-items:center;
+  white-space:nowrap;
+}
+.action-row .btn-mini,
+.action-row .tier-select {
+  flex:0 0 auto;
+  white-space:nowrap;
+}
 .btn-mini {
   padding:5px 10px; border-radius:5px;
   border:1px solid var(--border-strong); background:#fff;

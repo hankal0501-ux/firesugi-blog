@@ -370,10 +370,10 @@ const programData = {
     version: 'NFTC 2026 · PWA 지원',
     platform: '브라우저 (PC·모바일) · 홈 화면 설치 가능',
     screenshots: [
-      { url: 'screenshots/nftc-login.png',
-        caption: '① 접근 비밀번호 입력 — 받은 패스워드를 입력하면 같은 기기에서 다시 묻지 않음' },
-      { url: 'screenshots/nftc-flashcard.png',
-        caption: '② 플래시카드 본 화면 — 조문 + 진행률(1/14) + 하단 6단계 평가 버튼 + PWA 설치 안내' }
+      { url: 'https://image.thum.io/get/width/800/https://nftc-cards.vercel.app',
+        caption: '① NFTC 학습카드 메인 화면 — 비밀번호 입력 후 플래시카드 학습' },
+      { url: 'https://image.thum.io/get/width/400/viewportWidth/400/https://nftc-cards.vercel.app',
+        caption: '② 모바일 뷰 — 6단계 평가 버튼 + PWA 설치 안내' }
     ]
   },
   recorder: {
@@ -441,10 +441,10 @@ const programData = {
     techStack: '로컬 파일 재생 + YouTube 스트리밍',
     workflow: '파일/URL 선택 → 반복 횟수 설정 → 재생 → 자동 다음 영상',
     screenshots: [
-      { url: 'screenshots/repeat-main.png',
-        caption: '① 메인 화면 — 영상 파일 선택 + YouTube URL 입력 + 반복 횟수 버튼 (없음/2x/3x/5x/∞)' },
-      { url: 'screenshots/repeat-playing.png',
-        caption: '② 재생 중 화면 — 홈·이전·재생·다음 컨트롤 + 자동재생 토글 + 현재 시간 표시' }
+      { url: 'https://image.thum.io/get/width/800/https://hankal0501-ux.github.io/repeat-player/',
+        caption: '① 메인 화면 — 영상 파일 선택 + YouTube URL 입력 + 반복 횟수 버튼' },
+      { url: 'https://image.thum.io/get/width/400/viewportWidth/400/https://hankal0501-ux.github.io/repeat-player/',
+        caption: '② 모바일 뷰 — 자동재생 토글 + 최근 영상 목록' }
     ]
   },
   firesugi: {
@@ -504,10 +504,10 @@ const programData = {
     techStack: 'SQLite FTS5 + 909MB DB · PDF 자동추출 · LLM(AI 도우미)',
     workflow: '건축물대장 PDF 업로드 → 자동 추출 → 허가일 기반 당시법·현행법 동시 판정 → 시설별 분류 리포트',
     screenshots: [
-      { url: 'screenshots/firelaw-main.png',
-        caption: '① 메인 화면 — 건축물대장 업로드 + 강화기준 vs 당시법 비교 (7개 탭: 시설조회·개정연혁·설치판정·AI도우미·당시법판정·당시법시설·시설별기준)' },
-      { url: 'screenshots/firelaw-db.png',
-        caption: '② DB 실시간 현황 — 법령텍스트 192,920건·PDF/MD 18,899건·909MB (소방관련법령 49,846 / 설비연혁 39,716 / 메뉴얼·해설서 15,998 / 화재안전기준 7,660 등)' }
+      { url: 'https://image.thum.io/get/width/800/http://firelaw.duckdns.org/login.html',
+        caption: '① 로그인 화면 — 발급받은 계정으로 접속' },
+      { url: 'https://image.thum.io/get/width/400/viewportWidth/400/http://firelaw.duckdns.org/login.html',
+        caption: '② 모바일 뷰 — 건축물대장 업로드 + 7개 탭 (서버 켜진 경우만)' }
     ]
   },
   calculators: {
@@ -522,6 +522,32 @@ const programData = {
     link: null
   }
 };
+
+// 이미지 로드 실패 시 사용할 SVG 플레이스홀더 (data URL)
+function makePlaceholderSvg(progName, caption) {
+  const title = (progName || '프로그램').slice(0, 30);
+  const sub = (caption || '스크린샷').slice(0, 60);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#e6f8ee"/>
+        <stop offset="0.5" stop-color="#e8f1ff"/>
+        <stop offset="1" stop-color="#fff4d4"/>
+      </linearGradient>
+    </defs>
+    <rect width="800" height="450" fill="url(#g)"/>
+    <g text-anchor="middle" font-family="'Noto Sans KR',sans-serif">
+      <text x="400" y="190" font-size="56" fill="#1c5cd6" font-weight="900">📷</text>
+      <text x="400" y="250" font-size="26" fill="#222" font-weight="800">${escSvg(title)}</text>
+      <text x="400" y="290" font-size="16" fill="#666">${escSvg(sub)}</text>
+      <text x="400" y="340" font-size="13" fill="#888">스크린샷 준비 중</text>
+    </g>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+function escSvg(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
 // ===== 프로그램 숨김(삭제) / 복원 =====
 const HIDDEN_PROGS_KEY = 'fireSugiHiddenPrograms';
@@ -855,11 +881,7 @@ function showProgramDetail(key) {
             <figure class="screenshot-item">
               <a href="${esc(s.url)}" target="_blank">
                 <img src="${esc(s.url)}" alt="${esc(s.caption || '스크린샷')}" loading="lazy"
-                     onerror="this.parentElement.parentElement.querySelector('.screenshot-fallback').style.display='flex'; this.style.display='none';">
-                <div class="screenshot-fallback" style="display:none;">
-                  <span>📷</span><span>이미지 없음</span>
-                  <small>${esc(s.url)}<br>${esc(s.caption || '')}</small>
-                </div>
+                     onerror="this.src='${makePlaceholderSvg(data.name, s.caption)}'; this.onerror=null;">
               </a>
               <figcaption>
                 ${esc(s.caption || '(캡션 없음)')}

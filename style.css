@@ -1753,35 +1753,46 @@ html { -webkit-text-size-adjust: 100%; }
   }
   .nav-toggle:hover { background: var(--naver-green-light); }
 
-  /* 모바일 햄버거 메뉴 — 평소 숨김, open 시 드롭다운 */
+  /* 모바일 햄버거 메뉴 — 평소 숨김, open 시 가로 스크롤 알약 펼침 */
   nav {
     display: none !important;
     position: absolute !important;
     top: 56px;
     left: 0; right: 0;
     background: #fff;
-    flex-direction: column !important;
-    padding: 8px !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    padding: 10px 12px !important;
     border-bottom: 1px solid var(--border);
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     z-index: 99;
-    max-height: calc(100vh - 56px);
-    overflow-y: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    animation: slideDown 0.25s ease;
   }
   nav.open { display: flex !important; }
-  nav a {
-    padding: 12px 16px !important;
-    font-size: 0.96rem !important;
-    border-radius: 6px !important;
-    border-bottom: 1px solid var(--border) !important;
-    background: transparent;
-    white-space: nowrap;
-    text-align: left;
+  nav::-webkit-scrollbar { display: none; }
+  @keyframes slideDown {
+    from { transform: translateY(-8px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
-  nav a:last-child { border-bottom: none !important; }
+  nav a {
+    flex: 0 0 auto;
+    padding: 9px 16px !important;
+    font-size: 0.88rem !important;
+    border-radius: 20px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--bg-secondary);
+    white-space: nowrap;
+    font-weight: 600;
+  }
   nav a.active {
-    background: var(--naver-green-light) !important;
-    color: var(--naver-green-dark) !important;
+    background: var(--naver-green) !important;
+    color: #fff !important;
+    border-color: var(--naver-green) !important;
     font-weight: 800;
   }
 

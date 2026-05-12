@@ -326,15 +326,9 @@ const programData = {
       { title: '🏠 PWA 설치', desc: '"홈 화면에 추가" 안내에서 [설치] 클릭 시 앱처럼 홈 화면 실행 + 비밀번호도 기억해 즉시 접속.' }
     ],
     howto: [
-      '1. 아래 "프로그램 바로가기" 링크를 클릭해 접속합니다.',
-      '2. 비밀번호 입력 화면에서 받은 패스워드("nftc2026")를 입력하고 [확인]을 누릅니다.',
-      '3. 같은 기기에서는 다음부터 비밀번호를 다시 묻지 않습니다.',
-      '4. 상단 셀렉터 또는 좌측 ☰ 메뉴를 열어 학습할 화재안전기준(NFTC 101~501) 중 하나를 선택합니다.',
-      '5. 플래시카드가 표시되면 조문 내용을 읽고 이해합니다. 핵심 키워드는 노란/파란 하이라이트로 표시됩니다.',
-      '6. 하단의 6개 컬러 버튼으로 평가: ❌ 모른다 / ⭐ 중요 / ✓ 기억 / 📝 메모 / 🚫 무시 / ✅ 안다',
-      '7. 우측 상단의 페이지 번호(예: 1/14 전체 35)로 진행 상황을 확인합니다.',
-      '8. "모른다" 또는 "중요"로 분류한 카드는 나중에 반복 학습합니다.',
-      '9. 자주 쓴다면 "홈 화면에 추가" 안내의 [설치]를 눌러 앱처럼 사용하세요.'
+      '1. 접속 후 비밀번호("nftc2026") 입력 → 상단 셀렉터 또는 좌측 ☰ 메뉴에서 학습할 NFTC 기준 선택.',
+      '2. 플래시카드 조문을 읽고 하단 6단계 컬러 버튼으로 평가: ❌ 모른다 / ⭐ 중요 / ✓ 기억 / 📝 메모 / 🚫 무시 / ✅ 안다.',
+      '3. "모른다·중요"로 분류한 카드 반복 학습. 자주 쓸 경우 "홈 화면에 추가" 안내의 [설치]를 누르면 앱처럼 사용 가능.'
     ],
     link: 'https://nftc-cards.vercel.app',
     version: 'NFTC 2026 · PWA 지원',
@@ -355,13 +349,9 @@ const programData = {
       { title: '💾 폴더 저장 + 💬 카톡 공유', desc: '기기의 원하는 폴더에 저장 후, 카카오톡으로 팀·고객에게 현장에서 즉시 공유.' }
     ],
     howto: [
-      '1. 스마트폰 브라우저에서 voice-memo URL에 접속합니다 (즐겨찾기·홈 추가 권장).',
-      '2. 🆕 버튼으로 새 메모를 시작합니다. 필요시 행·열을 추가해 표 구조를 만듭니다.',
-      '3. 🎤 버튼을 눌러 점검 내용을 음성으로 녹음합니다. 다시 누르면 정지.',
-      '4. 📷 카메라 또는 🖼 사진첩 버튼으로 현장 사진을 첨부합니다.',
-      '5. 표의 각 셀에 점검 결과·코멘트를 직접 입력하거나 음성으로 받아쓰기 합니다.',
-      '6. 💾 저장 버튼 → 파일명 입력 → 저장 폴더 선택 → "✅ 이 폴더에 저장" 클릭.',
-      '7. 💬 카카오톡 공유로 팀에 즉시 전송하거나 📥 기기에 저장으로 PC 동기화.'
+      '1. 🆕 새 메모 → 행·열 추가로 표 구조 생성 후 🎤 음성 녹음 + 📷 카메라/🖼 사진첩으로 현장 사진 첨부.',
+      '2. 각 셀에 점검 결과를 직접 입력하거나 음성으로 받아쓰기, 💾 저장 버튼으로 파일명·폴더 지정해 보관.',
+      '3. 💬 카카오톡 공유로 팀에 즉시 전송 또는 📥 기기에 저장으로 PC 동기화.'
     ],
     link: 'https://hankal0501-ux.github.io/voice-memo/',
     version: 'ver.P8462',
@@ -405,13 +395,9 @@ const programData = {
       { title: '📚 최근 영상 + 자동재생', desc: '최근 재생한 영상 목록 자동 저장. 자동재생 ON 시 학습이 끊기지 않고 다음 영상으로 자동 진행.' }
     ],
     howto: [
-      '1. 스마트폰 브라우저에서 repeat-player URL에 접속합니다 (즐겨찾기·홈 추가 권장).',
-      '2. 학습 영상을 불러옵니다 — (A) 영상 파일 선택 버튼으로 폰 안의 파일 선택, 또는 (B) YouTube 영상 URL을 입력창에 붙여넣기.',
-      '3. 영상이 로드되면 재생 컨트롤(홈·이전·▶ 재생·다음)이 표시됩니다.',
-      '4. 반복 설정 버튼에서 횟수를 선택합니다: 없음 / 2x / 3x / 5x / ∞ (무한).',
-      '5. 재생 버튼을 누르면 설정한 횟수만큼 자동 반복됩니다.',
-      '6. 여러 영상을 이어 학습하려면 [자동 재생 ON] 토글을 켜 두세요.',
-      '7. 화면 하단에 현재 재생 시간(0:00)이 표시되고, 최근 본 영상은 목록에서 다시 선택 가능합니다.'
+      '1. 영상 파일 선택 또는 YouTube URL 붙여넣기로 영상 로드.',
+      '2. 반복 설정 버튼에서 횟수 선택 (없음 / 2x / 3x / 5x / ∞) 후 ▶ 재생 → 자동 반복.',
+      '3. [자동 재생 ON] 토글 시 최근 영상 목록에서 다음 영상으로 자동 이어재생.'
     ],
     link: 'https://hankal0501-ux.github.io/repeat-player/',
     version: 'Mobile 전용',
@@ -472,14 +458,9 @@ const programData = {
       { title: '📊 시설별 자동 분류', desc: '시설을 소화설비·경보설비·피난구조·소화활동설비·기타 5개로 자동 분류하고 설치의무·자체점검 대상 자동 표시.' }
     ],
     howto: [
-      '1. 사이트 접속 → 로그인 화면에서 발급받은 계정으로 로그인합니다 (관리자에게 문의).',
-      '2. 메인 진입 후 좌측 [건축물대장 파일 업로드] 영역에 PDF 파일을 끌어다 놓거나 클릭해 선택합니다.',
-      '3. 자동 추출 결과(종류·명칭·연면적·허가일·지상층·지하층·층별 용도면적)를 확인하고 필요시 수정합니다.',
-      '4. 하단 [⚡ 소방시설 자동 판정] 버튼을 클릭합니다.',
-      '5. 중앙 패널에 [강화기준 — 신규 허가 시 적용] / [당시 소방시설] 카드가 동시에 표시됩니다.',
-      '6. 좌상단 탭에서 원하는 모드 선택: ① 시설조회 ② 개정연혁 ③ 설치판정 ④ AI 도우미 ⑤ 당시법 판정 ⑥ 당시법 시설 ⑦ 시설별 기준.',
-      '7. 우측 [보고서 표시창]에서 시설별 자체점검 분류를 확인하고 PDF 출력하거나 점검 지적서로 연계합니다.',
-      '8. AI 도우미 탭에서 자연어로 질문 → 관련 법령·고시·매뉴얼이 인용과 함께 답변됩니다.'
+      '1. 로그인 후 좌측 [건축물대장 파일 업로드] 영역에 PDF를 끌어다 놓고 자동 추출 결과를 확인합니다.',
+      '2. 하단 [⚡ 소방시설 자동 판정]을 클릭하면 중앙에 [강화기준 — 신규 허가 시 적용]과 [당시 소방시설] 카드가 동시에 표시됩니다.',
+      '3. 좌상단 7개 탭(시설조회·개정연혁·설치판정·AI 도우미·당시법 판정·당시법 시설·시설별 기준)에서 원하는 모드 선택 후 우측 보고서로 PDF 출력 또는 점검 지적서로 연계.'
     ],
     link: 'http://firelaw.duckdns.org/login.html',
     version: 'v1.4.0 (24remte-control)',
@@ -779,8 +760,12 @@ function showProgramDetail(key) {
   // 개발 완료 → 전체 내용 표시 (링크는 정회원/관리자만 활성화)
   const tier = getTier();
   const canAccess = (tier === 'admin' || tier === 'premium');
+  const clickCount = getProgramClickCount(key);
   const linkHtml = canAccess
-    ? `<button class="btn btn-primary detail-link-btn" onclick="openSecureLink('${key}')">📖 ${esc(data.name)} 접속하기 →</button>`
+    ? `<div class="access-row">
+         <button class="btn btn-primary detail-link-btn" onclick="openSecureLink('${key}')">📖 ${esc(data.name)} 접속하기 →</button>
+         <span class="click-count-badge" id="clickCountBadge_${key}">👁 클릭 ${clickCount}회</span>
+       </div>`
     : `<div class="locked-link">
          <button class="btn btn-outline detail-link-btn" disabled>🔒 ${esc(data.name)} — 정회원 전용</button>
          <p class="locked-msg">💎 <b>정회원 또는 관리자</b>만 이 프로그램을 이용할 수 있습니다.<br>
@@ -875,6 +860,23 @@ function hideProgramDetail() {
   document.getElementById('programDetail').style.display = 'none';
 }
 
+// 프로그램 클릭 횟수 카운터 (localStorage)
+const PROG_CLICKS_KEY = 'fireSugiProgramClicks';
+function getProgramClicks() {
+  return JSON.parse(localStorage.getItem(PROG_CLICKS_KEY) || '{}');
+}
+function getProgramClickCount(key) {
+  const clicks = getProgramClicks();
+  return (clicks[key] && clicks[key].count) || 0;
+}
+function incrementProgramClicks(key) {
+  const clicks = getProgramClicks();
+  if (!clicks[key]) clicks[key] = { count: 0 };
+  clicks[key].count++;
+  clicks[key].lastClick = Date.now();
+  localStorage.setItem(PROG_CLICKS_KEY, JSON.stringify(clicks));
+}
+
 // 안전한 프로그램 링크 열기 — URL이 마우스 호버에 노출되지 않음 (button 사용)
 function openSecureLink(key) {
   const data = programData[key];
@@ -897,7 +899,11 @@ function openSecureLink(key) {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+  incrementProgramClicks(key);
   if (typeof logActivity === 'function') logActivity('프로그램 접속: ' + key);
+  // 클릭 후 카운트 표시 갱신
+  const badge = document.getElementById('clickCountBadge_' + key);
+  if (badge) badge.textContent = '👁 클릭 ' + getProgramClickCount(key) + '회';
 }
 
 // 프로그램 링크 클릭 핸들러 — 정회원/관리자만 통과

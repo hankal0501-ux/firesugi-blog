@@ -780,8 +780,7 @@ function showProgramDetail(key) {
   const tier = getTier();
   const canAccess = (tier === 'admin' || tier === 'premium');
   const linkHtml = canAccess
-    ? `<a href="${esc(data.link)}" target="_blank" class="btn btn-primary detail-link-btn"
-         onclick="if(typeof logActivity==='function') logActivity('프로그램 접속: ${key}');">📖 ${esc(data.name)} 접속하기 →</a>`
+    ? `<button class="btn btn-primary detail-link-btn" onclick="openSecureLink('${key}')">📖 ${esc(data.name)} 접속하기 →</button>`
     : `<div class="locked-link">
          <button class="btn btn-outline detail-link-btn" disabled>🔒 ${esc(data.name)} — 정회원 전용</button>
          <p class="locked-msg">💎 <b>정회원 또는 관리자</b>만 이 프로그램을 이용할 수 있습니다.<br>
@@ -874,6 +873,31 @@ function showProgramDetail(key) {
 function hideProgramDetail() {
   document.getElementById('programList').style.display = 'block';
   document.getElementById('programDetail').style.display = 'none';
+}
+
+// 안전한 프로그램 링크 열기 — URL이 마우스 호버에 노출되지 않음 (button 사용)
+function openSecureLink(key) {
+  const data = programData[key];
+  if (!data) return;
+  if (!data.link || data.link === '#') {
+    alert('⏳ 아직 배포되지 않은 프로그램입니다.');
+    return;
+  }
+  const tier = getTier();
+  if (tier !== 'admin' && tier !== 'premium') {
+    alert('🔒 정회원 또는 관리자만 이용할 수 있습니다.');
+    return;
+  }
+  // 임시 <a> 엘리먼트 생성·즉시 클릭·제거 (URL 노출 없이 새 탭 열림)
+  const a = document.createElement('a');
+  a.href = data.link;
+  a.target = '_blank';
+  // rel 속성 없음 → about:blank 방지
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  if (typeof logActivity === 'function') logActivity('프로그램 접속: ' + key);
 }
 
 // 프로그램 링크 클릭 핸들러 — 정회원/관리자만 통과

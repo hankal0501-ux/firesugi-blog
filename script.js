@@ -33,8 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('nav');
   if (toggle) {
-    toggle.addEventListener('click', () => nav.classList.toggle('open'));
-    document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      toggle.classList.toggle('is-open', isOpen);
+      toggle.textContent = isOpen ? '✕' : '☰';
+    });
+    document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      toggle.classList.remove('is-open');
+      toggle.textContent = '☰';
+    }));
   }
   // Particles & Stats
   createParticles();

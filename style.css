@@ -1741,37 +1741,66 @@ html { -webkit-text-size-adjust: 100%; }
   .logo { font-size: 1.05rem; flex: 0 0 auto !important; order: 1; }
   .logo-icon { width: 28px; height: 28px; font-size: 0.9rem; }
   .auth-area {
-    flex: 0 0 auto !important;
-    margin-left: auto !important;
-    justify-content: flex-end;
+    flex: 1 1 auto !important;
+    justify-content: flex-end !important;
     order: 2;
+    min-width: 0;
+    margin-left: 0 !important;
   }
   .user-name-text { font-size: 0.78rem; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
   .tier-pill { padding: 3px 8px; font-size: 0.7rem; }
   .btn-sm { padding: 5px 10px; font-size: 0.74rem; }
 
-  /* 햄버거 토글 숨김 — 메뉴 항상 표시 */
-  .nav-toggle { display: none !important; }
+  /* 햄버거 토글 — 펼치기/접기 버튼 */
+  .nav-toggle {
+    display: inline-flex !important;
+    align-items: center; justify-content: center;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    order: 3;
+    flex: 0 0 auto;
+  }
+  .nav-toggle:hover, .nav-toggle:active {
+    background: var(--naver-green-light);
+    border-color: var(--naver-green);
+    color: var(--naver-green-dark);
+  }
+  /* 메뉴 열림 표시 — nav.open일 때 토글 아이콘 변경 (Edge/Safari 호환) */
+  .nav-toggle.is-open { background: var(--naver-green); color: #fff; border-color: var(--naver-green); }
 
-  /* 네비 — 2~3행 자동 줄바꿈 (스크롤 없이 모든 메뉴 표시) */
+  /* 네비 — 평소 숨김, .open 시 2~3행 자동 줄바꿈 펼침 */
   nav {
-    display: flex !important;
+    display: none !important;
     position: static !important;
     flex: 0 0 100% !important;
     width: 100% !important;
-    order: 3;
+    order: 4;
     flex-direction: row !important;
-    flex-wrap: wrap !important;   /* 가로 줄바꿈 허용 */
+    flex-wrap: wrap !important;
     overflow: visible !important;
-    padding: 0 !important;
+    padding: 8px 0 0 !important;
     margin: 4px 0 0 0;
     border: none !important;
+    border-top: 1px dashed var(--border) !important;
     box-shadow: none !important;
     gap: 6px;
+    row-gap: 6px;
     background: transparent;
     justify-content: flex-start;
-    row-gap: 6px;
+    animation: navSlideDown 0.25s ease;
   }
+  nav.open { display: flex !important; }
+  @keyframes navSlideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .auth-area { order: 3; margin-left: 0 !important; }
   nav a {
     flex: 0 0 auto;
     padding: 6px 12px !important;

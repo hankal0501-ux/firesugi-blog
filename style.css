@@ -1596,6 +1596,179 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
 }
 
 /* ========================================================
+   📱 모바일 최적화 (종합)
+   ======================================================== */
+
+/* iOS 자동 폰트 확대 방지 */
+html { -webkit-text-size-adjust: 100%; }
+
+/* 터치 디바이스: 호버 효과 비활성화 (모바일에서 stuck 방지) */
+@media (hover: none) {
+  .program-card:hover,
+  .blog-card:hover,
+  .news-card-naver:hover,
+  .law-card:hover { transform: none; }
+}
+
+/* === 휴대폰 (768px 이하) === */
+@media (max-width: 768px) {
+  /* 기본 폰트·간격 축소 */
+  body { font-size: 14px; }
+
+  /* 헤더 — 슬림화 */
+  .nav-inner { padding: 0 14px; height: 56px; gap: 6px; }
+  .logo { font-size: 1.05rem; }
+  .logo-icon { width: 28px; height: 28px; font-size: 0.9rem; }
+  .user-name-text { font-size: 0.78rem; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
+  .tier-pill { padding: 3px 8px; font-size: 0.7rem; }
+  .btn-sm { padding: 5px 10px; font-size: 0.74rem; }
+  .tab-page { padding-top: 56px; }
+
+  /* 모바일 햄버거 메뉴 개선 */
+  nav { top: 56px !important; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  nav a { padding: 12px 18px !important; font-size: 0.96rem !important;
+    border-radius: 0; border-bottom: 1px solid var(--border); }
+
+  /* Hero 영역 컴팩트 */
+  .hero { padding: 36px 16px 28px !important; }
+  .naver-logo-big { font-size: 2rem !important; gap: 6px; }
+  .hero-tagline { font-size: 0.86rem; margin-bottom: 20px; }
+  .hero-catchphrase { margin: 18px auto 12px; }
+  .hc-main { font-size: 1.5rem !important; }
+  .hc-sub { font-size: 0.9rem; }
+  .hc-keywords { gap: 6px; }
+  .hc-keywords span { padding: 4px 10px; font-size: 0.78rem; }
+  .hero-stats { gap: 20px !important; margin-top: 16px; padding-top: 16px; flex-wrap: nowrap; }
+  .stat-number { font-size: 1.3rem; }
+  .stat-label { font-size: 0.74rem; }
+
+  /* 섹션 패딩 축소 */
+  .tab-section { padding: 28px 14px !important; }
+  .section-header h2 { font-size: 1.3rem !important; }
+  .section-header p { font-size: 0.85rem; }
+
+  /* 프로그램 카드 그리드 1열로 */
+  .programs-grid { grid-template-columns: 1fr !important; gap: 12px; }
+  .program-card { padding: 20px 18px; }
+  .program-card h3 { font-size: 1.05rem; }
+  .program-card p { font-size: 0.86rem; }
+
+  /* Featured 카드 모바일 최적화 */
+  .program-card.is-featured {
+    padding: 30px 18px 18px;
+    margin-top: 18px;
+    animation: none;  /* 모바일에서 펄스 끔 (배터리 절약) */
+  }
+  .is-featured .prog-header h3 { font-size: 1.15rem !important; }
+  .featured-ribbon {
+    font-size: 0.7rem; padding: 6px 14px;
+    letter-spacing: 0.5px; top: -14px;
+  }
+  .featured-stars { font-size: 0.86rem; right: 12px; top: 10px; }
+  .featured-tags { gap: 4px; }
+  .featured-tags span { padding: 3px 9px; font-size: 0.72rem; }
+
+  /* 상세 페이지 */
+  .detail-card { padding: 22px 18px !important; }
+  .detail-header { gap: 12px; padding-bottom: 14px; margin-bottom: 20px; }
+  .detail-header h2 { font-size: 1.15rem !important; }
+  .detail-meta-row { padding: 10px 12px; gap: 6px; font-size: 0.78rem; }
+  .detail-meta { display: flex; flex-wrap: wrap; gap: 4px; width: 100%; }
+  .detail-meta + .detail-meta::before { display: none; }
+  .detail-section h3 { font-size: 0.95rem; }
+  .detail-section p, .detail-section li { font-size: 0.88rem; }
+  .feature-grid { grid-template-columns: 1fr !important; }
+
+  /* 모달 풀스크린 */
+  .modal-overlay { padding: 0 !important; }
+  .modal-content {
+    max-width: 100% !important; width: 100% !important;
+    height: 100vh !important; max-height: 100vh !important;
+    border-radius: 0 !important;
+    padding: 56px 16px 24px !important;
+  }
+  .modal-close { top: 10px; right: 10px; width: 36px; height: 36px; }
+
+  /* 게시판·뉴스·회원 테이블 가로 스크롤 */
+  .board-table-wrap { -webkit-overflow-scrolling: touch; overflow-x: auto; }
+  .board-table { min-width: 540px; font-size: 0.84rem; }
+  .board-table th, .board-table td { padding: 10px 8px; }
+
+  /* 폼 입력 — iOS 자동 줌 방지 (16px 최소) */
+  .form-group input, .form-group textarea,
+  .board-search input, #boardSearchInput,
+  #memberSearchInput, #newsSearchInput,
+  .naver-search input {
+    font-size: 16px !important;
+  }
+
+  /* 버튼 터치 영역 확보 (44x44 최소) */
+  .btn { min-height: 40px; padding: 10px 20px; }
+  .btn-mini { min-height: 32px; padding: 6px 10px; }
+  .quick-shortcut { padding: 10px 14px; }
+
+  /* 회원 등급·뱃지 */
+  .grade-badge { padding: 3px 8px; font-size: 0.74rem; }
+
+  /* 뉴스 모달 — 본문 가독성 */
+  .news-modal-content { padding: 50px 16px 20px !important; }
+  #newsModalTitle { font-size: 1.1rem !important; line-height: 1.4; }
+  .news-modal-body { font-size: 0.92rem; }
+  .news-modal-body p.lead { padding: 12px 14px; font-size: 0.96rem; }
+  .news-modal-body ol.news-list li { padding: 10px 12px 10px 42px; }
+  .news-modal-body ol.news-list li::before { width: 24px; height: 24px; font-size: 0.78rem; }
+
+  /* CTA 섹션 */
+  .cta-section { padding: 36px 20px !important; }
+  .cta-section h2 { font-size: 1.4rem !important; }
+  .cta-section p { font-size: 0.92rem; }
+
+  /* 푸터 */
+  footer { padding: 24px 16px; }
+  .footer-links { gap: 12px; }
+  .footer-links a { font-size: 0.82rem; }
+
+  /* 홈 게시판 위젯 */
+  .hb-item { padding: 14px 16px; }
+  .hb-title { white-space: normal; line-height: 1.5; font-size: 0.94rem; }
+  .hb-meta { font-size: 0.74rem; gap: 10px; }
+
+  /* 마이페이지 */
+  .mi-card { padding: 18px 16px; }
+  .mi-profile { padding: 12px; gap: 12px; }
+  .mi-avatar { width: 48px; height: 48px; font-size: 1.3rem; }
+  .mi-name { font-size: 0.96rem; }
+  .mi-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 6px; }
+  .mi-num { font-size: 1.15rem; }
+  .mi-actions { flex-direction: column; }
+  .mi-actions .btn { width: 100%; justify-content: center; }
+
+  /* 사이드 메뉴(법령탭) */
+  .kfma-side { position: static !important; padding: 14px; }
+  .kfma-side h4 { font-size: 0.88rem; }
+  .side-menu li { flex: 1 1 calc(50% - 4px); min-width: auto; }
+
+  /* 블로그 참고 카드 */
+  .blog-refs-grid { grid-template-columns: 1fr !important; }
+
+  /* 뒤로가기 버튼 큼지막히 */
+  .back-to-top { width: 48px; height: 48px; bottom: 18px; right: 18px; font-size: 1.1rem; }
+}
+
+/* === 작은 휴대폰 (400px 이하) — iPhone SE 등 === */
+@media (max-width: 400px) {
+  .nav-inner { padding: 0 10px; gap: 4px; }
+  .logo { font-size: 0.95rem; }
+  .logo-icon { width: 24px; height: 24px; }
+  .user-name-text { max-width: 60px; }
+  .hc-main { font-size: 1.3rem !important; }
+  .naver-logo-big { font-size: 1.7rem !important; }
+  .hero-stats { gap: 14px !important; }
+  .stat-number { font-size: 1.15rem; }
+  .featured-ribbon { font-size: 0.64rem; padding: 5px 11px; }
+}
+
+/* ========================================================
    NEIGHBOR (이웃) SYSTEM
    ======================================================== */
 .btn-neighbor {

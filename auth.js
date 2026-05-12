@@ -1,5 +1,6 @@
 // ===== MEMBER SYSTEM (localStorage) =====
 const AUTH_KEY = 'fireSugiUsers';
+const SITE_OWNER_ID = 'hankal0501';  // 사이트 소유자 — 항상 관리자, 다른 사람은 절대 admin 안 됨
 const SESSION_KEY = 'fireSugiSession';
 const LOG_KEY = 'fireSugiAccessLogs';
 const ONLINE_KEY = 'fireSugiOnline';
@@ -288,9 +289,8 @@ function doSignup() {
   const now = new Date();
   const joinDate = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
 
-  // 첫 가입자(봇 계정 제외) 또는 id === 'admin' 이면 관리자
-  const realUserCount = users.filter(u => !u.id.toLowerCase().includes('bot')).length;
-  const role = (realUserCount === 0 || id.toLowerCase() === 'admin') ? 'admin' : 'user';
+  // 사이트 소유자(SITE_OWNER_ID)만 관리자, 그 외 모든 회원은 일반(user)
+  const role = (id.toLowerCase() === SITE_OWNER_ID.toLowerCase()) ? 'admin' : 'user';
   const newUser = { id, pw, joinDate, role, banned: false, lastLogin: Date.now() };
   users.push(newUser);
   saveUsers(users);
@@ -347,25 +347,44 @@ function adminDeleteUser(id) {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-  // 기존 사용자 데이터 마이그레이션 (role/banned 필드 보강)
+  // 기존 사용자 데이터 마이그레이션 + 소유자만 admin 강제
   const users = getUsers();
   let dirty = false;
   users.forEach((u) => {
-    if (u.role === undefined) {
-      u.role = (u.id.toLowerCase() === 'admin') ? 'admin' : 'user';
+    // SITE_OWNER만 admin, 나머지는 모두 user로 강제
+    const shouldBeAdmin = (u.id.toLowerCase() === SITE_OWNER_ID.toLowerCase());
+    if (shouldBeAdmin && u.role !== 'admin') {
+      u.role = 'admin';
+      dirty = true;
+    } else if (!shouldBeAdmin && u.role === 'admin') {
+      // 다른 사람이 admin이면 강등
+      u.role = 'user';
+      dirty = true;
+    } else if (u.role === undefined) {
+      u.role = 'user';
       dirty = true;
     }
     if (u.banned === undefined) { u.banned = false; dirty = true; }
   });
-  // 관리자가 없는데 실제 회원(봇 제외)이 있으면 → 첫 실제 회원을 자동 승급
-  const realUsers = users.filter(u => !u.id.toLowerCase().includes('bot'));
-  const hasAdmin = users.some(u => u.role === 'admin');
-  if (!hasAdmin && realUsers.length > 0) {
-    realUsers[0].role = 'admin';
-    console.log('🛡 관리자 자동 승급:', realUsers[0].id);
-    dirty = true;
-  }
   if (dirty) saveUsers(users);
+
+  // 현재 로그인한 사용자가 DB에 없으면 자동 등록 (회원목록에 본인이 안 보이는 문제 해결)
+  const me = getCurrentUser();
+  if (me && !users.find(u => u.id === me.id)) {
+    const now = new Date();
+    const joinDate = me.joinDate || `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+    const isOwner = me.id.toLowerCase() === SITE_OWNER_ID.toLowerCase();
+    users.push({
+      id: me.id,
+      pw: '__auto_restored_' + Date.now(),  // 임시 PW (사용자가 재설정 필요)
+      joinDate,
+      role: isOwner ? 'admin' : 'user',
+      banned: false,
+      lastLogin: Date.now()
+    });
+    saveUsers(users);
+    console.log('🛡 누락된 본인 계정 자동 복구:', me.id);
+  }
 
   updateAuthUI();
   // 페이지 진입 로그 (로그인 상태에서만)

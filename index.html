@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260512u">
+  <link rel="stylesheet" href="style.css?v=20260512v">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -683,6 +683,17 @@
           또는 Google Analytics 연동을 권장합니다.
         </p>
 
+        <!-- 🔥 Firebase 실시간 동기화 상태 -->
+        <div class="dash-card" style="margin-bottom:18px; background:linear-gradient(135deg,#fff4d4,#fff);">
+          <div class="dash-card-header">
+            <h3>🔥 Firebase 통합 DB 상태</h3>
+            <button class="btn btn-primary btn-sm" onclick="showFirebaseStatus()">🔄 상태 확인</button>
+          </div>
+          <div id="firebaseStatus" style="font-size:0.86rem; line-height:1.7;">
+            <p style="color:var(--text-muted);">[🔄 상태 확인] 버튼을 클릭해 Firestore와 동기화 상태를 확인하세요.</p>
+          </div>
+        </div>
+
         <!-- 데이터 백업·복원 (관리자 기기간 수동 동기화) -->
         <div class="dash-card" style="margin-bottom:18px; background:linear-gradient(135deg,var(--c-amber-light),#fff);">
           <div class="dash-card-header">
@@ -906,9 +917,9 @@
   <!-- Firebase v10 Compat SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script src="firebase-sync.js?v=20260512u"></script>
+  <script src="firebase-sync.js?v=20260512v"></script>
 
-  <script src="auth.js?v=20260512u"></script>
-  <script src="script.js?v=20260512u"></script>
+  <script src="auth.js?v=20260512v"></script>
+  <script src="script.js?v=20260512v"></script>
 </body>
 </html>

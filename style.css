@@ -1722,19 +1722,61 @@ html { -webkit-text-size-adjust: 100%; }
   /* 기본 폰트·간격 축소 */
   body { font-size: 14px; }
 
-  /* 헤더 — 슬림화 */
-  .nav-inner { padding: 0 14px; height: 56px; gap: 6px; }
-  .logo { font-size: 1.05rem; }
+  /* 헤더 — 2행 구조 (로고+사용자 / 메뉴 가로 스크롤) */
+  .nav-inner {
+    padding: 8px 12px; height: auto; gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .logo { font-size: 1.05rem; flex: 0 0 auto; order: 1; }
   .logo-icon { width: 28px; height: 28px; font-size: 0.9rem; }
+  .auth-area { flex: 1 1 auto; justify-content: flex-end; order: 2; }
   .user-name-text { font-size: 0.78rem; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
   .tier-pill { padding: 3px 8px; font-size: 0.7rem; }
   .btn-sm { padding: 5px 10px; font-size: 0.74rem; }
-  .tab-page { padding-top: 56px; }
 
-  /* 모바일 햄버거 메뉴 개선 */
-  nav { top: 56px !important; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
-  nav a { padding: 12px 18px !important; font-size: 0.96rem !important;
-    border-radius: 0; border-bottom: 1px solid var(--border); }
+  /* 햄버거 토글 숨김 (모바일에서도 메뉴 항상 표시) */
+  .nav-toggle { display: none !important; }
+
+  /* 네비 — 상단 가로 스크롤 알약 메뉴 */
+  nav {
+    display: flex !important;
+    position: static !important;
+    width: 100%;
+    order: 3;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    padding: 2px 0 6px !important;
+    margin: 4px -12px 0 -12px;
+    padding-left: 12px !important; padding-right: 12px !important;
+    border: none !important;
+    box-shadow: none !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    flex: 0 0 auto;
+    padding: 7px 14px !important;
+    font-size: 0.84rem !important;
+    border: 1px solid var(--border) !important;
+    border-bottom: 1px solid var(--border) !important;
+    border-radius: 18px !important;
+    background: var(--bg-secondary);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  nav a.active {
+    background: var(--naver-green) !important;
+    color: #fff !important;
+    border-color: var(--naver-green) !important;
+  }
+
+  /* 헤더 늘어난 만큼 body padding 조정 */
+  .tab-page { padding-top: 110px; }
 
   /* Hero 영역 컴팩트 */
   .hero { padding: 36px 16px 28px !important; }

@@ -14,10 +14,20 @@ function saveUsers(users) {
   localStorage.setItem(AUTH_KEY, JSON.stringify(users));
 }
 function getCurrentUser() {
-  return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+  // localStorage(기억하기 ON) 우선, 없으면 sessionStorage(기억하기 OFF)
+  const stored = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
+  return JSON.parse(stored || 'null');
 }
 function setCurrentUser(user) {
-  localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  // 기존 저장 위치(local 또는 session) 그대로 갱신
+  if (localStorage.getItem(SESSION_KEY)) {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  } else if (sessionStorage.getItem(SESSION_KEY)) {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  } else {
+    // 신규 — 기본은 localStorage(기억하기 ON)
+    localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  }
 }
 function isAdmin(user) {
   const u = user || getCurrentUser();
@@ -68,6 +78,8 @@ function logout() {
   const u = getCurrentUser();
   if (u) logActivity('로그아웃', u.id);
   localStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(SESSION_KEY);
+  // 기억하기 ID는 유지 (다음 로그인 시 자동 채움)
   removeOnline(u && u.id);
   updateAuthUI();
   renderBoard();
@@ -254,7 +266,16 @@ function updateAuthUI() {
 function showLoginModal() {
   document.getElementById('loginModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
-  document.getElementById('loginId').focus();
+  // 기억된 ID가 있으면 자동 채움 → 포커스는 비밀번호 칸으로
+  const rememberedId = localStorage.getItem(REMEMBER_KEY);
+  const idInput = document.getElementById('loginId');
+  const pwInput = document.getElementById('loginPw');
+  if (rememberedId && idInput && !idInput.value) {
+    idInput.value = rememberedId;
+    pwInput && pwInput.focus();
+  } else {
+    idInput && idInput.focus();
+  }
 }
 function hideLoginModal() {
   document.getElementById('loginModal').style.display = 'none';
@@ -272,9 +293,12 @@ function hideSignupModal() {
 }
 
 // ===== LOGIN =====
+const REMEMBER_KEY = 'fireSugiRememberId';
+
 function doLogin() {
   const id = document.getElementById('loginId').value.trim();
   const pw = document.getElementById('loginPw').value;
+  const remember = document.getElementById('loginRemember')?.checked !== false;  // 기본 ON
   const errEl = document.getElementById('loginError');
 
   if (!id || !pw) { errEl.textContent = '아이디와 비밀번호를 입력하세요.'; return; }
@@ -288,9 +312,20 @@ function doLogin() {
   user.lastLogin = Date.now();
   saveUsers(users);
 
+  // 기억하기: ON → localStorage(영구), OFF → sessionStorage(세션 종료 시 자동 로그아웃)
+  const sessionData = { id: user.id, name: user.name || user.id, joinDate: user.joinDate, role: user.role || 'user', tier: user.tier };
+  if (remember) {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+    localStorage.setItem(REMEMBER_KEY, user.id);  // 다음번 ID 자동 채움용
+    sessionStorage.removeItem(SESSION_KEY);
+  } else {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+    localStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(REMEMBER_KEY);
+  }
+
   errEl.textContent = '';
-  setCurrentUser({ id: user.id, name: user.name || user.id, joinDate: user.joinDate, role: user.role || 'user' });
-  logActivity('로그인', user.id);
+  logActivity('로그인' + (remember ? ' (기억하기)' : ''), user.id);
   pingOnline();
   hideLoginModal();
   updateAuthUI();

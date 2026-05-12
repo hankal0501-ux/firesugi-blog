@@ -1733,58 +1733,53 @@ html { -webkit-text-size-adjust: 100%; }
   /* 기본 폰트·간격 축소 */
   body { font-size: 14px; }
 
-  /* 헤더 — 슬림화 (햄버거 메뉴 방식) */
-  .nav-inner { padding: 0 14px; height: 56px; gap: 6px; }
-  .logo { font-size: 1.05rem; }
+  /* 헤더 — 2행 고정 (로고+사용자 / 메뉴 가로 스크롤) */
+  .nav-inner {
+    padding: 8px 12px;
+    height: auto;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .logo { font-size: 1.05rem; flex: 0 0 auto; order: 1; }
   .logo-icon { width: 28px; height: 28px; font-size: 0.9rem; }
+  .auth-area { flex: 1 1 auto; justify-content: flex-end; order: 2; }
   .user-name-text { font-size: 0.78rem; max-width: 80px; overflow: hidden; text-overflow: ellipsis; }
   .tier-pill { padding: 3px 8px; font-size: 0.7rem; }
   .btn-sm { padding: 5px 10px; font-size: 0.74rem; }
-  .tab-page { padding-top: 56px; }
 
-  /* 햄버거 ☰ 토글 표시 + 클릭 가능 */
-  .nav-toggle {
-    display: block !important;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 12px;
-    cursor: pointer;
-  }
-  .nav-toggle:hover { background: var(--naver-green-light); }
+  /* 햄버거 토글 숨김 — 메뉴 항상 표시 */
+  .nav-toggle { display: none !important; }
 
-  /* 모바일 햄버거 메뉴 — 평소 숨김, open 시 가로 스크롤 알약 펼침 */
+  /* 네비 — 2번째 행, 가로 스크롤 알약 (상단 고정 유지) */
   nav {
-    display: none !important;
-    position: absolute !important;
-    top: 56px;
-    left: 0; right: 0;
-    background: #fff;
+    display: flex !important;
+    position: static !important;
+    width: 100%;
+    order: 3;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    padding: 10px 12px !important;
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    z-index: 99;
-    overflow-x: auto;
+    overflow-x: auto !important;
     overflow-y: hidden;
+    padding: 0 0 4px !important;
+    margin: 4px -12px 0 -12px;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    border: none !important;
+    box-shadow: none !important;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     gap: 6px;
-    animation: slideDown 0.25s ease;
+    background: transparent;
   }
-  nav.open { display: flex !important; }
   nav::-webkit-scrollbar { display: none; }
-  @keyframes slideDown {
-    from { transform: translateY(-8px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
   nav a {
     flex: 0 0 auto;
-    padding: 9px 16px !important;
-    font-size: 0.88rem !important;
-    border-radius: 20px !important;
+    padding: 7px 14px !important;
+    font-size: 0.84rem !important;
     border: 1px solid var(--border) !important;
+    border-bottom: 1px solid var(--border) !important;
+    border-radius: 18px !important;
     background: var(--bg-secondary);
     white-space: nowrap;
     font-weight: 600;
@@ -1793,8 +1788,10 @@ html { -webkit-text-size-adjust: 100%; }
     background: var(--naver-green) !important;
     color: #fff !important;
     border-color: var(--naver-green) !important;
-    font-weight: 800;
   }
+
+  /* 헤더가 2행이라 콘텐츠 padding-top 증가 */
+  .tab-page { padding-top: 100px; }
 
   /* Hero 영역 컴팩트 */
   .hero { padding: 36px 16px 28px !important; }

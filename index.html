@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260512c">
+  <link rel="stylesheet" href="style.css?v=20260512d">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -711,6 +711,44 @@
           또는 Google Analytics 연동을 권장합니다.
         </p>
 
+        <!-- 어제 활동 요약 -->
+        <div class="dash-card" style="margin-bottom:18px;">
+          <div class="dash-card-header">
+            <h3>📅 어제 활동 요약 <span id="dYesterdayDate" class="kfma-sub"></span></h3>
+            <button class="btn btn-outline btn-sm" onclick="renderDashboard()">↻ 새로고침</button>
+          </div>
+          <div class="yesterday-grid">
+            <div class="yest-box">
+              <div class="yest-num" id="dYestSignups">0</div>
+              <div class="yest-lab">🆕 신규 가입</div>
+            </div>
+            <div class="yest-box">
+              <div class="yest-num" id="dYestLogins">0</div>
+              <div class="yest-lab">🔑 로그인</div>
+            </div>
+            <div class="yest-box">
+              <div class="yest-num" id="dYestPosts">0</div>
+              <div class="yest-lab">✏️ 글작성</div>
+            </div>
+            <div class="yest-box">
+              <div class="yest-num" id="dYestAnon">0</div>
+              <div class="yest-lab">🌍 익명 방문</div>
+            </div>
+            <div class="yest-box">
+              <div class="yest-num" id="dYestActive">0</div>
+              <div class="yest-lab">💚 활동 회원</div>
+            </div>
+          </div>
+          <div class="yest-section">
+            <h4>🆕 어제 가입한 회원</h4>
+            <div id="dYestSignupList" class="yest-list"></div>
+          </div>
+          <div class="yest-section">
+            <h4>📜 어제 활동 로그</h4>
+            <div id="dYestLogList" class="yest-list"></div>
+          </div>
+        </div>
+
         <div class="dashboard-grid">
           <!-- 7일 차트 -->
           <div class="dash-card">
@@ -872,7 +910,7 @@
 
   <a href="#" class="back-to-top" id="backToTop">↑</a>
 
-  <script src="auth.js?v=20260512c"></script>
-  <script src="script.js?v=20260512c"></script>
+  <script src="auth.js?v=20260512d"></script>
+  <script src="script.js?v=20260512d"></script>
 </body>
 </html>

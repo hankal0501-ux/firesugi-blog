@@ -2075,8 +2075,64 @@ function renderDashboard() {
   const weekLogs = logs.filter(l => l.ts >= weekStart);
   document.getElementById('dWeek').textContent = weekLogs.length;
 
+  // ===== 어제 활동 요약 =====
+  const yStart = new Date(); yStart.setDate(yStart.getDate() - 1); yStart.setHours(0, 0, 0, 0);
+  const yEnd = new Date(yStart); yEnd.setHours(23, 59, 59, 999);
+  const yStartMs = yStart.getTime(), yEndMs = yEnd.getTime();
+  const yDateStr = `${yStart.getFullYear()}.${String(yStart.getMonth()+1).padStart(2,'0')}.${String(yStart.getDate()).padStart(2,'0')}`;
+
+  const allUsers = getUsers();
+  const yestSignups = allUsers.filter(u => u.joinDate === yDateStr && !u.id.toLowerCase().includes('bot'));
+  const yestLogs = logs.filter(l => l.ts >= yStartMs && l.ts <= yEndMs);
+  const yestLogins = yestLogs.filter(l => l.action && l.action.startsWith('로그인')).length;
+  const yestPostsLogs = yestLogs.filter(l => l.action && l.action.startsWith('글작성')).length;
+  const yestActiveUsers = new Set(yestLogs.map(l => l.id)).size;
+
+  const elYestDate = document.getElementById('dYesterdayDate');
+  if (elYestDate) elYestDate.textContent = `(${yDateStr})`;
+  const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setText('dYestSignups', yestSignups.length);
+  setText('dYestLogins', yestLogins);
+  setText('dYestPosts', yestPostsLogs);
+  setText('dYestActive', yestActiveUsers);
+
+  // 가입자 리스트
+  const signupList = document.getElementById('dYestSignupList');
+  if (signupList) {
+    signupList.innerHTML = yestSignups.length
+      ? yestSignups.map(u => {
+          const tier = u.role === 'admin' ? '👑 관리자' : (u.tier === 'premium' ? '💎 정회원' : '👤 일반');
+          return `<div class="yest-item">
+            <span class="yest-id">${esc(u.id)}</span>
+            <span class="yest-tier">${tier}</span>
+            <span class="yest-date">${u.joinDate}</span>
+          </div>`;
+        }).join('')
+      : '<div class="yest-empty">📭 어제 가입한 회원이 없습니다 (이 브라우저 기준)</div>';
+  }
+
+  // 활동 로그 리스트 (최대 20건)
+  const logList = document.getElementById('dYestLogList');
+  if (logList) {
+    const recentYest = yestLogs.slice().reverse().slice(0, 20);
+    logList.innerHTML = recentYest.length
+      ? recentYest.map(l => {
+          const time = new Date(l.ts);
+          const hhmm = `${String(time.getHours()).padStart(2,'0')}:${String(time.getMinutes()).padStart(2,'0')}`;
+          return `<div class="yest-item">
+            <span class="yest-time">${hhmm}</span>
+            <span class="yest-id">${esc(l.id)}</span>
+            <span class="yest-action">${esc(l.action || '-')}</span>
+          </div>`;
+        }).join('') + (yestLogs.length > 20 ? `<div class="yest-more">+ ${yestLogs.length - 20} 건 더</div>` : '')
+      : '<div class="yest-empty">📭 어제 활동 기록이 없습니다 (이 브라우저 기준)</div>';
+  }
+
   // 일반인(비로그인) 익명 방문 통계
   const anonVisits = (typeof getAnonVisits === 'function') ? getAnonVisits() : [];
+  const anonYest = anonVisits.filter(v => v.ts >= yStartMs && v.ts <= yEndMs);
+  const anonYestUnique = new Set(anonYest.map(v => v.anonId)).size;
+  setText('dYestAnon', anonYestUnique);
   const anonToday = anonVisits.filter(v => v.ts >= startOfDay.getTime());
   const anonWeek = anonVisits.filter(v => v.ts >= weekStart);
   // 오늘 고유 익명 방문자 수 (anonId 기준 unique)

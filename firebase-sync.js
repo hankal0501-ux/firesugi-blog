@@ -233,6 +233,20 @@ async function initFirebaseSync() {
 
     console.log(`🔥 추가 동기화: 로그 ${mergedLogs.length}건, 익명방문 ${mergedAnons.length}건`);
 
+    // ─ 사용자 추가 프로그램 동기화 ─
+    try {
+      const upSnap = await fbDb.collection('userPrograms').get();
+      const remoteUserProgs = {};
+      upSnap.forEach(doc => { remoteUserProgs[doc.id] = doc.data(); });
+      const localUserProgs = JSON.parse(localStorage.getItem('fireSugiUserPrograms') || '{}');
+      const mergedUserProgs = { ...localUserProgs, ...remoteUserProgs };
+      localStorage.setItem('fireSugiUserPrograms', JSON.stringify(mergedUserProgs));
+      // programData에 머지
+      if (typeof programData !== 'undefined') Object.assign(programData, mergedUserProgs);
+      console.log(`🔥 사용자 추가 프로그램: ${Object.keys(mergedUserProgs).length}건`);
+      if (typeof renderPrograms === 'function') renderPrograms();
+    } catch (e) { console.warn('userPrograms sync 실패:', e.message); }
+
     // 본 기기의 데이터도 Firestore로 푸시 (양방향 sync 보장)
     await fbPushAllUsers(mergedUsers);
     await fbPushAllPosts(mergedPosts);

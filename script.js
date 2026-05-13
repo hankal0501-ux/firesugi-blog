@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Particles & Stats
   createParticles();
   initStats();
+  // 사용자 추가 프로그램 로드 (programData에 머지)
+  loadUserPrograms();
   // Board
   renderBoard();
   renderHomeBoard();
@@ -530,6 +532,155 @@ const programData = {
   }
 };
 
+// ===== 사용자 추가 프로그램 (관리자 직접 입력) =====
+const USER_PROGRAMS_KEY = 'fireSugiUserPrograms';
+
+function getUserPrograms() {
+  return JSON.parse(localStorage.getItem(USER_PROGRAMS_KEY) || '{}');
+}
+function saveUserPrograms(obj) {
+  localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(obj));
+  // Firestore 동기화
+  if (typeof fbDb !== 'undefined') {
+    Object.entries(obj).forEach(([key, p]) => {
+      fbDb.collection('userPrograms').doc(key).set(p, { merge: true }).catch(() => {});
+    });
+  }
+}
+
+function showAddProgramModal() {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  document.getElementById('programAddModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  document.getElementById('paName').focus();
+}
+function hideAddProgramModal() {
+  document.getElementById('programAddModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+async function submitAddProgram() {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  const get = id => document.getElementById(id).value.trim();
+  const name = get('paName');
+  const icon = get('paIcon') || '📦';
+  const tag = get('paTag');
+  const desc = get('paDesc');
+  const link = get('paLink');
+  const version = get('paVersion');
+  const platform = get('paPlatform');
+  const errEl = document.getElementById('paError');
+
+  if (!name || !tag || !desc) { errEl.textContent = '이름·분류·설명은 필수입니다.'; return; }
+
+  // 첨부 파일 → base64
+  const fileInput = document.getElementById('paAttachment');
+  let attachment = null;
+  if (fileInput.files && fileInput.files[0]) {
+    const file = fileInput.files[0];
+    if (file.size > 3 * 1024 * 1024) {
+      errEl.textContent = '⚠️ 파일은 3MB 이하만 가능합니다.';
+      return;
+    }
+    try {
+      attachment = {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        data: await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = e => resolve(e.target.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        })
+      };
+    } catch (e) { errEl.textContent = '파일 읽기 실패: ' + e.message; return; }
+  }
+
+  // 기능 3개
+  const features = [];
+  for (let i = 1; i <= 3; i++) {
+    const t = get('paF' + i + 'Title');
+    const d = get('paF' + i + 'Desc');
+    if (t || d) features.push({ title: t || ('기능 ' + i), desc: d || '' });
+  }
+
+  // 사용 매뉴얼
+  const howto = get('paHowto').split(/\n/).map(s => s.trim()).filter(Boolean);
+
+  // 키 생성 (이름 기반 slug)
+  const key = 'user_' + Date.now();
+
+  const newProg = {
+    key, icon, name, tag, desc,
+    features,
+    howto: howto.length ? howto : ['1. 사이트 접속 후 사용하세요.'],
+    link: link || null,
+    version: version || undefined,
+    platform: platform || undefined,
+    attachment,
+    userAdded: true,
+    addedAt: Date.now(),
+    addedBy: getCurrentUser()?.id || 'unknown'
+  };
+
+  // 저장
+  const all = getUserPrograms();
+  all[key] = newProg;
+  saveUserPrograms(all);
+
+  // programData에 추가하여 즉시 표시
+  programData[key] = newProg;
+
+  logActivity('프로그램 추가: ' + name);
+  hideAddProgramModal();
+  renderPrograms();
+  alert('✅ "' + name + '" 프로그램 추가 완료!');
+
+  // 폼 초기화
+  ['paName','paIcon','paTag','paDesc','paLink','paVersion','paPlatform',
+   'paF1Title','paF1Desc','paF2Title','paF2Desc','paF3Title','paF3Desc','paHowto'
+  ].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('paAttachment').value = '';
+  errEl.textContent = '';
+}
+
+// 첨부 파일 정보 표시
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('paAttachment');
+  if (inp) {
+    inp.addEventListener('change', e => {
+      const info = document.getElementById('paAttachmentInfo');
+      const f = e.target.files[0];
+      if (!f) { info.textContent = ''; return; }
+      info.textContent = `📎 ${f.name} (${(f.size/1024).toFixed(1)} KB, ${f.type || '알 수 없는 형식'})`;
+    });
+  }
+});
+
+// 페이지 로드 시 user-added programs를 programData에 머지
+function loadUserPrograms() {
+  const userProgs = getUserPrograms();
+  Object.assign(programData, userProgs);
+}
+
+function deleteUserProgram(key) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  const all = getUserPrograms();
+  if (!all[key]) return alert('사용자 추가 프로그램이 아닙니다.');
+  if (!confirm(`"${all[key].name}"을(를) 영구 삭제하시겠습니까?`)) return;
+  const name = all[key].name;
+  delete all[key];
+  delete programData[key];
+  localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(all));
+  if (typeof fbDb !== 'undefined') {
+    fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
+  }
+  logActivity('프로그램 삭제: ' + name);
+  hideProgramDetail();
+  renderPrograms();
+}
+
 // 이미지 로드 실패 시 사용할 SVG 플레이스홀더 (data URL)
 function makePlaceholderSvg(progName, caption) {
   const title = (progName || '프로그램').slice(0, 30);
@@ -927,6 +1078,21 @@ function showProgramDetail(key) {
       <div class="detail-section"><h3>⚡ 주요 기능</h3><div class="feature-grid">${data.features.map(f => `<div class="feature-item"><h4>${esc(f.title)}</h4><p>${esc(f.desc)}</p></div>`).join('')}</div></div>
       <div class="detail-section"><h3>📖 사용 매뉴얼</h3><ol class="howto-list">${data.howto.map(s => `<li>${esc(s.replace(/^\d+\.\s*/, ''))}</li>`).join('')}</ol></div>
       <div class="detail-section"><h3>🔗 접속 / 바로가기</h3>${linkHtml}</div>
+      ${data.attachment ? `
+        <div class="detail-section">
+          <h3>📎 첨부 파일</h3>
+          <a href="${data.attachment.data}" download="${esc(data.attachment.name)}" class="btn btn-outline btn-sm" style="text-decoration:none;">
+            📥 ${esc(data.attachment.name)} (${(data.attachment.size/1024).toFixed(1)} KB)
+          </a>
+          ${data.attachment.type && data.attachment.type.startsWith('image/')
+            ? `<div style="margin-top:12px;"><img src="${data.attachment.data}" alt="${esc(data.attachment.name)}" style="max-width:100%; border:1px solid var(--border); border-radius:8px;"></div>`
+            : ''}
+        </div>` : ''}
+      ${data.userAdded && admin ? `
+        <div class="detail-section detail-admin-zone">
+          <h3>🛡 관리자 영역 (사용자 추가)</h3>
+          <button class="btn btn-outline btn-sm" onclick="deleteUserProgram('${key}')">🗑 이 프로그램 영구 삭제</button>
+        </div>` : ''}
       ${admin ? `<div class="detail-section detail-admin-zone">
         <h3>🛡 관리자 영역</h3>
         <div class="admin-actions-row">

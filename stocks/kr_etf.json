@@ -1,0 +1,17 @@
+{
+  "market": "KR",
+  "asset_type": "ETF",
+  "count": 10,
+  "items": [
+    {"theme": "AI 반도체",   "name": "KODEX 반도체",            "ticker": "091160", "yf_symbol": "091160.KS", "stage": "매수"},
+    {"theme": "전력 인프라",  "name": "TIGER 송전&전선",         "ticker": "470240", "yf_symbol": "470240.KS", "stage": "매수"},
+    {"theme": "양자",        "name": "(공석 — 미국 QTUM 보완)",  "ticker": "",       "yf_symbol": "",          "stage": "공석"},
+    {"theme": "우주",        "name": "TIGER 우주방산",          "ticker": "453950", "yf_symbol": "453950.KS", "stage": "매수"},
+    {"theme": "SMR",         "name": "HANARO 원자력iSelect",    "ticker": "438330", "yf_symbol": "438330.KS", "stage": "매수"},
+    {"theme": "중동/에너지", "name": "KODEX WTI원유선물(H)",     "ticker": "261220", "yf_symbol": "261220.KS", "stage": "관망"},
+    {"theme": "휴머노이드",  "name": "KODEX K-로봇액티브",       "ticker": "471910", "yf_symbol": "471910.KS", "stage": "매수"},
+    {"theme": "바이오",      "name": "TIGER 코스닥150바이오TECH","ticker": "365040", "yf_symbol": "365040.KS", "stage": "관망"},
+    {"theme": "방산",        "name": "KODEX K-방산",            "ticker": "449450", "yf_symbol": "449450.KS", "stage": "매수"},
+    {"theme": "선박해양",    "name": "HANARO Fn조선해운",        "ticker": "469540", "yf_symbol": "469540.KS", "stage": "매수"}
+  ]
+}

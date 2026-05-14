@@ -1,0 +1,17 @@
+{
+  "market": "KR",
+  "asset_type": "STOCK",
+  "count": 10,
+  "items": [
+    {"theme": "AI 반도체",   "name": "SK하이닉스",         "ticker": "000660", "yf_symbol": "000660.KS", "stage": "적극매수"},
+    {"theme": "전력 인프라",  "name": "HD현대일렉트릭",      "ticker": "267260", "yf_symbol": "267260.KS", "stage": "매수"},
+    {"theme": "양자",        "name": "이수페타시스",         "ticker": "007660", "yf_symbol": "007660.KS", "stage": "관망"},
+    {"theme": "우주",        "name": "한국항공우주(KAI)",   "ticker": "047810", "yf_symbol": "047810.KS", "stage": "매수"},
+    {"theme": "SMR",         "name": "두산에너빌리티",       "ticker": "034020", "yf_symbol": "034020.KS", "stage": "매수"},
+    {"theme": "중동/에너지", "name": "한국가스공사",         "ticker": "036460", "yf_symbol": "036460.KS", "stage": "관망"},
+    {"theme": "휴머노이드",  "name": "LG전자",              "ticker": "066570", "yf_symbol": "066570.KS", "stage": "매수"},
+    {"theme": "바이오",      "name": "알테오젠",            "ticker": "196170", "yf_symbol": "196170.KQ", "stage": "매수"},
+    {"theme": "방산",        "name": "한화에어로스페이스",   "ticker": "012450", "yf_symbol": "012450.KS", "stage": "적극매수"},
+    {"theme": "선박해양",    "name": "HD한국조선해양",       "ticker": "009540", "yf_symbol": "009540.KS", "stage": "매수"}
+  ]
+}

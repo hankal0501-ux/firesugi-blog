@@ -1,0 +1,17 @@
+{
+  "market": "US",
+  "asset_type": "ETF",
+  "count": 10,
+  "items": [
+    {"theme": "AI 반도체",  "name": "iShares Semiconductor ETF",         "ticker": "SOXX", "yf_symbol": "SOXX", "stage": "매수"},
+    {"theme": "전력 인프라", "name": "First Trust NASDAQ Clean Edge Grid", "ticker": "GRID", "yf_symbol": "GRID", "stage": "매수"},
+    {"theme": "양자",       "name": "Defiance Quantum ETF",              "ticker": "QTUM", "yf_symbol": "QTUM", "stage": "매수"},
+    {"theme": "우주",       "name": "Procure Space ETF",                  "ticker": "UFO",  "yf_symbol": "UFO",  "stage": "관망"},
+    {"theme": "SMR",        "name": "VanEck Uranium + Nuclear ETF",       "ticker": "NLR",  "yf_symbol": "NLR",  "stage": "매수"},
+    {"theme": "중동/에너지","name": "Energy Select Sector SPDR",         "ticker": "XLE",  "yf_symbol": "XLE",  "stage": "관망"},
+    {"theme": "휴머노이드", "name": "ROBO Global Robotics",                "ticker": "ROBO", "yf_symbol": "ROBO", "stage": "매수"},
+    {"theme": "바이오",     "name": "Global X Genomics & Biotech",         "ticker": "GNOM", "yf_symbol": "GNOM", "stage": "매수"},
+    {"theme": "방산",       "name": "iShares US Aerospace & Defense",      "ticker": "ITA",  "yf_symbol": "ITA",  "stage": "매수"},
+    {"theme": "선박해양",   "name": "SonicShares Global Shipping",          "ticker": "BOAT", "yf_symbol": "BOAT", "stage": "관망"}
+  ]
+}

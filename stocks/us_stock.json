@@ -1,0 +1,17 @@
+{
+  "market": "US",
+  "asset_type": "STOCK",
+  "count": 10,
+  "items": [
+    {"theme": "AI 반도체",  "name": "NVIDIA",              "ticker": "NVDA", "yf_symbol": "NVDA", "stage": "적극매수"},
+    {"theme": "전력 인프라", "name": "GE Vernova",          "ticker": "GEV",  "yf_symbol": "GEV",  "stage": "적극매수"},
+    {"theme": "양자",       "name": "IonQ",                "ticker": "IONQ", "yf_symbol": "IONQ", "stage": "매수"},
+    {"theme": "우주",       "name": "Rocket Lab USA",       "ticker": "RKLB", "yf_symbol": "RKLB", "stage": "매수"},
+    {"theme": "SMR",        "name": "Oklo Inc",            "ticker": "OKLO", "yf_symbol": "OKLO", "stage": "매수"},
+    {"theme": "중동/에너지","name": "Occidental Petroleum","ticker": "OXY",  "yf_symbol": "OXY",  "stage": "관망"},
+    {"theme": "휴머노이드", "name": "Tesla",               "ticker": "TSLA", "yf_symbol": "TSLA", "stage": "매수"},
+    {"theme": "바이오",     "name": "Eli Lilly",            "ticker": "LLY",  "yf_symbol": "LLY",  "stage": "적극매수"},
+    {"theme": "방산",       "name": "Palantir",             "ticker": "PLTR", "yf_symbol": "PLTR", "stage": "매수"},
+    {"theme": "선박해양",   "name": "Huntington Ingalls",   "ticker": "HII",  "yf_symbol": "HII",  "stage": "관망"}
+  ]
+}

@@ -1,0 +1,407 @@
+{
+  "091160.KS": {
+    "ok": true,
+    "current": 157200.0,
+    "change_pct": 0.86,
+    "ytd_pct": 390.02,
+    "high_52w": 157200.0,
+    "low_52w": 29997.51,
+    "currency": "KRW",
+    "name_full": "KODEX SEMICON",
+    "market_cap": null
+  },
+  "470240.KS": {
+    "error": "empty"
+  },
+  "453950.KS": {
+    "ok": true,
+    "current": 34995.0,
+    "change_pct": 0.85,
+    "ytd_pct": 127.4,
+    "high_52w": 34995.0,
+    "low_52w": 14044.81,
+    "currency": "KRW",
+    "name_full": "TIGER TSMC Foundry Value Chain",
+    "market_cap": null
+  },
+  "438330.KS": {
+    "ok": true,
+    "current": 114870.0,
+    "change_pct": -0.03,
+    "ytd_pct": -0.71,
+    "high_52w": 117287.61,
+    "low_52w": 114225.0,
+    "currency": "KRW",
+    "name_full": "TIGER INV GRADE CORP ACTIVE",
+    "market_cap": null
+  },
+  "261220.KS": {
+    "ok": true,
+    "current": 26300.0,
+    "change_pct": 0.17,
+    "ytd_pct": 92.82,
+    "high_52w": 28625.0,
+    "low_52w": 12970.0,
+    "currency": "KRW",
+    "name_full": "KODEX WTIOILF(H)",
+    "market_cap": null
+  },
+  "471910.KS": {
+    "error": "empty"
+  },
+  "365040.KS": {
+    "ok": true,
+    "current": 40850.0,
+    "change_pct": 1.11,
+    "ytd_pct": 208.11,
+    "high_52w": 40850.0,
+    "low_52w": 13038.09,
+    "currency": "KRW",
+    "name_full": "TIGER AI KOR GWTH ACTV",
+    "market_cap": null
+  },
+  "449450.KS": {
+    "ok": true,
+    "current": 72700.0,
+    "change_pct": 1.13,
+    "ytd_pct": 93.2,
+    "high_52w": 81560.0,
+    "low_52w": 37628.96,
+    "currency": "KRW",
+    "name_full": "PLUS K-Defense Industry",
+    "market_cap": null
+  },
+  "469540.KS": {
+    "error": "empty"
+  },
+  "000660.KS": {
+    "ok": true,
+    "current": 1970000.0,
+    "change_pct": -0.3,
+    "ytd_pct": 861.88,
+    "high_52w": 1976000.0,
+    "low_52w": 195759.86,
+    "currency": "KRW",
+    "name_full": "SK hynix",
+    "market_cap": 1398414239596544
+  },
+  "267260.KS": {
+    "ok": true,
+    "current": 1267000.0,
+    "change_pct": -1.02,
+    "ytd_pct": 261.43,
+    "high_52w": 1418644.62,
+    "low_52w": 347087.81,
+    "currency": "KRW",
+    "name_full": "HD HYUNDAI ELECTRIC",
+    "market_cap": 45602754789376
+  },
+  "007660.KS": {
+    "ok": true,
+    "current": 132500.0,
+    "change_pct": -0.45,
+    "ytd_pct": 205.21,
+    "high_52w": 161400.0,
+    "low_52w": 38023.8,
+    "currency": "KRW",
+    "name_full": "ISUPETASYS",
+    "market_cap": 9726720999424
+  },
+  "047810.KS": {
+    "ok": true,
+    "current": 172200.0,
+    "change_pct": 5.32,
+    "ytd_pct": 90.61,
+    "high_52w": 201420.2,
+    "low_52w": 83360.05,
+    "currency": "KRW",
+    "name_full": "KOREA AEROSPACE",
+    "market_cap": 16785212440576
+  },
+  "034020.KS": {
+    "ok": true,
+    "current": 117100.0,
+    "change_pct": -2.42,
+    "ytd_pct": 274.12,
+    "high_52w": 136400.0,
+    "low_52w": 31300.0,
+    "currency": "KRW",
+    "name_full": "Doosan Enerbility",
+    "market_cap": 74842447544320
+  },
+  "036460.KS": {
+    "ok": true,
+    "current": 37750.0,
+    "change_pct": 1.21,
+    "ytd_pct": 8.37,
+    "high_52w": 46007.45,
+    "low_52w": 34350.0,
+    "currency": "KRW",
+    "name_full": "Kogas",
+    "market_cap": 3294647549952
+  },
+  "066570.KS": {
+    "ok": true,
+    "current": 217000.0,
+    "change_pct": 13.38,
+    "ytd_pct": 203.57,
+    "high_52w": 217000.0,
+    "low_52w": 68031.11,
+    "currency": "KRW",
+    "name_full": "LGELECTRONICS",
+    "market_cap": 38973028171776
+  },
+  "196170.KQ": {
+    "ok": true,
+    "current": 385000.0,
+    "change_pct": 8.76,
+    "ytd_pct": 14.93,
+    "high_52w": 559000.0,
+    "low_52w": 317500.0,
+    "currency": "KRW",
+    "name_full": "Alteogen",
+    "market_cap": 20590601699328
+  },
+  "012450.KS": {
+    "ok": true,
+    "current": 1306000.0,
+    "change_pct": 1.56,
+    "ytd_pct": 62.7,
+    "high_52w": 1537000.0,
+    "low_52w": 772732.19,
+    "currency": "KRW",
+    "name_full": "HANWHA AEROSPACE",
+    "market_cap": 67192116740096
+  },
+  "009540.KS": {
+    "ok": true,
+    "current": 437500.0,
+    "change_pct": -4.99,
+    "ytd_pct": 56.31,
+    "high_52w": 479000.0,
+    "low_52w": 271154.22,
+    "currency": "KRW",
+    "name_full": "HDKSOE",
+    "market_cap": 30937651871744
+  },
+  "SOXX": {
+    "ok": true,
+    "current": 530.03,
+    "change_pct": 0.33,
+    "ytd_pct": 149.94,
+    "high_52w": 532.76,
+    "low_52w": 201.27,
+    "currency": "USD",
+    "name_full": "iShares PHLX SOX Semiconductor ",
+    "market_cap": null
+  },
+  "GRID": {
+    "ok": true,
+    "current": 197.33,
+    "change_pct": 0.04,
+    "ytd_pct": 54.7,
+    "high_52w": 199.8,
+    "low_52w": 127.42,
+    "currency": "USD",
+    "name_full": "First Trust NASDAQ Clean Edge S",
+    "market_cap": null
+  },
+  "QTUM": {
+    "ok": true,
+    "current": 147.88,
+    "change_pct": 0.74,
+    "ytd_pct": 78.19,
+    "high_52w": 147.88,
+    "low_52w": 82.99,
+    "currency": "USD",
+    "name_full": "Defiance Quantum ETF",
+    "market_cap": null
+  },
+  "UFO": {
+    "ok": true,
+    "current": 57.97,
+    "change_pct": 2.86,
+    "ytd_pct": 138.07,
+    "high_52w": 57.97,
+    "low_52w": 24.05,
+    "currency": "USD",
+    "name_full": "Procure Space ETF",
+    "market_cap": null
+  },
+  "NLR": {
+    "ok": true,
+    "current": 134.6,
+    "change_pct": -1.32,
+    "ytd_pct": 56.66,
+    "high_52w": 164.37,
+    "low_52w": 85.54,
+    "currency": "USD",
+    "name_full": "VanEck Uranium and Nuclear ETF",
+    "market_cap": null
+  },
+  "XLE": {
+    "ok": true,
+    "current": 58.07,
+    "change_pct": 0.76,
+    "ytd_pct": 40.03,
+    "high_52w": 62.56,
+    "low_52w": 39.5,
+    "currency": "USD",
+    "name_full": "State Street Energy Select Sect",
+    "market_cap": null
+  },
+  "ROBO": {
+    "ok": true,
+    "current": 86.94,
+    "change_pct": -0.37,
+    "ytd_pct": 56.14,
+    "high_52w": 87.26,
+    "low_52w": 55.3,
+    "currency": "USD",
+    "name_full": "ROBO Global Robotics and Automa",
+    "market_cap": null
+  },
+  "GNOM": {
+    "ok": true,
+    "current": 45.59,
+    "change_pct": -1.21,
+    "ytd_pct": 53.55,
+    "high_52w": 50.59,
+    "low_52w": 29.69,
+    "currency": "USD",
+    "name_full": "Global X Genomics & Biotechnolo",
+    "market_cap": null
+  },
+  "ITA": {
+    "ok": true,
+    "current": 224.46,
+    "change_pct": -0.55,
+    "ytd_pct": 32.22,
+    "high_52w": 250.42,
+    "low_52w": 169.3,
+    "currency": "USD",
+    "name_full": "iShares U.S. Aerospace & Defens",
+    "market_cap": null
+  },
+  "BOAT": {
+    "ok": true,
+    "current": 42.28,
+    "change_pct": -0.31,
+    "ytd_pct": 56.25,
+    "high_52w": 42.97,
+    "low_52w": 26.74,
+    "currency": "USD",
+    "name_full": "SonicShares Global Shipping ETF",
+    "market_cap": null
+  },
+  "NVDA": {
+    "ok": true,
+    "current": 235.74,
+    "change_pct": 4.39,
+    "ytd_pct": 74.88,
+    "high_52w": 235.74,
+    "low_52w": 131.26,
+    "currency": "USD",
+    "name_full": "NVIDIA Corporation",
+    "market_cap": 5709746405376
+  },
+  "GEV": {
+    "ok": true,
+    "current": 1090.53,
+    "change_pct": 2.63,
+    "ytd_pct": 155.97,
+    "high_52w": 1149.53,
+    "low_52w": 426.03,
+    "currency": "USD",
+    "name_full": "GE Vernova Inc.",
+    "market_cap": 293047238656
+  },
+  "IONQ": {
+    "ok": true,
+    "current": 57.47,
+    "change_pct": 4.0,
+    "ytd_pct": 76.61,
+    "high_52w": 82.09,
+    "low_52w": 26.59,
+    "currency": "USD",
+    "name_full": "IonQ, Inc.",
+    "market_cap": 21451825152
+  },
+  "RKLB": {
+    "ok": true,
+    "current": 132.55,
+    "change_pct": 6.77,
+    "ytd_pct": 425.57,
+    "high_52w": 132.55,
+    "low_52w": 25.17,
+    "currency": "USD",
+    "name_full": "Rocket Lab Corporation",
+    "market_cap": 76713443328
+  },
+  "OKLO": {
+    "ok": true,
+    "current": 67.21,
+    "change_pct": -3.52,
+    "ytd_pct": 79.66,
+    "high_52w": 174.14,
+    "low_52w": 36.81,
+    "currency": "USD",
+    "name_full": "Oklo Inc.",
+    "market_cap": 11693934592
+  },
+  "OXY": {
+    "ok": true,
+    "current": 56.84,
+    "change_pct": 1.17,
+    "ytd_pct": 33.9,
+    "high_52w": 66.24,
+    "low_52w": 38.74,
+    "currency": "USD",
+    "name_full": "Occidental Petroleum Corporatio",
+    "market_cap": 56535035904
+  },
+  "TSLA": {
+    "ok": true,
+    "current": 443.3,
+    "change_pct": -0.44,
+    "ytd_pct": 29.31,
+    "high_52w": 489.88,
+    "low_52w": 284.7,
+    "currency": "USD",
+    "name_full": "Tesla, Inc.",
+    "market_cap": 1664912326656
+  },
+  "LLY": {
+    "ok": true,
+    "current": 1006.7,
+    "change_pct": -0.89,
+    "ytd_pct": 38.3,
+    "high_52w": 1108.09,
+    "low_52w": 622.32,
+    "currency": "USD",
+    "name_full": "Eli Lilly and Company",
+    "market_cap": 897716060160
+  },
+  "PLTR": {
+    "ok": true,
+    "current": 133.73,
+    "change_pct": 2.83,
+    "ytd_pct": 4.38,
+    "high_52w": 207.18,
+    "low_52w": 119.91,
+    "currency": "USD",
+    "name_full": "Palantir Technologies Inc.",
+    "market_cap": 320592510976
+  },
+  "HII": {
+    "ok": true,
+    "current": 336.95,
+    "change_pct": 0.82,
+    "ytd_pct": 50.44,
+    "high_52w": 453.73,
+    "low_52w": 219.29,
+    "currency": "USD",
+    "name_full": "Huntington Ingalls Industries, ",
+    "market_cap": 13277188096
+  }
+}

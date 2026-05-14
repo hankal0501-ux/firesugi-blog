@@ -2567,3 +2567,22 @@ function doGlobalSearch() {
 
 // ===== UTILS =====
 function esc(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+// === 이벤트 탭 중복 방지 — 항상 같은 named window 재사용 ===
+window.__eventsWin = null;
+function openEventsTab(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  // 기존 참조가 살아있으면 focus
+  if (window.__eventsWin && !window.__eventsWin.closed) {
+    try {
+      window.__eventsWin.focus();
+      // 이미 events 페이지가 열려있으면 그대로, 다른 페이지면 다시 events로
+      window.__eventsWin.location.href = 'events/';
+      return false;
+    } catch (_) { /* cross-origin 등 — fall through */ }
+  }
+  // 새로 열기 (같은 name으로 — 다른 곳에서 같은 name 열렸으면 그 탭 재사용)
+  window.__eventsWin = window.open('events/', 'firesugi-events');
+  if (window.__eventsWin) window.__eventsWin.focus();
+  return false;
+}

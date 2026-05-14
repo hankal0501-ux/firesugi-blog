@@ -14,7 +14,12 @@ header h1{margin:0;font-size:26px;letter-spacing:-0.5px}
 header .tagline{margin:6px 0 0;opacity:0.85;font-size:14px}
 .back{display:inline-block;margin-top:14px;color:#cbd5e1;text-decoration:none;font-size:13px}
 .back:hover{color:#fff}
-.home-btn{display:inline-block;background:#fff;color:#0b62ff !important;padding:7px 18px;border-radius:999px;font-weight:700;font-size:14px;margin-top:14px;text-decoration:none}
+.home-btn{display:inline-block;background:#fff;color:#0b62ff !important;padding:7px 18px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none}
+.header-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.send-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#0088cc,#229ED9);color:#fff;border:0;padding:8px 18px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,0.18)}
+.send-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.25)}
+.send-btn:disabled{opacity:0.6;cursor:wait;transform:none}
+.send-status{display:inline-block;padding:6px 14px;border-radius:999px;font-size:12.5px;color:#fff;background:rgba(255,255,255,0.18)}
 .stock-section{background:#fff;border-radius:12px;padding:22px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
 .stock-section h2{margin:0 0 16px;font-size:20px}
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -81,9 +86,15 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
   <div class="container">
     <h1>📈 10X Stock Hunter · 40종목</h1>
     <p class="tagline">5~10년 10배 상승 가능 종목 상시 운영 · 한국 20 + 미국 20</p>
-    <p class="meta" style="color:#cbd5e1;">최근 갱신: 2026-05-15 05:57</p>
-    <a href="../" class="home-btn">🏠 Fire-Sugi 홈</a>
-    <a href="../events/" class="back">↗ 이벤트 알림</a>
+    <p class="meta" style="color:#cbd5e1;">최근 갱신: 2026-05-15 06:02</p>
+    <div class="header-actions">
+      <a href="../" class="home-btn">🏠 Fire-Sugi 홈</a>
+      <a href="../events/" class="back">↗ 이벤트 알림</a>
+      <button type="button" id="admin-send-btn"
+              class="send-btn" style="display:none;"
+              onclick="sendStockReport()">📤 텔레그램·메일 전송</button>
+      <span id="send-status" class="send-status" style="display:none;"></span>
+    </div>
   </div>
 </header>
 
@@ -96,5 +107,60 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
     <small>자료: Yahoo Finance · 본 페이지는 참고용으로 투자 권유가 아닙니다.</small>
   </div>
 </footer>
+
+<script>
+// === 관리자 판별 — Fire-Sugi 메인의 로그인 상태로 발송 버튼 노출 ===
+(function() {
+  try {
+    const session = localStorage.getItem('fireSugiSession') || sessionStorage.getItem('fireSugiSession');
+    if (!session) return;
+    const user = JSON.parse(session);
+    if (!user || !user.id) return;
+    const users = JSON.parse(localStorage.getItem('fireSugiUsers') || '[]');
+    const dbUser = users.find(u => u.id === user.id);
+    if (dbUser && dbUser.role === 'admin') {
+      const btn = document.getElementById('admin-send-btn');
+      if (btn) btn.style.display = 'inline-flex';
+    }
+  } catch (e) { /* 무시 */ }
+})();
+
+const SEND_URL = "https://dive-bill-wed-powell.trycloudflare.com/admin/stocks/send";
+
+async function sendStockReport() {
+  const btn = document.getElementById('admin-send-btn');
+  const st = document.getElementById('send-status');
+  if (!confirm('현재 10X 리포트를 관리자(본인) 이메일·텔레그램으로 전송할까요?')) return;
+  btn.disabled = true;
+  btn.textContent = '⏳ 전송 중...';
+  st.style.display = 'inline';
+  st.textContent = '';
+  st.style.background = 'rgba(255,255,255,0.18)';
+  try {
+    const resp = await fetch(SEND_URL, {method: 'POST', credentials: 'include'});
+    if (resp.ok) {
+      const data = await resp.json().catch(() => ({}));
+      st.textContent = '✅ 전송 완료';
+      st.style.background = 'rgba(22,163,74,0.85)';
+      if (data.email !== undefined || data.telegram !== undefined) {
+        st.textContent = `✅ 이메일=${data.email ? 'OK' : 'FAIL'} · 텔레그램=${data.telegram ? 'OK' : 'FAIL'}`;
+      }
+    } else if (resp.status === 401) {
+      st.textContent = '🔒 관리자 인증 필요 (Basic Auth 팝업 확인)';
+      st.style.background = 'rgba(220,38,38,0.85)';
+    } else {
+      st.textContent = `❌ 실패 (HTTP ${resp.status})`;
+      st.style.background = 'rgba(220,38,38,0.85)';
+    }
+  } catch (e) {
+    st.textContent = `❌ 네트워크 오류: ${e.message}`;
+    st.style.background = 'rgba(220,38,38,0.85)';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📤 텔레그램·메일 전송';
+    setTimeout(() => { st.style.display = 'none'; }, 8000);
+  }
+}
+</script>
 </body>
 </html>

@@ -19,6 +19,258 @@
   ],
   "giveaways": [
     {
+      "source_site": "올콘 공모전",
+      "title": "대한안과학회 동체시력 테스트 이벤트\t26.05.06~26.05.15\t대한안과학회",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.05.06~26.05.15",
+      "url": "https://www.all-con.co.kr/hit/event/4141?page=1",
+      "created_at": "2026-05-14 17:09:46"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "‍ 2026 보훈런 챌린지 완주 인증 이벤트 ‍\t26.05.06~26.05.26\t한국보훈복지의료공단",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.05.06~26.05.26",
+      "url": "https://www.all-con.co.kr/hit/event/4148?page=1",
+      "created_at": "2026-05-14 17:09:39"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "연극 <비기닝> 초대이벤트\t26.05.13~26.05.19\t올콘, 수컴퍼니",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.05.13~26.05.19",
+      "url": "https://www.all-con.co.kr/hit/event/4145?page=1",
+      "created_at": "2026-05-14 17:09:32"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "굿네이버스 공익 캠페인 영상 공모전N",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.04.15~26.10.30",
+      "url": "https://www.all-con.co.kr/view/contest/537203",
+      "created_at": "2026-05-14 17:09:25"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "2026년 제97주년 학생독립운동 콘텐츠 공모전N",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.05.19~26.09.04",
+      "url": "https://www.all-con.co.kr/view/contest/537204",
+      "created_at": "2026-05-14 17:09:18"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "제15회 협성독서왕 독후감 공모전N",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.07.01~26.07.31",
+      "url": "https://www.all-con.co.kr/view/contest/537211",
+      "created_at": "2026-05-14 17:09:10"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "안전한 어린이 의약정보 영상 콘텐츠 공모전\t26.05.11~26.06.19\t식품의약품안전처",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.05.11~26.06.19",
+      "url": "https://www.all-con.co.kr/view/contest/537268",
+      "created_at": "2026-05-14 17:09:03"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "제1회 정선 여행 AI 영상 광고 공모전\t26.05.04~26.05.29\t정선군청",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.05.04~26.05.29",
+      "url": "https://www.all-con.co.kr/hit/contest/4103?page=1",
+      "created_at": "2026-05-14 17:08:56"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "공모전/대외활동명\t접수기간\t주최\t진행상황",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.all-con.co.kr/",
+      "created_at": "2026-05-14 17:08:49"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "이벤트명\t기간\t주최\t진행상황",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.05.13~26.05.19",
+      "url": "https://www.all-con.co.kr/hit/event/4145?page=1",
+      "created_at": "2026-05-14 17:08:42"
+    },
+    {
+      "source_site": "올콘 공모전",
+      "title": "최신 이벤트 정보",
+      "category": "공모전",
+      "prize": null,
+      "period": "26.05.13~26.05.19",
+      "url": "https://www.all-con.co.kr/hit/event/4145?page=1",
+      "created_at": "2026-05-14 17:08:35"
+    },
+    {
+      "source_site": "온오프믹스",
+      "title": "개설자의 다른이벤트",
+      "category": "기타",
+      "prize": null,
+      "period": null,
+      "url": "https://onoffmix.com/event/main/index",
+      "created_at": "2026-05-14 17:08:27"
+    },
+    {
+      "source_site": "세븐일레븐",
+      "title": "진행중인 이벤트",
+      "category": "생활",
+      "prize": "/신상품",
+      "period": null,
+      "url": "https://www.7-eleven.co.kr/",
+      "created_at": "2026-05-14 17:08:20"
+    },
+    {
+      "source_site": "컨테스트코리아",
+      "title": "2027년 상상인 신춘문예 공모",
+      "category": "공모전",
+      "prize": null,
+      "period": "2026.12.01 ~ 2027.01.05",
+      "url": "https://www.contestkorea.com/sub/view.php?int_gbn=1&Txt_bcode=030110001&str_no=202602240031",
+      "created_at": "2026-05-14 17:08:13"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "2026 제6회 청송야송미술대전 전국공모",
+      "category": "공모전",
+      "prize": null,
+      "period": "2026-05-14 ~ 2026-08-27",
+      "url": "https://www.thinkcontest.com/",
+      "created_at": "2026-05-14 17:08:06"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "2026년 대구 근대골목 숏폼 영상 공모전",
+      "category": "공모전",
+      "prize": null,
+      "period": "2026-05-13 ~ 2026-09-30",
+      "url": "https://www.thinkcontest.com/",
+      "created_at": "2026-05-14 17:07:59"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "과학고 재학생 대상 Bio Research Fellowship 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": "2026-05-13 ~ 2026-05-31",
+      "url": "https://www.thinkcontest.com/",
+      "created_at": "2026-05-14 17:07:51"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "제3회 한강 서울 하프 마라톤",
+      "category": "공모전",
+      "prize": null,
+      "period": "2026-05-14 ~ 2026-08-23",
+      "url": "https://www.thinkcontest.com/",
+      "created_at": "2026-05-14 17:07:44"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "2026 대구광역시청소년참여예산제 아이디어 제안대회",
+      "category": "공모전",
+      "prize": null,
+      "period": "2026-04-10 ~ 2026-05-26",
+      "url": "https://www.thinkcontest.com/",
+      "created_at": "2026-05-14 17:07:37"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "제4회 업사이클링 해양과학 메이커톤 발명대회 공모전 개최",
+      "category": "공모전",
+      "prize": null,
+      "period": "2026-06-11 ~ 2026-06-25",
+      "url": "https://www.thinkcontest.com/",
+      "created_at": "2026-05-14 17:07:30"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "공모명\t구분\t주최\tD-day\t진행기간\t진행사항",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.thinkcontest.com/",
+      "created_at": "2026-05-14 17:07:23"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "HOT 이전보다 어려워진 \"리뉴얼 홈페이지\" 관하여 (공모전 이용 중 어려움,불편함) (2)",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.thinkcontest.com/thinkgood/user/contest/free-bulletin-board.do?mode=view&articleNo=45924",
+      "created_at": "2026-05-14 17:07:15"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "HOT 공모전 뿐만아니라 도전해볼게 많네요! -",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.thinkcontest.com/thinkgood/user/contest/free-bulletin-board.do?mode=view&articleNo=45826",
+      "created_at": "2026-05-14 17:07:08"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "HOT 다들 한 학기에 공모전 얼마나 참여하세요?? (1)",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.thinkcontest.com/thinkgood/user/contest/free-bulletin-board.do?mode=view&articleNo=45780",
+      "created_at": "2026-05-14 17:07:01"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "HOT 퀴즈 이벤트 풀고 스타벅스 기프티콘 받아가자! -",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.thinkcontest.com/thinkgood/user/contest/free-bulletin-board.do?mode=view&articleNo=63329",
+      "created_at": "2026-05-14 17:06:54"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "HOT 광주 여행스토리 공모전 팀원모집 -",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.thinkcontest.com/thinkgood/user/contest/free-bulletin-board.do?mode=view&articleNo=50149",
+      "created_at": "2026-05-14 17:06:47"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "HOT 📌 나에게 딱 맞는 공모전 팀원을 찾아드릴게요! -",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.thinkcontest.com/thinkgood/user/contest/free-bulletin-board.do?mode=view&articleNo=54166",
+      "created_at": "2026-05-14 17:06:39"
+    },
+    {
+      "source_site": "씽굿",
+      "title": "HOT 메타버스 공모전 팀원 모집합니다! -",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://www.thinkcontest.com/thinkgood/user/contest/free-bulletin-board.do?mode=view&articleNo=48677",
+      "created_at": "2026-05-14 17:06:32"
+    },
+    {
       "source_site": "하나은행 블로그",
       "title": "하나은행 블로그 응모 안내",
       "category": "금융",
@@ -37,5 +289,5 @@
       "created_at": "2026-05-13 15:27:25"
     }
   ],
-  "last_updated": "2026-05-13 15:27:25"
+  "last_updated": "2026-05-14 17:09:46"
 }

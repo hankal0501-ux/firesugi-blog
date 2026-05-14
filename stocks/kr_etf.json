@@ -3,15 +3,15 @@
   "asset_type": "ETF",
   "count": 10,
   "items": [
-    {"theme": "AI 반도체",   "name": "KODEX 반도체",            "ticker": "091160", "yf_symbol": "091160.KS", "stage": "매수"},
-    {"theme": "전력 인프라",  "name": "TIGER 송전&전선",         "ticker": "470240", "yf_symbol": "470240.KS", "stage": "매수"},
-    {"theme": "양자",        "name": "(공석 — 미국 QTUM 보완)",  "ticker": "",       "yf_symbol": "",          "stage": "공석"},
-    {"theme": "우주",        "name": "TIGER 우주방산",          "ticker": "453950", "yf_symbol": "453950.KS", "stage": "매수"},
-    {"theme": "SMR",         "name": "HANARO 원자력iSelect",    "ticker": "438330", "yf_symbol": "438330.KS", "stage": "매수"},
-    {"theme": "중동/에너지", "name": "KODEX WTI원유선물(H)",     "ticker": "261220", "yf_symbol": "261220.KS", "stage": "관망"},
-    {"theme": "휴머노이드",  "name": "KODEX K-로봇액티브",       "ticker": "471910", "yf_symbol": "471910.KS", "stage": "매수"},
-    {"theme": "바이오",      "name": "TIGER 코스닥150바이오TECH","ticker": "365040", "yf_symbol": "365040.KS", "stage": "관망"},
-    {"theme": "방산",        "name": "KODEX K-방산",            "ticker": "449450", "yf_symbol": "449450.KS", "stage": "매수"},
-    {"theme": "선박해양",    "name": "HANARO Fn조선해운",        "ticker": "469540", "yf_symbol": "469540.KS", "stage": "매수"}
+    {"theme": "AI 반도체",   "name": "KODEX 반도체",            "ticker": "091160", "yf_symbol": "091160.KS", "stage": "매수",       "target_3y_mult": 1.8, "target_10y_mult": 4.0, "ten_x": "중간", "ten_x_reason": "삼성·SK하이닉스 양강 HBM 사이클 진입. ETF 분산 효과로 개별주 대비 가능성 ↓"},
+    {"theme": "전력 인프라",  "name": "TIGER 송전&전선",         "ticker": "470240", "yf_symbol": "470240.KS", "stage": "매수",       "target_3y_mult": 2.0, "target_10y_mult": 5.0, "ten_x": "중간", "ten_x_reason": "미국 그리드 현대화 + IRA, 한국 변압기 글로벌 수출 폭증. 사이클 강점"},
+    {"theme": "양자",        "name": "(공석 — 미국 QTUM 보완)",  "ticker": "",       "yf_symbol": "",          "stage": "공석",       "target_3y_mult": 1.0, "target_10y_mult": 1.0, "ten_x": "-", "ten_x_reason": ""},
+    {"theme": "우주",        "name": "TIGER 우주방산",          "ticker": "453950", "yf_symbol": "453950.KS", "stage": "매수",       "target_3y_mult": 1.7, "target_10y_mult": 3.5, "ten_x": "중간", "ten_x_reason": "K-방산 글로벌화 + 누리호 후속. 단일 시장 의존"},
+    {"theme": "SMR",         "name": "HANARO 원자력iSelect",    "ticker": "438330", "yf_symbol": "438330.KS", "stage": "매수",       "target_3y_mult": 1.8, "target_10y_mult": 4.5, "ten_x": "중간", "ten_x_reason": "두산에너빌리티 비중 ↑, NuScale 협력 모멘텀"},
+    {"theme": "중동/에너지", "name": "KODEX WTI원유선물(H)",     "ticker": "261220", "yf_symbol": "261220.KS", "stage": "관망",       "target_3y_mult": 1.2, "target_10y_mult": 1.5, "ten_x": "낮음", "ten_x_reason": "원유는 사이클 자산. 헤지/단기용, 10X 어려움"},
+    {"theme": "휴머노이드",  "name": "KODEX K-로봇액티브",       "ticker": "471910", "yf_symbol": "471910.KS", "stage": "매수",       "target_3y_mult": 2.0, "target_10y_mult": 6.0, "ten_x": "중간", "ten_x_reason": "두산로보틱스·레인보우로보틱스, 휴머노이드 양산 시 폭발성"},
+    {"theme": "바이오",      "name": "TIGER 코스닥150바이오TECH","ticker": "365040", "yf_symbol": "365040.KS", "stage": "관망",       "target_3y_mult": 1.5, "target_10y_mult": 3.0, "ten_x": "낮음", "ten_x_reason": "한국 바이오 단일 신약 의존, ETF 분산 한계"},
+    {"theme": "방산",        "name": "KODEX K-방산",            "ticker": "449450", "yf_symbol": "449450.KS", "stage": "매수",       "target_3y_mult": 1.8, "target_10y_mult": 4.5, "ten_x": "중간", "ten_x_reason": "K-방산 글로벌 점유율 5%→15% 목표, 폴란드 K2 등 수주 호황"},
+    {"theme": "선박해양",    "name": "HANARO Fn조선해운",        "ticker": "469540", "yf_symbol": "469540.KS", "stage": "매수",       "target_3y_mult": 1.8, "target_10y_mult": 4.0, "ten_x": "중간", "ten_x_reason": "LNG 슈퍼사이클 + 미군 MRO, 사이클성 변동"}
   ]
 }

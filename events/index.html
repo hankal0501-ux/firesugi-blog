@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이벤트 알림 · 여행 특가 + 무료 응모/경품</title>
+<meta http-equiv="refresh" content="600">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",Roboto,Arial,sans-serif;background:#f6f7fb;color:#222;line-height:1.55}
+.container{max-width:980px;margin:0 auto;padding:24px}
+header{background:linear-gradient(120deg,#0b62ff,#00b4d8);color:#fff;padding:36px 0 28px}
+header h1{margin:0;font-size:26px;letter-spacing:-0.5px}
+header .tagline{margin:6px 0 0;opacity:0.9}
+.back{display:inline-block;margin-top:14px;color:#fff;text-decoration:none;font-size:13px;opacity:0.9}
+.back:hover{opacity:1;text-decoration:underline}
+section{background:#fff;border-radius:12px;padding:24px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,0.05);border-left:4px solid #0b62ff}
+.block-topic{border-left-color:#b045d4}
+.block-list{border-left-color:#16a34a}
+section h3{margin:0 0 12px;font-size:16px;color:#555;letter-spacing:0.5px;text-transform:uppercase;font-weight:700}
+.page-title{margin:0 0 8px;font-size:24px;color:#1a1a1a}
+.meta{color:#555;margin:0;font-size:14px}
+.topics{display:flex;flex-wrap:wrap;gap:8px}
+.topic-pill{padding:8px 16px;background:#f1f3f9;color:#335;border:0;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit}
+.topic-pill:hover{background:#e5eaf5}
+.topic-pill[data-active="1"]{background:#b045d4;color:#fff;font-weight:600}
+.list-header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.list-header h3{margin:0}
+.list-header .count{color:#888;font-size:13px}
+ul.event-list{list-style:none;padding:0;margin:0}
+ul.event-list li{padding:12px 0;border-bottom:1px solid #f0f2f6;display:block}
+ul.event-list li:last-child{border-bottom:0}
+ul.event-list .kind{display:inline-block;background:#e8f1ff;color:#0b62ff;padding:2px 8px;border-radius:4px;font-size:12px;margin-right:6px}
+ul.event-list .section{display:inline-block;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-size:11px;margin-right:6px}
+ul.event-list a{color:#1a1a1a;text-decoration:none;font-weight:500}
+ul.event-list a:hover{color:#0b62ff;text-decoration:underline}
+ul.event-list small{display:block;color:#888;font-size:12px;margin-top:2px;padding-left:6px}
+.empty{color:#888;padding:20px;text-align:center}
+footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>이벤트 알림</h1>
+    <p class="tagline">여행 특가 · 무료 응모/경품 이벤트를 한 번에</p>
+    <a href="../" class="back">← Fire-Sugi 메인으로</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <section>
+    <h2 class="page-title">여행 특가 · 무료 응모/경품 이벤트</h2>
+    <p class="meta">최신 정보 갱신: <strong>2026-05-13 15:27:25</strong> · 페이지 자동 새로고침(10분)</p>
+  </section>
+
+  <section class="block-topic">
+    <h3>주제</h3>
+    <div class="topics"><button class="topic-pill" data-topic="전체" data-active="1">전체</button><button class="topic-pill" data-topic="여행">여행</button><button class="topic-pill" data-topic="차량">차량</button><button class="topic-pill" data-topic="현금">현금</button><button class="topic-pill" data-topic="생활">생활</button><button class="topic-pill" data-topic="디지털">디지털</button><button class="topic-pill" data-topic="금융">금융</button><button class="topic-pill" data-topic="부동산">부동산</button><button class="topic-pill" data-topic="공모전">공모전</button><button class="topic-pill" data-topic="정부공모">정부공모</button><button class="topic-pill" data-topic="기타">기타</button></div>
+  </section>
+
+  <section class="block-list">
+    <div class="list-header">
+      <h3>리스트</h3>
+      <span class="count" id="count">6건 · 최근 168시간</span>
+    </div>
+    <ul class="event-list" id="event-list">
+      <li data-cat="여행"><span class="kind">🎁 여행사</span><span class="section">여행 특가</span><a href="https://www.modetour.com/event" target="_blank" rel="noopener">베트남, 상반기최대혜택+쿠폰할인</a><small>모두투어 · 70% 할인 · 2026-05-12 08:58:26</small></li><li data-cat="여행"><span class="kind">🎁 여행사</span><span class="section">여행 특가</span><a href="https://www.kkday.com/ko/promotion" target="_blank" rel="noopener">KKday 5월 프로모션 최대 10%</a><small>KKday · 10% 할인 · 2026-05-12 08:58:26</small></li>
+      <li data-cat="차량"><span class="kind">🎁</span><span class="section">[차량]</span><a href="https://www.hyundai.com/kr/ko/event/event-hyundai-ncsi-2605" target="_blank" rel="noopener">현대차 NCSI 1위 기념 이벤트</a><small>현대자동차 · 경품: 차량/주유권 등 경품 · 2026-05-13 15:27:25</small></li><li data-cat="차량"><span class="kind">🎁</span><span class="section">[차량]</span><a href="https://www.hyundai.com/kr/ko/event/event_hyundai_driving_fifa_worldcup_2026" target="_blank" rel="noopener">현대차 X FIFA 월드컵 2026 시승 이벤트</a><small>현대자동차 · 경품: 월드컵 관람권/굿즈 · 2026-05-13 15:27:25</small></li><li data-cat="금융"><span class="kind">🎁</span><span class="section">[금융]</span><a href="https://blog.hanabank.com/502015" target="_blank" rel="noopener">하나은행 블로그 응모 안내</a><small>하나은행 블로그 · 2026-05-13 15:27:25</small></li><li data-cat="기타"><span class="kind">🎁</span><span class="section">[기타]</span><a href="https://www.instagram.com/p/DX6C0NjEdDo/" target="_blank" rel="noopener">인스타그램 한정 응모 이벤트</a><small>Instagram · 2026-05-13 15:27:25</small></li>
+    </ul>
+    
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <small>본 페이지는 자동 수집 시스템이 일정 주기로 갱신합니다. 정확한 응모 조건은 각 출처에서 확인하세요.</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const pills = document.querySelectorAll('.topic-pill');
+  const items = document.querySelectorAll('#event-list li');
+  const countEl = document.getElementById('count');
+  pills.forEach(p => p.addEventListener('click', () => {
+    const topic = p.dataset.topic;
+    pills.forEach(x => x.removeAttribute('data-active'));
+    p.setAttribute('data-active', '1');
+    let visible = 0;
+    items.forEach(li => {
+      const cat = li.dataset.cat;
+      const show = (topic === '전체') ||
+                   (topic === '여행' && (cat === '여행' || li.querySelector('.section')?.textContent === '여행 특가')) ||
+                   (cat === topic);
+      li.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    countEl.textContent = visible + '건 · ' + countEl.textContent.split('·')[1];
+  }));
+})();
+</script>
+</body>
+</html>

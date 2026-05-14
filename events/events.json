@@ -1,0 +1,59 @@
+{
+  "travel": [
+    {
+      "kind": "🎁 여행사",
+      "title": "베트남, 상반기최대혜택+쿠폰할인",
+      "detail": "모두투어 · 70% 할인",
+      "url": "https://www.modetour.com/event",
+      "site": "agency_모두투어-이벤트",
+      "created_at": "2026-05-12 08:58:26"
+    },
+    {
+      "kind": "🎁 여행사",
+      "title": "KKday 5월 프로모션 최대 10%",
+      "detail": "KKday · 10% 할인",
+      "url": "https://www.kkday.com/ko/promotion",
+      "site": "agency_KKday",
+      "created_at": "2026-05-12 08:58:26"
+    }
+  ],
+  "giveaways": [
+    {
+      "source_site": "현대자동차",
+      "title": "현대차 NCSI 1위 기념 이벤트",
+      "category": "차량",
+      "prize": "차량/주유권 등 경품",
+      "period": null,
+      "url": "https://www.hyundai.com/kr/ko/event/event-hyundai-ncsi-2605",
+      "created_at": "2026-05-13 15:27:25"
+    },
+    {
+      "source_site": "현대자동차",
+      "title": "현대차 X FIFA 월드컵 2026 시승 이벤트",
+      "category": "차량",
+      "prize": "월드컵 관람권/굿즈",
+      "period": null,
+      "url": "https://www.hyundai.com/kr/ko/event/event_hyundai_driving_fifa_worldcup_2026",
+      "created_at": "2026-05-13 15:27:25"
+    },
+    {
+      "source_site": "하나은행 블로그",
+      "title": "하나은행 블로그 응모 안내",
+      "category": "금융",
+      "prize": null,
+      "period": null,
+      "url": "https://blog.hanabank.com/502015",
+      "created_at": "2026-05-13 15:27:25"
+    },
+    {
+      "source_site": "Instagram",
+      "title": "인스타그램 한정 응모 이벤트",
+      "category": "기타",
+      "prize": null,
+      "period": null,
+      "url": "https://www.instagram.com/p/DX6C0NjEdDo/",
+      "created_at": "2026-05-13 15:27:25"
+    }
+  ],
+  "last_updated": "2026-05-13 15:27:25"
+}

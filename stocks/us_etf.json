@@ -4,7 +4,7 @@
   "count": 10,
   "items": [
     {"theme": "AI 반도체",  "name": "iShares Semiconductor ETF",         "name_kr": "아이셰어즈 반도체 ETF",      "ticker": "SOXX", "yf_symbol": "SOXX", "stage": "매수",   "target_3y_mult": 1.8, "target_10y_mult": 4.0, "ten_x": "중간", "ten_x_reason": "NVIDIA/AMD/TSMC 등 AI 반도체 핵심 노출. ETF 분산으로 개별주 대비 폭발성 ↓"},
-    {"theme": "전력 인프라", "name": "First Trust NASDAQ Clean Edge Grid", "name_kr": "퍼스트트러스트 그리드 ETF",  "ticker": "GRID", "yf_symbol": "GRID", "stage": "매수",   "target_3y_mult": 2.0, "target_10y_mult": 5.0, "ten_x": "중간", "ten_x_reason": "미국 그리드 현대화 메가사이클 + AI 데이터센터 전력 수요"},
+    {"theme": "전력 인프라", "name": "First Trust NASDAQ Clean Edge Grid", "name_kr": "퍼스트트러스트 그리드 ETF",  "ticker": "GRID", "yf_symbol": "GRID", "stage": "매수",   "target_3y_mult": 2.2, "target_10y_mult": 6.0, "ten_x": "중간", "ten_x_reason": "Quanta Services(EPC·송전 시공)·Eaton·Schneider Electric·GE Vernova·ABB 등 글로벌 전력 인프라 핵심주 분산. IRA 그리드 현대화 + AI 데이터센터 메가사이클 직접 노출. 분산 효과로 폭발성 ↓"},
     {"theme": "양자",       "name": "Defiance Quantum ETF",              "name_kr": "디파이언스 양자 ETF",        "ticker": "QTUM", "yf_symbol": "QTUM", "stage": "매수",   "target_3y_mult": 2.0, "target_10y_mult": 6.0, "ten_x": "중간", "ten_x_reason": "IonQ/Rigetti/D-Wave + IBM/Google 양자부서. 양자 우위 경쟁 초기"},
     {"theme": "우주",       "name": "Procure Space ETF",                  "name_kr": "프로큐어 우주 ETF",          "ticker": "UFO",  "yf_symbol": "UFO",  "stage": "관망",   "target_3y_mult": 1.5, "target_10y_mult": 3.0, "ten_x": "낮음", "ten_x_reason": "우주 ETF 작은 시장, 분산. 개별주 RKLB가 폭발성 ↑"},
     {"theme": "SMR",        "name": "VanEck Uranium + Nuclear ETF",       "name_kr": "VanEck 우라늄+원자력 ETF",   "ticker": "NLR",  "yf_symbol": "NLR",  "stage": "매수",   "target_3y_mult": 2.0, "target_10y_mult": 5.0, "ten_x": "중간", "ten_x_reason": "원자력 르네상스 + 우라늄 공급 부족. NuScale/Cameco 비중"},
@@ -12,6 +12,6 @@
     {"theme": "휴머노이드", "name": "ROBO Global Robotics",                "name_kr": "ROBO 글로벌 로봇 ETF",       "ticker": "ROBO", "yf_symbol": "ROBO", "stage": "매수",   "target_3y_mult": 1.7, "target_10y_mult": 4.0, "ten_x": "중간", "ten_x_reason": "로봇 ETF, 휴머노이드 노출 일부. 분산 효과로 폭발성 ↓"},
     {"theme": "바이오",     "name": "Global X Genomics & Biotech",         "name_kr": "Global X 유전체 ETF",        "ticker": "GNOM", "yf_symbol": "GNOM", "stage": "매수",   "target_3y_mult": 2.0, "target_10y_mult": 5.0, "ten_x": "중간", "ten_x_reason": "CRISPR/유전자 치료 초기. 변동성 ↑ + 신약 성공 시 폭발"},
     {"theme": "방산",       "name": "iShares US Aerospace & Defense",      "name_kr": "iShares 항공우주방산 ETF",   "ticker": "ITA",  "yf_symbol": "ITA",  "stage": "매수",   "target_3y_mult": 1.5, "target_10y_mult": 3.0, "ten_x": "낮음", "ten_x_reason": "RTX/LMT/Boeing 등 대형주, 안정형. 10X 어려움"},
-    {"theme": "선박해양",   "name": "SonicShares Global Shipping",          "name_kr": "SonicShares 글로벌 해운 ETF","ticker": "BOAT", "yf_symbol": "BOAT", "stage": "관망",   "target_3y_mult": 1.5, "target_10y_mult": 2.5, "ten_x": "낮음", "ten_x_reason": "해운 사이클 자산. 한국 비중 일부지만 10X 어려움"}
+    {"theme": "선박해양",   "name": "SonicShares Global Shipping",          "name_kr": "SonicShares 글로벌 해운 ETF","ticker": "BOAT", "yf_symbol": "BOAT", "stage": "매수",   "target_3y_mult": 1.8, "target_10y_mult": 3.0, "ten_x": "낮음", "ten_x_reason": "Maersk·ZIM·STAR Bulk·Frontline 등 글로벌 컨테이너·벌크·탱커·LNG 운송 분산. 미·중 관세/공급망 재편 단기 수혜 + LNG 운임 슈퍼사이클 + 친환경 규제(IMO 2030)로 신조선 수요. 본질적 사이클 자산"}
   ]
 }

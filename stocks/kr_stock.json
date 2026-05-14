@@ -4,7 +4,7 @@
   "count": 10,
   "items": [
     {"theme": "AI 반도체",   "name": "SK하이닉스",         "ticker": "000660", "yf_symbol": "000660.KS", "stage": "적극매수",  "target_3y_mult": 2.5, "target_10y_mult": 10.0, "ten_x": "높음", "ten_x_reason": "HBM3E 12단 글로벌 독점, NVIDIA H200/B100 핵심 공급사. AI 메모리 슈퍼사이클 진행 중. 10X 충분"},
-    {"theme": "전력 인프라",  "name": "HD현대일렉트릭",      "ticker": "267260", "yf_symbol": "267260.KS", "stage": "매수",       "target_3y_mult": 2.5, "target_10y_mult": 10.0, "ten_x": "높음", "ten_x_reason": "미국 변압기 백로그 사상 최대 (5년치 수주), AI 데이터센터 전력 수요 + IRA 그리드 현대화"},
+    {"theme": "전력 인프라",  "name": "HD현대일렉트릭",      "ticker": "267260", "yf_symbol": "267260.KS", "stage": "적극매수",   "target_3y_mult": 3.0, "target_10y_mult": 12.0, "ten_x": "높음", "ten_x_reason": "미국 변압기 백로그 사상 최대(7년치 이상 수주잔고), AI 데이터센터 전력 수요 폭증 + IRA 그리드 현대화 + 한전 노후망 교체 사이클. 영업이익률 20%+ 진입, 분기 사상 최대 매출 연속 갱신"},
     {"theme": "양자",        "name": "이수페타시스",         "ticker": "007660", "yf_symbol": "007660.KS", "stage": "관망",       "target_3y_mult": 1.5, "target_10y_mult": 3.0, "ten_x": "낮음", "ten_x_reason": "양자컴퓨팅 PCB(MLB) 공급. 간접노출이라 본격 양자 시대 와도 폭발성 ↓"},
     {"theme": "우주",        "name": "한국항공우주(KAI)",   "ticker": "047810", "yf_symbol": "047810.KS", "stage": "매수",       "target_3y_mult": 2.0, "target_10y_mult": 5.0, "ten_x": "중간", "ten_x_reason": "KF-21 양산 + 누리호 후속 발사체 주관. 우주 사업 분사 시 가치 재평가"},
     {"theme": "SMR",         "name": "두산에너빌리티",       "ticker": "034020", "yf_symbol": "034020.KS", "stage": "매수",       "target_3y_mult": 2.5, "target_10y_mult": 10.0, "ten_x": "높음", "ten_x_reason": "NuScale 협력 + X-energy 합작, 글로벌 SMR 핵심 공급사. 미국 IRA 직접 수혜"},
@@ -12,6 +12,6 @@
     {"theme": "휴머노이드",  "name": "LG전자",              "ticker": "066570", "yf_symbol": "066570.KS", "stage": "매수",       "target_3y_mult": 1.8, "target_10y_mult": 5.0, "ten_x": "중간", "ten_x_reason": "베어로보틱스 인수, AI 가전→로봇 전환. 휴머노이드 양산 시 폭발 가능"},
     {"theme": "바이오",      "name": "알테오젠",            "ticker": "196170", "yf_symbol": "196170.KQ", "stage": "매수",       "target_3y_mult": 2.5, "target_10y_mult": 10.0, "ten_x": "높음", "ten_x_reason": "SC제형 기술 글로벌 라이선스 (MSD 키트루다 등). 매출 폭증 단계 진입"},
     {"theme": "방산",        "name": "한화에어로스페이스",   "ticker": "012450", "yf_symbol": "012450.KS", "stage": "적극매수",   "target_3y_mult": 2.8, "target_10y_mult": 10.0, "ten_x": "높음", "ten_x_reason": "K9 자주포 폴란드 17조 수주 + 누리호 + 한화시스템 위성 합병. K-방산 No.1"},
-    {"theme": "선박해양",    "name": "HD한국조선해양",       "ticker": "009540", "yf_symbol": "009540.KS", "stage": "매수",       "target_3y_mult": 2.0, "target_10y_mult": 5.0, "ten_x": "중간", "ten_x_reason": "LNG선 글로벌 70%, 미군 MRO 협력. 사이클 강점. 다만 조선은 사이클성 ↑"}
+    {"theme": "선박해양",    "name": "HD한국조선해양",       "ticker": "009540", "yf_symbol": "009540.KS", "stage": "적극매수",   "target_3y_mult": 2.5, "target_10y_mult": 6.0, "ten_x": "중간", "ten_x_reason": "LNG선 글로벌 점유율 70%+ 압도적 1위, 미 해군 MRO 시범사업 본격 진입 + 한미 조선 동맹(Jones Act 협력) + 메탄올/암모니아 친환경선 선도. 수주잔고 사상 최대 4년치 이상. 다만 본질적으로 사이클 자산"}
   ]
 }

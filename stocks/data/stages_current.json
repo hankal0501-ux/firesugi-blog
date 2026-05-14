@@ -1,0 +1,202 @@
+{
+  "091160.KS": {
+    "name": "KODEX 반도체",
+    "ticker": "091160",
+    "stage": "매수"
+  },
+  "470240.KS": {
+    "name": "TIGER 송전&전선",
+    "ticker": "470240",
+    "stage": "매수"
+  },
+  "(공석 — 미국 QTUM 보완)": {
+    "name": "(공석 — 미국 QTUM 보완)",
+    "ticker": "",
+    "stage": "공석"
+  },
+  "453950.KS": {
+    "name": "TIGER 우주방산",
+    "ticker": "453950",
+    "stage": "매수"
+  },
+  "438330.KS": {
+    "name": "HANARO 원자력iSelect",
+    "ticker": "438330",
+    "stage": "매수"
+  },
+  "261220.KS": {
+    "name": "KODEX WTI원유선물(H)",
+    "ticker": "261220",
+    "stage": "관망"
+  },
+  "471910.KS": {
+    "name": "KODEX K-로봇액티브",
+    "ticker": "471910",
+    "stage": "매수"
+  },
+  "365040.KS": {
+    "name": "TIGER 코스닥150바이오TECH",
+    "ticker": "365040",
+    "stage": "관망"
+  },
+  "449450.KS": {
+    "name": "KODEX K-방산",
+    "ticker": "449450",
+    "stage": "매수"
+  },
+  "466920.KS": {
+    "name": "KODEX 조선",
+    "ticker": "466920",
+    "stage": "매수"
+  },
+  "000660.KS": {
+    "name": "SK하이닉스",
+    "ticker": "000660",
+    "stage": "적극매수"
+  },
+  "267260.KS": {
+    "name": "HD현대일렉트릭",
+    "ticker": "267260",
+    "stage": "적극매수"
+  },
+  "007660.KS": {
+    "name": "이수페타시스",
+    "ticker": "007660",
+    "stage": "관망"
+  },
+  "047810.KS": {
+    "name": "한국항공우주(KAI)",
+    "ticker": "047810",
+    "stage": "매수"
+  },
+  "034020.KS": {
+    "name": "두산에너빌리티",
+    "ticker": "034020",
+    "stage": "매수"
+  },
+  "036460.KS": {
+    "name": "한국가스공사",
+    "ticker": "036460",
+    "stage": "관망"
+  },
+  "066570.KS": {
+    "name": "LG전자",
+    "ticker": "066570",
+    "stage": "매수"
+  },
+  "196170.KQ": {
+    "name": "알테오젠",
+    "ticker": "196170",
+    "stage": "매수"
+  },
+  "012450.KS": {
+    "name": "한화에어로스페이스",
+    "ticker": "012450",
+    "stage": "적극매수"
+  },
+  "009540.KS": {
+    "name": "HD한국조선해양",
+    "ticker": "009540",
+    "stage": "적극매수"
+  },
+  "SOXX": {
+    "name": "아이셰어즈 반도체 ETF",
+    "ticker": "SOXX",
+    "stage": "매수"
+  },
+  "GRID": {
+    "name": "퍼스트트러스트 그리드 ETF",
+    "ticker": "GRID",
+    "stage": "매수"
+  },
+  "QTUM": {
+    "name": "디파이언스 양자 ETF",
+    "ticker": "QTUM",
+    "stage": "매수"
+  },
+  "UFO": {
+    "name": "프로큐어 우주 ETF",
+    "ticker": "UFO",
+    "stage": "관망"
+  },
+  "NLR": {
+    "name": "VanEck 우라늄+원자력 ETF",
+    "ticker": "NLR",
+    "stage": "매수"
+  },
+  "XLE": {
+    "name": "에너지 셀렉트 섹터 ETF",
+    "ticker": "XLE",
+    "stage": "관망"
+  },
+  "ROBO": {
+    "name": "ROBO 글로벌 로봇 ETF",
+    "ticker": "ROBO",
+    "stage": "매수"
+  },
+  "GNOM": {
+    "name": "Global X 유전체 ETF",
+    "ticker": "GNOM",
+    "stage": "매수"
+  },
+  "ITA": {
+    "name": "iShares 항공우주방산 ETF",
+    "ticker": "ITA",
+    "stage": "매수"
+  },
+  "BOAT": {
+    "name": "SonicShares 글로벌 해운 ETF",
+    "ticker": "BOAT",
+    "stage": "매수"
+  },
+  "NVDA": {
+    "name": "엔비디아",
+    "ticker": "NVDA",
+    "stage": "적극매수"
+  },
+  "GEV": {
+    "name": "GE 버노바",
+    "ticker": "GEV",
+    "stage": "적극매수"
+  },
+  "IONQ": {
+    "name": "아이온큐",
+    "ticker": "IONQ",
+    "stage": "매수"
+  },
+  "RKLB": {
+    "name": "로켓랩",
+    "ticker": "RKLB",
+    "stage": "매수"
+  },
+  "OKLO": {
+    "name": "오클로",
+    "ticker": "OKLO",
+    "stage": "매수"
+  },
+  "OXY": {
+    "name": "옥시덴탈",
+    "ticker": "OXY",
+    "stage": "관망"
+  },
+  "TSLA": {
+    "name": "테슬라",
+    "ticker": "TSLA",
+    "stage": "매수"
+  },
+  "LLY": {
+    "name": "일라이 릴리",
+    "ticker": "LLY",
+    "stage": "적극매수"
+  },
+  "PLTR": {
+    "name": "팔란티어",
+    "ticker": "PLTR",
+    "stage": "매수"
+  },
+  "HII": {
+    "name": "헌팅턴 잉걸스",
+    "ticker": "HII",
+    "stage": "매수"
+  }
+}

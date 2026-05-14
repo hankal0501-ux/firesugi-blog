@@ -29,7 +29,7 @@
     "current": 114870.0,
     "change_pct": -0.03,
     "ytd_pct": -0.71,
-    "high_52w": 117287.62,
+    "high_52w": 117287.61,
     "low_52w": 114225.0,
     "currency": "KRW",
     "name_full": "TIGER INV GRADE CORP ACTIVE",
@@ -71,8 +71,16 @@
     "name_full": "PLUS K-Defense Industry",
     "market_cap": null
   },
-  "469540.KS": {
-    "error": "empty"
+  "466920.KS": {
+    "ok": true,
+    "current": 39000.0,
+    "change_pct": -4.25,
+    "ytd_pct": 68.06,
+    "high_52w": 42272.48,
+    "low_52w": 22726.77,
+    "currency": "KRW",
+    "name_full": "SOL Shipbuilding TOP3 Plus",
+    "market_cap": null
   },
   "000660.KS": {
     "ok": true,
@@ -146,7 +154,7 @@
     "change_pct": 13.38,
     "ytd_pct": 203.57,
     "high_52w": 217000.0,
-    "low_52w": 68031.11,
+    "low_52w": 68031.1,
     "currency": "KRW",
     "name_full": "LGELECTRONICS",
     "market_cap": 38973028171776

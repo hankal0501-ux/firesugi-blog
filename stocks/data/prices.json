@@ -29,7 +29,7 @@
     "current": 114870.0,
     "change_pct": -0.03,
     "ytd_pct": -0.71,
-    "high_52w": 117287.62,
+    "high_52w": 117287.61,
     "low_52w": 114225.0,
     "currency": "KRW",
     "name_full": "TIGER INV GRADE CORP ACTIVE",
@@ -46,8 +46,16 @@
     "name_full": "KODEX WTIOILF(H)",
     "market_cap": null
   },
-  "471910.KS": {
-    "error": "empty"
+  "445290.KS": {
+    "ok": true,
+    "current": 42200.0,
+    "change_pct": 0.14,
+    "ytd_pct": 186.97,
+    "high_52w": 42200.0,
+    "low_52w": 13891.76,
+    "currency": "KRW",
+    "name_full": "KODEX Robot Active",
+    "market_cap": null
   },
   "365040.KS": {
     "ok": true,

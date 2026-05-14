@@ -12,8 +12,11 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD 
 header{background:linear-gradient(120deg,#0b62ff,#00b4d8);color:#fff;padding:36px 0 28px}
 header h1{margin:0;font-size:26px;letter-spacing:-0.5px}
 header .tagline{margin:6px 0 0;opacity:0.9}
-.back{display:inline-block;margin-top:14px;color:#fff;text-decoration:none;font-size:13px;opacity:0.9}
+.header-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;align-items:center}
+.back{display:inline-block;color:#fff;text-decoration:none;font-size:13px;opacity:0.9}
 .back:hover{opacity:1;text-decoration:underline}
+.admin-link{background:rgba(255,255,255,0.18);padding:6px 14px;border-radius:999px;font-weight:600}
+.admin-link:hover{background:rgba(255,255,255,0.28);text-decoration:none}
 section{background:#fff;border-radius:12px;padding:24px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,0.05);border-left:4px solid #0b62ff}
 .block-topic{border-left-color:#b045d4}
 .block-list{border-left-color:#16a34a}
@@ -44,7 +47,14 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
   <div class="container">
     <h1>이벤트 알림</h1>
     <p class="tagline">여행 특가 · 무료 응모/경품 이벤트를 한 번에</p>
-    <a href="../" class="back">← Fire-Sugi 메인으로</a>
+    <div class="header-links">
+      <a href="../" class="back">← Fire-Sugi 메인으로</a>
+      <a id="admin-settings-link"
+         href="http://localhost:8088/admin/dashboard"
+         target="_blank" rel="noopener"
+         class="back admin-link"
+         style="display:none;">🛠️ 이벤트 설정 (관리자)</a>
+    </div>
   </div>
 </header>
 
@@ -81,6 +91,7 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
 </footer>
 
 <script>
+// === 주제 필터 ===
 (function(){
   const pills = document.querySelectorAll('.topic-pill');
   const items = document.querySelectorAll('#event-list li');
@@ -100,6 +111,24 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
     });
     countEl.textContent = visible + '건 · ' + countEl.textContent.split('·')[1];
   }));
+})();
+
+// === 관리자 판별 — Fire-Sugi 메인의 로그인 상태 읽어서 settings 링크 노출 ===
+(function(){
+  try {
+    const session = localStorage.getItem('fireSugiSession') || sessionStorage.getItem('fireSugiSession');
+    if (!session) return;
+    const user = JSON.parse(session);
+    if (!user || !user.id) return;
+    const users = JSON.parse(localStorage.getItem('fireSugiUsers') || '[]');
+    const dbUser = users.find(u => u.id === user.id);
+    if (dbUser && dbUser.role === 'admin') {
+      const link = document.getElementById('admin-settings-link');
+      if (link) link.style.display = 'inline-block';
+    }
+  } catch (e) {
+    /* 무시 */
+  }
 })();
 </script>
 </body>

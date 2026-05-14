@@ -10,8 +10,16 @@
     "name_full": "KODEX SEMICON",
     "market_cap": null
   },
-  "470240.KS": {
-    "error": "empty"
+  "487230.KS": {
+    "ok": true,
+    "current": 27800.0,
+    "change_pct": -0.11,
+    "ytd_pct": 107.0,
+    "high_52w": 27850.0,
+    "low_52w": 12966.33,
+    "currency": "KRW",
+    "name_full": "KODEX US AI Electric Power Core",
+    "market_cap": null
   },
   "453950.KS": {
     "ok": true,
@@ -29,7 +37,7 @@
     "current": 114870.0,
     "change_pct": -0.03,
     "ytd_pct": -0.71,
-    "high_52w": 117287.61,
+    "high_52w": 117287.62,
     "low_52w": 114225.0,
     "currency": "KRW",
     "name_full": "TIGER INV GRADE CORP ACTIVE",
@@ -195,7 +203,7 @@
     "change_pct": -4.99,
     "ytd_pct": 56.31,
     "high_52w": 479000.0,
-    "low_52w": 271154.25,
+    "low_52w": 271154.22,
     "currency": "KRW",
     "name_full": "HDKSOE",
     "market_cap": 30937651871744

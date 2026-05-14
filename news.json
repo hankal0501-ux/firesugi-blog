@@ -1,5 +1,20 @@
 [
   {
+    "id": 1778726162374,
+    "topic": "최신기술",
+    "source": "뉴스워커",
+    "emoji": "🚀",
+    "image": "🚀",
+    "title": "대전시, 'AI 화재대응' 산업시설 안전망 강화",
+    "summary": "대전시, 'AI 화재대응' 산업시설 안전망 강화 뉴스워커",
+    "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE0wdktPTzAyZ0w3NHhPT245bDQ1V3RqTTBBRTh2S00xT09JVDc5UDBkNE5mckloM0x3VnN4akdmZ0NmcG9iaU04VUxQWThIc2c0X1J5SVY2aEtLVkhmdmV0SnA3cXlBTU1VUGMweGVKRzjSAXNBVV95cUxNbkFEbUZVal9IRG03RGZ4eGtlMjk2eTdaQjdFUXdiN0pCNVBhVFU4YVR1dFAtd1RUbHlURkRuSUtyaFNMY1FrNjAydnZIQVEyX0tFQ0U3dVZTSHRwdEdwY3JSUmtyR1dGOWQ4a28zSHZFZi1F?oc=5",
+    "date": "2026.05.13",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-14T02:35:58.889Z",
+    "pubDate": "2026-05-13T09:25:00.000Z"
+  },
+  {
     "id": 1778639740695,
     "topic": "최신기술",
     "source": "증권경제신문",
@@ -10,7 +25,7 @@
     "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1lNnRmQzlURGJ1TWtWNnBXT3J6SWVheVFwY2FkQmZoOUVlcm1PeFBzak9XVWZTWW90dEF2bm1ES3NfWmRYX3FtRnNBLVFvX0VEQTlTbjBaaFhqTHRXRnFldENLQkZqWmJONTZSREZsM2pMYlXSAXZBVV95cUxOeWJIQ3JHUGJ4aDZHMXRXQkdiWTBNZkJUZmxqV09pSjQySUN2ZUM5Zkl5R2ZzTjBmc3ZtV2haVlFIZE96MXF0dmJ2N2FJYS1CbUhudFFqczJMelB0Q3YwTHlLTWwzQUZrWEtGSEJVTDVoeEFTMkJB?oc=5",
     "date": "2026.05.12",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-13T02:35:38.856Z",
     "pubDate": "2026-05-12T08:00:02.000Z"
   },

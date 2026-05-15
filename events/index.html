@@ -42,6 +42,25 @@ ul.event-list a:hover{color:#0b62ff;text-decoration:underline}
 ul.event-list small{display:block;color:#888;font-size:12px;margin-top:2px;padding-left:6px}
 .empty{color:#888;padding:20px;text-align:center}
 footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
+/* 구독/해지 모달 */
+.modal-bd{position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:200;display:none;align-items:flex-start;justify-content:center;padding:40px 14px;overflow-y:auto}
+.modal-bd[data-open="1"]{display:flex}
+.modal-bx{background:#fff;border-radius:14px;width:100%;max-width:520px;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,0.25)}
+.modal-bx h3{margin:0 0 8px;font-size:18px;color:#0b62ff}
+.modal-desc{margin:0 0 16px;color:#555;font-size:14px;line-height:1.5}
+.modal-bx input[type=email]{width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:15px;font-family:inherit;box-sizing:border-box}
+.cat-fs{border:1px solid #eef0f5;border-radius:8px;padding:10px 12px;margin:14px 0 0}
+.cat-fs legend{font-size:12px;color:#666;padding:0 6px}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px}
+.cat-grid label{font-size:13px;color:#444;cursor:pointer;display:flex;align-items:center;gap:5px}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.btn-primary{flex:1;padding:11px;border:0;border-radius:8px;background:#16a34a;color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:15px}
+.btn-danger{flex:1;padding:11px;border:0;border-radius:8px;background:#dc2626;color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:15px}
+.btn-secondary{flex:0 0 auto;padding:11px 18px;border:0;border-radius:8px;background:#e5e7eb;color:#374151;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px}
+.modal-status{margin:12px 0 0;font-size:13px;font-weight:600;min-height:20px}
+.modal-status.ok{color:#16a34a}
+.modal-status.err{color:#dc2626}
+.modal-foot{margin:14px 0 0;color:#888;font-size:11.5px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -51,6 +70,10 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
     <p class="tagline">여행 특가 · 무료 응모/경품 이벤트를 한 번에</p>
     <div class="header-links">
       <a href="../" class="back home-btn">🏠 홈으로 가기</a>
+      <button type="button" class="back home-btn" style="background:#16a34a;color:#fff !important;border:0;cursor:pointer;font-family:inherit;font-size:14px;"
+              onclick="document.getElementById('sub-modal').dataset.open='1'">📬 메일받기 신청</button>
+      <button type="button" class="back" style="background:rgba(255,255,255,0.15);color:#fff !important;border:0;cursor:pointer;font-family:inherit;font-size:13px;padding:6px 14px;border-radius:999px;"
+              onclick="document.getElementById('unsub-modal').dataset.open='1'">✉️ 메일 해지</button>
       <a id="admin-stocks-link"
          href="../stocks/"
          class="back home-btn"
@@ -96,7 +119,103 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
   </div>
 </footer>
 
+<!-- 구독 신청 모달 -->
+<div class="modal-bd" id="sub-modal" onclick="if(event.target===this)this.removeAttribute('data-open')">
+  <div class="modal-bx">
+    <h3>📬 이벤트 메일받기 신청</h3>
+    <p class="modal-desc">아래에 이메일을 입력하시면, 새 여행 특가·응모·경품 이벤트를 즉시 메일로 받아보실 수 있습니다.</p>
+    <input type="email" id="sub-email" placeholder="your@email.com" autocomplete="email">
+    <fieldset class="cat-fs">
+      <legend>관심 카테고리 (선택 — 비워두면 전체)</legend>
+      <div class="cat-grid">
+        <label><input type="checkbox" value="여행"> 여행</label><label><input type="checkbox" value="현금"> 현금</label><label><input type="checkbox" value="생활"> 생활</label><label><input type="checkbox" value="디지털"> 디지털</label><label><input type="checkbox" value="금융"> 금융</label><label><input type="checkbox" value="부동산"> 부동산</label><label><input type="checkbox" value="공모전"> 공모전</label><label><input type="checkbox" value="정부공모"> 정부공모</label><label><input type="checkbox" value="기타"> 기타</label>
+      </div>
+    </fieldset>
+    <div class="modal-actions">
+      <button type="button" class="btn-primary" onclick="submitSubscribe()">신청</button>
+      <button type="button" class="btn-secondary" onclick="document.getElementById('sub-modal').removeAttribute('data-open')">취소</button>
+    </div>
+    <p class="modal-status" id="sub-status"></p>
+    <p class="modal-foot">해지는 받은 메일 하단 링크 또는 상단 "메일 해지" 버튼에서 즉시 가능합니다.</p>
+  </div>
+</div>
+
+<!-- 해지 모달 -->
+<div class="modal-bd" id="unsub-modal" onclick="if(event.target===this)this.removeAttribute('data-open')">
+  <div class="modal-bx">
+    <h3>✉️ 이벤트 메일 해지</h3>
+    <p class="modal-desc">등록한 이메일을 입력하시면 즉시 해지됩니다.</p>
+    <input type="email" id="unsub-email" placeholder="your@email.com" autocomplete="email">
+    <div class="modal-actions">
+      <button type="button" class="btn-danger" onclick="submitUnsubscribe()">즉시 해지</button>
+      <button type="button" class="btn-secondary" onclick="document.getElementById('unsub-modal').removeAttribute('data-open')">취소</button>
+    </div>
+    <p class="modal-status" id="unsub-status"></p>
+  </div>
+</div>
+
 <script>
+const SUBSCRIBE_URL = "https://dive-bill-wed-powell.trycloudflare.com/api/subscribe";
+const UNSUBSCRIBE_URL = "https://dive-bill-wed-powell.trycloudflare.com/api/unsubscribe";
+
+async function submitSubscribe() {
+  const email = document.getElementById('sub-email').value.trim();
+  const status = document.getElementById('sub-status');
+  if (!email) { status.textContent = '이메일을 입력하세요.'; status.className='modal-status err'; return; }
+  const cats = Array.from(document.querySelectorAll('#sub-modal .cat-fs input:checked')).map(x => x.value);
+  status.textContent = '⏳ 신청 중...'; status.className='modal-status';
+  try {
+    const resp = await fetch(SUBSCRIBE_URL, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, categories: cats}),
+    });
+    const data = await resp.json().catch(() => ({}));
+    if (resp.ok && data.ok) {
+      status.textContent = '✅ ' + (data.message || '신청 완료');
+      status.className = 'modal-status ok';
+      document.getElementById('sub-email').value = '';
+    } else {
+      status.textContent = '❌ ' + (data.error || ('실패 HTTP ' + resp.status));
+      status.className = 'modal-status err';
+    }
+  } catch (e) {
+    status.textContent = '❌ 네트워크 오류: ' + e.message;
+    status.className = 'modal-status err';
+  }
+}
+
+async function submitUnsubscribe() {
+  const email = document.getElementById('unsub-email').value.trim();
+  const status = document.getElementById('unsub-status');
+  if (!email) { status.textContent = '이메일을 입력하세요.'; status.className='modal-status err'; return; }
+  status.textContent = '⏳ 해지 중...'; status.className='modal-status';
+  try {
+    const resp = await fetch(UNSUBSCRIBE_URL, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email}),
+    });
+    const data = await resp.json().catch(() => ({}));
+    if (resp.ok && data.ok) {
+      status.textContent = '✅ ' + (data.message || '해지 완료');
+      status.className = 'modal-status ok';
+      document.getElementById('unsub-email').value = '';
+    } else {
+      status.textContent = '❌ ' + (data.error || ('실패 HTTP ' + resp.status));
+      status.className = 'modal-status err';
+    }
+  } catch (e) {
+    status.textContent = '❌ 네트워크 오류: ' + e.message;
+    status.className = 'modal-status err';
+  }
+}
+
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape') {
+    document.getElementById('sub-modal').removeAttribute('data-open');
+    document.getElementById('unsub-modal').removeAttribute('data-open');
+  }
+});
+
 // === 주제 필터 ===
 (function(){
   const pills = document.querySelectorAll('.topic-pill');

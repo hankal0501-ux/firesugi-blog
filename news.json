@@ -1,5 +1,20 @@
 [
   {
+    "id": 1778812594150,
+    "topic": "최신기술",
+    "source": "팍스경제TV",
+    "emoji": "🚀",
+    "image": "🚀",
+    "title": "[리포트] “전기가 끊겨도 화재 잡는다”…파라텍, ‘스마트 소방 솔루션’ 공개",
+    "summary": "[리포트] “전기가 끊겨도 화재 잡는다”…파라텍, ‘스마트 소방 솔루션’ 공개 팍스경제TV",
+    "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9iVTFFY045Tmtlbk1tRnoyZlJOVEdZcEZXZzdnT2VxTWZjMkI1RXVzSF9BRGNmbFBzVXh2V3hfSTRqNWNJU0pHajZDTEV4RFNCRzdNS1VQQ0ZaakVUdmlROWhDN1hPVmhV?oc=5",
+    "date": "2026.05.15",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-15T02:36:28.694Z",
+    "pubDate": "2026-05-15T00:30:40.000Z"
+  },
+  {
     "id": 1778726162374,
     "topic": "최신기술",
     "source": "뉴스워커",
@@ -10,7 +25,7 @@
     "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE0wdktPTzAyZ0w3NHhPT245bDQ1V3RqTTBBRTh2S00xT09JVDc5UDBkNE5mckloM0x3VnN4akdmZ0NmcG9iaU04VUxQWThIc2c0X1J5SVY2aEtLVkhmdmV0SnA3cXlBTU1VUGMweGVKRzjSAXNBVV95cUxNbkFEbUZVal9IRG03RGZ4eGtlMjk2eTdaQjdFUXdiN0pCNVBhVFU4YVR1dFAtd1RUbHlURkRuSUtyaFNMY1FrNjAydnZIQVEyX0tFQ0U3dVZTSHRwdEdwY3JSUmtyR1dGOWQ4a28zSHZFZi1F?oc=5",
     "date": "2026.05.13",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-14T02:35:58.889Z",
     "pubDate": "2026-05-13T09:25:00.000Z"
   },

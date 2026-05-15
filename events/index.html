@@ -73,7 +73,7 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
       <button type="button" class="back home-btn" style="background:#16a34a;color:#fff !important;border:0;cursor:pointer;font-family:inherit;font-size:14px;"
               onclick="document.getElementById('sub-modal').dataset.open='1'">📬 메일받기 신청</button>
       <button type="button" class="back" style="background:rgba(255,255,255,0.15);color:#fff !important;border:0;cursor:pointer;font-family:inherit;font-size:13px;padding:6px 14px;border-radius:999px;"
-              onclick="document.getElementById('unsub-modal').dataset.open='1'">✉️ 메일 해지</button>
+              onclick="quickUnsubscribe()">✉️ 메일 해지</button>
       <a id="admin-stocks-link"
          href="../stocks/"
          class="back home-btn"
@@ -173,6 +173,8 @@ async function submitSubscribe() {
     if (resp.ok && data.ok) {
       status.textContent = '✅ ' + (data.message || '신청 완료');
       status.className = 'modal-status ok';
+      // 동일 브라우저에서 한 번에 해지할 수 있도록 이메일 캐시
+      try { localStorage.setItem('eventAlertEmail', email); } catch (e) {}
       document.getElementById('sub-email').value = '';
     } else {
       status.textContent = '❌ ' + (data.error || ('실패 HTTP ' + resp.status));
@@ -184,11 +186,26 @@ async function submitSubscribe() {
   }
 }
 
-async function submitUnsubscribe() {
-  const email = document.getElementById('unsub-email').value.trim();
-  const status = document.getElementById('unsub-status');
-  if (!email) { status.textContent = '이메일을 입력하세요.'; status.className='modal-status err'; return; }
-  status.textContent = '⏳ 해지 중...'; status.className='modal-status';
+// === 즉시 자동 해지 ===
+// 1) localStorage에 이전 신청 이메일이 있으면 그대로 즉시 호출 (자동)
+// 2) 없으면 모달로 이메일 입력
+async function quickUnsubscribe() {
+  let cached = null;
+  try { cached = localStorage.getItem('eventAlertEmail'); } catch (e) {}
+  if (cached) {
+    if (!confirm(cached + ' 메일 알림을 즉시 해지할까요?')) return;
+    const ok = await callUnsubscribe(cached, null);
+    if (ok) {
+      try { localStorage.removeItem('eventAlertEmail'); } catch (e) {}
+      alert('✅ ' + cached + ' 해지 완료');
+    }
+    return;
+  }
+  document.getElementById('unsub-modal').dataset.open = '1';
+}
+
+async function callUnsubscribe(email, statusEl) {
+  if (statusEl) { statusEl.textContent = '⏳ 해지 중...'; statusEl.className='modal-status'; }
   try {
     const resp = await fetch(UNSUBSCRIBE_URL, {
       method: 'POST', headers: {'Content-Type': 'application/json'},
@@ -196,16 +213,36 @@ async function submitUnsubscribe() {
     });
     const data = await resp.json().catch(() => ({}));
     if (resp.ok && data.ok) {
-      status.textContent = '✅ ' + (data.message || '해지 완료');
-      status.className = 'modal-status ok';
-      document.getElementById('unsub-email').value = '';
-    } else {
-      status.textContent = '❌ ' + (data.error || ('실패 HTTP ' + resp.status));
-      status.className = 'modal-status err';
+      if (statusEl) {
+        statusEl.textContent = '✅ ' + (data.message || '해지 완료');
+        statusEl.className = 'modal-status ok';
+      }
+      return true;
     }
+    const msg = data.error || ('실패 HTTP ' + resp.status);
+    if (statusEl) { statusEl.textContent = '❌ ' + msg; statusEl.className = 'modal-status err'; }
+    else alert('❌ ' + msg);
+    return false;
   } catch (e) {
-    status.textContent = '❌ 네트워크 오류: ' + e.message;
-    status.className = 'modal-status err';
+    const msg = '네트워크 오류: ' + e.message;
+    if (statusEl) { statusEl.textContent = '❌ ' + msg; statusEl.className = 'modal-status err'; }
+    else alert('❌ ' + msg);
+    return false;
+  }
+}
+
+async function submitUnsubscribe() {
+  const emailEl = document.getElementById('unsub-email');
+  const email = emailEl.value.trim();
+  const status = document.getElementById('unsub-status');
+  if (!email) { status.textContent = '이메일을 입력하세요.'; status.className='modal-status err'; return; }
+  const ok = await callUnsubscribe(email, status);
+  if (ok) {
+    emailEl.value = '';
+    try {
+      const cached = localStorage.getItem('eventAlertEmail');
+      if (cached && cached.toLowerCase() === email.toLowerCase()) localStorage.removeItem('eventAlertEmail');
+    } catch (e) {}
   }
 }
 

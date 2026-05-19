@@ -104,99 +104,14 @@
     "ticker": "SOXX",
     "stage": "매수"
   },
-  "GRID": {
-    "name": "퍼스트트러스트 그리드 ETF",
-    "ticker": "GRID",
-    "stage": "매수"
-  },
   "QTUM": {
     "name": "디파이언스 양자 ETF",
     "ticker": "QTUM",
     "stage": "매수"
   },
-  "UFO": {
-    "name": "프로큐어 우주 ETF",
-    "ticker": "UFO",
-    "stage": "관망"
-  },
   "NLR": {
     "name": "VanEck 우라늄+원자력 ETF",
     "ticker": "NLR",
-    "stage": "매수"
-  },
-  "XLE": {
-    "name": "에너지 셀렉트 섹터 ETF",
-    "ticker": "XLE",
-    "stage": "관망"
-  },
-  "ROBO": {
-    "name": "ROBO 글로벌 로봇 ETF",
-    "ticker": "ROBO",
-    "stage": "매수"
-  },
-  "GNOM": {
-    "name": "Global X 유전체 ETF",
-    "ticker": "GNOM",
-    "stage": "매수"
-  },
-  "ITA": {
-    "name": "iShares 항공우주방산 ETF",
-    "ticker": "ITA",
-    "stage": "매수"
-  },
-  "BOAT": {
-    "name": "SonicShares 글로벌 해운 ETF",
-    "ticker": "BOAT",
-    "stage": "매수"
-  },
-  "NVDA": {
-    "name": "엔비디아",
-    "ticker": "NVDA",
-    "stage": "적극매수"
-  },
-  "GEV": {
-    "name": "GE 버노바",
-    "ticker": "GEV",
-    "stage": "적극매수"
-  },
-  "IONQ": {
-    "name": "아이온큐",
-    "ticker": "IONQ",
-    "stage": "매수"
-  },
-  "RKLB": {
-    "name": "로켓랩",
-    "ticker": "RKLB",
-    "stage": "매수"
-  },
-  "OKLO": {
-    "name": "오클로",
-    "ticker": "OKLO",
-    "stage": "매수"
-  },
-  "OXY": {
-    "name": "옥시덴탈",
-    "ticker": "OXY",
-    "stage": "관망"
-  },
-  "TSLA": {
-    "name": "테슬라",
-    "ticker": "TSLA",
-    "stage": "적극매수"
-  },
-  "LLY": {
-    "name": "일라이 릴리",
-    "ticker": "LLY",
-    "stage": "적극매수"
-  },
-  "PLTR": {
-    "name": "팔란티어",
-    "ticker": "PLTR",
-    "stage": "매수"
-  },
-  "HII": {
-    "name": "헌팅턴 잉걸스",
-    "ticker": "HII",
     "stage": "매수"
   }
 }

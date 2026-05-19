@@ -40,7 +40,7 @@
     "current": 114670.0,
     "change_pct": 0.06,
     "ytd_pct": -0.86,
-    "high_52w": 117287.62,
+    "high_52w": 117287.61,
     "low_52w": 114225.0,
     "currency": "KRW",
     "name_full": "TIGER INV GRADE CORP ACTIVE",
@@ -124,7 +124,7 @@
       "영업이익성장률 YoY": 396.6,
       "순이익률": 56.9,
       "부채비율": 11.75,
-      "배당수익률": 16.0
+      "배당수익률": 17.0
     }
   },
   "267260.KS": {
@@ -133,7 +133,7 @@
     "change_pct": -4.53,
     "ytd_pct": 215.48,
     "high_52w": 1418644.62,
-    "low_52w": 347087.84,
+    "low_52w": 347087.81,
     "currency": "KRW",
     "name_full": "HD HYUNDAI ELECTRIC",
     "market_cap": 39412012417024,
@@ -144,7 +144,7 @@
       "영업이익성장률 YoY": 89.6,
       "순이익률": 17.96,
       "부채비율": 12.72,
-      "배당수익률": 73.0
+      "배당수익률": 77.0
     }
   },
   "007660.KS": {
@@ -164,7 +164,7 @@
       "영업이익성장률 YoY": 88.6,
       "순이익률": 14.75,
       "부채비율": 31.82,
-      "배당수익률": 17.0
+      "배당수익률": 19.0
     }
   },
   "047810.KS": {
@@ -221,7 +221,7 @@
       "매출성장률 YoY": -9.9,
       "순이익률": 0.37,
       "부채비율": 336.59,
-      "배당수익률": 3.07
+      "배당수익률": 3.03
     }
   },
   "066570.KS": {
@@ -239,7 +239,7 @@
       "매출성장률 YoY": 4.3,
       "순이익률": 1.21,
       "부채비율": 48.89,
-      "배당수익률": 62.0
+      "배당수익률": 70.0
     }
   },
   "196170.KQ": {
@@ -279,7 +279,7 @@
       "영업이익성장률 YoY": -60.1,
       "순이익률": 5.26,
       "부채비율": 76.37,
-      "배당수익률": 57.0
+      "배당수익률": 54.0
     }
   },
   "009540.KS": {
@@ -288,7 +288,7 @@
     "change_pct": -2.44,
     "ytd_pct": 42.91,
     "high_52w": 479000.0,
-    "low_52w": 271154.25,
+    "low_52w": 271154.22,
     "currency": "KRW",
     "name_full": "HDKSOE",
     "market_cap": 28285853499392,
@@ -299,368 +299,53 @@
       "영업이익성장률 YoY": 26.5,
       "순이익률": 7.24,
       "부채비율": 8.86,
-      "배당수익률": 2.22
+      "배당수익률": 2.28
     }
   },
   "SOXX": {
     "ok": true,
-    "current": 495.87,
-    "change_pct": -2.49,
-    "ytd_pct": 135.56,
+    "current": 496.74,
+    "change_pct": 0.18,
+    "ytd_pct": 136.32,
     "high_52w": 532.76,
     "low_52w": 201.27,
     "currency": "USD",
     "name_full": "iShares PHLX SOX Semiconductor ",
     "market_cap": null,
     "metrics": {
-      "PER": 45.52,
+      "PER": 45.6,
       "PBR": 1.17,
       "배당수익률": 36.0
     }
   },
-  "GRID": {
-    "ok": true,
-    "current": 189.22,
-    "change_pct": -1.33,
-    "ytd_pct": 47.38,
-    "high_52w": 199.8,
-    "low_52w": 127.42,
-    "currency": "USD",
-    "name_full": "First Trust NASDAQ Clean Edge S",
-    "market_cap": null,
-    "metrics": {
-      "PER": 33.43,
-      "배당수익률": 79.0
-    }
-  },
   "QTUM": {
     "ok": true,
-    "current": 141.97,
-    "change_pct": -0.78,
-    "ytd_pct": 69.19,
+    "current": 140.63,
+    "change_pct": -0.94,
+    "ytd_pct": 64.56,
     "high_52w": 147.88,
     "low_52w": 83.71,
     "currency": "USD",
     "name_full": "Defiance Quantum ETF",
     "market_cap": null,
     "metrics": {
-      "PER": 35.36,
+      "PER": 35.02,
       "배당수익률": 88.0
-    }
-  },
-  "UFO": {
-    "ok": true,
-    "current": 57.59,
-    "change_pct": 2.38,
-    "ytd_pct": 136.12,
-    "high_52w": 57.97,
-    "low_52w": 24.05,
-    "currency": "USD",
-    "name_full": "Procure Space ETF",
-    "market_cap": null,
-    "metrics": {
-      "PER": 26.05,
-      "배당수익률": 32.0
     }
   },
   "NLR": {
     "ok": true,
-    "current": 127.53,
-    "change_pct": -1.66,
-    "ytd_pct": 47.78,
+    "current": 125.06,
+    "change_pct": -1.94,
+    "ytd_pct": 45.42,
     "high_52w": 164.37,
     "low_52w": 85.54,
     "currency": "USD",
     "name_full": "VanEck Uranium and Nuclear ETF",
     "market_cap": null,
     "metrics": {
-      "PER": 24.4,
+      "PER": 23.92,
       "배당수익률": 2.19
-    }
-  },
-  "XLE": {
-    "ok": true,
-    "current": 60.58,
-    "change_pct": 1.92,
-    "ytd_pct": 48.23,
-    "high_52w": 62.56,
-    "low_52w": 39.5,
-    "currency": "USD",
-    "name_full": "State Street Energy Select Sect",
-    "market_cap": null,
-    "metrics": {
-      "PER": 22.03,
-      "PBR": 1.16,
-      "배당수익률": 2.5
-    }
-  },
-  "ROBO": {
-    "ok": true,
-    "current": 84.24,
-    "change_pct": -0.88,
-    "ytd_pct": 50.0,
-    "high_52w": 87.26,
-    "low_52w": 55.3,
-    "currency": "USD",
-    "name_full": "ROBO Global Robotics and Automa",
-    "market_cap": null,
-    "metrics": {
-      "PER": 33.85,
-      "PBR": 278.02,
-      "배당수익률": 36.0
-    }
-  },
-  "GNOM": {
-    "ok": true,
-    "current": 44.01,
-    "change_pct": -0.68,
-    "ytd_pct": 42.66,
-    "high_52w": 50.59,
-    "low_52w": 30.3,
-    "currency": "USD",
-    "name_full": "Global X Genomics & Biotechnolo",
-    "market_cap": null,
-    "metrics": {
-      "배당수익률": 1.38
-    }
-  },
-  "ITA": {
-    "ok": true,
-    "current": 220.23,
-    "change_pct": 1.36,
-    "ytd_pct": 27.76,
-    "high_52w": 250.42,
-    "low_52w": 169.3,
-    "currency": "USD",
-    "name_full": "iShares U.S. Aerospace & Defens",
-    "market_cap": null,
-    "metrics": {
-      "PER": 36.1,
-      "배당수익률": 49.0
-    }
-  },
-  "BOAT": {
-    "ok": true,
-    "current": 41.85,
-    "change_pct": 1.18,
-    "ytd_pct": 51.8,
-    "high_52w": 42.97,
-    "low_52w": 26.74,
-    "currency": "USD",
-    "name_full": "SonicShares Global Shipping ETF",
-    "market_cap": null,
-    "metrics": {
-      "PER": 9.96,
-      "배당수익률": 6.19
-    }
-  },
-  "NVDA": {
-    "ok": true,
-    "current": 222.32,
-    "change_pct": -1.33,
-    "ytd_pct": 64.03,
-    "high_52w": 235.74,
-    "low_52w": 131.26,
-    "currency": "USD",
-    "name_full": "NVIDIA Corporation",
-    "market_cap": 5384707244032,
-    "metrics": {
-      "영업이익률": 65.02,
-      "ROE": 101.48,
-      "매출성장률 YoY": 73.2,
-      "영업이익성장률 YoY": 95.6,
-      "순이익률": 55.6,
-      "부채비율": 7.25,
-      "PER": 45.46,
-      "PBR": 34.35,
-      "배당수익률": 2.0
-    }
-  },
-  "GEV": {
-    "ok": true,
-    "current": 1012.25,
-    "change_pct": -3.52,
-    "ytd_pct": 127.16,
-    "high_52w": 1149.53,
-    "low_52w": 445.62,
-    "currency": "USD",
-    "name_full": "GE Vernova Inc.",
-    "market_cap": 272011821056,
-    "metrics": {
-      "영업이익률": 5.46,
-      "ROE": 75.71,
-      "매출성장률 YoY": 16.3,
-      "영업이익성장률 YoY": 1816.5,
-      "순이익률": 23.81,
-      "부채비율": 24.93,
-      "PER": 29.59,
-      "PBR": 19.54,
-      "배당수익률": 15.0
-    }
-  },
-  "IONQ": {
-    "ok": true,
-    "current": 49.31,
-    "change_pct": -5.08,
-    "ytd_pct": 40.52,
-    "high_52w": 82.09,
-    "low_52w": 26.59,
-    "currency": "USD",
-    "name_full": "IonQ, Inc.",
-    "market_cap": 18405941248,
-    "metrics": {
-      "영업이익률": -401.75,
-      "ROE": 11.29,
-      "매출성장률 YoY": 754.7,
-      "순이익률": 174.88,
-      "부채비율": 0.61,
-      "PER": 126.44,
-      "PBR": 4.71
-    }
-  },
-  "RKLB": {
-    "ok": true,
-    "current": 131.16,
-    "change_pct": 5.12,
-    "ytd_pct": 408.37,
-    "high_52w": 132.55,
-    "low_52w": 25.17,
-    "currency": "USD",
-    "name_full": "Rocket Lab Corporation",
-    "market_cap": 75908980736,
-    "metrics": {
-      "영업이익률": -22.36,
-      "ROE": -13.55,
-      "매출성장률 YoY": 63.5,
-      "순이익률": -26.87,
-      "부채비율": 6.12,
-      "PBR": 41.4
-    }
-  },
-  "OKLO": {
-    "ok": true,
-    "current": 58.56,
-    "change_pct": -5.93,
-    "ytd_pct": 47.39,
-    "high_52w": 174.14,
-    "low_52w": 36.81,
-    "currency": "USD",
-    "name_full": "Oklo Inc.",
-    "market_cap": 10188912640,
-    "metrics": {
-      "영업이익률": 0.0,
-      "ROE": -8.87,
-      "순이익률": 0.0,
-      "부채비율": 0.1,
-      "PBR": 6.37
-    }
-  },
-  "OXY": {
-    "ok": true,
-    "current": 59.7,
-    "change_pct": 0.13,
-    "ytd_pct": 44.17,
-    "high_52w": 66.24,
-    "low_52w": 38.74,
-    "currency": "USD",
-    "name_full": "Occidental Petroleum Corporatio",
-    "market_cap": 59379691520,
-    "metrics": {
-      "영업이익률": 17.72,
-      "ROE": 4.05,
-      "매출성장률 YoY": -8.3,
-      "영업이익성장률 YoY": 315.6,
-      "순이익률": 22.42,
-      "부채비율": 41.99,
-      "PER": 80.68,
-      "PBR": 1.93,
-      "배당수익률": 1.74
-    }
-  },
-  "TSLA": {
-    "ok": true,
-    "current": 409.99,
-    "change_pct": -2.9,
-    "ytd_pct": 19.85,
-    "high_52w": 489.88,
-    "low_52w": 284.7,
-    "currency": "USD",
-    "name_full": "Tesla, Inc.",
-    "market_cap": 1539809214464,
-    "metrics": {
-      "영업이익률": 4.2,
-      "ROE": 4.9,
-      "매출성장률 YoY": 15.8,
-      "영업이익성장률 YoY": 8.3,
-      "순이익률": 3.95,
-      "부채비율": 18.74,
-      "PER": 369.36,
-      "PBR": 18.72
-    }
-  },
-  "LLY": {
-    "ok": true,
-    "current": 988.09,
-    "change_pct": -1.67,
-    "ytd_pct": 31.78,
-    "high_52w": 1106.19,
-    "low_52w": 621.26,
-    "currency": "USD",
-    "name_full": "Eli Lilly and Company",
-    "market_cap": 881120772096,
-    "metrics": {
-      "영업이익률": 49.39,
-      "ROE": 107.46,
-      "매출성장률 YoY": 55.5,
-      "영업이익성장률 YoY": 169.9,
-      "순이익률": 34.99,
-      "부채비율": 139.01,
-      "PER": 35.09,
-      "PBR": 28.3,
-      "배당수익률": 70.0
-    }
-  },
-  "PLTR": {
-    "ok": true,
-    "current": 135.14,
-    "change_pct": 0.86,
-    "ytd_pct": 6.97,
-    "high_52w": 207.18,
-    "low_52w": 119.91,
-    "currency": "USD",
-    "name_full": "Palantir Technologies Inc.",
-    "market_cap": 323972726784,
-    "metrics": {
-      "영업이익률": 46.18,
-      "ROE": 32.59,
-      "매출성장률 YoY": 84.7,
-      "영업이익성장률 YoY": 325.0,
-      "순이익률": 43.67,
-      "부채비율": 2.48,
-      "PER": 151.84,
-      "PBR": 43.75
-    }
-  },
-  "HII": {
-    "ok": true,
-    "current": 329.35,
-    "change_pct": 0.97,
-    "ytd_pct": 46.28,
-    "high_52w": 453.73,
-    "low_52w": 219.29,
-    "currency": "USD",
-    "name_full": "Huntington Ingalls Industries, ",
-    "market_cap": 12977717248,
-    "metrics": {
-      "영업이익률": 6.55,
-      "ROE": 12.2,
-      "매출성장률 YoY": 13.4,
-      "영업이익성장률 YoY": 0.0,
-      "순이익률": 4.71,
-      "부채비율": 56.95,
-      "PER": 21.41,
-      "PBR": 2.52,
-      "배당수익률": 1.68
     }
   }
 }

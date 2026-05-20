@@ -1,5 +1,35 @@
 [
   {
+    "id": 1779244927623,
+    "topic": "최신기술",
+    "source": "매일안전신문",
+    "emoji": "🚀",
+    "image": "🚀",
+    "title": "해수부, AI 화재탐지장치 연안여객선에 시범 설치",
+    "summary": "해수부, AI 화재탐지장치 연안여객선에 시범 설치 매일안전신문",
+    "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9lSmFydF81c3RsOGlpNjA4X0ZBNFFNR3R2TGJZNTBFbUxqaVM1ajZYQ1ZDaU9aYnMzQnNYWlZUaDZHbGdNRHJZei1hSHZIWlZqV1hlTU1wNUrSAWhBVV95cUxPMHVHRXBPSVJaWGR2bFJ5Z3hJN3lFeVpQUms4QXJsa3k1ZXF4ZjYwZTVsVmxfMThuQ2Q0bGlwbVJHX1RrRUJaYlpuWHllcFU5R2lpSzBCRjRHM3FWNG5zZXRUMmZxSm5sVQ?oc=5",
+    "date": "2026.05.19",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-20T02:42:05.402Z",
+    "pubDate": "2026-05-19T08:04:24.000Z"
+  },
+  {
+    "id": 1779244935833,
+    "topic": "논문연구",
+    "source": "인더뉴스",
+    "emoji": "📚",
+    "image": "📚",
+    "title": "부산대, AI 활용 구조물 내진설계 경진대회 개최",
+    "summary": "부산대, AI 활용 구조물 내진설계 경진대회 개최 인더뉴스",
+    "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9fVTRmYnVMYUxDc0VidE5oR2g1dVR0MEgwaG5uOFhiaFVMNnl2dUtXUDhyeTdZejVfZHlIbjk4TTRjUVhTSzNUTjk5a2FZVHhxdHAtR2c4WDdRVTZOZ0ZqSmxnMA?oc=5",
+    "date": "2026.05.19",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-20T02:42:07.272Z",
+    "pubDate": "2026-05-19T02:59:34.000Z"
+  },
+  {
     "id": 1779158496350,
     "topic": "최신기술",
     "source": "서울Pn",
@@ -10,7 +40,7 @@
     "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE95WWVMTUZZazRkQk5xaEs4QllpamZnSEpYWFAtbWRRMkw2SllXYi1zY3JoMTRzQlI2eEgyU1A5VGMySk9NVkdPdE5ZWXhFSXlQbUxieUtQbXlIYjlGS2Fxbmpn?oc=5",
     "date": "2026.05.19",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-19T02:41:31.426Z",
     "pubDate": "2026-05-19T02:05:22.000Z"
   },
@@ -25,7 +55,7 @@
     "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9ha2dHVlZqb3YzbVVScVFPUUtnX2J5WVJPdTdvT3NfdFl3VFBrVWxGRVBZaXNDbnU1cE84ZExleVZsRmhoX3V2T093b2ZQS2xSa1lqNHE1OWhEWGNTUWhMZEo2bkRyUElWcnNsX1hmSkEyTERn?oc=5",
     "date": "2026.05.19",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-19T02:41:33.265Z",
     "pubDate": "2026-05-19T01:11:58.000Z"
   },

@@ -1075,8 +1075,6 @@ function showProgramDetail(key) {
       ${metaHtml}
       <div class="detail-section"><h3>📌 소개</h3><p>${esc(data.desc)}</p></div>
       ${screenshotsHtml}
-      <div class="detail-section"><h3>⚡ 주요 기능</h3><div class="feature-grid">${data.features.map(f => `<div class="feature-item"><h4>${esc(f.title)}</h4><p>${esc(f.desc)}</p></div>`).join('')}</div></div>
-      <div class="detail-section"><h3>📖 사용 매뉴얼</h3><ol class="howto-list">${data.howto.map(s => `<li>${esc(s.replace(/^\d+\.\s*/, ''))}</li>`).join('')}</ol></div>
       <div class="detail-section"><h3>🔗 접속 / 바로가기</h3>${linkHtml}</div>
       ${data.attachment ? `
         <div class="detail-section">

@@ -1,8 +1,58 @@
-// ===== MEMBER SYSTEM (localStorage) =====
+// ===== ADMIN-ONLY MODE (회원 ID 시스템 폐지 — 단일 관리자 비밀번호만) =====
+// 일반 방문자는 로그인 없이 콘텐츠 열람. 이 PW는 10X 발송·선정기준 편집 등 관리 기능 전용.
 const AUTH_KEY = 'fireSugiUsers';
-const ADMIN_PASSWORD = 'firesugi-admin-2026';  // 관리자 비밀번호 — 이 값 입력 시에만 관리자 권한 부여
-const SITE_OWNER_ID = 'hankal0501';  // 사이트 소유자 — 유일한 관리자, 다른 사람은 절대 admin 안 됨
+const ADMIN_PASSWORD = 'firesugi-admin-2026';
+const SITE_OWNER_ID = 'admin';  // 합성 관리자 ID — 회원 시스템 폐지로 의미만 유지
 const SESSION_KEY = 'fireSugiSession';
+
+// 관리자 모드 진입 — 단일 비밀번호 검증
+function showAdminModal() {
+  const m = document.getElementById('adminModal');
+  if (m) m.style.display = 'flex';
+  const inp = document.getElementById('adminPw');
+  if (inp) { inp.value = ''; setTimeout(() => inp.focus(), 50); }
+  const err = document.getElementById('adminError');
+  if (err) err.textContent = '';
+}
+function hideAdminModal() {
+  const m = document.getElementById('adminModal');
+  if (m) m.style.display = 'none';
+}
+function doAdminLogin() {
+  const pw = (document.getElementById('adminPw') || {}).value || '';
+  const err = document.getElementById('adminError');
+  if (pw !== ADMIN_PASSWORD) {
+    if (err) err.textContent = '❌ 비밀번호가 일치하지 않습니다.';
+    return;
+  }
+  // 합성 관리자 사용자 등록 — 기존 isAdmin/getCurrentUser 체인이 그대로 동작하도록
+  const adminUser = { id: SITE_OWNER_ID, role: 'admin', joinDate: new Date().toISOString().slice(0,10), lastLogin: Date.now() };
+  const users = JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');
+  const idx = users.findIndex(u => u.id === SITE_OWNER_ID);
+  if (idx >= 0) users[idx] = { ...users[idx], ...adminUser };
+  else users.push(adminUser);
+  localStorage.setItem(AUTH_KEY, JSON.stringify(users));
+  localStorage.setItem(SESSION_KEY, JSON.stringify(adminUser));
+  hideAdminModal();
+  if (typeof updateAuthUI === 'function') updateAuthUI();
+  if (typeof logActivity === 'function') logActivity('🛡 관리자 모드 진입', SITE_OWNER_ID);
+  alert('✅ 관리자 모드 진입 완료. 페이지가 자동 새로고침됩니다.');
+  location.reload();
+}
+function exitAdminMode() {
+  localStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(SESSION_KEY);
+  if (typeof logActivity === 'function') logActivity('관리자 모드 종료', SITE_OWNER_ID);
+  location.reload();
+}
+// 하위 호환 — 기존 코드의 showLoginModal/showSignupModal/logout 호출은 관리자 모달로 대체
+function showLoginModal() { showAdminModal(); }
+function hideLoginModal() { hideAdminModal(); }
+function showSignupModal() { showAdminModal(); }
+function hideSignupModal() { hideAdminModal(); }
+function logout() { exitAdminMode(); }
+function doLogin() { doAdminLogin(); }
+function doSignup() { showAdminModal(); }
 const LOG_KEY = 'fireSugiAccessLogs';
 const ONLINE_KEY = 'fireSugiOnline';
 const MAX_LOGS = 500;

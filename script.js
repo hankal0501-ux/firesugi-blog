@@ -1636,29 +1636,29 @@ function renderNews() {
 
   list.innerHTML = filtered.map(n => {
     const topicMeta = TOPIC_META[n.topic];
-    const color = topicMeta ? topicMeta.color : sourceColor(n.source);
+    const color = topicMeta ? topicMeta.color : (n.color || sourceColor(n.source));
     const thumbEmoji = topicMeta ? topicMeta.emoji : (n.image || n.emoji || '📰');
     const topicBadge = topicMeta
       ? `<span class="topic-chip" style="background:${color};">${topicMeta.emoji} ${topicMeta.label}</span>`
       : '';
     return `
-    <article class="news-card-naver">
-      <div class="news-thumb-naver" style="background:linear-gradient(135deg, ${color}22, ${color}11); border-bottom:3px solid ${color};">
-        <span class="news-emoji">${thumbEmoji}</span>
-        ${n.autoAdded ? '<span class="news-auto-badge">🤖 자동</span>' : ''}
+    <article class="news-card-naver" style="border-top:5px solid ${color}; box-shadow:0 4px 14px ${color}1a, 0 1px 3px rgba(0,0,0,0.08);">
+      <div class="news-thumb-naver" style="background:linear-gradient(135deg, ${color}, ${color}aa); border-bottom:0;">
+        <span class="news-emoji" style="filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25));">${thumbEmoji}</span>
+        ${n.autoAdded ? '<span class="news-auto-badge" style="background:rgba(255,255,255,0.92); color:#222;">🤖 자동</span>' : ''}
       </div>
       <div class="news-card-body" onclick="showNewsDetail('${n.id}')" style="cursor:pointer;">
         <div class="news-card-meta">
           ${topicBadge}
-          <span class="news-source-chip" style="background:${color}cc;">${esc(n.source)}</span>
-          ${n.isNew ? '<span class="badge-new">NEW</span>' : ''}
+          <span class="news-source-chip" style="background:${color}; color:#fff;">${esc(n.source)}</span>
+          ${n.isNew ? `<span class="badge-new" style="background:${color}; color:#fff; box-shadow:0 2px 6px ${color}66;">NEW</span>` : ''}
         </div>
         <h3 class="news-card-title">${esc(n.title)}</h3>
         <p class="news-card-summary">${esc(n.summary)}</p>
         <div class="news-card-footer" onclick="event.stopPropagation();">
           <span class="news-card-date">📅 ${n.date}</span>
-          <a href="#" onclick="event.preventDefault(); event.stopPropagation(); showNewsDetail('${n.id}'); return false;" class="news-card-link">📖 자세히 보기</a>
-          <a href="${esc(newsItemUrl(n))}" target="_blank" rel="noopener" class="news-card-link" onclick="event.stopPropagation();">원문 ↗</a>
+          <a href="#" onclick="event.preventDefault(); event.stopPropagation(); showNewsDetail('${n.id}'); return false;" class="news-card-link" style="color:${color}; font-weight:700;">📖 자세히 보기</a>
+          <a href="${esc(newsItemUrl(n))}" target="_blank" rel="noopener" class="news-card-link" onclick="event.stopPropagation();" style="color:${color};">원문 ↗</a>
           ${isAdmin() ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteNews(${n.id})" title="삭제">🗑</button>` : ''}
         </div>
       </div>
@@ -1691,7 +1691,8 @@ function showNewsDetail(id) {
     ${n.topic ? `<span><b>주제</b> ${esc(n.topic)}</span>` : ''}
     ${n.collectedAt ? `<span><b>수집</b> ${formatTs ? formatTs(new Date(n.collectedAt).getTime()) : n.collectedAt.slice(0,10)}</span>` : ''}
   `;
-  document.getElementById('newsModalBody').innerHTML = formatNewsContent(n.summary || '');
+  // 상세 모달에는 fullDesc(원본 전체) 우선, 없으면 summary 사용
+  document.getElementById('newsModalBody').innerHTML = formatNewsContent(n.fullDesc || n.summary || '');
   document.getElementById('newsModalLink').href = newsItemUrl(n);
   document.getElementById('newsModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';

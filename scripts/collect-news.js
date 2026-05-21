@@ -62,11 +62,9 @@ async function fetchTopic(topic) {
     return null;
   }
 
-  // 최신순(pubDate desc) 정렬
+  // 최신순(pubDate desc) 정렬 → 상위 5개 후보 반환 (중복 시 다음 후보로 폴백)
   items.sort((a, b) => new Date(b.pubDate || 0) - new Date(a.pubDate || 0));
-
-  const top = items[0];
-  return normalizeItem(top, topic);
+  return items.slice(0, 5).map(it => normalizeItem(it, topic));
 }
 
 function normalizeItem(item, topic) {
@@ -88,7 +86,9 @@ function normalizeItem(item, topic) {
     .replace(/\s+/g, ' ')
     .trim();
 
-  const summary = desc.slice(0, 220) + (desc.length > 220 ? '…' : '');
+  // 카드 요약(중간 길이) + 상세 모달용 풀텍스트 분리
+  const summary = desc.slice(0, 500) + (desc.length > 500 ? '…' : '');
+  const fullDesc = desc;
 
   const pubDate = new Date(item.pubDate || Date.now());
   const date = `${pubDate.getFullYear()}.${pad(pubDate.getMonth() + 1)}.${pad(pubDate.getDate())}`;
@@ -99,8 +99,10 @@ function normalizeItem(item, topic) {
     source: sourceName,
     emoji: topic.emoji,
     image: topic.emoji,
+    color: topic.color,
     title,
     summary: summary || '(요약 없음 — 원문을 확인하세요.)',
+    fullDesc: fullDesc || '',
     url: link,
     date,
     autoAdded: true,
@@ -132,21 +134,25 @@ async function main() {
 
   for (const topic of TOPICS) {
     try {
-      const item = await fetchTopic(topic);
-      if (!item) continue;
-      if (item.url && seenUrls.has(item.url)) {
-        console.log(`  ⏭  중복 URL 스킵: ${item.title.slice(0, 50)}\n`);
+      const candidates = await fetchTopic(topic);
+      if (!candidates || !candidates.length) continue;
+      // 후보 5개 중 첫 비-중복 항목 채택 — 매일 3개 보장
+      let picked = null;
+      for (const cand of candidates) {
+        if (cand.url && seenUrls.has(cand.url)) continue;
+        if (seenTitles.has(cand.title)) continue;
+        picked = cand;
+        break;
+      }
+      if (!picked) {
+        console.log(`  ⏭  [${topic.key}] 5개 후보 모두 중복 — 스킵\n`);
         continue;
       }
-      if (seenTitles.has(item.title)) {
-        console.log(`  ⏭  중복 제목 스킵: ${item.title.slice(0, 50)}\n`);
-        continue;
-      }
-      collected.push(item);
-      seenUrls.add(item.url);
-      seenTitles.add(item.title);
-      console.log(`  ✅ [${topic.key}] ${item.title.slice(0, 60)}`);
-      console.log(`     출처: ${item.source} · ${item.date}\n`);
+      collected.push(picked);
+      seenUrls.add(picked.url);
+      seenTitles.add(picked.title);
+      console.log(`  ✅ [${topic.key}] ${picked.title.slice(0, 60)}`);
+      console.log(`     출처: ${picked.source} · ${picked.date} · 요약 ${picked.summary.length}자\n`);
     } catch (e) {
       console.error(`  ❌ [${topic.key}] 실패:`, e.message, '\n');
     }

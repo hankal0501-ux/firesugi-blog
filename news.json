@@ -1,5 +1,20 @@
 [
   {
+    "id": 1779331463823,
+    "topic": "사고처벌",
+    "source": "제민일보",
+    "emoji": "⚖️",
+    "image": "⚖️",
+    "title": "제주소방 특사경, 소방법 위반 110명 검찰 송치",
+    "summary": "제주소방 특사경, 소방법 위반 110명 검찰 송치 제민일보",
+    "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1UVkdnNlpVUUxpX1QzSFFTbldEcVg2MXZfTUZYOUVSbHZuT1FmUFBtUFRBZ1k1NUtJeks0WmxuT1M4V1ZZOHVzMTFhUFptX3pSdlhyYy1SMF9DMG1yNGYybGZXT0VZa0k?oc=5",
+    "date": "2026.03.11",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-21T02:44:15.423Z",
+    "pubDate": "2026-03-11T07:00:00.000Z"
+  },
+  {
     "id": 1779244927623,
     "topic": "최신기술",
     "source": "매일안전신문",
@@ -10,7 +25,7 @@
     "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9lSmFydF81c3RsOGlpNjA4X0ZBNFFNR3R2TGJZNTBFbUxqaVM1ajZYQ1ZDaU9aYnMzQnNYWlZUaDZHbGdNRHJZei1hSHZIWlZqV1hlTU1wNUrSAWhBVV95cUxPMHVHRXBPSVJaWGR2bFJ5Z3hJN3lFeVpQUms4QXJsa3k1ZXF4ZjYwZTVsVmxfMThuQ2Q0bGlwbVJHX1RrRUJaYlpuWHllcFU5R2lpSzBCRjRHM3FWNG5zZXRUMmZxSm5sVQ?oc=5",
     "date": "2026.05.19",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-20T02:42:05.402Z",
     "pubDate": "2026-05-19T08:04:24.000Z"
   },
@@ -25,7 +40,7 @@
     "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9fVTRmYnVMYUxDc0VidE5oR2g1dVR0MEgwaG5uOFhiaFVMNnl2dUtXUDhyeTdZejVfZHlIbjk4TTRjUVhTSzNUTjk5a2FZVHhxdHAtR2c4WDdRVTZOZ0ZqSmxnMA?oc=5",
     "date": "2026.05.19",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-20T02:42:07.272Z",
     "pubDate": "2026-05-19T02:59:34.000Z"
   },

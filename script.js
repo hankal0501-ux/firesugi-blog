@@ -548,12 +548,56 @@ function saveUserPrograms(obj) {
   }
 }
 
-function showAddProgramModal() {
+function showAddProgramModal(devOnly) {
   if (!isAdmin()) return alert('관리자만 가능합니다.');
   document.getElementById('programAddModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  const linkEl = document.getElementById('paLink');
+  if (devOnly && linkEl) {
+    linkEl.value = '';
+    linkEl.placeholder = '(비워두면 개발중 — 완성 후 URL 추가하면 자동 AI 프로그램 탭으로 이동)';
+  } else if (linkEl) {
+    linkEl.placeholder = 'https://... (선택 — 없으면 개발중 표시)';
+  }
   document.getElementById('paName').focus();
 }
+
+// 기존 프로그램 URL 편집 — 완료 시 자동 AI 프로그램 탭 이동
+function editProgramLink(key) {
+  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  const prog = programData[key];
+  if (!prog) return;
+  const currentUrl = (prog.link && prog.link !== '#') ? prog.link : '';
+  const newUrl = prompt(
+    `📝 "${prog.name}" URL 편집\n\nURL 입력 → 완료 (AI 프로그램 탭)\n비우기 → 개발중 (개발중 탭)`,
+    currentUrl
+  );
+  if (newUrl === null) return;
+
+  const trimmed = newUrl.trim();
+  if (trimmed && !/^https?:\/\//.test(trimmed)) {
+    return alert('URL은 http:// 또는 https://로 시작해야 합니다.');
+  }
+
+  const userProgs = getUserPrograms();
+  if (userProgs[key]) {
+    userProgs[key].link = trimmed || null;
+    saveUserPrograms(userProgs);
+    programData[key].link = trimmed || null;
+  } else {
+    programData[key].link = trimmed || null;
+    alert('⚠️ 빌트인 프로그램 — 메모리 변경됨. 영구 변경은 script.js의 programData 직접 수정 필요.');
+  }
+  if (typeof logActivity === 'function') logActivity(`URL 편집: ${key} → ${trimmed || '(개발중)'}`);
+  hideProgramDetail();
+  renderPrograms();
+  // 자동으로 해당 탭 이동
+  showTab(trimmed ? 'programs' : 'records');
+  setTimeout(() => alert(trimmed
+    ? `✅ "${prog.name}" 완료 → AI 프로그램 탭으로 이동됨`
+    : `🚧 "${prog.name}" 개발중 → 개발중 탭으로 이동됨`), 200);
+}
+
 function hideAddProgramModal() {
   document.getElementById('programAddModal').style.display = 'none';
   document.body.style.overflow = '';
@@ -1094,9 +1138,12 @@ function showProgramDetail(key) {
       ${admin ? `<div class="detail-section detail-admin-zone">
         <h3>🛡 관리자 영역</h3>
         <div class="admin-actions-row">
-          <button class="btn btn-outline btn-sm" onclick="deleteProgram('${key}')">🗑 이 프로그램 목록에서 삭제</button>
-          <span style="color:var(--text-muted); font-size:0.82rem;">삭제 후 [AI 프로그램] 탭 하단의 [복원]으로 되돌릴 수 있습니다.</span>
+          <button class="btn btn-primary btn-sm" onclick="editProgramLink('${key}')">📝 URL 편집 (완료/개발중 전환)</button>
+          <button class="btn btn-outline btn-sm" onclick="deleteProgram('${key}')">🗑 목록에서 삭제</button>
         </div>
+        <p style="margin-top:8px; font-size:0.82rem; color:var(--text-muted);">
+          ℹ️ URL을 입력하면 <b>AI 프로그램(완료)</b> 탭으로, 비우면 <b>개발중</b> 탭으로 자동 이동.
+        </p>
       </div>` : ''}
     </div>`;
   window.scrollTo(0, 0);

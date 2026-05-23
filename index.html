@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260522a">
+  <link rel="stylesheet" href="style.css?v=20260522b">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -257,7 +257,11 @@
         <div class="section-header">
           <div class="tag">🚧 In Development</div>
           <h2>개발중 프로그램</h2>
-          <p>현재 개발 진행 중인 프로그램들입니다. 완성 후 [AI 프로그램] 탭으로 이동됩니다.</p>
+          <p>현재 개발 진행 중인 프로그램들입니다. URL이 등록되면 자동으로 [AI 프로그램] 탭으로 이동됩니다.</p>
+        </div>
+        <!-- 관리자: 개발중 프로그램 직접 추가 -->
+        <div class="admin-only" style="display:none; text-align:right; margin-bottom:16px;">
+          <button class="btn btn-primary btn-sm" onclick="showAddProgramModal(true)">+ 개발중 프로그램 추가</button>
         </div>
         <div class="programs-grid" id="devProgramsGrid"></div>
       </div>
@@ -952,7 +956,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script src="firebase-sync.js?v=20260513b"></script>
 
-  <script src="auth.js?v=20260522a"></script>
-  <script src="script.js?v=20260522a"></script>
+  <script src="auth.js?v=20260522b"></script>
+  <script src="script.js?v=20260522b"></script>
 </body>
 </html>

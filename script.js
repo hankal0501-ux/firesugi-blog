@@ -1220,10 +1220,9 @@ function showProgramDetail(key) {
           <h3>🛠 관리 영역 (🔐 비밀번호 필요)</h3>
           <div class="admin-actions-row">
             <button class="btn btn-primary btn-sm" onclick="editProgramLink('${key}')">📝 URL 추가 → 완료로 전환</button>
-            <button class="btn btn-outline btn-sm" onclick="quickDeleteProgram('${key}'); hideProgramDetail();">🗑 이 프로그램 삭제</button>
           </div>
           <p style="margin-top:8px; font-size:0.82rem; color:var(--text-muted);">
-            ℹ️ URL을 입력하면 <b>완료 상태</b>로 자동 전환됩니다. 삭제는 영구 처리됩니다.
+            ℹ️ URL을 입력하면 <b>완료 상태</b>로 자동 전환됩니다. 삭제는 상단의 [🗑 삭제] 버튼 사용.
           </p>
         </div>
       </div>`;
@@ -1323,21 +1322,15 @@ function showProgramDetail(key) {
             ? `<div style="margin-top:12px;"><img src="${data.attachment.data}" alt="${esc(data.attachment.name)}" style="max-width:100%; border:1px solid var(--border); border-radius:8px;"></div>`
             : ''}
         </div>` : ''}
-      ${data.userAdded && admin ? `
-        <div class="detail-section detail-admin-zone">
-          <h3>🛡 관리자 영역 (사용자 추가)</h3>
-          <button class="btn btn-outline btn-sm" onclick="deleteUserProgram('${key}')">🗑 이 프로그램 영구 삭제</button>
-        </div>` : ''}
-      ${admin ? `<div class="detail-section detail-admin-zone">
-        <h3>🛡 관리자 영역</h3>
+      <div class="detail-section detail-admin-zone">
+        <h3>🛠 관리 영역 (🔐 비밀번호 필요)</h3>
         <div class="admin-actions-row">
           <button class="btn btn-primary btn-sm" onclick="editProgramLink('${key}')">📝 URL 편집 (완료/개발중 전환)</button>
-          <button class="btn btn-outline btn-sm" onclick="deleteProgram('${key}')">🗑 목록에서 삭제</button>
         </div>
         <p style="margin-top:8px; font-size:0.82rem; color:var(--text-muted);">
-          ℹ️ URL을 입력하면 <b>AI 프로그램(완료)</b> 탭으로, 비우면 <b>개발중</b> 탭으로 자동 이동.
+          ℹ️ URL을 입력하면 <b>완료</b>, 비우면 <b>개발중</b>으로 자동 전환. 삭제는 상단 [🗑 삭제] 버튼 사용.
         </p>
-      </div>` : ''}
+      </div>
     </div>`;
   window.scrollTo(0, 0);
 }

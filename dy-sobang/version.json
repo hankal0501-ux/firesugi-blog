@@ -1,7 +1,7 @@
 {
-  "latest": "1.2.0",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.2.0.apk",
-  "notes": "1.2.0 - 촬영/리스트 탭 분리·전체공유·선택공유·선택삭제·사업장+층수 1줄·위치자동·음성버튼 제거·입력완료시 리스트만 저장·최상 화질(0.98, 4000px)·앱 시작 자동 업데이트 확인",
+  "latest": "1.2.1",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.2.1.apk",
+  "notes": "1.2.1 - 상단 업데이트 신호등 (🟢최신·🟡확인중·🔴NEW·⚫오프라인) | 1.2.0 - 촬영/리스트 탭 분리·전체공유·선택공유·선택삭제·위치자동·최상화질",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-24T00:00:00Z"

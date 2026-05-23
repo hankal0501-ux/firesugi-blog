@@ -450,8 +450,54 @@
 
   .tag {
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
   .tag:active { opacity: 0.6; }
+
+  /* === 업데이트 신호등 === */
+  .update-light {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #6b7280;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.25) inset;
+    transition: background 0.3s, box-shadow 0.3s;
+    flex-shrink: 0;
+  }
+  .update-light.checking {
+    background: #fbbf24;
+    box-shadow: 0 0 6px #fbbf24, 0 0 0 1px rgba(0,0,0,0.25) inset;
+    animation: pulse-light 1s infinite;
+  }
+  .update-light.ok {
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e, 0 0 0 1px rgba(0,0,0,0.25) inset;
+  }
+  .update-light.new {
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444, 0 0 0 1px rgba(0,0,0,0.25) inset;
+    animation: pulse-light 1.2s infinite;
+  }
+  .update-light.error {
+    background: #6b7280;
+    box-shadow: 0 0 0 1px rgba(239,68,68,0.5) inset;
+  }
+  @keyframes pulse-light {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+  .update-status-text {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 1px 5px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.08);
+    margin-left: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
 
   /* === 탭 바 === */
   .tab-bar {
@@ -568,7 +614,11 @@
 <body>
 
 <div class="header">
-  <div class="tag" id="versionTag">DY-SOBANG · FIELD LOG · v<span id="appVer">1.0.0</span></div>
+  <div class="tag" id="versionTag" title="탭하여 업데이트 확인">
+    <span class="update-light unknown" id="updateLight" title="업데이트 상태"></span>
+    DY-SOBANG · FIELD LOG · v<span id="appVer">1.0.0</span>
+    <span class="update-status-text" id="updateStatusText">확인 중</span>
+  </div>
   <div class="title">현장 기록</div>
   <div class="stats">
     <span class="status-dot"></span>
@@ -666,7 +716,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.2.0';
+  const APP_VERSION = '1.2.1';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1438,11 +1488,21 @@
     return false;
   }
 
+  // 업데이트 신호등 상태 설정 — unknown / checking / ok / new / error
+  function setUpdateLight(state, label) {
+    const light = document.getElementById('updateLight');
+    const text = document.getElementById('updateStatusText');
+    if (light) light.className = 'update-light ' + state;
+    if (text) text.textContent = label;
+  }
+
   async function checkForUpdates(silent) {
     if (!UPDATE_CHECK_URL || UPDATE_CHECK_URL.includes('YOUR-DOMAIN')) {
+      setUpdateLight('error', '미설정');
       if (!silent) toast('업데이트 서버 URL 미설정');
       return;
     }
+    setUpdateLight('checking', '확인중');
     try {
       const res = await fetch(UPDATE_CHECK_URL + '?t=' + Date.now(), {
         cache: 'no-store',
@@ -1454,13 +1514,16 @@
       if (!info.latest || !info.url) throw new Error('invalid version.json');
 
       if (isNewer(info.latest, APP_VERSION)) {
+        setUpdateLight('new', `NEW v${info.latest}`);
         showUpdateModal(info);
         return true;
-      } else if (!silent) {
-        toast(`최신 버전 사용 중 (v${APP_VERSION})`);
+      } else {
+        setUpdateLight('ok', '최신');
+        if (!silent) toast(`최신 버전 사용 중 (v${APP_VERSION})`);
       }
     } catch(e) {
       console.warn('update check failed:', e);
+      setUpdateLight('error', '오프라인');
       if (!silent) toast('업데이트 확인 실패');
     }
     return false;

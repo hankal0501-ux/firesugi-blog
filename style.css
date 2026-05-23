@@ -2471,7 +2471,6 @@ html { -webkit-text-size-adjust: 100%; }
    🔓 회원 시스템 완전 제거 — 조회 전용 공개 모드
    ======================================================== */
 .auth-area,
-#authLoginBtn,
 #authUserInfo,
 nav a[data-tab="members-info"],
 nav a[data-tab="dashboard"],
@@ -2480,6 +2479,8 @@ nav a[data-tab="dashboard"],
 .tier-pill {
   display: none !important;
 }
+/* 관리자 버튼은 표시 — 비번 변경/관리자 모드 진입에 필요 */
+#authLoginBtn { display: inline-flex !important; }
 /* 상세 페이지 관리 영역은 표시 (비번 보호 적용) */
 .detail-admin-zone { display: block !important; }
 #loginModal, #signupModal, #programAddModal { display: none !important; }

@@ -584,9 +584,9 @@ const PWD_AUTH_SESSION = 'progAuth_v3';
 // 본인 인증 화이트리스트 (네이버 OR 폰번호 둘 중 하나만 맞아도 통과)
 const AUTH_WHITELIST = Object.freeze({
   naverEmail: 'hankal0501@naver.com',
-  phoneFull: '01098078000',   // 11자리로 정규화 (사용자가 11자리 알려주면 끝자리 수정)
-  phoneNoDash: '010-980-7800',
-  phoneLast4: '7800'
+  phoneFull: '01098078004',   // 010-9807-8004
+  phoneNoDash: '010-9807-8004',
+  phoneLast4: '8004'
 });
 
 async function sha256(text) {

@@ -829,6 +829,65 @@ function editProgramLink(key) {
     : `🚧 "${prog.name}" 개발중 → 개발중 탭으로 이동됨`), 200);
 }
 
+// 상세 페이지에서 프로그램에 파일 첨부 (이미지·PDF·ZIP, 3MB)
+async function uploadProgramAttachment(key, inputEl) {
+  if (!inputEl.files || !inputEl.files[0]) return;
+  const file = inputEl.files[0];
+  if (file.size > 3 * 1024 * 1024) {
+    inputEl.value = '';
+    return alert('⚠️ 파일은 3MB 이하만 가능합니다.');
+  }
+  if (!checkDeletePassword()) { inputEl.value = ''; return; }
+  const prog = programData[key];
+  if (!prog) { inputEl.value = ''; return; }
+
+  let attachment;
+  try {
+    attachment = {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      data: await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      })
+    };
+  } catch (e) {
+    inputEl.value = '';
+    return alert('파일 읽기 실패: ' + e.message);
+  }
+
+  const userProgs = getUserPrograms();
+  if (userProgs[key]) {
+    userProgs[key].attachment = attachment;
+    saveUserPrograms(userProgs);
+  }
+  programData[key].attachment = attachment;
+  if (typeof logActivity === 'function') logActivity(`첨부 업로드: ${key} ← ${file.name}`);
+  inputEl.value = '';
+  alert(`✅ "${file.name}" 첨부됨 (${(file.size/1024).toFixed(1)} KB)`);
+  showProgramDetail(key);
+}
+
+// 상세 페이지에서 첨부 파일 제거
+function removeProgramAttachment(key) {
+  if (!checkDeletePassword()) return;
+  const prog = programData[key];
+  if (!prog || !prog.attachment) return;
+  if (!confirm(`첨부 파일 "${prog.attachment.name}"을(를) 제거합니까?`)) return;
+
+  const userProgs = getUserPrograms();
+  if (userProgs[key]) {
+    delete userProgs[key].attachment;
+    saveUserPrograms(userProgs);
+  }
+  delete programData[key].attachment;
+  if (typeof logActivity === 'function') logActivity(`첨부 제거: ${key}`);
+  showProgramDetail(key);
+}
+
 function hideAddProgramModal() {
   document.getElementById('programAddModal').style.display = 'none';
   document.body.style.overflow = '';
@@ -1374,9 +1433,14 @@ function showProgramDetail(key) {
         <h3>🛠 관리 영역 (🔐 비밀번호 필요)</h3>
         <div class="admin-actions-row">
           <button class="btn btn-primary btn-sm" onclick="editProgramLink('${key}')">📝 URL 편집 (완료/개발중 전환)</button>
+          <label class="btn btn-outline btn-sm" style="cursor:pointer; margin:0;">
+            📎 파일 올리기 (이미지·PDF·ZIP, 3MB)
+            <input type="file" accept="image/*,application/pdf,.zip" style="display:none;" onchange="uploadProgramAttachment('${key}', this)">
+          </label>
+          ${data.attachment ? `<button class="btn btn-outline btn-sm" onclick="removeProgramAttachment('${key}')" style="color:#c93030;">🗑 첨부 제거</button>` : ''}
         </div>
         <p style="margin-top:8px; font-size:0.82rem; color:var(--text-muted);">
-          ℹ️ URL을 입력하면 <b>완료</b>, 비우면 <b>개발중</b>으로 자동 전환. 삭제는 상단 [🗑 삭제] 버튼 사용.
+          ℹ️ URL을 입력하면 <b>완료</b>, 비우면 <b>개발중</b>으로 자동 전환. 파일을 올리면 상세 페이지에 첨부 다운로드(이미지는 자동 미리보기)가 추가됩니다.
         </p>
       </div>
     </div>`;

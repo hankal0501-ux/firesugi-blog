@@ -714,7 +714,7 @@ function showAddProgramModal(devOnly) {
 
 // 기존 프로그램 URL 편집 — 완료 시 자동 AI 프로그램 탭 이동
 function editProgramLink(key) {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  if (!checkDeletePassword()) return;
   const prog = programData[key];
   if (!prog) return;
   const currentUrl = (prog.link && prog.link !== '#') ? prog.link : '';
@@ -859,10 +859,10 @@ function loadUserPrograms() {
 }
 
 function deleteUserProgram(key) {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  if (!checkDeletePassword()) return;
   const all = getUserPrograms();
   if (!all[key]) return alert('사용자 추가 프로그램이 아닙니다.');
-  if (!confirm(`"${all[key].name}"을(를) 영구 삭제하시겠습니까?`)) return;
+  if (!confirm(`"${all[key].name}"을(를) 영구 삭제하시겠습니까?\n⚠️ 휴지통을 거치지 않고 즉시 영구 삭제됩니다.`)) return;
   const name = all[key].name;
   delete all[key];
   delete programData[key];
@@ -911,19 +911,20 @@ function saveHiddenPrograms(arr) {
   localStorage.setItem(HIDDEN_PROGS_KEY, JSON.stringify(arr));
 }
 function deleteProgram(key) {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
+  // 빌트인 삭제도 매번 비번 입력
+  if (!checkDeletePassword()) return;
   const prog = programData[key];
   if (!prog) return;
-  if (!confirm(`"${prog.name}" 을(를) 목록에서 삭제하시겠습니까?\n\n데이터는 보존되며, 프로그램 목록 하단의 [복원] 버튼으로 되돌릴 수 있습니다.`)) return;
+  if (!confirm(`"${prog.name}" 을(를) 목록에서 숨기시겠습니까?\n(휴지통에서 [복원] 가능)`)) return;
   const arr = getHiddenPrograms();
   if (!arr.includes(key)) arr.push(key);
   saveHiddenPrograms(arr);
-  if (typeof logActivity === 'function') logActivity('프로그램 삭제: ' + key);
+  if (typeof logActivity === 'function') logActivity('프로그램 숨김: ' + key);
   hideProgramDetail();
   renderPrograms();
 }
 function restoreProgram(key) {
-  if (!isAdmin()) return;
+  if (!checkDeletePassword()) return;
   const arr = getHiddenPrograms().filter(k => k !== key);
   saveHiddenPrograms(arr);
   if (typeof logActivity === 'function') logActivity('프로그램 복원: ' + key);

@@ -452,6 +452,117 @@
     cursor: pointer;
   }
   .tag:active { opacity: 0.6; }
+
+  /* === 탭 바 === */
+  .tab-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 12px;
+    overflow: hidden;
+  }
+  .tab-btn {
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    padding: 12px 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, color 0.15s;
+    border-right: 1px solid var(--border);
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active {
+    background: var(--accent);
+    color: #000;
+  }
+  .tab-btn:active { opacity: 0.85; }
+  .tab-count {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 1px 6px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tab-btn:not(.active) .tab-count {
+    background: var(--bg-3);
+    color: var(--muted);
+  }
+  .tab-panel { display: block; }
+  .tab-panel[hidden] { display: none; }
+
+  /* === 리스트 일괄 액션 === */
+  .list-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--bg-3);
+    border-radius: 6px;
+    margin: 0 12px 8px;
+    font-size: 12px;
+  }
+  .select-all-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .select-all-row input[type=checkbox] {
+    width: 18px; height: 18px;
+    accent-color: var(--accent);
+  }
+  .selected-info {
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .list-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin: 0 12px 10px;
+  }
+  .list-action-btn {
+    background: var(--bg-3);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 6px;
+    font-family: inherit;
+  }
+  .list-action-btn.primary {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .list-action-btn.danger {
+    color: var(--danger);
+    border-color: rgba(239,68,68,0.3);
+  }
+  .list-action-btn:active { opacity: 0.8; }
+
+  /* 카드 체크박스 */
+  .record-card { position: relative; }
+  .record-chk {
+    position: absolute;
+    top: 8px; left: 8px;
+    width: 20px; height: 20px;
+    accent-color: var(--accent);
+    z-index: 2;
+  }
 </style>
 </head>
 <body>
@@ -465,52 +576,72 @@
   </div>
 </div>
 
-<div class="capture-area">
-  <div class="form-section">
-    <div class="field-row field-row-combined">
-      <input class="field-input field-input-site" id="inputSite" list="siteList" placeholder="사업장 (예: 호반써밋)" autocomplete="off" autocapitalize="none">
-      <datalist id="siteList"></datalist>
-      <input class="field-input field-input-floor" id="inputFloor" placeholder="층수" autocomplete="off">
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="capture">📸 사진 촬영</button>
+  <button class="tab-btn" data-tab="list">📋 사진 리스트 <span class="tab-count" id="tabCount">0</span></button>
+</div>
+
+<div class="tab-panel" id="panelCapture">
+  <div class="capture-area">
+    <div class="form-section">
+      <div class="field-row field-row-combined">
+        <input class="field-input field-input-site" id="inputSite" list="siteList" placeholder="사업장 (예: 호반써밋)" autocomplete="off" autocapitalize="none">
+        <datalist id="siteList"></datalist>
+        <input class="field-input field-input-floor" id="inputFloor" placeholder="층수" autocomplete="off">
+      </div>
+      <div class="address-display compact" id="addressDisplay">
+        <span class="addr-icon">📍</span>
+        <span class="addr-text" id="addressText">위치자동</span>
+      </div>
     </div>
-    <div class="address-display compact" id="addressDisplay">
-      <span class="addr-icon">📍</span>
-      <span class="addr-text" id="addressText">위치자동</span>
+
+    <button class="btn-primary" id="btnCamera">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      사진 촬영
+    </button>
+    <input type="file" accept="image/*" capture="environment" id="cameraInput">
+
+    <div class="preview-photo" id="previewBox">
+      <span>아직 사진 없음</span>
     </div>
-  </div>
 
-  <button class="btn-primary" id="btnCamera">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-    사진 촬영
-  </button>
-  <input type="file" accept="image/*" capture="environment" id="cameraInput">
+    <div class="memo-area">
+      <textarea class="memo" id="memo" placeholder="자유 입력&#10;예) 자동화재탐지설비 감지기 미설치, 발신기 표시등 단선"></textarea>
+    </div>
 
-  <div class="preview-photo" id="previewBox">
-    <span>아직 사진 없음</span>
-  </div>
-
-  <div class="memo-area">
-    <textarea class="memo" id="memo" placeholder="자유 입력&#10;예) 자동화재탐지설비 감지기 미설치, 발신기 표시등 단선"></textarea>
-  </div>
-
-  <div class="action-row">
-    <button class="btn-save" id="btnSave">입력완료</button>
-    <button class="btn-clear" id="btnReset" title="입력 초기화" aria-label="지우기">✕</button>
+    <div class="action-row">
+      <button class="btn-save" id="btnSave">입력완료</button>
+      <button class="btn-clear" id="btnReset" title="입력 초기화" aria-label="지우기">✕</button>
+    </div>
   </div>
 </div>
 
-<div class="records-section">
-  <div class="section-label">
-    <span>기록 목록</span>
-    <span class="count" id="listCount">000</span>
+<div class="tab-panel" id="panelList" hidden>
+  <div class="records-section">
+    <div class="section-label">
+      <span>기록 목록</span>
+      <span class="count" id="listCount">000</span>
+    </div>
+    <div class="list-toolbar">
+      <label class="select-all-row">
+        <input type="checkbox" id="chkSelectAll"> <span>전체 선택</span>
+      </label>
+      <span class="selected-info" id="selectedInfo">0건 선택됨</span>
+    </div>
+    <div class="list-actions">
+      <button class="list-action-btn primary" id="btnShareSelected">⬆ 선택 공유</button>
+      <button class="list-action-btn" id="btnShareAll">⬆ 전체 공유</button>
+      <button class="list-action-btn danger" id="btnDelSelected">🗑 선택 삭제</button>
+    </div>
+    <div id="recordList">
+      <div class="empty-state">아직 기록이 없습니다.</div>
+    </div>
   </div>
-  <div id="recordList">
-    <div class="empty-state">아직 기록이 없습니다.</div>
-  </div>
-</div>
 
-<div class="footer-bar">
-  <button id="btnClearAll">전체 삭제</button>
-  <button class="export" id="btnExport">전체 JPEG 공유</button>
+  <div class="footer-bar">
+    <button id="btnClearAll">전체 삭제</button>
+    <button class="export" id="btnExport" hidden>전체 JPEG 공유</button>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -535,7 +666,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.1.0';
+  const APP_VERSION = '1.2.0';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -644,7 +775,8 @@
   document.getElementById('cameraInput').addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const compressed = await compressImage(file, 1600, 0.85);
+    // 최상 화질 — 다운스케일 없음 (4000px까지), JPEG 품질 0.98
+    const compressed = await compressImage(file, 4000, 0.98);
     currentPhoto = compressed;  // raw photo (will be re-stamped on save with latest metadata)
     const box = document.getElementById('previewBox');
     const now = new Date();
@@ -808,7 +940,7 @@
         ctx.fillStyle = 'rgba(232,236,243,0.7)';
         ctx.fillText('FIELD LOG', W - pad, pad + Math.round(baseFont * 1.1));
 
-        resolve(canvas.toDataURL('image/jpeg', 0.88));
+        resolve(canvas.toDataURL('image/jpeg', 0.98));
       };
       img.src = srcDataUrl;
     });
@@ -1015,8 +1147,8 @@
     return `${site}_${memo}_${ymd}_${hm}.jpg`;
   }
 
+  // ⬆ 공유 버튼 전용 — share sheet 열어 사용자가 갤러리/드라이브/카톡 등 선택
   async function saveJpeg(dataUrl, filename) {
-    // Native: write to cache + open share sheet (user picks Drive/Gallery/KakaoTalk/etc)
     if (window.Capacitor?.isNativePlatform?.()
         && Capacitor.Plugins?.Filesystem
         && Capacitor.Plugins?.Share) {
@@ -1036,11 +1168,11 @@
         return true;
       } catch(e) {
         if (e?.message?.includes('canceled')) return false;
-        console.warn('native save failed:', e);
+        console.warn('native share failed:', e);
       }
     }
 
-    // Web fallback: trigger download
+    // Web: 다운로드 폴더로
     try {
       const blob = await (await fetch(dataUrl)).blob();
       const url = URL.createObjectURL(blob);
@@ -1110,13 +1242,9 @@
       updateSiteList();
       renderList();
 
-      // Immediately save JPEG to phone (opens share sheet on native)
-      const filename = buildFilename(rec);
-      saveBtn.textContent = '저장 중...';
-      await saveJpeg(stamped, filename);
-
+      // 리스트 저장만 — 갤러리/공유는 아래 [공유] 버튼 누를 때만
       resetCurrent();
-      toast(`저장됨: ${filename}`);
+      toast('리스트에 저장됨');
     } catch(e) {
       console.error('save error:', e);
       toast('저장 실패');
@@ -1163,6 +1291,7 @@
       const memoHtml = r.memo ? escapeHtml(r.memo) : '<em>메모 없음</em>';
       const addrHtml = r.address ? `<div class="addr">📍 ${escapeHtml(r.address)}</div>` : '';
       return `<div class="record-card">
+        <input type="checkbox" class="record-chk" data-id="${r.id}">
         ${thumb}
         <div class="body">
           <div class="meta">${dateStr} ${time}${gpsInfo}</div>
@@ -1186,6 +1315,14 @@
         await saveJpeg(rec.photo, filename);
       });
     });
+
+    list.querySelectorAll('.record-chk').forEach(chk => {
+      chk.addEventListener('change', updateSelectedInfo);
+    });
+    updateSelectedInfo();
+    // 탭 카운트 갱신
+    const tabCount = document.getElementById('tabCount');
+    if (tabCount) tabCount.textContent = records.length;
     list.querySelectorAll('.btn-del').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const id = parseInt(e.currentTarget.getAttribute('data-id'));
@@ -1206,21 +1343,76 @@
     }[c]));
   }
 
-  // ===== Bulk export (iterate JPEGs through share/download) =====
-  document.getElementById('btnExport').addEventListener('click', async () => {
-    if (records.length === 0) { toast('내보낼 기록 없음'); return; }
-    if (!confirm(`${records.length}건의 사진을 순차로 공유합니다.\n각 사진마다 저장 위치를 선택하세요.\n\n계속하시겠습니까?`)) return;
+  // ===== 탭 전환 =====
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.getAttribute('data-tab');
+      document.getElementById('panelCapture').hidden = (target !== 'capture');
+      document.getElementById('panelList').hidden = (target !== 'list');
+    });
+  });
 
+  // ===== 선택 카운트 표시 =====
+  function getSelectedIds() {
+    return Array.from(document.querySelectorAll('.record-chk:checked'))
+      .map(c => parseInt(c.getAttribute('data-id')));
+  }
+  function updateSelectedInfo() {
+    const n = getSelectedIds().length;
+    const total = document.querySelectorAll('.record-chk').length;
+    const info = document.getElementById('selectedInfo');
+    if (info) info.textContent = `${n} / ${total}건 선택됨`;
+    const all = document.getElementById('chkSelectAll');
+    if (all) all.checked = (n > 0 && n === total);
+  }
+  document.getElementById('chkSelectAll').addEventListener('change', (e) => {
+    const checked = e.currentTarget.checked;
+    document.querySelectorAll('.record-chk').forEach(c => { c.checked = checked; });
+    updateSelectedInfo();
+  });
+
+  // ===== 선택 공유 =====
+  document.getElementById('btnShareSelected').addEventListener('click', async () => {
+    const ids = getSelectedIds();
+    if (ids.length === 0) { toast('선택된 항목 없음'); return; }
+    if (!confirm(`${ids.length}건의 사진을 순차로 공유합니다.\n각 사진마다 저장 위치를 선택하세요.`)) return;
+    let done = 0;
+    for (const id of ids) {
+      const rec = records.find(r => r.id === id);
+      if (!rec?.photo) continue;
+      const ok = await saveJpeg(rec.photo, buildFilename(rec));
+      if (ok) done++;
+      await new Promise(r => setTimeout(r, 200));
+    }
+    toast(`${done}/${ids.length}건 공유 완료`);
+  });
+
+  // ===== 전체 공유 =====
+  document.getElementById('btnShareAll').addEventListener('click', async () => {
+    if (records.length === 0) { toast('공유할 기록 없음'); return; }
+    if (!confirm(`전체 ${records.length}건의 사진을 순차로 공유합니다.\n각 사진마다 저장 위치를 선택하세요.`)) return;
     let done = 0;
     for (const rec of records) {
       if (!rec.photo) continue;
-      const filename = buildFilename(rec);
-      const ok = await saveJpeg(rec.photo, filename);
+      const ok = await saveJpeg(rec.photo, buildFilename(rec));
       if (ok) done++;
-      // Small delay between iterations so user can see each share dialog
       await new Promise(r => setTimeout(r, 200));
     }
-    toast(`${done}/${records.length}건 처리 완료`);
+    toast(`${done}/${records.length}건 공유 완료`);
+  });
+
+  // ===== 선택 삭제 =====
+  document.getElementById('btnDelSelected').addEventListener('click', () => {
+    const ids = getSelectedIds();
+    if (ids.length === 0) { toast('선택된 항목 없음'); return; }
+    if (!confirm(`선택한 ${ids.length}건을 삭제합니까?\n복구할 수 없습니다.`)) return;
+    ids.forEach(id => Store.remove(id));
+    records = records.filter(r => !ids.includes(r.id));
+    renderList();
+    updateSiteList();
+    toast(`${ids.length}건 삭제됨`);
   });
 
   // ===== Clear all =====

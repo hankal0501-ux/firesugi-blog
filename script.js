@@ -548,6 +548,46 @@ function saveUserPrograms(obj) {
   }
 }
 
+// 빠른 등록 — 이름만 입력하면 즉시 추가
+function quickAddProgram() {
+  const input = document.getElementById('quickAddName');
+  if (!input) return;
+  const name = (input.value || '').trim();
+  if (!name) {
+    input.focus();
+    alert('프로그램 이름을 입력하세요.');
+    return;
+  }
+  const key = 'user_' + Date.now();
+  const newProg = {
+    key,
+    name,
+    icon: '📦',
+    tag: 'AI 도구',
+    desc: name + ' — 등록 직후 상태 (상세 정보·URL은 카드 클릭 후 [📝 URL 편집]에서 추가)',
+    features: [],
+    howto: ['1. 사이트 접속 후 사용하세요.'],
+    link: null,
+    userAdded: true,
+    addedAt: Date.now(),
+    addedBy: (typeof getCurrentUser === 'function' && getCurrentUser()?.id) || 'guest'
+  };
+  const all = getUserPrograms();
+  all[key] = newProg;
+  saveUserPrograms(all);
+  programData[key] = newProg;
+  if (typeof logActivity === 'function') logActivity('빠른 등록: ' + name);
+  input.value = '';
+  renderPrograms();
+  // 자동 스크롤 — 새로 추가된 카드 영역으로
+  setTimeout(() => {
+    const grid = document.getElementById('programsGrid');
+    if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+  // 토스트 대신 console만 (alert는 흐름 끊김)
+  console.log('✅ 프로그램 등록 완료:', name);
+}
+
 function showAddProgramModal(devOnly) {
   document.getElementById('programAddModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';

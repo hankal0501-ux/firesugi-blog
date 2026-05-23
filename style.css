@@ -2292,6 +2292,38 @@ html { -webkit-text-size-adjust: 100%; }
   .news-modal-body dl.news-dl dt { width:fit-content; }
 }
 
+/* === 빠른 프로그램 등록 바 === */
+.prog-add-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.quick-add-input {
+  flex: 1 1 auto;
+  min-width: 200px;
+  max-width: 380px;
+  padding: 8px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.quick-add-input:focus {
+  outline: none;
+  border-color: var(--naver-green);
+  box-shadow: 0 0 0 3px rgba(3,199,90,0.15);
+}
+.quick-add-btn { white-space: nowrap; }
+@media (max-width: 600px) {
+  .prog-add-bar { justify-content: stretch; }
+  .quick-add-input { max-width: 100%; min-width: 0; flex: 1 1 100%; }
+}
+
 /* ========================================================
    🔓 회원 시스템 완전 제거 — 조회 전용 공개 모드
    ======================================================== */

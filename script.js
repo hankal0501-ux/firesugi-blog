@@ -549,18 +549,21 @@ function saveUserPrograms(obj) {
 }
 
 // 프로그램 등록·삭제 비밀번호 (간단한 abuse 방지)
-const PROG_PASSWORD = '0501';
+const PROG_PASSWORD = 'dodan0501!';
 
 function checkProgPassword() {
-  // 세션 동안 한 번만 입력 (sessionStorage)
-  if (sessionStorage.getItem('progAuth') === 'ok') return true;
+  // 세션 동안 한 번만 입력 (sessionStorage) — 비번 변경 시 키도 변경해 옛 인증 무효화
+  const AUTH_KEY = 'progAuth_v2';
+  if (sessionStorage.getItem(AUTH_KEY) === 'ok') return true;
   const pw = prompt('🔐 프로그램 등록·삭제 비밀번호:');
   if (pw === null) return false;
   if (pw !== PROG_PASSWORD) {
     alert('❌ 비밀번호가 일치하지 않습니다.');
     return false;
   }
-  sessionStorage.setItem('progAuth', 'ok');
+  sessionStorage.setItem(AUTH_KEY, 'ok');
+  // 옛 인증 키 정리
+  sessionStorage.removeItem('progAuth');
   return true;
 }
 
@@ -1120,7 +1123,7 @@ function showProgramDetail(key) {
           <p class="dev-sub">진행 상황은 <a href="#" onclick="hideProgramDetail(); showTab('news'); return false;">최신 뉴스 검색</a> 탭에서 확인해 주세요.</p>
         </div>
         <div class="detail-section detail-admin-zone">
-          <h3>🛠 관리 영역 (🔐 비번 0501 필요)</h3>
+          <h3>🛠 관리 영역 (🔐 비밀번호 필요)</h3>
           <div class="admin-actions-row">
             <button class="btn btn-primary btn-sm" onclick="editProgramLink('${key}')">📝 URL 추가 → 완료로 전환</button>
             <button class="btn btn-outline btn-sm" onclick="quickDeleteProgram('${key}'); hideProgramDetail();">🗑 이 프로그램 삭제</button>

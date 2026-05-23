@@ -1,7 +1,7 @@
 {
-  "latest": "1.3.2",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.3.2.apk",
-  "notes": "1.3.2 - 업데이트 모달의 [기존 앱 제거] 자동 트리거 버튼을 안내 메시지로 대체 (WebView intent 핸들 불안정 회피, 사용자 직접 설정 → 앱 → 제거 안내)",
+  "latest": "1.3.3",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.3.3.apk",
+  "notes": "1.3.3 - 📍위치자동을 '사진 기록' 제목 우측으로 이동 · 사진촬영 탭 색상 파랑(#2563eb)으로 변경(노란 카메라 버튼과 구분) · 새 버전(빨강) 신호등은 텍스트 배지 없이 LED만 표시",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-24T00:00:00Z"

@@ -39,6 +39,24 @@
     font-family: 'JetBrains Mono', monospace;
   }
   .header .title { font-size: 22px; font-weight: 800; margin-top: 2px; letter-spacing: -0.5px; }
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .title-row .title { margin-top: 0; flex: 0 0 auto; }
+  .header-addr {
+    margin-top: 0 !important;
+    flex: 0 1 auto;
+    max-width: 60%;
+    padding: 5px 10px !important;
+    font-size: 10px !important;
+    border-left-width: 2px !important;
+  }
+  .header-addr .addr-text { font-size: 10px !important; }
+  .header-addr .addr-icon { font-size: 11px !important; }
   .header .stats {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px; color: var(--muted); margin-top: 4px;
@@ -100,26 +118,7 @@
   .address-display.compact .addr-icon { font-size: 12px; }
   .address-display.compact .addr-text { font-size: 11px; letter-spacing: -0.2px; }
 
-  /* 사진 촬영 버튼 + 위치자동 인라인 배치 */
-  .camera-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 8px;
-    align-items: stretch;
-    margin-top: 12px;
-  }
-  .camera-row .btn-primary { margin: 0; }
-  .address-display.compact.inline {
-    margin-top: 0;
-    min-width: 120px;
-    max-width: 180px;
-    display: flex;
-    align-items: center;
-  }
-  @media (max-width: 360px) {
-    .camera-row { grid-template-columns: 1fr; }
-    .address-display.compact.inline { max-width: 100%; }
-  }
+  /* (camera-row 제거됨 — 위치자동을 헤더로 이동) */
 
   .address-display {
     display: flex;
@@ -598,8 +597,12 @@
   }
   .tab-btn:last-child { border-right: none; }
   .tab-btn.active {
-    background: var(--accent);
-    color: #000;
+    background: #2563eb;
+    color: #fff;
+  }
+  .tab-btn.active .tab-count {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
   }
   .tab-btn:active { opacity: 0.85; }
   .tab-count {
@@ -694,7 +697,13 @@
     DY-SOBANG · FIELD LOG · v<span id="appVer">1.0.0</span>
     <span class="update-status-text" id="updateStatusText">확인 중</span>
   </div>
-  <div class="title">사진 기록</div>
+  <div class="title-row">
+    <div class="title">사진 기록</div>
+    <div class="address-display compact header-addr" id="addressDisplay">
+      <span class="addr-icon">📍</span>
+      <span class="addr-text" id="addressText">위치자동</span>
+    </div>
+  </div>
   <div class="stats">
     <span class="status-dot"></span>
     <span id="recordCount">000</span>건 · <span id="dateLabel"></span>
@@ -716,16 +725,10 @@
       </div>
     </div>
 
-    <div class="camera-row">
-      <button class="btn-primary" id="btnCamera">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        사진 촬영
-      </button>
-      <div class="address-display compact inline" id="addressDisplay">
-        <span class="addr-icon">📍</span>
-        <span class="addr-text" id="addressText">위치자동</span>
-      </div>
-    </div>
+    <button class="btn-primary" id="btnCamera">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      사진 촬영
+    </button>
     <input type="file" accept="image/*" capture="environment" id="cameraInput">
 
     <div class="preview-photo" id="previewBox">
@@ -813,7 +816,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.3.2';
+  const APP_VERSION = '1.3.3';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1645,11 +1648,20 @@
   }
 
   // 업데이트 신호등 상태 설정 — unknown / checking / ok / new / error
+  // 새 버전(new) 일 때는 빨강 신호등만 표시, 텍스트 배지 숨김
   function setUpdateLight(state, label) {
     const light = document.getElementById('updateLight');
     const text = document.getElementById('updateStatusText');
     if (light) light.className = 'update-light ' + state;
-    if (text) text.textContent = label;
+    if (text) {
+      if (state === 'new') {
+        text.textContent = '';
+        text.style.display = 'none';
+      } else {
+        text.textContent = label;
+        text.style.display = '';
+      }
+    }
   }
 
   async function checkForUpdates(silent) {

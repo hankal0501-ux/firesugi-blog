@@ -548,10 +548,27 @@ function saveUserPrograms(obj) {
   }
 }
 
+// 프로그램 등록·삭제 비밀번호 (간단한 abuse 방지)
+const PROG_PASSWORD = '0501';
+
+function checkProgPassword() {
+  // 세션 동안 한 번만 입력 (sessionStorage)
+  if (sessionStorage.getItem('progAuth') === 'ok') return true;
+  const pw = prompt('🔐 프로그램 등록·삭제 비밀번호:');
+  if (pw === null) return false;
+  if (pw !== PROG_PASSWORD) {
+    alert('❌ 비밀번호가 일치하지 않습니다.');
+    return false;
+  }
+  sessionStorage.setItem('progAuth', 'ok');
+  return true;
+}
+
 // 빠른 삭제 — 카드의 ✕ 버튼 클릭 시
 function quickDeleteProgram(key) {
   const prog = programData[key];
   if (!prog) return;
+  if (!checkProgPassword()) return;
   const userProgs = getUserPrograms();
   const isUserAdded = !!userProgs[key];
   const action = isUserAdded ? '영구 삭제' : '목록에서 숨김';
@@ -585,6 +602,7 @@ function quickAddProgram() {
     alert('프로그램 이름을 입력하세요.');
     return;
   }
+  if (!checkProgPassword()) return;
   const key = 'user_' + Date.now();
   const newProg = {
     key,
@@ -670,6 +688,7 @@ function hideAddProgramModal() {
 }
 
 async function submitAddProgram() {
+  if (!checkProgPassword()) return;
   const get = id => document.getElementById(id).value.trim();
   const name = get('paName');
   const icon = get('paIcon') || '📦';

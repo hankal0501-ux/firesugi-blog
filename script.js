@@ -551,34 +551,55 @@ function saveUserPrograms(obj) {
 // 프로그램 등록·삭제 비밀번호 (간단한 abuse 방지)
 const PROG_PASSWORD = 'dodan0501!';
 
+// 등록용 — 세션당 1회 (편의)
 function checkProgPassword() {
-  // 세션 동안 한 번만 입력 (sessionStorage) — 비번 변경 시 키도 변경해 옛 인증 무효화
   const AUTH_KEY = 'progAuth_v2';
   if (sessionStorage.getItem(AUTH_KEY) === 'ok') return true;
-  const pw = prompt('🔐 프로그램 등록·삭제 비밀번호:');
+  const pw = prompt('🔐 프로그램 등록 비밀번호:');
   if (pw === null) return false;
   if (pw !== PROG_PASSWORD) {
     alert('❌ 비밀번호가 일치하지 않습니다.');
     return false;
   }
   sessionStorage.setItem(AUTH_KEY, 'ok');
-  // 옛 인증 키 정리
   sessionStorage.removeItem('progAuth');
   return true;
 }
 
+// 삭제용 — 항상 매번 입력 (실수 방지)
+function checkDeletePassword() {
+  const pw = prompt('🔐 삭제 비밀번호:');
+  if (pw === null) return false;
+  if (pw !== PROG_PASSWORD) {
+    alert('❌ 비밀번호가 일치하지 않습니다.');
+    return false;
+  }
+  return true;
+}
+
 // 빠른 삭제 — 카드의 ✕ 버튼 클릭 시
+// 삭제된 사용자 프로그램 보관소 (휴지통)
+const DELETED_PROGRAMS_KEY = 'fireSugiDeletedPrograms';
+function getDeletedPrograms() {
+  return JSON.parse(localStorage.getItem(DELETED_PROGRAMS_KEY) || '{}');
+}
+function saveDeletedPrograms(obj) {
+  localStorage.setItem(DELETED_PROGRAMS_KEY, JSON.stringify(obj));
+}
+
 function quickDeleteProgram(key) {
   const prog = programData[key];
   if (!prog) return;
-  if (!checkProgPassword()) return;
+  if (!checkDeletePassword()) return;
   const userProgs = getUserPrograms();
   const isUserAdded = !!userProgs[key];
-  const action = isUserAdded ? '영구 삭제' : '목록에서 숨김';
-  if (!confirm(`"${prog.name}"을(를) ${action}하시겠습니까?`)) return;
+  if (!confirm(`"${prog.name}"을(를) 휴지통으로 이동하시겠습니까?\n(언제든 복원 가능)`)) return;
 
   if (isUserAdded) {
-    // 사용자 추가 프로그램 — 영구 삭제 (localStorage + Firestore + programData)
+    // 휴지통으로 이동 (soft delete)
+    const deleted = getDeletedPrograms();
+    deleted[key] = { ...userProgs[key], deletedAt: Date.now() };
+    saveDeletedPrograms(deleted);
     delete userProgs[key];
     delete programData[key];
     localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(userProgs));
@@ -586,12 +607,54 @@ function quickDeleteProgram(key) {
       fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
     }
   } else {
-    // 빌트인 프로그램 — 숨김 (휴지통에 복원 가능)
+    // 빌트인 — 숨김 (programData에서 안 지움, 휴지통의 hidden 영역에서 복원 가능)
     const hidden = getHiddenPrograms();
     if (!hidden.includes(key)) hidden.push(key);
     saveHiddenPrograms(hidden);
   }
   if (typeof logActivity === 'function') logActivity('삭제: ' + prog.name);
+  renderPrograms();
+}
+
+// 사용자 프로그램 복원 (휴지통 → 활성)
+function restoreUserProgram(key) {
+  if (!checkDeletePassword()) return;
+  const deleted = getDeletedPrograms();
+  const prog = deleted[key];
+  if (!prog) return alert('휴지통에 없는 프로그램입니다.');
+  delete prog.deletedAt;
+  const userProgs = getUserPrograms();
+  userProgs[key] = prog;
+  saveUserPrograms(userProgs);
+  programData[key] = prog;
+  delete deleted[key];
+  saveDeletedPrograms(deleted);
+  if (typeof logActivity === 'function') logActivity('복원: ' + prog.name);
+  renderPrograms();
+}
+
+// 사용자 프로그램 영구 삭제 (휴지통에서 완전 제거)
+function permanentDeleteUserProgram(key) {
+  if (!checkDeletePassword()) return;
+  const deleted = getDeletedPrograms();
+  const prog = deleted[key];
+  if (!prog) return;
+  if (!confirm(`"${prog.name}"을(를) 영구 삭제하시겠습니까?\n⚠️ 복원 불가합니다.`)) return;
+  delete deleted[key];
+  saveDeletedPrograms(deleted);
+  if (typeof logActivity === 'function') logActivity('영구삭제: ' + prog.name);
+  renderPrograms();
+}
+
+// 휴지통 비우기 — 사용자 프로그램 모두 영구 삭제
+function emptyTrash() {
+  if (!checkDeletePassword()) return;
+  const deleted = getDeletedPrograms();
+  const count = Object.keys(deleted).length;
+  if (!count) return alert('휴지통이 비어있습니다.');
+  if (!confirm(`휴지통의 사용자 프로그램 ${count}건을 모두 영구 삭제하시겠습니까?\n⚠️ 복원 불가합니다.`)) return;
+  saveDeletedPrograms({});
+  if (typeof logActivity === 'function') logActivity(`휴지통 비우기: ${count}건`);
   renderPrograms();
 }
 
@@ -867,9 +930,23 @@ function restoreProgram(key) {
   renderPrograms();
 }
 function restoreAllPrograms() {
-  if (!isAdmin()) return;
-  if (!confirm('삭제된 모든 프로그램을 복원하시겠습니까?')) return;
+  if (!checkDeletePassword()) return;
+  if (!confirm('휴지통의 모든 프로그램(빌트인 + 사용자 추가)을 복원하시겠습니까?')) return;
+  // 빌트인 숨김 해제
   saveHiddenPrograms([]);
+  // 사용자 추가 삭제분 복원
+  if (typeof getDeletedPrograms === 'function') {
+    const deleted = getDeletedPrograms();
+    const userProgs = getUserPrograms();
+    Object.entries(deleted).forEach(([k, p]) => {
+      delete p.deletedAt;
+      userProgs[k] = p;
+      programData[k] = p;
+    });
+    saveUserPrograms(userProgs);
+    saveDeletedPrograms({});
+  }
+  if (typeof logActivity === 'function') logActivity('전체 복원');
   renderPrograms();
 }
 
@@ -1068,24 +1145,40 @@ function renderPrograms() {
   // devProgramsGrid는 더 이상 사용 안 함 (탭 삭제됨)
   if (gridDev) gridDev.innerHTML = '';
 
-  // 관리자 + 삭제된 프로그램 있으면 휴지통 영역 표시
+  // 휴지통 영역 — 빌트인 숨김 + 사용자 추가 삭제분 통합
   const trashHost = document.getElementById('programTrash');
   if (trashHost) {
-    if (admin && hidden.length) {
+    const deletedUser = (typeof getDeletedPrograms === 'function') ? getDeletedPrograms() : {};
+    const totalTrash = hidden.length + Object.keys(deletedUser).length;
+    if (totalTrash > 0) {
       trashHost.style.display = 'block';
       trashHost.innerHTML = `
         <div class="trash-header">
-          <h3>🗑 삭제된 프로그램 (${hidden.length}건)</h3>
-          <button class="btn btn-outline btn-sm" onclick="restoreAllPrograms()">↺ 전체 복원</button>
+          <h3>🗑 휴지통 (${totalTrash}건)</h3>
+          <div style="display:flex; gap:6px;">
+            <button class="btn btn-outline btn-sm" onclick="restoreAllPrograms()">↺ 전체 복원</button>
+            ${Object.keys(deletedUser).length ? '<button class="btn btn-outline btn-sm" onclick="emptyTrash()">🗑 사용자 휴지통 비우기</button>' : ''}
+          </div>
         </div>
         <div class="trash-list">
+          ${Object.entries(deletedUser).map(([k, p]) => {
+            const dDate = p.deletedAt ? new Date(p.deletedAt).toLocaleDateString('ko-KR') : '-';
+            return `
+              <div class="trash-item">
+                <span class="trash-name">${esc(p.name)}</span>
+                <span class="trash-tag">${esc(p.tag || '')} · 사용자 추가</span>
+                <span style="color:var(--text-muted); font-size:0.78rem;">삭제 ${dDate}</span>
+                <button class="btn-mini" onclick="restoreUserProgram('${k}')">↺ 복원</button>
+                <button class="btn-mini btn-mini-danger" onclick="permanentDeleteUserProgram('${k}')">🗑 영구삭제</button>
+              </div>`;
+          }).join('')}
           ${hidden.map(k => {
             const p = programData[k];
             if (!p) return '';
             return `
               <div class="trash-item">
                 <span class="trash-name">${esc(p.name)}</span>
-                <span class="trash-tag">${esc(p.tag)}</span>
+                <span class="trash-tag">${esc(p.tag)} · 빌트인</span>
                 <button class="btn-mini" onclick="restoreProgram('${k}')">↺ 복원</button>
               </div>`;
           }).join('')}

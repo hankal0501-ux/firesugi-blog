@@ -696,7 +696,7 @@ function quickAddProgram() {
     name,
     icon: '📦',
     tag: 'AI 도구',
-    desc: name + ' — 등록 직후 상태 (상세 정보·URL은 카드 클릭 후 [📝 URL 편집]에서 추가)',
+    desc: name + ' (현재 개발 중인 프로그램입니다. 곧 공개 예정.)',
     features: [],
     howto: ['1. 사이트 접속 후 사용하세요.'],
     link: null,
@@ -1218,57 +1218,22 @@ function showProgramDetail(key) {
   document.getElementById('programList').style.display = 'none';
   document.getElementById('programDetail').style.display = 'block';
 
-  // 개발중 (link 없음 또는 placeholder '#') → 간단한 안내만 표시
-  if (!data.link || data.link === '#') {
-    document.getElementById('programDetailContent').innerHTML = `
-      <div class="detail-card">
-        <div class="detail-header">
-          <div class="detail-icon">${data.icon}</div>
-          <div>
-            <h2>${esc(data.name)}</h2>
-            <span class="card-tag">${esc(data.tag)}</span>
-            <span class="prog-status prog-dev" style="margin-left:8px;">개발중</span>
-            ${data.featured ? '' : `<button class="status-del-btn" onclick="quickDeleteProgram('${key}'); hideProgramDetail();" title="이 프로그램 삭제 (🔐 비번 필요)">🗑 삭제</button>`}
-          </div>
-        </div>
-        <div class="dev-placeholder">
-          <div class="dev-icon">🚧</div>
-          <h3>현재 개발 중인 프로그램입니다</h3>
-          <p>완성 후 상세 기능과 사용 방법, 접속 링크를 공개할 예정입니다.</p>
-          <p class="dev-sub">진행 상황은 <a href="#" onclick="hideProgramDetail(); showTab('news'); return false;">최신 뉴스 검색</a> 탭에서 확인해 주세요.</p>
-        </div>
-        <div class="detail-section detail-admin-zone">
-          <h3>🛠 관리 영역 (🔐 비밀번호 필요)</h3>
-          <div class="admin-actions-row">
-            <button class="btn btn-primary btn-sm" onclick="editProgramLink('${key}')">📝 URL 추가 → 완료로 전환</button>
-          </div>
-          <p style="margin-top:8px; font-size:0.82rem; color:var(--text-muted);">
-            ℹ️ URL을 입력하면 <b>완료 상태</b>로 자동 전환됩니다. 삭제는 상단의 [🗑 삭제] 버튼 사용.
-          </p>
-        </div>
-      </div>`;
-    window.scrollTo(0, 0);
-    return;
-  }
-
-  // 개발 완료 → 전체 내용 표시 (링크는 정회원/관리자만 활성화)
-  const tier = getTier();
-  const canAccess = (tier === 'admin' || tier === 'premium');
+  // 통합 렌더 — 개발중·완료 모두 같은 풀 상세 표시. 상태 뱃지/접속 버튼만 분기.
+  const isDone = !!data.link && data.link !== '#';
+  const hasUrl = isDone;
   const clickCount = getProgramClickCount(key);
-  const linkHtml = canAccess
+  const linkHtml = isDone
     ? `<div class="access-row">
          <button class="btn btn-primary detail-link-btn" onclick="openSecureLink('${key}')">📖 ${esc(data.name)} 접속하기 →</button>
          <span class="click-count-badge" id="clickCountBadge_${key}">👁 클릭 ${clickCount}회</span>
        </div>`
     : `<div class="locked-link">
-         <button class="btn btn-outline detail-link-btn" disabled>🔒 ${esc(data.name)} — 정회원 전용</button>
-         <p class="locked-msg">💎 <b>정회원 또는 관리자</b>만 이 프로그램을 이용할 수 있습니다.<br>
-         <a href="#" onclick="event.preventDefault(); showTab('members-info');">회원정보 페이지</a>에서 관리자에게 정회원 승급을 요청하세요.</p>
+         <button class="btn btn-outline detail-link-btn" disabled>⏳ 준비 중 — URL 등록 시 자동 활성화</button>
+         <p class="locked-msg">현재 개발 중입니다. 관리자가 URL을 추가하면 자동으로 접속 가능해집니다.</p>
        </div>`;
 
   // 메타 정보 (버전, 플랫폼, 기술스택, 워크플로우)
-  const hasUrl = data.link && data.link !== '#';
-  const accessLabel = hasUrl ? '🔒 정회원 / 관리자 전용' : '⏳ 배포 대기 중';
+  const accessLabel = hasUrl ? '✅ 공개됨' : '⏳ 준비 중';
   const metaHtml = (data.version || data.platform || data.techStack || data.workflow) ? `
     <div class="detail-meta-row">
       ${data.version ? `<span class="detail-meta"><b>버전</b> ${esc(data.version)}</span>` : ''}
@@ -1325,7 +1290,9 @@ function showProgramDetail(key) {
         <div>
           <h2>${esc(data.name)}</h2>
           <span class="card-tag">${esc(data.tag)}</span>
-          <span class="prog-status prog-done" style="margin-left:8px;">완료</span>
+          ${isDone
+            ? '<span class="prog-status prog-done" style="margin-left:8px;">완료</span>'
+            : '<span class="prog-status prog-dev" style="margin-left:8px;">개발중</span>'}
           ${data.featured ? '' : `<button class="status-del-btn" onclick="quickDeleteProgram('${key}'); hideProgramDetail();" title="이 프로그램 삭제 (🔐 비번 필요)">🗑 삭제</button>`}
         </div>
       </div>

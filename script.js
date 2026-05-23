@@ -679,27 +679,69 @@ function emptyTrash() {
   renderPrograms();
 }
 
-// 빠른 등록 — 이름만 입력하면 즉시 추가
-function quickAddProgram() {
-  const input = document.getElementById('quickAddName');
-  if (!input) return;
-  const name = (input.value || '').trim();
+// 빠른 등록 — 이름·URL·파일 입력으로 즉시 추가 (URL 있으면 완료, 없으면 개발중)
+async function quickAddProgram() {
+  const nameInput = document.getElementById('quickAddName');
+  const urlInput = document.getElementById('quickAddUrl');
+  const fileInput = document.getElementById('quickAddFile');
+  if (!nameInput) return;
+
+  const name = (nameInput.value || '').trim();
   if (!name) {
-    input.focus();
+    nameInput.focus();
     alert('프로그램 이름을 입력하세요.');
     return;
   }
+
+  const url = (urlInput?.value || '').trim();
+  if (url && !/^https?:\/\//.test(url)) {
+    urlInput.focus();
+    alert('URL은 http:// 또는 https://로 시작해야 합니다.');
+    return;
+  }
+
+  // 파일 → base64 (3MB 제한)
+  let attachment = null;
+  if (fileInput && fileInput.files && fileInput.files[0]) {
+    const file = fileInput.files[0];
+    if (file.size > 3 * 1024 * 1024) {
+      alert('⚠️ 파일은 3MB 이하만 가능합니다.');
+      return;
+    }
+    try {
+      attachment = {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        data: await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = e => resolve(e.target.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        })
+      };
+    } catch (e) {
+      alert('파일 읽기 실패: ' + e.message);
+      return;
+    }
+  }
+
   if (!checkProgPassword()) return;
+
+  const isDone = !!url;
   const key = 'user_' + Date.now();
   const newProg = {
     key,
     name,
     icon: '📦',
     tag: 'AI 도구',
-    desc: name + ' (현재 개발 중인 프로그램입니다. 곧 공개 예정.)',
+    desc: isDone
+      ? name + ' — 정식 공개된 프로그램입니다.'
+      : name + ' (현재 개발 중인 프로그램입니다. 곧 공개 예정.)',
     features: [],
     howto: ['1. 사이트 접속 후 사용하세요.'],
-    link: null,
+    link: url || null,
+    attachment,
     userAdded: true,
     addedAt: Date.now(),
     addedBy: (typeof getCurrentUser === 'function' && getCurrentUser()?.id) || 'guest'
@@ -708,16 +750,34 @@ function quickAddProgram() {
   all[key] = newProg;
   saveUserPrograms(all);
   programData[key] = newProg;
-  if (typeof logActivity === 'function') logActivity('빠른 등록: ' + name);
-  input.value = '';
+  if (typeof logActivity === 'function') {
+    logActivity('빠른 등록: ' + name + (isDone ? ' (완료)' : ' (개발중)') + (attachment ? ' +첨부' : ''));
+  }
+  nameInput.value = '';
+  if (urlInput) urlInput.value = '';
+  if (fileInput) fileInput.value = '';
+  const label = document.getElementById('quickAddFileLabel');
+  if (label) label.textContent = '📎 파일';
   renderPrograms();
-  // 자동 스크롤 — 새로 추가된 카드 영역으로
   setTimeout(() => {
     const grid = document.getElementById('programsGrid');
     if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
-  // 토스트 대신 console만 (alert는 흐름 끊김)
-  console.log('✅ 프로그램 등록 완료:', name);
+  console.log('✅ 프로그램 등록 완료:', name, isDone ? '(완료)' : '(개발중)', attachment ? '+첨부' : '');
+}
+
+// 빠른 등록 — 파일 선택 시 라벨에 파일명 표시
+function updateQuickFileLabel() {
+  const fileInput = document.getElementById('quickAddFile');
+  const label = document.getElementById('quickAddFileLabel');
+  if (!fileInput || !label) return;
+  if (fileInput.files && fileInput.files[0]) {
+    const f = fileInput.files[0];
+    const kb = (f.size / 1024).toFixed(1);
+    label.textContent = `📎 ${f.name.slice(0, 18)}${f.name.length > 18 ? '…' : ''} (${kb}KB)`;
+  } else {
+    label.textContent = '📎 파일';
+  }
 }
 
 function showAddProgramModal(devOnly) {

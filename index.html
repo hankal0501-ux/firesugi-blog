@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260524i">
+  <link rel="stylesheet" href="style.css?v=20260524j">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -238,13 +238,20 @@
 
         <!-- 프로그램 목록 (동적 렌더 — programData 기반) -->
         <div id="programList">
-          <!-- 프로그램 직접 추가 (누구나) -->
+          <!-- 프로그램 직접 추가 (이름·URL·파일 한 줄로) -->
           <div class="prog-add-bar">
             <input type="text" id="quickAddName" class="quick-add-input"
-                   placeholder="프로그램 이름 입력 → 즉시 등록 (🔐 비번 필요)"
+                   placeholder="① 프로그램 이름 *"
                    onkeydown="if(event.key==='Enter') quickAddProgram();" autocomplete="off">
-            <button class="btn btn-primary btn-sm quick-add-btn" onclick="quickAddProgram()" title="이름만으로 즉시 등록">➕ 등록</button>
-            <button class="btn btn-outline btn-sm" onclick="showAddProgramModal()" title="상세 정보 입력">📝 상세 추가</button>
+            <input type="text" id="quickAddUrl" class="quick-add-input quick-add-url"
+                   placeholder="② URL (선택 — 비우면 개발중)"
+                   onkeydown="if(event.key==='Enter') quickAddProgram();" autocomplete="off">
+            <label class="quick-add-file-label" title="📎 파일 첨부 (이미지·PDF·ZIP, 3MB 이하)">
+              <input type="file" id="quickAddFile" accept="image/*,application/pdf,.zip" style="display:none;" onchange="updateQuickFileLabel()">
+              <span id="quickAddFileLabel">📎 파일</span>
+            </label>
+            <button class="btn btn-primary btn-sm quick-add-btn" onclick="quickAddProgram()" title="입력값으로 즉시 등록 (🔐 비번 필요)">➕ 등록</button>
+            <button class="btn btn-outline btn-sm" onclick="showAddProgramModal()" title="더 상세한 정보 입력 (기능·매뉴얼·메타 등)">📝 상세</button>
           </div>
           <div class="programs-grid" id="programsGrid"></div>
           <!-- 관리자 휴지통 (삭제된 프로그램) -->
@@ -964,7 +971,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script src="firebase-sync.js?v=20260513b"></script>
 
-  <script src="auth.js?v=20260524i"></script>
-  <script src="script.js?v=20260524i"></script>
+  <script src="auth.js?v=20260524j"></script>
+  <script src="script.js?v=20260524j"></script>
 </body>
 </html>

@@ -2378,9 +2378,35 @@ html { -webkit-text-size-adjust: 100%; }
   box-shadow: 0 0 0 3px rgba(3,199,90,0.15);
 }
 .quick-add-btn { white-space: nowrap; }
+.quick-add-url {
+  flex: 1 1 240px;
+  min-width: 180px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+.quick-add-file-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #f7f9fc;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+.quick-add-file-label:hover {
+  background: #eef4ff;
+  border-color: var(--naver-blue);
+  color: var(--naver-blue);
+}
 @media (max-width: 600px) {
   .prog-add-bar { justify-content: stretch; }
   .quick-add-input { max-width: 100%; min-width: 0; flex: 1 1 100%; }
+  .quick-add-file-label { flex: 1 1 100%; justify-content: center; }
 }
 
 /* ========================================================

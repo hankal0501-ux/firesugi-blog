@@ -1110,6 +1110,7 @@ function showProgramDetail(key) {
             <h2>${esc(data.name)}</h2>
             <span class="card-tag">${esc(data.tag)}</span>
             <span class="prog-status prog-dev" style="margin-left:8px;">개발중</span>
+            <button class="status-del-btn" onclick="quickDeleteProgram('${key}'); hideProgramDetail();" title="이 프로그램 삭제 (🔐 비번 필요)">🗑 삭제</button>
           </div>
         </div>
         <div class="dev-placeholder">
@@ -1208,6 +1209,7 @@ function showProgramDetail(key) {
           <h2>${esc(data.name)}</h2>
           <span class="card-tag">${esc(data.tag)}</span>
           <span class="prog-status prog-done" style="margin-left:8px;">완료</span>
+          <button class="status-del-btn" onclick="quickDeleteProgram('${key}'); hideProgramDetail();" title="이 프로그램 삭제 (🔐 비번 필요)">🗑 삭제</button>
         </div>
       </div>
       ${metaHtml}

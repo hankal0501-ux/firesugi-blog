@@ -2292,6 +2292,29 @@ html { -webkit-text-size-adjust: 100%; }
   .news-modal-body dl.news-dl dt { width:fit-content; }
 }
 
+/* === 상세 페이지 상태 뱃지 옆 삭제 버튼 === */
+.status-del-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 8px;
+  padding: 3px 10px;
+  background: #fff;
+  border: 1px solid #f0a0a0;
+  border-radius: 12px;
+  color: #c93030;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  vertical-align: middle;
+  transition: all 0.15s;
+}
+.status-del-btn:hover {
+  background: #ffe0e0;
+  transform: scale(1.05);
+}
+
 /* === 프로그램 카드 ✕ 삭제 버튼 === */
 .card-del-btn {
   position: absolute;
@@ -2370,10 +2393,11 @@ nav a[data-tab="members-info"],
 nav a[data-tab="dashboard"],
 .admin-only,
 .locked-link,
-.detail-admin-zone,
 .tier-pill {
   display: none !important;
 }
+/* 상세 페이지 관리 영역은 표시 (비번 보호 적용) */
+.detail-admin-zone { display: block !important; }
 #loginModal, #signupModal, #programAddModal { display: none !important; }
 /* 단, 관리자가 [+ 새 프로그램 추가] 클릭 시는 표시되도록 inline display:flex가 우선 */
 #programAddModal[style*="display:flex"], #programAddModal[style*="display: flex"] { display: flex !important; }

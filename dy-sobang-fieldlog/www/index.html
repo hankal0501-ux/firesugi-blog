@@ -100,6 +100,27 @@
   .address-display.compact .addr-icon { font-size: 12px; }
   .address-display.compact .addr-text { font-size: 11px; letter-spacing: -0.2px; }
 
+  /* 사진 촬영 버튼 + 위치자동 인라인 배치 */
+  .camera-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    align-items: stretch;
+    margin-top: 12px;
+  }
+  .camera-row .btn-primary { margin: 0; }
+  .address-display.compact.inline {
+    margin-top: 0;
+    min-width: 120px;
+    max-width: 180px;
+    display: flex;
+    align-items: center;
+  }
+  @media (max-width: 360px) {
+    .camera-row { grid-template-columns: 1fr; }
+    .address-display.compact.inline { max-width: 100%; }
+  }
+
   .address-display {
     display: flex;
     align-items: flex-start;
@@ -693,16 +714,18 @@
         <datalist id="siteList"></datalist>
         <input class="field-input field-input-floor" id="inputFloor" placeholder="층수" autocomplete="off">
       </div>
-      <div class="address-display compact" id="addressDisplay">
+    </div>
+
+    <div class="camera-row">
+      <button class="btn-primary" id="btnCamera">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        사진 촬영
+      </button>
+      <div class="address-display compact inline" id="addressDisplay">
         <span class="addr-icon">📍</span>
         <span class="addr-text" id="addressText">위치자동</span>
       </div>
     </div>
-
-    <button class="btn-primary" id="btnCamera">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      사진 촬영
-    </button>
     <input type="file" accept="image/*" capture="environment" id="cameraInput">
 
     <div class="preview-photo" id="previewBox">
@@ -787,7 +810,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.3.0';
+  const APP_VERSION = '1.3.1';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1270,6 +1293,55 @@
     return `${site}_${floor}_${memo}_${ymd}_${hm}.jpg`;
   }
 
+  // 입력완료 시 자동 호출 — 갤러리/Pictures 폴더에 silent 저장 (share sheet 없음)
+  async function saveToGallerySilent(dataUrl, filename) {
+    if (!window.Capacitor?.isNativePlatform?.() || !Capacitor.Plugins?.Filesystem) {
+      // 웹: 다운로드 폴더로 자동 저장
+      try {
+        const blob = await (await fetch(dataUrl)).blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = filename;
+        document.body.appendChild(a); a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        return 'web-download';
+      } catch (e) { console.warn('web auto-save 실패:', e); return false; }
+    }
+    const base64 = dataUrl.split(',')[1];
+    const { Filesystem } = Capacitor.Plugins;
+    // 1순위: 공용 Pictures/대영소방 (갤러리 인덱싱 가능)
+    try {
+      await Filesystem.writeFile({
+        path: 'Pictures/대영소방/' + filename,
+        data: base64,
+        directory: 'EXTERNAL_STORAGE',
+        recursive: true
+      });
+      return 'Pictures/대영소방';
+    } catch (e) { console.warn('EXTERNAL_STORAGE 실패:', e); }
+    // 2순위: Documents/대영소방 (파일 앱에서 확인 가능)
+    try {
+      await Filesystem.writeFile({
+        path: '대영소방/' + filename,
+        data: base64,
+        directory: 'DOCUMENTS',
+        recursive: true
+      });
+      return 'Documents/대영소방';
+    } catch (e) { console.warn('DOCUMENTS 실패:', e); }
+    // 3순위: 외부 데이터 디렉터리
+    try {
+      await Filesystem.writeFile({
+        path: '대영소방/' + filename,
+        data: base64,
+        directory: 'EXTERNAL',
+        recursive: true
+      });
+      return 'External/대영소방';
+    } catch (e) { console.error('모든 silent 저장 실패:', e); return false; }
+  }
+
   // ⬆ 공유 버튼 전용 — share sheet 열어 사용자가 갤러리/드라이브/카톡 등 선택
   async function saveJpeg(dataUrl, filename) {
     if (window.Capacitor?.isNativePlatform?.()
@@ -1365,9 +1437,17 @@
       updateSiteList();
       renderList();
 
-      // 리스트 저장만 — 갤러리/공유는 아래 [공유] 버튼 누를 때만
+      // 휴대폰 갤러리/Pictures 폴더에도 자동 저장 (silent — share sheet 없음)
+      const filename = buildFilename(rec);
+      saveBtn.textContent = '저장 중...';
+      const savedTo = await saveToGallerySilent(stamped, filename);
+
       resetCurrent();
-      toast('리스트에 저장됨');
+      if (savedTo) {
+        toast(`리스트 + 폰 저장 완료 (${savedTo})`);
+      } else {
+        toast('리스트 저장됨 (폰 저장 실패)');
+      }
     } catch(e) {
       console.error('save error:', e);
       toast('저장 실패');

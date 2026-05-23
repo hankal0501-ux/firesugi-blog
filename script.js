@@ -13,7 +13,7 @@ function showTab(tabName) {
   if (navLink) navLink.classList.add('active');
   // Reset program detail on tab switch + 동적 렌더
   if (tabName === 'programs') { hideProgramDetail(); renderPrograms(); }
-  if (tabName === 'records') { hideProgramDetail(); renderPrograms(); }  // 개발중 프로그램 (formerly 기록)
+  if (tabName === 'records') { showTab('programs'); return; }  // 개발중 → AI 프로그램으로 통합 리다이렉트
   if (tabName === 'home') renderHomeBoard();
   if (tabName === 'dashboard') renderDashboard();
   if (tabName === 'laws') renderLaws();
@@ -549,7 +549,6 @@ function saveUserPrograms(obj) {
 }
 
 function showAddProgramModal(devOnly) {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
   document.getElementById('programAddModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
   const linkEl = document.getElementById('paLink');
@@ -604,7 +603,6 @@ function hideAddProgramModal() {
 }
 
 async function submitAddProgram() {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
   const get = id => document.getElementById(id).value.trim();
   const name = get('paName');
   const icon = get('paIcon') || '📦';
@@ -958,28 +956,28 @@ function renderPrograms() {
   const hidden = getHiddenPrograms();
   const admin = isAdmin();
 
-  // 완료/개발중 분리
-  const completed = [];
-  const devList = [];
-  Object.entries(programData).forEach(([k, p]) => {
-    if (hidden.includes(k)) return;
-    const isDone = !!p.link && p.link !== '#';
-    (isDone ? completed : devList).push([k, p]);
-  });
-
-  // 완료된 것 중 featured 우선
-  completed.sort(([, a], [, b]) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+  // 모든 프로그램을 한 그리드(programsGrid)에 통합 표시
+  // featured 최우선, 완료 다음, 개발중 마지막
+  const all = Object.entries(programData)
+    .filter(([k]) => !hidden.includes(k))
+    .sort(([, a], [, b]) => {
+      // featured 최우선
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+      // 완료된 것 먼저
+      const aDone = !!a.link && a.link !== '#';
+      const bDone = !!b.link && b.link !== '#';
+      if (aDone !== bDone) return aDone ? -1 : 1;
+      return 0;
+    });
 
   if (gridCompleted) {
-    gridCompleted.innerHTML = completed.length
-      ? completed.map(([k, p]) => renderProgramCardHtml(k, p)).join('')
-      : '<div class="empty-state">📭 완료된 프로그램이 없습니다.</div>';
+    gridCompleted.innerHTML = all.length
+      ? all.map(([k, p]) => renderProgramCardHtml(k, p)).join('')
+      : '<div class="empty-state">📭 등록된 프로그램이 없습니다.</div>';
   }
-  if (gridDev) {
-    gridDev.innerHTML = devList.length
-      ? devList.map(([k, p]) => renderProgramCardHtml(k, p)).join('')
-      : '<div class="empty-state">🎉 개발중인 프로그램이 없습니다.</div>';
-  }
+  // devProgramsGrid는 더 이상 사용 안 함 (탭 삭제됨)
+  if (gridDev) gridDev.innerHTML = '';
 
   // 관리자 + 삭제된 프로그램 있으면 휴지통 영역 표시
   const trashHost = document.getElementById('programTrash');

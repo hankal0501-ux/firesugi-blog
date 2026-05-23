@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260522b">
+  <link rel="stylesheet" href="style.css?v=20260522c">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -18,12 +18,12 @@
       <a href="#" class="logo" onclick="showTab('home')">
         <div class="logo-icon">🔥</div>
         <span>Fire-Sugi</span>
+        <span class="logo-ver" title="현재 버전">v20260522b</span>
       </a>
       <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
       <nav>
         <a href="#" class="active" data-tab="home" onclick="showTab('home')">홈</a>
         <a href="#" data-tab="programs" onclick="showTab('programs')">AI 프로그램</a>
-        <a href="#" data-tab="records" onclick="showTab('records')">개발중</a>
         <a href="#" data-tab="news" onclick="showTab('news')">최신 뉴스 검색</a>
         <a href="#" data-tab="laws" onclick="showTab('laws')">법령정보</a>
         <a href="#" data-tab="tech" onclick="showTab('tech')">기술자료</a>
@@ -238,8 +238,8 @@
 
         <!-- 프로그램 목록 (동적 렌더 — programData 기반) -->
         <div id="programList">
-          <!-- 관리자: 직접 추가 버튼 -->
-          <div class="admin-only" style="display:none; text-align:right; margin-bottom:16px;">
+          <!-- 프로그램 직접 추가 (누구나) -->
+          <div class="prog-add-bar" style="text-align:right; margin-bottom:16px;">
             <button class="btn btn-primary btn-sm" onclick="showAddProgramModal()">+ 새 프로그램 추가</button>
           </div>
           <div class="programs-grid" id="programsGrid"></div>
@@ -940,12 +940,16 @@
         <a href="#" onclick="showTab('tech')">기술자료</a>
         <a href="#" onclick="showTab('forms')">서식자료</a>
         <a href="#" onclick="showTab('members-info')">회원정보</a>
-        <a href="#" onclick="showTab('records')">개발중</a>
         <a href="#" onclick="showTab('news')">최신 뉴스 검색</a>
         <a href="#" onclick="showTab('board')">게시판</a>
         <a href="#" class="admin-only" onclick="showTab('dashboard')" style="display:none;">접속상황판</a>
       </div>
       <p>© 2026 Fire-Sugi 소방안전 블로그. All rights reserved.</p>
+      <p class="version-info">
+        <span class="ver-badge">v20260522b</span>
+        <span class="ver-date">최종 수정 2026.05.22</span>
+        <a href="https://github.com/hankal0501-ux/firesugi-blog/commits/main" target="_blank" class="ver-link">📝 수정 이력</a>
+      </p>
     </div>
   </footer>
 
@@ -956,7 +960,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script src="firebase-sync.js?v=20260513b"></script>
 
-  <script src="auth.js?v=20260522b"></script>
-  <script src="script.js?v=20260522b"></script>
+  <script src="auth.js?v=20260522c"></script>
+  <script src="script.js?v=20260522c"></script>
 </body>
 </html>

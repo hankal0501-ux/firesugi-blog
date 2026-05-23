@@ -2307,6 +2307,11 @@ nav a[data-tab="dashboard"],
   display: none !important;
 }
 #loginModal, #signupModal, #programAddModal { display: none !important; }
+/* 단, 관리자가 [+ 새 프로그램 추가] 클릭 시는 표시되도록 inline display:flex가 우선 */
+#programAddModal[style*="display:flex"], #programAddModal[style*="display: flex"] { display: flex !important; }
+/* 개발중 탭 자체 제거 — AI 프로그램에 통합 */
+#tab-records { display: none !important; }
+nav a[data-tab="records"] { display: none !important; }
 /* 게시판 글쓰기·자동글 버튼 숨김 (수정은 코드로만) */
 .board-toolbar > .btn-primary,
 .board-toolbar > .btn-outline.btn-sm { display: none !important; }

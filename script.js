@@ -548,6 +548,33 @@ function saveUserPrograms(obj) {
   }
 }
 
+// 빠른 삭제 — 카드의 ✕ 버튼 클릭 시
+function quickDeleteProgram(key) {
+  const prog = programData[key];
+  if (!prog) return;
+  const userProgs = getUserPrograms();
+  const isUserAdded = !!userProgs[key];
+  const action = isUserAdded ? '영구 삭제' : '목록에서 숨김';
+  if (!confirm(`"${prog.name}"을(를) ${action}하시겠습니까?`)) return;
+
+  if (isUserAdded) {
+    // 사용자 추가 프로그램 — 영구 삭제 (localStorage + Firestore + programData)
+    delete userProgs[key];
+    delete programData[key];
+    localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(userProgs));
+    if (typeof fbDb !== 'undefined') {
+      fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
+    }
+  } else {
+    // 빌트인 프로그램 — 숨김 (휴지통에 복원 가능)
+    const hidden = getHiddenPrograms();
+    if (!hidden.includes(key)) hidden.push(key);
+    saveHiddenPrograms(hidden);
+  }
+  if (typeof logActivity === 'function') logActivity('삭제: ' + prog.name);
+  renderPrograms();
+}
+
 // 빠른 등록 — 이름만 입력하면 즉시 추가
 function quickAddProgram() {
   const input = document.getElementById('quickAddName');
@@ -980,6 +1007,7 @@ function renderProgramCardHtml(key, p) {
 
   return `
     <div class="program-card ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
+      <button class="card-del-btn" onclick="event.stopPropagation(); quickDeleteProgram('${key}')" title="이 프로그램 삭제">✕</button>
       <div class="card-icon">${p.icon}</div>
       <div class="prog-header">
         <h3>${esc(p.name)}</h3>

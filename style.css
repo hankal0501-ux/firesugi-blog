@@ -2292,6 +2292,42 @@ html { -webkit-text-size-adjust: 100%; }
   .news-modal-body dl.news-dl dt { width:fit-content; }
 }
 
+/* === 프로그램 카드 ✕ 삭제 버튼 === */
+.card-del-btn {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 26px; height: 26px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  opacity: 0;
+  z-index: 5;
+}
+.program-card { position: relative; }
+.program-card:hover .card-del-btn { opacity: 1; }
+.card-del-btn:hover {
+  background: #ffe0e0;
+  border-color: #f0a0a0;
+  color: #c93030;
+  transform: scale(1.1);
+}
+/* 모바일에서는 항상 보이게 (호버 없음) */
+@media (hover: none) {
+  .card-del-btn { opacity: 1; }
+}
+/* Featured 카드 — 별 영역과 겹치지 않게 위치 조정 */
+.program-card.is-featured .card-del-btn {
+  top: 8px; right: 8px;
+  z-index: 10;
+}
+.program-card.is-featured .featured-stars { right: 44px; }  /* 별을 왼쪽으로 */
+
 /* === 빠른 프로그램 등록 바 === */
 .prog-add-bar {
   display: flex;

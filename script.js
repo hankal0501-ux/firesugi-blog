@@ -1117,7 +1117,17 @@ function showProgramDetail(key) {
           <div class="dev-icon">🚧</div>
           <h3>현재 개발 중인 프로그램입니다</h3>
           <p>완성 후 상세 기능과 사용 방법, 접속 링크를 공개할 예정입니다.</p>
-          <p class="dev-sub">진행 상황은 <a href="#" onclick="hideProgramDetail(); showTab('records'); return false;">기록</a> 탭 또는 <a href="#" onclick="hideProgramDetail(); showTab('news'); return false;">최신 뉴스 검색</a> 탭에서 확인해 주세요.</p>
+          <p class="dev-sub">진행 상황은 <a href="#" onclick="hideProgramDetail(); showTab('news'); return false;">최신 뉴스 검색</a> 탭에서 확인해 주세요.</p>
+        </div>
+        <div class="detail-section detail-admin-zone">
+          <h3>🛠 관리 영역 (🔐 비번 0501 필요)</h3>
+          <div class="admin-actions-row">
+            <button class="btn btn-primary btn-sm" onclick="editProgramLink('${key}')">📝 URL 추가 → 완료로 전환</button>
+            <button class="btn btn-outline btn-sm" onclick="quickDeleteProgram('${key}'); hideProgramDetail();">🗑 이 프로그램 삭제</button>
+          </div>
+          <p style="margin-top:8px; font-size:0.82rem; color:var(--text-muted);">
+            ℹ️ URL을 입력하면 <b>완료 상태</b>로 자동 전환됩니다. 삭제는 영구 처리됩니다.
+          </p>
         </div>
       </div>`;
     window.scrollTo(0, 0);

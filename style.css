@@ -2292,6 +2292,33 @@ html { -webkit-text-size-adjust: 100%; }
   .news-modal-body dl.news-dl dt { width:fit-content; }
 }
 
+/* ========================================================
+   🔓 회원 시스템 완전 제거 — 조회 전용 공개 모드
+   ======================================================== */
+.auth-area,
+#authLoginBtn,
+#authUserInfo,
+nav a[data-tab="members-info"],
+nav a[data-tab="dashboard"],
+.admin-only,
+.locked-link,
+.detail-admin-zone,
+.tier-pill {
+  display: none !important;
+}
+#loginModal, #signupModal, #programAddModal { display: none !important; }
+/* 게시판 글쓰기·자동글 버튼 숨김 (수정은 코드로만) */
+.board-toolbar > .btn-primary,
+.board-toolbar > .btn-outline.btn-sm { display: none !important; }
+/* 비활성 잠긴 버튼 → 활성처럼 보이게 (스타일만) */
+.detail-link-btn[disabled] {
+  background: var(--naver-green) !important;
+  color: #fff !important;
+  border-color: var(--naver-green) !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+}
+
 /* === 페이지 전체 색깔 아이콘 / 강조색 일괄 무채색화 === */
 
 /* 1) 그린·블루·앰버 3색 팔레트 복구 (빨강 제외) */
@@ -2626,32 +2653,78 @@ button, .btn, a.btn, .quick-shortcut, .kfma-tab,
 .nb-tag { color: var(--naver-green) !important; }
 .bot-tag { color: var(--c-blue) !important; }
 
-/* === 뉴스 카드 색상 모두 회색 단색 통일 === */
-.news-source-chip,
-.topic-chip,
-.news-card-naver .badge-new {
-  background: var(--bg-secondary) !important;
-  color: var(--text-secondary) !important;
-  border: 1px solid var(--border) !important;
+/* === 최신 뉴스 검색 — 토픽별 연한 파스텔 색 === */
+/* 토픽 칩 — 토픽별 연한 색 */
+.topic-chip {
+  background: #f0f4ff !important;
+  color: #4a5cad !important;
+  border: 1px solid #d6e0ff !important;
 }
+/* 출처 칩 — 연한 그린 */
+.news-source-chip {
+  background: #e6f8ee !important;
+  color: #02a64a !important;
+  border: 1px solid #b8e5c8 !important;
+}
+/* NEW 뱃지 — 연한 앰버 */
+.news-card-naver .badge-new {
+  background: #fff4d4 !important;
+  color: #a07300 !important;
+  border: 1px solid #f0d97a !important;
+}
+/* 자세히 보기·원문 보기 링크 — 연한 블루 */
 .news-card-link {
-  color: var(--text-secondary) !important;
+  color: #4a5cad !important;
 }
 .news-card-link:hover {
-  color: var(--text-primary) !important;
+  color: #2a3c8d !important;
   text-decoration: underline !important;
 }
+/* 삭제 버튼 — 연한 핑크 (admin 전용이라 잘 안 보이지만) */
 .news-card-naver .btn-mini-danger {
-  background: var(--bg-secondary) !important;
-  color: var(--text-secondary) !important;
-  border: 1px solid var(--border-strong) !important;
+  background: #fde8e8 !important;
+  color: #a85050 !important;
+  border: 1px solid #f0c5c5 !important;
 }
-.news-card-naver .btn-mini-danger:hover {
-  background: var(--bg-hover) !important;
-  border-color: var(--text-muted) !important;
+/* 뉴스 카드 호버 — 연한 그린 보더 */
+.news-card-naver:hover {
+  border-color: #b8e5c8 !important;
+  box-shadow: 0 6px 20px rgba(2,166,74,0.12) !important;
 }
-/* 마지막 자동수집 날짜 강조 색 제거 */
-.ns-item b { color: var(--text-secondary) !important; }
+/* 뉴스 썸네일 영역 — 연한 그라데이션 (display:none 해제 + 연한 색) */
+.news-thumb-naver {
+  display: flex !important;
+  background: linear-gradient(135deg, #f0faf3 0%, #f0f4ff 50%, #fff4d4 100%) !important;
+  border-bottom: 2px solid #e6f8ee !important;
+  min-height: 60px;
+}
+.news-emoji {
+  display: inline-block !important;
+  font-size: 2rem !important;
+  opacity: 0.85;
+}
+/* 자동수집 뱃지 — 연한 회색 */
+.news-auto-badge {
+  display: inline-block !important;
+  background: rgba(255,255,255,0.85) !important;
+  color: #888 !important;
+  border: 1px solid #ddd !important;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  position: absolute;
+  top: 8px; right: 8px;
+}
+/* 마지막 자동수집 날짜 — 연한 그린 */
+.ns-item b { color: #02a64a !important; }
+/* 검색 입력창 포커스 — 연한 그린 */
+#newsSearchInput:focus { border-color: #02a64a !important; box-shadow: 0 0 0 3px rgba(2,166,74,0.12) !important; }
+/* 토픽 필터 탭 active — 연한 블루 */
+#newsFilterTabs .kfma-tab.active {
+  background: #d6e0ff !important;
+  color: #2a3c8d !important;
+  border-color: #b8c5f0 !important;
+}
 
 /* ========================================================
    참고 블로그 / 사이트 위젯

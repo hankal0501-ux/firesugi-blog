@@ -1124,7 +1124,7 @@ function incrementProgramClicks(key) {
   localStorage.setItem(PROG_CLICKS_KEY, JSON.stringify(clicks));
 }
 
-// 안전한 프로그램 링크 열기 — URL이 마우스 호버에 노출되지 않음 (button 사용)
+// 공개 모드 — 누구나 프로그램 접속 가능 (권한 체크 제거)
 function openSecureLink(key) {
   const data = programData[key];
   if (!data) return;
@@ -1132,23 +1132,15 @@ function openSecureLink(key) {
     alert('⏳ 아직 배포되지 않은 프로그램입니다.');
     return;
   }
-  const tier = getTier();
-  if (tier !== 'admin' && tier !== 'premium') {
-    alert('🔒 정회원 또는 관리자만 이용할 수 있습니다.');
-    return;
-  }
-  // 임시 <a> 엘리먼트 생성·즉시 클릭·제거 (URL 노출 없이 새 탭 열림)
   const a = document.createElement('a');
   a.href = data.link;
   a.target = '_blank';
-  // rel 속성 없음 → about:blank 방지
   a.style.display = 'none';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   incrementProgramClicks(key);
   if (typeof logActivity === 'function') logActivity('프로그램 접속: ' + key);
-  // 클릭 후 카운트 표시 갱신
   const badge = document.getElementById('clickCountBadge_' + key);
   if (badge) badge.textContent = '👁 클릭 ' + getProgramClickCount(key) + '회';
 }

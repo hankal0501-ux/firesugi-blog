@@ -1,0 +1,133 @@
+name: Build DY-Sobang APK
+
+# firesugi-blog 저장소의 .github/workflows/build-apk.yml 로 배치
+# 트리거: 수동 실행 (Actions 탭의 "Run workflow" 버튼)
+#         또는 dy-sobang-fieldlog/ 코드 변경 시 자동 실행
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'dy-sobang-fieldlog/www/**'
+      - 'dy-sobang-fieldlog/capacitor.config.json'
+      - 'dy-sobang-fieldlog/package.json'
+      - 'dy-sobang-fieldlog/homepage-files/**'
+      - '.github/workflows/build-apk.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-apk
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: 1) 저장소 체크아웃
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 2) Node.js 20 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: dy-sobang-fieldlog/package-lock.json
+
+      - name: 3) JDK 17 설치
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 4) Android SDK 설치
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-34 build-tools;34.0.0'
+
+      - name: 5) 앱 버전 추출 (www/index.html APP_VERSION)
+        id: ver
+        run: |
+          V=$(grep -oP "(?<=APP_VERSION = ')[^']+" dy-sobang-fieldlog/www/index.html)
+          if [ -z "$V" ]; then
+            echo "❌ APP_VERSION을 찾을 수 없음"; exit 1
+          fi
+          echo "version=$V" >> $GITHUB_OUTPUT
+          echo "✅ Detected version: $V"
+
+      - name: 6) npm 의존성 설치
+        working-directory: dy-sobang-fieldlog
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: 7) Android 플랫폼 추가 (최초 1회)
+        working-directory: dy-sobang-fieldlog
+        run: |
+          if [ ! -d android ]; then
+            npx cap add android
+          fi
+
+      - name: 8) Capacitor sync (웹 자산 → 안드로이드)
+        working-directory: dy-sobang-fieldlog
+        run: npx cap sync android
+
+      - name: 9) Gradle 캐시 복원
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('dy-sobang-fieldlog/android/**/*.gradle*', 'dy-sobang-fieldlog/android/**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: 10) APK 빌드 (debug)
+        working-directory: dy-sobang-fieldlog/android
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: 11) APK + 다운로드 페이지 배포 폴더로 복사
+        run: |
+          mkdir -p dy-sobang
+          cp dy-sobang-fieldlog/android/app/build/outputs/apk/debug/app-debug.apk \
+             dy-sobang/dy-sobang-fieldlog-${{ steps.ver.outputs.version }}.apk
+          cp dy-sobang-fieldlog/homepage-files/index.html  dy-sobang/index.html
+          cp dy-sobang-fieldlog/homepage-files/version.json dy-sobang/version.json
+          ls -lh dy-sobang/
+
+      - name: 12) Artifact 업로드 (백업·다운로드 가능)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dy-sobang-fieldlog-v${{ steps.ver.outputs.version }}
+          path: dy-sobang/dy-sobang-fieldlog-*.apk
+          retention-days: 90
+
+      - name: 13) dy-sobang/ 폴더 변경사항 커밋 & 푸시
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dy-sobang/
+          if git diff --cached --quiet; then
+            echo "ℹ️ 변경사항 없음 — 커밋 생략"
+          else
+            git commit -m "build: DY-Sobang v${{ steps.ver.outputs.version }} APK [skip ci]"
+            git push
+            echo "✅ dy-sobang/ 푸시 완료 → 1~2분 뒤 GitHub Pages 배포 → 폰 자동 업데이트 알림"
+          fi
+
+      - name: 14) 요약
+        run: |
+          echo "===================================="
+          echo "📦 빌드 완료: v${{ steps.ver.outputs.version }}"
+          echo "📥 다운로드: https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/"
+          echo "===================================="

@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>대영소방 현장기록</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-2: #131826;
+    --bg-3: #1c2236;
+    --border: #2a3148;
+    --text: #e8ecf3;
+    --muted: #8893a8;
+    --accent: #ffd60a;
+    --danger: #ff3b30;
+    --success: #34c759;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', -apple-system, sans-serif; min-height: 100vh; }
+  body { padding-bottom: 80px; }
+  button, textarea, input { font-family: inherit; }
+
+  .header {
+    padding: 18px 16px 14px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg);
+    z-index: 10;
+  }
+  .header .tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+    color: var(--accent); text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .header .title { font-size: 22px; font-weight: 800; margin-top: 2px; letter-spacing: -0.5px; }
+  .header .stats {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--muted); margin-top: 4px;
+    display: flex; align-items: center;
+  }
+  .status-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--success);
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .capture-area { padding: 16px; }
+
+  .form-section {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+  .field-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .field-row:last-of-type { margin-bottom: 0; }
+  .field-label {
+    flex: 0 0 50px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .field-input {
+    flex: 1;
+    background: var(--bg-3);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    min-width: 0;
+  }
+  .field-input:focus { border-color: var(--accent); outline: none; }
+  .field-input::placeholder { color: var(--muted); font-weight: 400; }
+
+  .address-display {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: var(--bg-3);
+    border-left: 3px solid var(--accent);
+    font-size: 12px;
+    line-height: 1.4;
+    min-height: 38px;
+  }
+  .address-display .addr-icon { font-size: 14px; flex-shrink: 0; }
+  .address-display .addr-text { color: var(--text); word-break: break-word; }
+  .address-display.loading .addr-text { color: var(--muted); font-style: italic; }
+  .address-display.empty { border-left-color: var(--border); }
+  .address-display.empty .addr-text { color: var(--muted); }
+
+  .btn-primary {
+    width: 100%;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.1s;
+    letter-spacing: -0.3px;
+  }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary svg { width: 22px; height: 22px; stroke-width: 2.5; }
+
+  .preview-photo {
+    width: 100%;
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    aspect-ratio: 4/3;
+    background: var(--bg-2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .preview-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .preview-photo .badge {
+    position: absolute; top: 8px; left: 8px;
+    background: rgba(0,0,0,0.7); color: var(--accent);
+    padding: 4px 8px; font-size: 10px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;
+  }
+
+  .memo-area { margin-top: 12px; }
+
+  .btn-mic {
+    width: 100%;
+    background: var(--bg-3);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .btn-mic svg { width: 20px; height: 20px; stroke-width: 2.5; }
+  .btn-mic.recording {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
+    animation: pulse 1.4s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,59,48,0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(255,59,48,0); }
+  }
+
+  textarea.memo {
+    width: 100%;
+    min-height: 110px;
+    background: var(--bg-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+  textarea.memo:focus { border-color: var(--accent); outline: none; }
+  textarea.memo::placeholder { color: var(--muted); }
+
+  .action-row { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; margin-top: 10px; }
+  .btn-save {
+    background: var(--success); color: #000; border: none; padding: 16px;
+    font-weight: 800; font-size: 15px; cursor: pointer; letter-spacing: -0.3px;
+  }
+  .btn-save:active { opacity: 0.85; }
+  .btn-clear {
+    background: transparent; color: var(--muted); border: 1px solid var(--border);
+    padding: 16px; font-size: 13px; cursor: pointer; font-weight: 600;
+  }
+
+  .records-section {
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+    padding: 20px 16px;
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    font-weight: 700;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .section-label .count {
+    color: var(--accent);
+    background: var(--bg-2);
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+  }
+
+  .record-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    position: relative;
+  }
+  .record-card .thumb {
+    width: 72px; height: 72px; object-fit: cover; background: var(--bg-3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 10px;
+  }
+  .record-card .body { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding-right: 48px; }
+  .record-card .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .record-card .site-line {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .record-card .floor-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+  }
+  .record-card .text {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--text);
+    word-break: break-word;
+  }
+  .record-card .text em { color: var(--muted); font-style: normal; }
+  .record-card .addr {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+  .record-card .actions {
+    position: absolute; top: 6px; right: 6px;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .record-card .actions button {
+    background: none; border: none; color: var(--muted);
+    font-size: 14px; cursor: pointer; padding: 4px 6px;
+    line-height: 1;
+  }
+  .record-card .actions button:hover { color: var(--text); }
+  .record-card .actions .btn-share { color: var(--accent); }
+
+  .empty-state {
+    padding: 36px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    border: 1px dashed var(--border);
+  }
+
+  .footer-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 8px;
+    z-index: 10;
+  }
+  .footer-bar button {
+    padding: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid var(--border);
+    background: var(--bg-3);
+    color: var(--text);
+    cursor: pointer;
+    letter-spacing: -0.2px;
+  }
+  .footer-bar button.export {
+    background: var(--accent); color: #000; border-color: var(--accent);
+  }
+
+  .toast {
+    position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+    background: var(--bg-3); border: 1px solid var(--accent); color: var(--accent);
+    padding: 10px 18px; font-size: 12px; font-weight: 700;
+    z-index: 100;
+    opacity: 0; transition: opacity 0.25s;
+    pointer-events: none;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1.5px;
+    max-width: 90vw;
+    text-align: center;
+  }
+  .toast.show { opacity: 1; }
+
+  #cameraInput { display: none; }
+
+  .interim-hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+  }
+
+  /* ===== Update modal ===== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.2s ease-out;
+  }
+  .modal-overlay[hidden] { display: none; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    max-width: 360px;
+    width: 100%;
+    padding: 24px 20px 18px;
+    animation: slideUp 0.25s ease-out;
+  }
+  .modal-icon {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .modal-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: -0.3px;
+    margin-bottom: 14px;
+  }
+  .version-compare {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .version-current { color: var(--muted); text-decoration: line-through; }
+  .version-arrow { color: var(--accent); font-size: 18px; }
+  .version-new { color: var(--accent); font-size: 16px; }
+  .modal-notes {
+    background: var(--bg-3);
+    border-left: 3px solid var(--accent);
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text);
+    margin-bottom: 18px;
+    white-space: pre-wrap;
+    max-height: 200px;
+    overflow-y: auto;
+    word-break: break-word;
+  }
+  .modal-notes:empty::before {
+    content: '변경사항 정보 없음';
+    color: var(--muted);
+    font-style: italic;
+  }
+  .modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 8px;
+  }
+  .modal-actions button {
+    padding: 14px 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    letter-spacing: -0.2px;
+  }
+  .btn-modal-skip {
+    background: transparent;
+    color: var(--muted);
+  }
+  .btn-modal-primary {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .modal-actions.force .btn-modal-skip { display: none; }
+  .modal-actions.force { grid-template-columns: 1fr; }
+
+  .tag {
+    cursor: pointer;
+  }
+  .tag:active { opacity: 0.6; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="tag" id="versionTag">DY-SOBANG · FIELD LOG · v<span id="appVer">1.0.0</span></div>
+  <div class="title">현장 기록</div>
+  <div class="stats">
+    <span class="status-dot"></span>
+    <span id="recordCount">000</span>건 · <span id="dateLabel"></span>
+  </div>
+</div>
+
+<div class="capture-area">
+  <div class="form-section">
+    <div class="field-row">
+      <label class="field-label" for="inputSite">사업장</label>
+      <input class="field-input" id="inputSite" list="siteList" placeholder="예) 에코델타 호반써밋" autocomplete="off" autocapitalize="none">
+      <datalist id="siteList"></datalist>
+    </div>
+    <div class="field-row">
+      <label class="field-label" for="inputFloor">층수</label>
+      <input class="field-input" id="inputFloor" placeholder="예) 3F · B1 · 옥상" autocomplete="off">
+    </div>
+    <div class="address-display" id="addressDisplay">
+      <span class="addr-icon">📍</span>
+      <span class="addr-text" id="addressText">사진 촬영 시 GPS·주소 자동 기록</span>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="btnCamera">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    사진 촬영
+  </button>
+  <input type="file" accept="image/*" capture="environment" id="cameraInput">
+
+  <div class="preview-photo" id="previewBox">
+    <span>아직 사진 없음</span>
+  </div>
+
+  <div class="memo-area">
+    <button class="btn-mic" id="btnMic">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+      <span id="micLabel">음성 입력 시작</span>
+    </button>
+    <textarea class="memo" id="memo" placeholder="자유입력 — 음성으로 말하거나 직접 타이핑&#10;예) 자동화재탐지설비 감지기 미설치, 발신기 표시등 단선"></textarea>
+    <div class="interim-hint" id="micHint">▸ 마이크 권한 허용 후 한국어로 말씀하세요</div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn-save" id="btnSave">기록 추가</button>
+    <button class="btn-clear" id="btnReset">지우기</button>
+  </div>
+</div>
+
+<div class="records-section">
+  <div class="section-label">
+    <span>기록 목록</span>
+    <span class="count" id="listCount">000</span>
+  </div>
+  <div id="recordList">
+    <div class="empty-state">아직 기록이 없습니다.</div>
+  </div>
+</div>
+
+<div class="footer-bar">
+  <button id="btnClearAll">전체 삭제</button>
+  <button class="export" id="btnExport">전체 JPEG 공유</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Update modal -->
+<div class="modal-overlay" id="updateModal" hidden>
+  <div class="modal">
+    <div class="modal-icon">🔄</div>
+    <h2 class="modal-title">새 버전 출시</h2>
+    <div class="version-compare">
+      <span class="version-current">v<span id="modalCurrentVersion"></span></span>
+      <span class="version-arrow">→</span>
+      <span class="version-new">v<span id="modalNewVersion"></span></span>
+    </div>
+    <div class="modal-notes" id="modalNotes"></div>
+    <div class="modal-actions" id="modalActions">
+      <button class="btn-modal-skip" id="btnUpdateSkip">나중에</button>
+      <button class="btn-modal-primary" id="btnUpdateNow">지금 업데이트</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============ CONFIG (edit before each release) ============
+  const APP_VERSION = '1.0.0';
+  const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
+  // ============================================================
+
+  // ===== State =====
+  let currentPhoto = null;
+  let currentGps = null;          // {lat, lon, accuracy}
+  let currentAddress = null;      // reverse-geocoded string
+  let geoFetchInFlight = false;
+  let records = [];
+
+  // ===== Storage (IndexedDB — saves to phone, persists offline) =====
+  const Store = {
+    db: null,
+    async open() {
+      if (this.db) return this.db;
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open('dysobang_fieldlog', 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains('records')) {
+            db.createObjectStore('records', { keyPath: 'id' });
+          }
+        };
+        req.onsuccess = (e) => { this.db = e.target.result; resolve(this.db); };
+        req.onerror = (e) => reject(e.target.error);
+      });
+    },
+    async load() {
+      try {
+        await this.open();
+        await new Promise((resolve) => {
+          const tx = this.db.transaction('records', 'readonly');
+          const req = tx.objectStore('records').getAll();
+          req.onsuccess = () => {
+            records = (req.result || []).sort((a,b) => b.id - a.id);
+            resolve();
+          };
+          req.onerror = () => { records = []; resolve(); };
+        });
+      } catch(e) {
+        console.error('DB open failed:', e);
+        records = [];
+        toast('저장소 초기화 실패');
+      }
+      renderList();
+    },
+    async put(rec) {
+      try {
+        await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = this.db.transaction('records', 'readwrite');
+          tx.objectStore('records').put(rec);
+          tx.oncomplete = () => resolve();
+          tx.onerror = (e) => reject(e.target.error);
+        });
+      } catch(e) { console.error('put failed:', e); toast('저장 실패'); }
+    },
+    async remove(id) {
+      try {
+        await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = this.db.transaction('records', 'readwrite');
+          tx.objectStore('records').delete(id);
+          tx.oncomplete = () => resolve();
+          tx.onerror = (e) => reject(e.target.error);
+        });
+      } catch(e) { console.error('remove failed:', e); }
+    },
+    async clear() {
+      try {
+        await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = this.db.transaction('records', 'readwrite');
+          tx.objectStore('records').clear();
+          tx.oncomplete = () => resolve();
+          tx.onerror = (e) => reject(e.target.error);
+        });
+      } catch(e) { console.error('clear failed:', e); }
+    }
+  };
+
+  // ===== Toast =====
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._t);
+    t._t = setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
+  // ===== Date label =====
+  function updateDateLabel() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth()+1).padStart(2,'0');
+    const d = String(now.getDate()).padStart(2,'0');
+    document.getElementById('dateLabel').textContent = `${y}-${m}-${d}`;
+  }
+
+  // ===== Camera + Location =====
+  document.getElementById('btnCamera').addEventListener('click', () => {
+    document.getElementById('cameraInput').click();
+    prefetchLocation();  // GPS/address fetch in parallel while user takes photo
+  });
+
+  document.getElementById('cameraInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const compressed = await compressImage(file, 1600, 0.85);
+    currentPhoto = compressed;  // raw photo (will be re-stamped on save with latest metadata)
+    const box = document.getElementById('previewBox');
+    const now = new Date();
+    const ts = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    box.innerHTML = `<img src="${compressed}" alt="현장 사진"><span class="badge">${ts}</span>`;
+    toast('사진 캡처 완료');
+  });
+
+  async function compressImage(file, maxWidth, quality) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const scale = Math.min(1, maxWidth / img.width);
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ----- GPS + reverse geocoding -----
+  function setAddressUI(text, cls) {
+    const el = document.getElementById('addressDisplay');
+    el.className = 'address-display ' + (cls || '');
+    document.getElementById('addressText').textContent = text;
+  }
+
+  function prefetchLocation() {
+    if (geoFetchInFlight || !navigator.geolocation) return;
+    geoFetchInFlight = true;
+    setAddressUI('위치 확인 중…', 'loading');
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        currentGps = {
+          lat: +pos.coords.latitude.toFixed(6),
+          lon: +pos.coords.longitude.toFixed(6),
+          accuracy: Math.round(pos.coords.accuracy)
+        };
+        setAddressUI(`GPS ${currentGps.lat}, ${currentGps.lon} · 주소 변환 중…`, 'loading');
+        const addr = await reverseGeocode(currentGps.lat, currentGps.lon);
+        currentAddress = addr;
+        if (addr) {
+          setAddressUI(addr, '');
+        } else {
+          setAddressUI(`GPS ${currentGps.lat}, ${currentGps.lon} (주소 조회 실패)`, '');
+        }
+        geoFetchInFlight = false;
+      },
+      (err) => {
+        console.warn('geolocation error:', err);
+        setAddressUI('위치 권한 없음 · 사진에 GPS 미포함', 'empty');
+        geoFetchInFlight = false;
+      },
+      { timeout: 12000, enableHighAccuracy: true, maximumAge: 30000 }
+    );
+  }
+
+  async function reverseGeocode(lat, lon) {
+    // Free Nominatim API. Korean addresses adequate for general use.
+    // Swap to Kakao Local API for production-grade Korean addressing (see README).
+    try {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ko&zoom=18`;
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) return null;
+      const data = await res.json();
+      // Nominatim returns Western-order display_name; reverse for Korean order
+      if (data.display_name) {
+        const parts = data.display_name.split(',').map(s => s.trim()).reverse();
+        return parts.slice(0, 6).join(' ');  // skip country at end
+      }
+      return null;
+    } catch(e) {
+      console.warn('reverseGeocode failed:', e);
+      return null;
+    }
+  }
+
+  // ----- Watermark composition: bake metadata into JPEG -----
+  async function stampPhoto(srcDataUrl, info) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+
+        const W = canvas.width;
+        const H = canvas.height;
+        const pad = Math.round(W * 0.025);
+        const baseFont = Math.max(18, Math.round(W / 55));
+
+        // Bottom gradient backdrop for readability
+        const overlayH = Math.round(H * 0.28);
+        const grad = ctx.createLinearGradient(0, H - overlayH, 0, H);
+        grad.addColorStop(0, 'rgba(0,0,0,0)');
+        grad.addColorStop(0.4, 'rgba(0,0,0,0.55)');
+        grad.addColorStop(1, 'rgba(0,0,0,0.92)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, H - overlayH, W, overlayH);
+
+        ctx.textBaseline = 'bottom';
+        ctx.textAlign = 'left';
+        let y = H - pad;
+
+        // Line 1 (bottom): 사업장 · 층수  ← biggest, yellow
+        const headline = [info.site, info.floor].filter(Boolean).join(' · ') || '사업장 미지정';
+        ctx.font = `900 ${Math.round(baseFont * 1.35)}px "Noto Sans KR", sans-serif`;
+        ctx.fillStyle = '#ffd60a';
+        ctx.fillText(headline, pad, y);
+        y -= Math.round(baseFont * 1.7);
+
+        // Line 2: 자유입력 메모  ← white, medium
+        if (info.memo) {
+          ctx.font = `600 ${Math.round(baseFont * 1.0)}px "Noto Sans KR", sans-serif`;
+          ctx.fillStyle = '#ffffff';
+          // Wrap long memo to 2 lines if needed
+          const lines = wrapText(ctx, info.memo, W - pad * 2, 2);
+          for (let i = lines.length - 1; i >= 0; i--) {
+            ctx.fillText(lines[i], pad, y);
+            y -= Math.round(baseFont * 1.25);
+          }
+        }
+
+        // Line 3: 주소
+        if (info.address) {
+          ctx.font = `400 ${Math.round(baseFont * 0.85)}px "Noto Sans KR", sans-serif`;
+          ctx.fillStyle = '#c8d0e0';
+          const addrLines = wrapText(ctx, '📍 ' + info.address, W - pad * 2, 2);
+          for (let i = addrLines.length - 1; i >= 0; i--) {
+            ctx.fillText(addrLines[i], pad, y);
+            y -= Math.round(baseFont * 1.05);
+          }
+        }
+
+        // Line 4 (top of overlay): datetime + GPS  ← small, gray, monospace
+        ctx.font = `700 ${Math.round(baseFont * 0.75)}px "JetBrains Mono", monospace`;
+        ctx.fillStyle = '#8893a8';
+        let metaLine = info.datetimeStr;
+        if (info.gps) {
+          metaLine += `  ·  ${info.gps.lat}, ${info.gps.lon}  ·  ±${info.gps.accuracy}m`;
+        }
+        ctx.fillText(metaLine, pad, y);
+
+        // Top-right brand watermark
+        ctx.font = `900 ${Math.round(baseFont * 0.95)}px "Noto Sans KR", sans-serif`;
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'top';
+        ctx.fillStyle = 'rgba(255,214,10,0.92)';
+        ctx.fillText('대영소방', W - pad, pad);
+        ctx.font = `700 ${Math.round(baseFont * 0.55)}px "JetBrains Mono", monospace`;
+        ctx.fillStyle = 'rgba(232,236,243,0.7)';
+        ctx.fillText('FIELD LOG', W - pad, pad + Math.round(baseFont * 1.1));
+
+        resolve(canvas.toDataURL('image/jpeg', 0.88));
+      };
+      img.src = srcDataUrl;
+    });
+  }
+
+  function wrapText(ctx, text, maxWidth, maxLines) {
+    const words = text.split(/(\s+)/);
+    const lines = [];
+    let cur = '';
+    for (const w of words) {
+      const test = cur + w;
+      if (ctx.measureText(test).width > maxWidth && cur) {
+        lines.push(cur.trim());
+        cur = w.trimStart();
+        if (lines.length >= maxLines - 1) break;
+      } else {
+        cur = test;
+      }
+    }
+    if (cur.trim()) lines.push(cur.trim());
+    // Truncate last line with ellipsis if it would still overflow
+    if (lines.length === maxLines) {
+      let last = lines[lines.length - 1];
+      while (last.length > 4 && ctx.measureText(last + '…').width > maxWidth) {
+        last = last.slice(0, -1);
+      }
+      lines[lines.length - 1] = last + (lines.length === maxLines && text.length > lines.join(' ').length ? '…' : '');
+    }
+    return lines;
+  }
+
+  // ===== Voice (dual-mode: native Capacitor plugin / Web Speech API) =====
+  const speech = {
+    mode: null,             // 'native' | 'web' | null
+    isListening: false,
+    nativePlugin: null,
+    recognition: null,
+    initialText: '',        // textarea content when mic was pressed
+    nativeBuffer: '',       // accumulated final text across native session restarts
+    _lastPartial: '',
+    onPartial: null,
+    onError: null,
+
+    async init() {
+      // 1) Try native plugin (Capacitor)
+      if (window.Capacitor?.isNativePlatform?.() && window.Capacitor?.Plugins?.SpeechRecognition) {
+        try {
+          const SR = Capacitor.Plugins.SpeechRecognition;
+          const { available } = await SR.available();
+          if (available) {
+            this.mode = 'native';
+            this.nativePlugin = SR;
+
+            await SR.addListener('partialResults', (data) => {
+              const current = data?.matches?.[0] || '';
+              this._lastPartial = current;
+              this.onPartial?.(this._combine(current));
+            });
+
+            await SR.addListener('listeningState', ({ status }) => {
+              if (status === 'stopped' && this.isListening) {
+                // Native session ended; commit partial to buffer & restart for continuous mode
+                if (this._lastPartial) {
+                  this.nativeBuffer = (this.nativeBuffer ? this.nativeBuffer + ' ' : '') + this._lastPartial;
+                  this._lastPartial = '';
+                }
+                setTimeout(() => { if (this.isListening) this._startNativeSession(); }, 80);
+              }
+            });
+
+            return true;
+          }
+        } catch(e) { console.warn('native speech unavailable:', e); }
+      }
+
+      // 2) Web fallback
+      const WebSR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (WebSR) {
+        this.mode = 'web';
+        this.recognition = new WebSR();
+        this.recognition.lang = 'ko-KR';
+        this.recognition.continuous = true;
+        this.recognition.interimResults = true;
+
+        let webFinal = '';
+        this.recognition.onresult = (event) => {
+          let interim = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const t = event.results[i][0].transcript;
+            if (event.results[i].isFinal) webFinal += t;
+            else interim += t;
+          }
+          this.nativeBuffer = webFinal;
+          this.onPartial?.(this._combine(interim));
+        };
+
+        this.recognition.onerror = (e) => {
+          if (e.error === 'no-speech' || e.error === 'aborted') return;
+          if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+            this.onError?.('마이크 권한 거부됨');
+            this.stop();
+          }
+        };
+
+        this.recognition.onend = () => {
+          if (this.isListening) {
+            try { this.recognition.start(); } catch(e) {}
+          }
+        };
+        return true;
+      }
+
+      return false;
+    },
+
+    _combine(currentSegment) {
+      const parts = [this.initialText, this.nativeBuffer, currentSegment]
+        .map(p => (p || '').trim()).filter(Boolean);
+      return parts.join(' ');
+    },
+
+    async _startNativeSession() {
+      try {
+        const perm = await this.nativePlugin.checkPermissions();
+        if (perm.speechRecognition !== 'granted') {
+          const req = await this.nativePlugin.requestPermissions();
+          if (req.speechRecognition !== 'granted') {
+            this.onError?.('마이크 권한이 필요합니다');
+            this.isListening = false;
+            return;
+          }
+        }
+        await this.nativePlugin.start({
+          language: 'ko-KR',
+          maxResults: 1,
+          prompt: '',
+          partialResults: true,
+          popup: false,
+        });
+      } catch(e) {
+        console.warn('native start failed:', e);
+        this.onError?.('녹음 시작 실패');
+        this.isListening = false;
+      }
+    },
+
+    start(initialText) {
+      this.isListening = true;
+      this.initialText = initialText || '';
+      this.nativeBuffer = '';
+      this._lastPartial = '';
+      if (this.mode === 'native') {
+        this._startNativeSession();
+      } else if (this.mode === 'web') {
+        try { this.recognition.start(); } catch(e) {}
+      }
+    },
+
+    async stop() {
+      this.isListening = false;
+      if (this.mode === 'native') {
+        try { await this.nativePlugin.stop(); } catch(e) {}
+      } else if (this.mode === 'web') {
+        try { this.recognition.stop(); } catch(e) {}
+      }
+    },
+
+    get isAvailable() { return this.mode !== null; }
+  };
+
+  // Wire up speech callbacks
+  speech.onPartial = (text) => {
+    document.getElementById('memo').value = text;
+  };
+  speech.onError = (msg) => {
+    toast(msg);
+    updateMicUI(false);
+  };
+
+  function updateMicUI(listening) {
+    const btn = document.getElementById('btnMic');
+    const lbl = document.getElementById('micLabel');
+    const hint = document.getElementById('micHint');
+    if (listening) {
+      btn.classList.add('recording');
+      lbl.textContent = '● 녹음 중 · 탭하여 정지';
+      hint.textContent = '▸ 천천히 말씀하세요. 자동으로 텍스트로 변환됩니다.';
+    } else {
+      btn.classList.remove('recording');
+      lbl.textContent = '음성 입력 시작';
+      hint.textContent = speech.mode === 'native'
+        ? '▸ 네이티브 한국어 음성인식 (오프라인 지원 가능)'
+        : '▸ 마이크 권한 허용 후 한국어로 말씀하세요';
+    }
+  }
+
+  document.getElementById('btnMic').addEventListener('click', async () => {
+    if (!speech.isAvailable) return;
+    if (speech.isListening) {
+      await speech.stop();
+      updateMicUI(false);
+    } else {
+      const initial = document.getElementById('memo').value;
+      speech.start(initial);
+      updateMicUI(true);
+    }
+  });
+
+  function startMic() { /* deprecated — use button handler */ }
+  function stopMic() {
+    if (speech.isListening) {
+      speech.stop();
+      updateMicUI(false);
+    }
+  }
+
+  // ===== Filename + JPEG save helpers =====
+  function sanitize(s, maxLen) {
+    return (s || '').toString()
+      .replace(/[\/\\:*?"<>|\n\r\t]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, maxLen || 30);
+  }
+
+  function buildFilename(rec) {
+    const d = new Date(rec.timestamp);
+    const ymd = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+    const hm = `${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}`;
+    const site = sanitize(rec.site, 20) || '미지정';
+    const memo = sanitize(rec.memo, 25) || '메모없음';
+    return `${site}_${memo}_${ymd}_${hm}.jpg`;
+  }
+
+  async function saveJpeg(dataUrl, filename) {
+    // Native: write to cache + open share sheet (user picks Drive/Gallery/KakaoTalk/etc)
+    if (window.Capacitor?.isNativePlatform?.()
+        && Capacitor.Plugins?.Filesystem
+        && Capacitor.Plugins?.Share) {
+      try {
+        const { Filesystem, Share } = Capacitor.Plugins;
+        const base64 = dataUrl.split(',')[1];
+        const writeRes = await Filesystem.writeFile({
+          path: filename,
+          data: base64,
+          directory: 'CACHE'
+        });
+        await Share.share({
+          title: filename,
+          url: writeRes.uri,
+          dialogTitle: '저장 / 공유'
+        });
+        return true;
+      } catch(e) {
+        if (e?.message?.includes('canceled')) return false;
+        console.warn('native save failed:', e);
+      }
+    }
+
+    // Web fallback: trigger download
+    try {
+      const blob = await (await fetch(dataUrl)).blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      return true;
+    } catch(e) {
+      console.error('web download failed:', e);
+      return false;
+    }
+  }
+
+  function updateSiteList() {
+    const sites = [...new Set(records.map(r => r.site).filter(Boolean))];
+    const dl = document.getElementById('siteList');
+    dl.innerHTML = sites.map(s => `<option value="${escapeHtml(s)}">`).join('');
+  }
+
+  // ===== Save record (stamp metadata onto JPEG, store in DB, share immediately) =====
+  document.getElementById('btnSave').addEventListener('click', async () => {
+    if (!currentPhoto) {
+      toast('사진을 먼저 촬영하세요');
+      return;
+    }
+    if (speech.isListening) stopMic();
+
+    const site = document.getElementById('inputSite').value.trim();
+    const floor = document.getElementById('inputFloor').value.trim();
+    const memo = document.getElementById('memo').value.trim();
+
+    if (!site) {
+      if (!confirm('사업장이 비어있습니다. 그래도 저장하시겠습니까?')) return;
+    }
+
+    const now = new Date();
+    const datetimeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+    const saveBtn = document.getElementById('btnSave');
+    saveBtn.disabled = true;
+    saveBtn.textContent = '합성 중...';
+
+    try {
+      // Bake all metadata as watermark onto the JPEG
+      const stamped = await stampPhoto(currentPhoto, {
+        site, floor, memo,
+        address: currentAddress,
+        gps: currentGps,
+        datetimeStr
+      });
+
+      const rec = {
+        id: Date.now(),
+        timestamp: now.toISOString(),
+        site, floor, memo,
+        address: currentAddress,
+        gps: currentGps,
+        photo: stamped
+      };
+
+      records.unshift(rec);
+      await Store.put(rec);
+      updateSiteList();
+      renderList();
+
+      // Immediately save JPEG to phone (opens share sheet on native)
+      const filename = buildFilename(rec);
+      saveBtn.textContent = '저장 중...';
+      await saveJpeg(stamped, filename);
+
+      resetCurrent();
+      toast(`저장됨: ${filename}`);
+    } catch(e) {
+      console.error('save error:', e);
+      toast('저장 실패');
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = '기록 추가';
+    }
+  });
+
+  document.getElementById('btnReset').addEventListener('click', resetCurrent);
+
+  function resetCurrent() {
+    currentPhoto = null;
+    // Keep site name + floor (likely same site for consecutive records)
+    // Clear: memo, photo preview, photo input
+    document.getElementById('memo').value = '';
+    document.getElementById('previewBox').innerHTML = '<span>아직 사진 없음</span>';
+    document.getElementById('cameraInput').value = '';
+    if (speech.isListening) stopMic();
+  }
+
+  // ===== Render list =====
+  function renderList() {
+    const list = document.getElementById('recordList');
+    const cstr = String(records.length).padStart(3,'0');
+    document.getElementById('recordCount').textContent = cstr;
+    document.getElementById('listCount').textContent = cstr;
+
+    if (records.length === 0) {
+      list.innerHTML = '<div class="empty-state">아직 기록이 없습니다.</div>';
+      return;
+    }
+
+    list.innerHTML = records.map(r => {
+      const date = new Date(r.timestamp);
+      const time = `${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+      const dateStr = `${date.getMonth()+1}/${date.getDate()}`;
+      const thumb = r.photo
+        ? `<img class="thumb" src="${r.photo}" alt="">`
+        : `<div class="thumb">사진없음</div>`;
+      const gpsInfo = r.gps ? ' · GPS' : '';
+      const siteText = escapeHtml(r.site || '미지정');
+      const floorBadge = r.floor ? `<span class="floor-badge">${escapeHtml(r.floor)}</span>` : '';
+      const memoHtml = r.memo ? escapeHtml(r.memo) : '<em>메모 없음</em>';
+      const addrHtml = r.address ? `<div class="addr">📍 ${escapeHtml(r.address)}</div>` : '';
+      return `<div class="record-card">
+        ${thumb}
+        <div class="body">
+          <div class="meta">${dateStr} ${time}${gpsInfo}</div>
+          <div class="site-line">${siteText} ${floorBadge}</div>
+          <div class="text">${memoHtml}</div>
+          ${addrHtml}
+        </div>
+        <div class="actions">
+          <button class="btn-share" data-id="${r.id}" title="JPEG 공유/저장">⬆</button>
+          <button class="btn-del" data-id="${r.id}" title="삭제">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+
+    list.querySelectorAll('.btn-share').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = parseInt(e.currentTarget.getAttribute('data-id'));
+        const rec = records.find(r => r.id === id);
+        if (!rec || !rec.photo) { toast('사진 없음'); return; }
+        const filename = buildFilename(rec);
+        await saveJpeg(rec.photo, filename);
+      });
+    });
+    list.querySelectorAll('.btn-del').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = parseInt(e.currentTarget.getAttribute('data-id'));
+        if (confirm('이 기록을 삭제하시겠습니까?')) {
+          records = records.filter(r => r.id !== id);
+          Store.remove(id);
+          renderList();
+          updateSiteList();
+          toast('삭제됨');
+        }
+      });
+    });
+  }
+
+  function escapeHtml(s) {
+    return (s||'').replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  // ===== Bulk export (iterate JPEGs through share/download) =====
+  document.getElementById('btnExport').addEventListener('click', async () => {
+    if (records.length === 0) { toast('내보낼 기록 없음'); return; }
+    if (!confirm(`${records.length}건의 사진을 순차로 공유합니다.\n각 사진마다 저장 위치를 선택하세요.\n\n계속하시겠습니까?`)) return;
+
+    let done = 0;
+    for (const rec of records) {
+      if (!rec.photo) continue;
+      const filename = buildFilename(rec);
+      const ok = await saveJpeg(rec.photo, filename);
+      if (ok) done++;
+      // Small delay between iterations so user can see each share dialog
+      await new Promise(r => setTimeout(r, 200));
+    }
+    toast(`${done}/${records.length}건 처리 완료`);
+  });
+
+  // ===== Clear all =====
+  document.getElementById('btnClearAll').addEventListener('click', () => {
+    if (records.length === 0) return;
+    if (confirm(`전체 ${records.length}건을 삭제하시겠습니까?\n복구할 수 없습니다.`)) {
+      records = [];
+      Store.clear();
+      renderList();
+      toast('전체 삭제됨');
+    }
+  });
+
+  // ===== Update check =====
+  function isNewer(remote, local) {
+    const r = String(remote).split('.').map(n => parseInt(n) || 0);
+    const l = String(local).split('.').map(n => parseInt(n) || 0);
+    for (let i = 0; i < Math.max(r.length, l.length); i++) {
+      const a = r[i] || 0, b = l[i] || 0;
+      if (a > b) return true;
+      if (a < b) return false;
+    }
+    return false;
+  }
+
+  async function checkForUpdates(silent) {
+    if (!UPDATE_CHECK_URL || UPDATE_CHECK_URL.includes('YOUR-DOMAIN')) {
+      if (!silent) toast('업데이트 서버 URL 미설정');
+      return;
+    }
+    try {
+      const res = await fetch(UPDATE_CHECK_URL + '?t=' + Date.now(), {
+        cache: 'no-store',
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const info = await res.json();
+
+      if (!info.latest || !info.url) throw new Error('invalid version.json');
+
+      if (isNewer(info.latest, APP_VERSION)) {
+        showUpdateModal(info);
+        return true;
+      } else if (!silent) {
+        toast(`최신 버전 사용 중 (v${APP_VERSION})`);
+      }
+    } catch(e) {
+      console.warn('update check failed:', e);
+      if (!silent) toast('업데이트 확인 실패');
+    }
+    return false;
+  }
+
+  function showUpdateModal(info) {
+    document.getElementById('modalCurrentVersion').textContent = APP_VERSION;
+    document.getElementById('modalNewVersion').textContent = info.latest;
+    document.getElementById('modalNotes').textContent = info.notes || '';
+
+    const actions = document.getElementById('modalActions');
+    actions.classList.toggle('force', !!info.force);
+
+    document.getElementById('btnUpdateSkip').onclick = () => {
+      if (!info.force) document.getElementById('updateModal').hidden = true;
+    };
+
+    document.getElementById('btnUpdateNow').onclick = async () => {
+      // Open APK URL in system browser → Android download manager → user taps to install
+      try {
+        if (window.Capacitor?.isNativePlatform?.() && Capacitor.Plugins?.Browser) {
+          await Capacitor.Plugins.Browser.open({
+            url: info.url,
+            presentationStyle: 'fullscreen'
+          });
+        } else {
+          window.open(info.url, '_blank');
+        }
+        toast('다운로드 시작됨. 다운로드 폴더에서 APK 탭하여 설치');
+        if (!info.force) document.getElementById('updateModal').hidden = true;
+      } catch(e) {
+        console.error('open URL failed:', e);
+        toast('다운로드 페이지 열기 실패');
+      }
+    };
+
+    document.getElementById('updateModal').hidden = false;
+  }
+
+  // Wire up clickable version tag → manual check
+  document.getElementById('versionTag').addEventListener('click', () => {
+    toast('업데이트 확인 중…');
+    checkForUpdates(false);
+  });
+
+  // ===== Init =====
+  (async function init() {
+    document.getElementById('appVer').textContent = APP_VERSION;
+    updateDateLabel();
+    await Store.load();
+    updateSiteList();
+
+    // Native: configure status bar to match theme
+    if (window.Capacitor?.isNativePlatform?.() && Capacitor.Plugins?.StatusBar) {
+      try {
+        const { StatusBar } = Capacitor.Plugins;
+        await StatusBar.setBackgroundColor({ color: '#0a0e1a' });
+        await StatusBar.setStyle({ style: 'DARK' });
+      } catch(e) { /* ignore */ }
+    }
+
+    // Init speech (native plugin or Web Speech)
+    const ok = await speech.init();
+    if (!ok) {
+      document.getElementById('btnMic').disabled = true;
+      document.getElementById('micLabel').textContent = '음성 인식 미지원';
+      document.getElementById('micHint').textContent = '▸ Chrome/Edge 브라우저 또는 앱 설치 후 사용 가능';
+    } else {
+      updateMicUI(false);
+    }
+
+    console.log('[FieldLog] v' + APP_VERSION + ' · speech:', speech.mode, '· Capacitor:', !!window.Capacitor?.isNativePlatform?.());
+
+    // Silent update check on launch (after 2s so UI is responsive first)
+    setTimeout(() => checkForUpdates(true), 2000);
+  })();
+</script>
+
+</body>
+</html>

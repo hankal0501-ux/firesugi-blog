@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#131826"/>
+      <stop offset="1" stop-color="#0a0e1a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- Hi-vis yellow corner brackets (safety/inspection mark) -->
+  <g stroke="#ffd60a" stroke-width="20" fill="none" stroke-linecap="square">
+    <path d="M 140 240 L 140 140 L 240 140"/>
+    <path d="M 884 240 L 884 140 L 784 140"/>
+    <path d="M 140 784 L 140 884 L 240 884"/>
+    <path d="M 884 784 L 884 884 L 784 884"/>
+  </g>
+
+  <!-- Central mark: 대영 in clean bold -->
+  <text x="512" y="540"
+        text-anchor="middle"
+        font-family="Noto Sans CJK KR, Noto Sans KR, sans-serif"
+        font-weight="900"
+        font-size="280"
+        fill="#ffd60a"
+        letter-spacing="-10">대영</text>
+
+  <!-- Subtitle: 소방 -->
+  <text x="512" y="690"
+        text-anchor="middle"
+        font-family="Noto Sans CJK KR, Noto Sans KR, sans-serif"
+        font-weight="700"
+        font-size="90"
+        fill="#e8ecf3"
+        letter-spacing="20">소방</text>
+
+  <!-- Bottom tag: FIELD LOG -->
+  <text x="512" y="800"
+        text-anchor="middle"
+        font-family="ui-monospace, 'JetBrains Mono', monospace"
+        font-weight="700"
+        font-size="42"
+        fill="#8893a8"
+        letter-spacing="12">FIELD LOG</text>
+</svg>

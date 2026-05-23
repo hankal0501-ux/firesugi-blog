@@ -1,0 +1,8 @@
+{
+  "latest": "1.0.0",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.0.0.apk",
+  "notes": "초기 버전 - 사진+음성 메모, 워터마크 자동 합성, JPEG 저장",
+  "force": false,
+  "minSupportedVersion": "1.0.0",
+  "releasedAt": "2026-05-22T00:00:00Z"
+}

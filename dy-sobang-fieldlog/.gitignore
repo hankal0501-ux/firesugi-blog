@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+android/app/build/
+android/.gradle/
+android/build/
+android/captures/
+android/local.properties
+
+# Keystore (NEVER commit)
+*.keystore
+*.jks
+android/key.properties
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

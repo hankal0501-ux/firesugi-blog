@@ -37,8 +37,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: dy-sobang-fieldlog/package-lock.json
 
       - name: 3) JDK 17 설치
         uses: actions/setup-java@v4

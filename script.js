@@ -970,6 +970,66 @@ async function uploadProgramAttachment(key, inputEl) {
   showProgramDetail(key);
 }
 
+// 📷 상세 페이지에서 스크린샷 업로드 (비번 보호 — admin이 아니어도 가능)
+async function uploadProgramScreenshot(key, inputEl) {
+  if (!inputEl.files || !inputEl.files[0]) return;
+  const file = inputEl.files[0];
+  if (file.size > 3 * 1024 * 1024) {
+    if (!confirm(`⚠️ 파일이 ${(file.size/1024/1024).toFixed(1)}MB로 큽니다.\nlocalStorage 용량 초과 위험. 계속하시겠습니까?`)) {
+      inputEl.value = ''; return;
+    }
+  }
+  if (!(await checkDeletePassword())) { inputEl.value = ''; return; }
+  const caption = prompt('캡션 (사진 설명):', file.name.replace(/\.[^.]+$/, '')) || '';
+  try {
+    const url = await readFileAsDataURL(file);
+    const arr = getProgramScreenshots(key);
+    arr.push({ url, caption, custom: true, fileName: file.name });
+    saveProgramScreenshots(key, arr);
+    if (typeof logActivity === 'function') logActivity('스크린샷 추가: ' + key);
+    inputEl.value = '';
+    showProgramDetail(key);
+  } catch (err) {
+    alert('파일 읽기 실패: ' + err.message);
+    inputEl.value = '';
+  }
+}
+
+// ✏️ 상세 페이지에서 프로그램 내용 (이름·분류·설명) 편집
+async function editProgramContent(key) {
+  if (!(await checkDeletePassword())) return;
+  const prog = programData[key];
+  if (!prog) return;
+
+  const newName = prompt('프로그램 이름:', prog.name || '');
+  if (newName === null) return;
+  if (!newName.trim()) return alert('이름은 비울 수 없습니다.');
+
+  const newTag = prompt('분류 (예: AI 분석, AI 도구):', prog.tag || '');
+  if (newTag === null) return;
+
+  const newDesc = prompt('설명 (한 줄):', prog.desc || '');
+  if (newDesc === null) return;
+
+  const userProgs = getUserPrograms();
+  if (userProgs[key]) {
+    userProgs[key].name = newName.trim();
+    userProgs[key].tag = newTag.trim() || prog.tag;
+    userProgs[key].desc = newDesc.trim() || prog.desc;
+    saveUserPrograms(userProgs);
+  } else {
+    alert('⚠️ 빌트인 프로그램 — 메모리만 변경됩니다.\n영구 변경은 script.js의 programData 직접 수정 필요.');
+  }
+  programData[key].name = newName.trim();
+  programData[key].tag = newTag.trim() || prog.tag;
+  programData[key].desc = newDesc.trim() || prog.desc;
+
+  if (typeof logActivity === 'function') logActivity(`내용 편집: ${key} (${newName.trim()})`);
+  showProgramDetail(key);
+  renderPrograms();
+  alert('✅ 내용이 수정되었습니다.');
+}
+
 // 상세 페이지에서 첨부 파일 제거
 async function removeProgramAttachment(key) {
   if (!(await checkDeletePassword())) return;
@@ -1530,7 +1590,12 @@ function showProgramDetail(key) {
           ${isDone
             ? `<button class="top-action-btn top-action-warn" onclick="toggleProgramStatus('${key}')" title="개발중으로 표시 (🔐 비번)">🚧 개발중</button>`
             : `<button class="top-action-btn top-action-done" onclick="toggleProgramStatus('${key}')" title="완료로 표시 (🔐 비번)">✅ 완료</button>`}
+          <button class="top-action-btn" onclick="editProgramContent('${key}')" title="이름·설명·기능 편집 (🔐 비번)">✏️ 편집</button>
           <button class="top-action-btn" onclick="editProgramLink('${key}')" title="URL 편집 (🔐 비번)">📝 URL</button>
+          <label class="top-action-btn" style="cursor:pointer; margin:0;" title="스크린샷 추가 (🔐 비번)">
+            📷 사진
+            <input type="file" accept="image/*" style="display:none;" onchange="uploadProgramScreenshot('${key}', this)">
+          </label>
           <label class="top-action-btn" style="cursor:pointer; margin:0;" title="파일 첨부 (🔐 비번)">
             📎 파일
             <input type="file" accept="image/*,application/pdf,.zip" style="display:none;" onchange="uploadProgramAttachment('${key}', this)">

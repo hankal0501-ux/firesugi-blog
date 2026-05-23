@@ -1026,7 +1026,6 @@ function renderProgramCardHtml(key, p) {
 
   return `
     <div class="program-card ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
-      <button class="card-del-btn" onclick="event.stopPropagation(); quickDeleteProgram('${key}')" title="이 프로그램 삭제">✕</button>
       <div class="card-icon">${p.icon}</div>
       <div class="prog-header">
         <h3>${esc(p.name)}</h3>

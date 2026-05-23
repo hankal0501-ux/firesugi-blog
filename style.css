@@ -2315,6 +2315,64 @@ html { -webkit-text-size-adjust: 100%; }
   transform: scale(1.05);
 }
 
+/* === 상세 페이지 상단 액션 버튼 === */
+.detail-top-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+.top-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: #444;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.top-action-btn:hover {
+  background: #eef4ff;
+  border-color: var(--naver-blue);
+  color: var(--naver-blue);
+  transform: translateY(-1px);
+}
+.top-action-btn.top-action-done {
+  background: #e8f8ee;
+  border-color: #03c75a;
+  color: #018a3e;
+}
+.top-action-btn.top-action-done:hover {
+  background: #03c75a;
+  color: #fff;
+}
+.top-action-btn.top-action-warn {
+  background: #fff7e6;
+  border-color: #f5a623;
+  color: #b8740c;
+}
+.top-action-btn.top-action-warn:hover {
+  background: #f5a623;
+  color: #fff;
+}
+.top-action-btn.top-action-danger {
+  background: #fff;
+  border-color: #f0a0a0;
+  color: #c93030;
+}
+.top-action-btn.top-action-danger:hover {
+  background: #ffe0e0;
+}
+
 /* === 프로그램 카드 ✕ 삭제 버튼 === */
 .card-del-btn {
   position: absolute;

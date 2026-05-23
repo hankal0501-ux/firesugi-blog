@@ -793,14 +793,14 @@ function showAddProgramModal(devOnly) {
   document.getElementById('paName').focus();
 }
 
-// 기존 프로그램 URL 편집 — 완료 시 자동 AI 프로그램 탭 이동
+// 기존 프로그램 URL 편집 — URL 자체만 변경 (완료 여부는 토글 버튼으로 별도 결정)
 function editProgramLink(key) {
   if (!checkDeletePassword()) return;
   const prog = programData[key];
   if (!prog) return;
   const currentUrl = (prog.link && prog.link !== '#') ? prog.link : '';
   const newUrl = prompt(
-    `📝 "${prog.name}" URL 편집\n\nURL 입력 → 완료 (AI 프로그램 탭)\n비우기 → 개발중 (개발중 탭)`,
+    `📝 "${prog.name}" URL 편집\n\nhttp:// 또는 https:// 로 시작하는 주소를 입력하세요.\n비우면 URL이 제거됩니다 (완료/개발중 상태는 따로 토글 버튼으로 변경).`,
     currentUrl
   );
   if (newUrl === null) return;
@@ -819,14 +819,27 @@ function editProgramLink(key) {
     programData[key].link = trimmed || null;
     alert('⚠️ 빌트인 프로그램 — 메모리 변경됨. 영구 변경은 script.js의 programData 직접 수정 필요.');
   }
-  if (typeof logActivity === 'function') logActivity(`URL 편집: ${key} → ${trimmed || '(개발중)'}`);
-  hideProgramDetail();
+  if (typeof logActivity === 'function') logActivity(`URL 편집: ${key} → ${trimmed || '(없음)'}`);
+  showProgramDetail(key);
+}
+
+// 완료/개발중 상태 토글 — URL/파일 유무와 독립
+function toggleProgramStatus(key) {
+  if (!checkDeletePassword()) return;
+  const prog = programData[key];
+  if (!prog) return;
+  const wasDone = !!prog.completed || (!!prog.link && prog.link !== '#');
+  const newCompleted = !wasDone;
+
+  const userProgs = getUserPrograms();
+  if (userProgs[key]) {
+    userProgs[key].completed = newCompleted;
+    saveUserPrograms(userProgs);
+  }
+  programData[key].completed = newCompleted;
+  if (typeof logActivity === 'function') logActivity(`상태 토글: ${key} → ${newCompleted ? '완료' : '개발중'}`);
+  showProgramDetail(key);
   renderPrograms();
-  // 자동으로 해당 탭 이동
-  showTab(trimmed ? 'programs' : 'records');
-  setTimeout(() => alert(trimmed
-    ? `✅ "${prog.name}" 완료 → AI 프로그램 탭으로 이동됨`
-    : `🚧 "${prog.name}" 개발중 → 개발중 탭으로 이동됨`), 200);
 }
 
 // 상세 페이지에서 프로그램에 파일 첨부 (이미지·PDF·ZIP, 3MB)
@@ -1216,7 +1229,7 @@ function resetProgramScreenshots(progKey) {
 }
 
 function renderProgramCardHtml(key, p) {
-  const isDone = !!p.link && p.link !== '#';
+  const isDone = !!p.completed || (!!p.link && p.link !== '#');
   const isFeatured = !!p.featured;
   const statusBadge = isDone
     ? '<span class="prog-status prog-done">완료</span>'
@@ -1338,18 +1351,32 @@ function showProgramDetail(key) {
   document.getElementById('programDetail').style.display = 'block';
 
   // 통합 렌더 — 개발중·완료 모두 같은 풀 상세 표시. 상태 뱃지/접속 버튼만 분기.
-  const isDone = !!data.link && data.link !== '#';
-  const hasUrl = isDone;
+  const hasUrl = !!data.link && data.link !== '#';
+  const hasFile = !!data.attachment;
+  const isDone = !!data.completed || hasUrl;
   const clickCount = getProgramClickCount(key);
-  const linkHtml = isDone
-    ? `<div class="access-row">
+  let linkHtml;
+  if (hasUrl) {
+    linkHtml = `<div class="access-row">
          <button class="btn btn-primary detail-link-btn" onclick="openSecureLink('${key}')">📖 ${esc(data.name)} 접속하기 →</button>
          <span class="click-count-badge" id="clickCountBadge_${key}">👁 클릭 ${clickCount}회</span>
-       </div>`
-    : `<div class="locked-link">
-         <button class="btn btn-outline detail-link-btn" disabled>⏳ 준비 중 — URL 등록 시 자동 활성화</button>
-         <p class="locked-msg">현재 개발 중입니다. 관리자가 URL을 추가하면 자동으로 접속 가능해집니다.</p>
        </div>`;
+  } else if (isDone && hasFile) {
+    linkHtml = `<div class="access-row">
+         <a href="${data.attachment.data}" download="${esc(data.attachment.name)}" class="btn btn-primary detail-link-btn" style="text-decoration:none;">📥 ${esc(data.attachment.name)} 다운로드</a>
+         <span class="click-count-badge">📎 파일 (${(data.attachment.size/1024).toFixed(1)} KB)</span>
+       </div>`;
+  } else if (isDone) {
+    linkHtml = `<div class="locked-link">
+         <button class="btn btn-outline detail-link-btn" disabled>✅ 완료 — 접속 URL·파일 미등록</button>
+         <p class="locked-msg">완료로 표시됐지만 접속 URL 또는 파일이 아직 없습니다.</p>
+       </div>`;
+  } else {
+    linkHtml = `<div class="locked-link">
+         <button class="btn btn-outline detail-link-btn" disabled>⏳ 준비 중</button>
+         <p class="locked-msg">현재 개발 중입니다. URL 또는 파일을 등록하고 [✅ 완료로 표시] 버튼을 누르면 활성화됩니다.</p>
+       </div>`;
+  }
 
   // 메타 정보 (버전, 플랫폼, 기술스택, 워크플로우)
   const accessLabel = hasUrl ? '✅ 공개됨' : '⏳ 준비 중';
@@ -1412,7 +1439,17 @@ function showProgramDetail(key) {
           ${isDone
             ? '<span class="prog-status prog-done" style="margin-left:8px;">완료</span>'
             : '<span class="prog-status prog-dev" style="margin-left:8px;">개발중</span>'}
-          ${data.featured ? '' : `<button class="status-del-btn" onclick="quickDeleteProgram('${key}'); hideProgramDetail();" title="이 프로그램 삭제 (🔐 비번 필요)">🗑 삭제</button>`}
+        </div>
+        <div class="detail-top-actions">
+          ${isDone
+            ? `<button class="top-action-btn top-action-warn" onclick="toggleProgramStatus('${key}')" title="개발중으로 표시 (🔐 비번)">🚧 개발중</button>`
+            : `<button class="top-action-btn top-action-done" onclick="toggleProgramStatus('${key}')" title="완료로 표시 (🔐 비번)">✅ 완료</button>`}
+          <button class="top-action-btn" onclick="editProgramLink('${key}')" title="URL 편집 (🔐 비번)">📝 URL</button>
+          <label class="top-action-btn" style="cursor:pointer; margin:0;" title="파일 첨부 (🔐 비번)">
+            📎 파일
+            <input type="file" accept="image/*,application/pdf,.zip" style="display:none;" onchange="uploadProgramAttachment('${key}', this)">
+          </label>
+          ${data.featured ? '' : `<button class="top-action-btn top-action-danger" onclick="quickDeleteProgram('${key}'); hideProgramDetail();" title="이 프로그램 삭제 (🔐 비번)">🗑 삭제</button>`}
         </div>
       </div>
       ${metaHtml}
@@ -1432,7 +1469,10 @@ function showProgramDetail(key) {
       <div class="detail-section detail-admin-zone">
         <h3>🛠 관리 영역 (🔐 비밀번호 필요)</h3>
         <div class="admin-actions-row">
-          <button class="btn btn-primary btn-sm" onclick="editProgramLink('${key}')">📝 URL 편집 (완료/개발중 전환)</button>
+          ${isDone
+            ? `<button class="btn btn-outline btn-sm" onclick="toggleProgramStatus('${key}')" style="color:#c98b30;">🚧 개발중으로 표시</button>`
+            : `<button class="btn btn-primary btn-sm" onclick="toggleProgramStatus('${key}')" style="background:#03c75a; border-color:#03c75a;">✅ 완료로 표시</button>`}
+          <button class="btn btn-outline btn-sm" onclick="editProgramLink('${key}')">📝 URL 편집</button>
           <label class="btn btn-outline btn-sm" style="cursor:pointer; margin:0;">
             📎 파일 올리기 (이미지·PDF·ZIP, 3MB)
             <input type="file" accept="image/*,application/pdf,.zip" style="display:none;" onchange="uploadProgramAttachment('${key}', this)">
@@ -1440,7 +1480,7 @@ function showProgramDetail(key) {
           ${data.attachment ? `<button class="btn btn-outline btn-sm" onclick="removeProgramAttachment('${key}')" style="color:#c93030;">🗑 첨부 제거</button>` : ''}
         </div>
         <p style="margin-top:8px; font-size:0.82rem; color:var(--text-muted);">
-          ℹ️ URL을 입력하면 <b>완료</b>, 비우면 <b>개발중</b>으로 자동 전환. 파일을 올리면 상세 페이지에 첨부 다운로드(이미지는 자동 미리보기)가 추가됩니다.
+          ℹ️ <b>완료/개발중</b>은 위 토글 버튼으로 직접 결정합니다. URL과 파일은 각각 독립적으로 등록 가능 — URL만, 파일만, 둘 다 모두 가능합니다.
         </p>
       </div>
     </div>`;

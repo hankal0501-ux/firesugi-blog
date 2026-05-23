@@ -569,34 +569,120 @@ function saveUserPrograms(obj) {
   }
 }
 
-// 프로그램 등록·삭제 비밀번호 (간단한 abuse 방지)
-const PROG_PASSWORD = 'dodan0501!';
+// ============================================================
+// 🔐 관리자 비밀번호 시스템 (SHA-256 해시 기반)
+// - 평문 password 코드에서 제거됨
+// - 변경하려면 네이버 이메일 OR 폰번호 본인 인증 필요
+// ============================================================
 
-// 등록용 — 세션당 1회 (편의)
-function checkProgPassword() {
-  const AUTH_KEY = 'progAuth_v2';
-  if (sessionStorage.getItem(AUTH_KEY) === 'ok') return true;
-  const pw = prompt('🔐 프로그램 등록 비밀번호:');
+// 기본 password 해시 (= 'FireSugi#2026-Hankal@Secure!')
+// 첫 로그인 후 즉시 changeAdminPassword() 호출해 변경 권장
+const DEFAULT_PWD_HASH = '4ae5afde210e289b1d6fb317741976b1ac554561dcf53e245b9b2a8d0d96be8e';
+const PWD_KEY_LOCAL = 'fireSugiAdminPwdHash_v3';
+const PWD_AUTH_SESSION = 'progAuth_v3';
+
+// 본인 인증 화이트리스트 (네이버 OR 폰번호 둘 중 하나만 맞아도 통과)
+const AUTH_WHITELIST = Object.freeze({
+  naverEmail: 'hankal0501@naver.com',
+  phoneFull: '01098078000',   // 11자리로 정규화 (사용자가 11자리 알려주면 끝자리 수정)
+  phoneNoDash: '010-980-7800',
+  phoneLast4: '7800'
+});
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(text)));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function getActiveAdminHash() {
+  return localStorage.getItem(PWD_KEY_LOCAL) || DEFAULT_PWD_HASH;
+}
+
+async function verifyAdminPassword(pw) {
+  if (!pw) return false;
+  try {
+    const hash = await sha256(pw);
+    return hash === getActiveAdminHash();
+  } catch (e) {
+    console.error('hash error:', e);
+    return false;
+  }
+}
+
+// 등록용 — 세션당 1회
+async function checkProgPassword() {
+  if (sessionStorage.getItem(PWD_AUTH_SESSION) === 'ok') return true;
+  const pw = prompt('🔐 관리자 비밀번호:');
   if (pw === null) return false;
-  if (pw !== PROG_PASSWORD) {
+  if (!(await verifyAdminPassword(pw))) {
     alert('❌ 비밀번호가 일치하지 않습니다.');
     return false;
   }
-  sessionStorage.setItem(AUTH_KEY, 'ok');
-  sessionStorage.removeItem('progAuth');
+  sessionStorage.setItem(PWD_AUTH_SESSION, 'ok');
   return true;
 }
 
-// 삭제용 — 항상 매번 입력 (실수 방지)
-function checkDeletePassword() {
+// 삭제용 — 매번 입력
+async function checkDeletePassword() {
   const pw = prompt('🔐 삭제 비밀번호:');
   if (pw === null) return false;
-  if (pw !== PROG_PASSWORD) {
+  if (!(await verifyAdminPassword(pw))) {
     alert('❌ 비밀번호가 일치하지 않습니다.');
     return false;
   }
   return true;
 }
+
+// 비밀번호 변경 — 네이버 OR 폰번호 본인 인증 후 변경
+async function changeAdminPassword() {
+  const intro = '🔐 관리자 비밀번호 변경\n\n' +
+                '본인 인증 후 변경할 수 있습니다.\n' +
+                '다음 중 하나를 정확히 입력하세요:\n\n' +
+                '• 네이버 이메일 (예: yourname@naver.com)\n' +
+                '• 폰 번호 (예: 010-1234-5678)\n' +
+                '• 폰 번호 마지막 4자리';
+  const auth = prompt(intro);
+  if (auth === null) return;
+
+  const norm = String(auth).trim().toLowerCase().replace(/[\s\-\.\(\)]/g, '');
+  const allowed = [
+    AUTH_WHITELIST.naverEmail.toLowerCase(),
+    AUTH_WHITELIST.phoneFull,
+    AUTH_WHITELIST.phoneNoDash.replace(/-/g, ''),
+    AUTH_WHITELIST.phoneLast4
+  ].map(v => v.toLowerCase());
+
+  if (!allowed.includes(norm)) {
+    alert('❌ 인증 실패 — 등록된 본인 정보가 아닙니다.\n시도가 기록되었습니다.');
+    if (typeof logActivity === 'function') {
+      logActivity(`⚠️ 비번 변경 인증 실패: ${norm.slice(0, 4)}***`);
+    }
+    return;
+  }
+
+  const newPw = prompt('✅ 인증 성공\n\n새 비밀번호 (8자 이상):');
+  if (newPw === null) return;
+  if (String(newPw).length < 8) {
+    alert('❌ 비밀번호는 8자 이상이어야 합니다.');
+    return;
+  }
+  const confirm2 = prompt('새 비밀번호 다시 입력 (확인):');
+  if (confirm2 !== newPw) {
+    alert('❌ 두 비밀번호가 일치하지 않습니다.');
+    return;
+  }
+
+  const newHash = await sha256(newPw);
+  localStorage.setItem(PWD_KEY_LOCAL, newHash);
+  sessionStorage.removeItem(PWD_AUTH_SESSION);
+  if (typeof logActivity === 'function') {
+    logActivity(`✅ 관리자 비번 변경됨 (인증 수단: ${norm.includes('@') ? '네이버' : '폰'})`);
+  }
+  alert('✅ 비밀번호가 변경되었습니다.\n\n다음 관리 작업 시 새 비밀번호로 인증하세요.');
+}
+
+// 글로벌 노출 (다른 모듈/HTML inline onclick에서 호출 가능)
+window.changeAdminPassword = changeAdminPassword;
 
 // 빠른 삭제 — 카드의 ✕ 버튼 클릭 시
 // 삭제된 사용자 프로그램 보관소 (휴지통)
@@ -608,10 +694,10 @@ function saveDeletedPrograms(obj) {
   localStorage.setItem(DELETED_PROGRAMS_KEY, JSON.stringify(obj));
 }
 
-function quickDeleteProgram(key) {
+async function quickDeleteProgram(key) {
   const prog = programData[key];
   if (!prog) return;
-  if (!checkDeletePassword()) return;
+  if (!(await checkDeletePassword())) return;
   const userProgs = getUserPrograms();
   const isUserAdded = !!userProgs[key];
   if (!confirm(`"${prog.name}"을(를) 휴지통으로 이동하시겠습니까?\n(언제든 복원 가능)`)) return;
@@ -638,8 +724,8 @@ function quickDeleteProgram(key) {
 }
 
 // 사용자 프로그램 복원 (휴지통 → 활성)
-function restoreUserProgram(key) {
-  if (!checkDeletePassword()) return;
+async function restoreUserProgram(key) {
+  if (!(await checkDeletePassword())) return;
   const deleted = getDeletedPrograms();
   const prog = deleted[key];
   if (!prog) return alert('휴지통에 없는 프로그램입니다.');
@@ -655,8 +741,8 @@ function restoreUserProgram(key) {
 }
 
 // 사용자 프로그램 영구 삭제 (휴지통에서 완전 제거)
-function permanentDeleteUserProgram(key) {
-  if (!checkDeletePassword()) return;
+async function permanentDeleteUserProgram(key) {
+  if (!(await checkDeletePassword())) return;
   const deleted = getDeletedPrograms();
   const prog = deleted[key];
   if (!prog) return;
@@ -668,8 +754,8 @@ function permanentDeleteUserProgram(key) {
 }
 
 // 휴지통 비우기 — 사용자 프로그램 모두 영구 삭제
-function emptyTrash() {
-  if (!checkDeletePassword()) return;
+async function emptyTrash() {
+  if (!(await checkDeletePassword())) return;
   const deleted = getDeletedPrograms();
   const count = Object.keys(deleted).length;
   if (!count) return alert('휴지통이 비어있습니다.');
@@ -726,7 +812,7 @@ async function quickAddProgram() {
     }
   }
 
-  if (!checkProgPassword()) return;
+  if (!(await checkProgPassword())) return;
 
   const isDone = !!url;
   const key = 'user_' + Date.now();
@@ -794,8 +880,8 @@ function showAddProgramModal(devOnly) {
 }
 
 // 기존 프로그램 URL 편집 — URL 자체만 변경 (완료 여부는 토글 버튼으로 별도 결정)
-function editProgramLink(key) {
-  if (!checkDeletePassword()) return;
+async function editProgramLink(key) {
+  if (!(await checkDeletePassword())) return;
   const prog = programData[key];
   if (!prog) return;
   const currentUrl = (prog.link && prog.link !== '#') ? prog.link : '';
@@ -824,8 +910,8 @@ function editProgramLink(key) {
 }
 
 // 완료/개발중 상태 토글 — URL/파일 유무와 독립
-function toggleProgramStatus(key) {
-  if (!checkDeletePassword()) return;
+async function toggleProgramStatus(key) {
+  if (!(await checkDeletePassword())) return;
   const prog = programData[key];
   if (!prog) return;
   const wasDone = !!prog.completed || (!!prog.link && prog.link !== '#');
@@ -850,7 +936,7 @@ async function uploadProgramAttachment(key, inputEl) {
     inputEl.value = '';
     return alert('⚠️ 파일은 3MB 이하만 가능합니다.');
   }
-  if (!checkDeletePassword()) { inputEl.value = ''; return; }
+  if (!(await checkDeletePassword())) { inputEl.value = ''; return; }
   const prog = programData[key];
   if (!prog) { inputEl.value = ''; return; }
 
@@ -885,8 +971,8 @@ async function uploadProgramAttachment(key, inputEl) {
 }
 
 // 상세 페이지에서 첨부 파일 제거
-function removeProgramAttachment(key) {
-  if (!checkDeletePassword()) return;
+async function removeProgramAttachment(key) {
+  if (!(await checkDeletePassword())) return;
   const prog = programData[key];
   if (!prog || !prog.attachment) return;
   if (!confirm(`첨부 파일 "${prog.attachment.name}"을(를) 제거합니까?`)) return;
@@ -907,7 +993,7 @@ function hideAddProgramModal() {
 }
 
 async function submitAddProgram() {
-  if (!checkProgPassword()) return;
+  if (!(await checkProgPassword())) return;
   const get = id => document.getElementById(id).value.trim();
   const name = get('paName');
   const icon = get('paIcon') || '📦';
@@ -1011,8 +1097,8 @@ function loadUserPrograms() {
   Object.assign(programData, userProgs);
 }
 
-function deleteUserProgram(key) {
-  if (!checkDeletePassword()) return;
+async function deleteUserProgram(key) {
+  if (!(await checkDeletePassword())) return;
   const all = getUserPrograms();
   if (!all[key]) return alert('사용자 추가 프로그램이 아닙니다.');
   if (!confirm(`"${all[key].name}"을(를) 영구 삭제하시겠습니까?\n⚠️ 휴지통을 거치지 않고 즉시 영구 삭제됩니다.`)) return;
@@ -1063,9 +1149,9 @@ function getHiddenPrograms() {
 function saveHiddenPrograms(arr) {
   localStorage.setItem(HIDDEN_PROGS_KEY, JSON.stringify(arr));
 }
-function deleteProgram(key) {
+async function deleteProgram(key) {
   // 빌트인 삭제도 매번 비번 입력
-  if (!checkDeletePassword()) return;
+  if (!(await checkDeletePassword())) return;
   const prog = programData[key];
   if (!prog) return;
   if (!confirm(`"${prog.name}" 을(를) 목록에서 숨기시겠습니까?\n(휴지통에서 [복원] 가능)`)) return;
@@ -1076,15 +1162,15 @@ function deleteProgram(key) {
   hideProgramDetail();
   renderPrograms();
 }
-function restoreProgram(key) {
-  if (!checkDeletePassword()) return;
+async function restoreProgram(key) {
+  if (!(await checkDeletePassword())) return;
   const arr = getHiddenPrograms().filter(k => k !== key);
   saveHiddenPrograms(arr);
   if (typeof logActivity === 'function') logActivity('프로그램 복원: ' + key);
   renderPrograms();
 }
-function restoreAllPrograms() {
-  if (!checkDeletePassword()) return;
+async function restoreAllPrograms() {
+  if (!(await checkDeletePassword())) return;
   if (!confirm('휴지통의 모든 프로그램(빌트인 + 사용자 추가)을 복원하시겠습니까?')) return;
   // 빌트인 숨김 해제
   saveHiddenPrograms([]);

@@ -1,7 +1,7 @@
 {
-  "latest": "1.2.2",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.2.2.apk",
-  "notes": "1.2.2 - 업데이트 모달에 [기존 앱 제거] 버튼 추가 (Android 제거 다이얼로그 자동 호출) → 패키지 충돌 해결",
+  "latest": "1.2.3",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.2.3.apk",
+  "notes": "1.2.3 - 자동 제거 4단계 폴백 (intent: 직접 → APPLICATION_DETAILS_SETTINGS → 다운로드 페이지) | 다운로드 페이지에 [🗑 기존 앱 자동 제거] 빨강 버튼 추가",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-24T00:00:00Z"

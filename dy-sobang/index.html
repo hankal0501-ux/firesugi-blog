@@ -47,6 +47,33 @@
     margin-top: 16px;
   }
   .download-btn:active { opacity: 0.85; }
+  .uninstall-btn {
+    display: block; width: 100%;
+    background: #ef4444; color: #fff;
+    text-align: center; text-decoration: none;
+    padding: 16px;
+    font-weight: 800; font-size: 15px;
+    letter-spacing: -0.3px;
+    margin-top: 12px;
+    border-radius: 0;
+  }
+  .uninstall-btn:active { opacity: 0.85; }
+  .conflict-warn {
+    background: #2a1a1a;
+    border-left: 3px solid #ef4444;
+    padding: 12px 14px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #ffcdd2;
+    line-height: 1.6;
+  }
+  .conflict-warn b { color: #ef4444; }
+  .step-num {
+    display: inline-block; width: 18px; height: 18px;
+    background: #ffd60a; color: #000;
+    border-radius: 50%; text-align: center; line-height: 18px;
+    font-weight: 900; font-size: 11px; margin-right: 4px;
+  }
   .steps {
     background: #1c2236; padding: 16px;
     margin-top: 20px; font-size: 13px; line-height: 1.7;
@@ -90,9 +117,20 @@
       <img id="qr" alt="다운로드 QR 코드" width="190" height="190">
     </div>
 
-    <a class="download-btn" id="apkLink" href="#">
-      📥 APK 다운로드
+    <a class="uninstall-btn" id="uninstallLink"
+       href="intent:#Intent;action=android.intent.action.DELETE;data=package:kr.daeyoung.sobang.fieldlog;end">
+      🗑 ① 기존 앱 자동 제거
     </a>
+
+    <a class="download-btn" id="apkLink" href="#">
+      📥 ② 새 버전 APK 다운로드
+    </a>
+
+    <div class="conflict-warn">
+      <b>⚠️ "패키지 충돌" 에러 발생 시</b><br>
+      → ① 버튼을 먼저 탭 → Android 제거 화면에서 "확인" → 다시 이 페이지로 돌아와 ② 탭<br>
+      → 한 번 다 끝내면 다음부터는 앱에서 자동 OTA 가능
+    </div>
 
     <div class="notes">
       <h3>변경사항</h3>
@@ -102,11 +140,12 @@
     <div class="steps">
       <h3>설치 방법</h3>
       <ol>
-        <li>위 버튼 탭 → APK 다운로드</li>
-        <li>알림창에서 다운로드된 APK 탭</li>
-        <li>"이 출처 허용" → 한 번 켜기</li>
-        <li>설치 → 완료</li>
-        <li>첫 실행 시 권한 3개 허용 (카메라·마이크·위치)</li>
+        <li><span class="step-num">1</span>(이미 깔린 사람만) <b>① 기존 앱 자동 제거</b> 탭 → "확인"</li>
+        <li><span class="step-num">2</span><b>② APK 다운로드</b> 탭</li>
+        <li><span class="step-num">3</span>알림창에서 다운로드된 APK 탭</li>
+        <li><span class="step-num">4</span>"이 출처 허용" → 한 번 켜기</li>
+        <li><span class="step-num">5</span>설치 → 완료</li>
+        <li><span class="step-num">6</span>첫 실행 시 권한 3개 허용 (카메라·마이크·위치)</li>
       </ol>
     </div>
 

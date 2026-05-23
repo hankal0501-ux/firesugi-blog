@@ -787,7 +787,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.2.2';
+  const APP_VERSION = '1.2.3';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1612,40 +1612,58 @@
       if (!info.force) document.getElementById('updateModal').hidden = true;
     };
 
-    // 🗑 기존 앱 제거 — Android 제거 다이얼로그 자동 호출
+    // 🗑 기존 앱 제거 — Android 제거 다이얼로그 자동 호출 (4단계 폴백)
     document.getElementById('btnUninstallSelf').onclick = async () => {
-      if (!window.Capacitor?.isNativePlatform?.()) {
-        toast('웹에서는 제거 불가 — 폰에서만 동작');
-        return;
-      }
       const recCount = records.length;
       const warn = recCount > 0
         ? `⚠️ 저장된 ${recCount}건의 기록이 사라집니다.\n\n먼저 📋 사진 리스트 탭에서 "⬆ 전체 공유"로 백업했나요?\n\n진짜 제거할까요?`
         : '기존 앱을 제거합니다.\nAndroid가 제거 확인 화면을 띄울 거예요.\n\n계속할까요?';
       if (!confirm(warn)) return;
+
       const PKG = 'kr.daeyoung.sobang.fieldlog';
-      const intentUrl = `intent:#Intent;action=android.intent.action.DELETE;data=package:${PKG};end`;
-      try {
-        // 1순위: Browser 플러그인으로 intent URL 열기
-        if (Capacitor.Plugins?.Browser?.open) {
-          await Capacitor.Plugins.Browser.open({ url: intentUrl });
-        } else {
-          window.location.href = intentUrl;
-        }
-        toast('Android 제거 화면에서 "확인" 누르세요');
-      } catch (e) {
-        // 폴백: 앱 정보 페이지 열기 (사용자가 거기서 제거 탭)
+      const attempts = [
+        // 가장 정통적 — package: 스킴 직접
+        `intent:#Intent;action=android.intent.action.DELETE;scheme=package;data=${PKG};end`,
+        // 변형 — data=package: 형식
+        `intent:#Intent;action=android.intent.action.DELETE;data=package:${PKG};end`,
+        // UNINSTALL_PACKAGE (Android 14+ deprecated but여전히 작동)
+        `intent:#Intent;action=android.intent.action.UNINSTALL_PACKAGE;data=package:${PKG};end`,
+        // 폴백 — 앱 정보 페이지 (수동 제거)
+        `intent:#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:${PKG};end`
+      ];
+
+      // 다운로드 페이지로 이동 — Chrome에서 ① 버튼 탭으로 처리 (가장 안정)
+      const downloadPageUrl = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/';
+
+      // 시도 1: 직접 location 이동 (WebView가 intent: 자체 핸들)
+      let fired = false;
+      for (const url of attempts) {
         try {
-          const settingsUrl = `intent:#Intent;action=android.settings.APPLICATION_DETAILS_SETTINGS;data=package:${PKG};end`;
           if (Capacitor.Plugins?.Browser?.open) {
-            await Capacitor.Plugins.Browser.open({ url: settingsUrl });
+            await Capacitor.Plugins.Browser.open({ url });
           } else {
-            window.location.href = settingsUrl;
+            const a = document.createElement('a');
+            a.href = url; a.target = '_system';
+            document.body.appendChild(a); a.click(); a.removeChild(a);
           }
-          toast('앱 정보 → 제거 버튼 탭하세요');
-        } catch (e2) {
-          console.error('uninstall intent failed:', e, e2);
-          toast('제거 화면 열기 실패 — 폰 설정 > 앱에서 직접 제거');
+          fired = true;
+          toast('Android 제거 화면에서 "확인" 누르세요');
+          break;
+        } catch (e) { console.warn('intent 시도 실패:', url, e); }
+      }
+
+      // 시도 2: 모두 실패 → 다운로드 페이지를 Chrome에 열어서 거기 ① 버튼 사용
+      if (!fired) {
+        try {
+          if (Capacitor.Plugins?.Browser?.open) {
+            await Capacitor.Plugins.Browser.open({ url: downloadPageUrl });
+          } else {
+            window.open(downloadPageUrl, '_system');
+          }
+          toast('다운로드 페이지의 [기존 앱 자동 제거] 버튼 탭하세요');
+        } catch (e3) {
+          console.error('모든 폴백 실패:', e3);
+          alert('자동 제거 실패\n\n폰 설정 > 앱 > 대영소방 현장기록 > 제거\n→ 후에 다시 새 APK 설치하세요.');
         }
       }
     };

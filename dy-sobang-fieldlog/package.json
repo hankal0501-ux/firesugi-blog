@@ -1,7 +1,7 @@
 {
   "name": "dy-sobang-fieldlog",
   "version": "1.0.0",
-  "description": "대영소방 현장기록 - 사진+음성 기반 점검 메모 앱",
+  "description": "대영소방 사진기록 - 현장 사진+메모+GPS 자동 기록 앱",
   "private": true,
   "scripts": {
     "sync": "npx cap sync",

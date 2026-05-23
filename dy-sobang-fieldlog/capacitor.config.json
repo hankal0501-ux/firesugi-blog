@@ -1,6 +1,6 @@
 {
   "appId": "kr.daeyoung.sobang.fieldlog",
-  "appName": "대영소방 현장기록",
+  "appName": "대영소방 사진기록",
   "webDir": "www",
   "android": {
     "allowMixedContent": false,

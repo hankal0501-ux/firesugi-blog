@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0a0e1a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>대영소방 현장기록</title>
+<title>대영소방 사진기록</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -673,7 +673,7 @@
     DY-SOBANG · FIELD LOG · v<span id="appVer">1.0.0</span>
     <span class="update-status-text" id="updateStatusText">확인 중</span>
   </div>
-  <div class="title">현장 기록</div>
+  <div class="title">사진 기록</div>
   <div class="stats">
     <span class="status-dot"></span>
     <span id="recordCount">000</span>건 · <span id="dateLabel"></span>
@@ -787,7 +787,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.2.3';
+  const APP_VERSION = '1.3.0';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1263,9 +1263,11 @@
     const d = new Date(rec.timestamp);
     const ymd = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
     const hm = `${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}`;
-    const site = sanitize(rec.site, 20) || '미지정';
-    const memo = sanitize(rec.memo, 25) || '메모없음';
-    return `${site}_${memo}_${ymd}_${hm}.jpg`;
+    const site = sanitize(rec.site, 15) || '미지정';
+    const floor = sanitize(rec.floor, 8) || '층미지정';
+    const memo = sanitize(rec.memo, 20) || '메모없음';
+    // 사업장_층_메모_yyyymmdd_hhmm.jpg
+    return `${site}_${floor}_${memo}_${ymd}_${hm}.jpg`;
   }
 
   // ⬆ 공유 버튼 전용 — share sheet 열어 사용자가 갤러리/드라이브/카톡 등 선택
@@ -1663,7 +1665,7 @@
           toast('다운로드 페이지의 [기존 앱 자동 제거] 버튼 탭하세요');
         } catch (e3) {
           console.error('모든 폴백 실패:', e3);
-          alert('자동 제거 실패\n\n폰 설정 > 앱 > 대영소방 현장기록 > 제거\n→ 후에 다시 새 APK 설치하세요.');
+          alert('자동 제거 실패\n\n폰 설정 > 앱 > 대영소방 사진기록 > 제거\n→ 후에 다시 새 APK 설치하세요.');
         }
       }
     };

@@ -88,6 +88,17 @@
   }
   .field-input:focus { border-color: var(--accent); outline: none; }
   .field-input::placeholder { color: var(--muted); font-weight: 400; }
+  .field-row-combined { gap: 8px; }
+  .field-input-site { flex: 1 1 auto; min-width: 0; }
+  .field-input-floor { flex: 0 0 90px; min-width: 0; text-align: center; }
+  .address-display.compact {
+    margin-top: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+    border-left-width: 2px;
+  }
+  .address-display.compact .addr-icon { font-size: 12px; }
+  .address-display.compact .addr-text { font-size: 11px; letter-spacing: -0.2px; }
 
   .address-display {
     display: flex;
@@ -188,16 +199,20 @@
   textarea.memo:focus { border-color: var(--accent); outline: none; }
   textarea.memo::placeholder { color: var(--muted); }
 
-  .action-row { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; margin-top: 10px; }
+  .action-row { display: grid; grid-template-columns: 1fr 56px; gap: 8px; margin-top: 10px; }
   .btn-save {
     background: var(--success); color: #000; border: none; padding: 16px;
     font-weight: 800; font-size: 15px; cursor: pointer; letter-spacing: -0.3px;
+    border-radius: 6px;
   }
   .btn-save:active { opacity: 0.85; }
   .btn-clear {
     background: transparent; color: var(--muted); border: 1px solid var(--border);
-    padding: 16px; font-size: 13px; cursor: pointer; font-weight: 600;
+    padding: 0; font-size: 20px; cursor: pointer; font-weight: 700;
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    line-height: 1;
   }
+  .btn-clear:active { background: var(--bg-3); color: var(--text); }
 
   .records-section {
     border-top: 1px solid var(--border);
@@ -452,18 +467,14 @@
 
 <div class="capture-area">
   <div class="form-section">
-    <div class="field-row">
-      <label class="field-label" for="inputSite">사업장</label>
-      <input class="field-input" id="inputSite" list="siteList" placeholder="예) 에코델타 호반써밋" autocomplete="off" autocapitalize="none">
+    <div class="field-row field-row-combined">
+      <input class="field-input field-input-site" id="inputSite" list="siteList" placeholder="사업장 (예: 호반써밋)" autocomplete="off" autocapitalize="none">
       <datalist id="siteList"></datalist>
+      <input class="field-input field-input-floor" id="inputFloor" placeholder="층수" autocomplete="off">
     </div>
-    <div class="field-row">
-      <label class="field-label" for="inputFloor">층수</label>
-      <input class="field-input" id="inputFloor" placeholder="예) 3F · B1 · 옥상" autocomplete="off">
-    </div>
-    <div class="address-display" id="addressDisplay">
+    <div class="address-display compact" id="addressDisplay">
       <span class="addr-icon">📍</span>
-      <span class="addr-text" id="addressText">사진 촬영 시 GPS·주소 자동 기록</span>
+      <span class="addr-text" id="addressText">위치자동</span>
     </div>
   </div>
 
@@ -478,17 +489,12 @@
   </div>
 
   <div class="memo-area">
-    <button class="btn-mic" id="btnMic">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-      <span id="micLabel">음성 입력 시작</span>
-    </button>
-    <textarea class="memo" id="memo" placeholder="자유입력 — 음성으로 말하거나 직접 타이핑&#10;예) 자동화재탐지설비 감지기 미설치, 발신기 표시등 단선"></textarea>
-    <div class="interim-hint" id="micHint">▸ 마이크 권한 허용 후 한국어로 말씀하세요</div>
+    <textarea class="memo" id="memo" placeholder="자유 입력&#10;예) 자동화재탐지설비 감지기 미설치, 발신기 표시등 단선"></textarea>
   </div>
 
   <div class="action-row">
-    <button class="btn-save" id="btnSave">기록 추가</button>
-    <button class="btn-clear" id="btnReset">지우기</button>
+    <button class="btn-save" id="btnSave">입력완료</button>
+    <button class="btn-clear" id="btnReset" title="입력 초기화" aria-label="지우기">✕</button>
   </div>
 </div>
 
@@ -529,7 +535,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.0.0';
+  const APP_VERSION = '1.1.0';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -670,7 +676,7 @@
   // ----- GPS + reverse geocoding -----
   function setAddressUI(text, cls) {
     const el = document.getElementById('addressDisplay');
-    el.className = 'address-display ' + (cls || '');
+    el.className = 'address-display compact ' + (cls || '');
     document.getElementById('addressText').textContent = text;
   }
 
@@ -982,40 +988,12 @@
     updateMicUI(false);
   };
 
-  function updateMicUI(listening) {
-    const btn = document.getElementById('btnMic');
-    const lbl = document.getElementById('micLabel');
-    const hint = document.getElementById('micHint');
-    if (listening) {
-      btn.classList.add('recording');
-      lbl.textContent = '● 녹음 중 · 탭하여 정지';
-      hint.textContent = '▸ 천천히 말씀하세요. 자동으로 텍스트로 변환됩니다.';
-    } else {
-      btn.classList.remove('recording');
-      lbl.textContent = '음성 입력 시작';
-      hint.textContent = speech.mode === 'native'
-        ? '▸ 네이티브 한국어 음성인식 (오프라인 지원 가능)'
-        : '▸ 마이크 권한 허용 후 한국어로 말씀하세요';
-    }
-  }
-
-  document.getElementById('btnMic').addEventListener('click', async () => {
-    if (!speech.isAvailable) return;
-    if (speech.isListening) {
-      await speech.stop();
-      updateMicUI(false);
-    } else {
-      const initial = document.getElementById('memo').value;
-      speech.start(initial);
-      updateMicUI(true);
-    }
-  });
-
-  function startMic() { /* deprecated — use button handler */ }
+  // 음성 입력 UI 제거됨 — 직접 타이핑만 사용
+  function updateMicUI(_listening) { /* noop */ }
+  function startMic() { /* removed */ }
   function stopMic() {
-    if (speech.isListening) {
-      speech.stop();
-      updateMicUI(false);
+    if (speech && speech.isListening) {
+      try { speech.stop(); } catch(e) {}
     }
   }
 
@@ -1144,7 +1122,7 @@
       toast('저장 실패');
     } finally {
       saveBtn.disabled = false;
-      saveBtn.textContent = '기록 추가';
+      saveBtn.textContent = '입력완료';
     }
   });
 
@@ -1157,7 +1135,7 @@
     document.getElementById('memo').value = '';
     document.getElementById('previewBox').innerHTML = '<span>아직 사진 없음</span>';
     document.getElementById('cameraInput').value = '';
-    if (speech.isListening) stopMic();
+    if (typeof speech !== 'undefined' && speech.isListening) stopMic();
   }
 
   // ===== Render list =====
@@ -1352,20 +1330,10 @@
       } catch(e) { /* ignore */ }
     }
 
-    // Init speech (native plugin or Web Speech)
-    const ok = await speech.init();
-    if (!ok) {
-      document.getElementById('btnMic').disabled = true;
-      document.getElementById('micLabel').textContent = '음성 인식 미지원';
-      document.getElementById('micHint').textContent = '▸ Chrome/Edge 브라우저 또는 앱 설치 후 사용 가능';
-    } else {
-      updateMicUI(false);
-    }
+    console.log('[FieldLog] v' + APP_VERSION + ' · Capacitor:', !!window.Capacitor?.isNativePlatform?.());
 
-    console.log('[FieldLog] v' + APP_VERSION + ' · speech:', speech.mode, '· Capacitor:', !!window.Capacitor?.isNativePlatform?.());
-
-    // Silent update check on launch (after 2s so UI is responsive first)
-    setTimeout(() => checkForUpdates(true), 2000);
+    // 앱 시작 시 자동 업데이트 확인 — 새 버전이면 모달 자동 표시
+    setTimeout(() => checkForUpdates(true), 1500);
   })();
 </script>
 

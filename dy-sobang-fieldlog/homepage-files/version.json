@@ -1,8 +1,8 @@
 {
-  "latest": "1.0.0",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.0.0.apk",
-  "notes": "초기 버전 - 사진+음성 메모, 워터마크 자동 합성, JPEG 저장",
+  "latest": "1.1.0",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.1.0.apk",
+  "notes": "1.1.0 - 음성 입력 버튼 제거 · 기록 추가 → 입력완료 · 지우기 버튼 아이콘화 · 앱 시작 시 자동 업데이트 확인",
   "force": false,
   "minSupportedVersion": "1.0.0",
-  "releasedAt": "2026-05-22T00:00:00Z"
+  "releasedAt": "2026-05-24T00:00:00Z"
 }

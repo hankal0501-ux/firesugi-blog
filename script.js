@@ -768,6 +768,86 @@ async function changeAdminPassword() {
 // 글로벌 노출 (다른 모듈/HTML inline onclick에서 호출 가능)
 window.changeAdminPassword = changeAdminPassword;
 
+// 🔄 모든 기기 즉시 동기화 — Firebase quota 락 해제 + push/pull 강제
+async function forceSyncAll() {
+  if (!confirm('🔄 모든 기기 즉시 동기화\n\n로컬 데이터를 Firestore에 강제 push 하고, 다른 기기의 변경분을 pull 합니다.\n\n진행하시겠습니까?')) return;
+
+  // 1) Firebase quota 자동차단 락 해제
+  const wasBlocked = localStorage.getItem('fbQuotaExceededAt');
+  if (wasBlocked) {
+    localStorage.removeItem('fbQuotaExceededAt');
+    if (typeof fbSyncReady !== 'undefined') {
+      try { window.fbSyncReady = true; } catch(e) {}
+    }
+    console.log('🔓 Firebase quota 락 해제');
+  }
+
+  // 2) 로컬 사용자 프로그램 강제 push
+  let pushedProgs = 0;
+  if (typeof fbDb !== 'undefined') {
+    const userProgs = getUserPrograms();
+    for (const [key, p] of Object.entries(userProgs)) {
+      try {
+        await fbDb.collection('userPrograms').doc(key).set(p, { merge: true });
+        pushedProgs++;
+      } catch (e) {
+        console.warn('push 실패:', key, e.message);
+        if (e?.message?.includes('resource-exhausted')) {
+          alert('❌ Firebase 할당량 초과 — 다음 KST 17시까지 대기 필요\n\n현재까지 push: ' + pushedProgs + '건');
+          return;
+        }
+      }
+    }
+  }
+
+  // 3) initFirebaseSync 호출 (users + posts + logs + anonVisits pull/merge)
+  let syncOk = false;
+  if (typeof initFirebaseSync === 'function') {
+    try {
+      await initFirebaseSync();
+      syncOk = true;
+    } catch (e) {
+      console.warn('initFirebaseSync 실패:', e.message);
+    }
+  }
+
+  // 4) Firestore 의 userPrograms 도 pull → 로컬 병합
+  let pulledProgs = 0;
+  if (typeof fbDb !== 'undefined') {
+    try {
+      const snap = await fbDb.collection('userPrograms').get();
+      const remote = {};
+      snap.forEach(doc => { remote[doc.id] = doc.data(); });
+      const local = getUserPrograms();
+      let added = 0;
+      for (const [key, p] of Object.entries(remote)) {
+        if (!local[key]) {
+          local[key] = p;
+          programData[key] = p;
+          added++;
+        }
+      }
+      if (added > 0) {
+        localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(local));
+        renderPrograms();
+      }
+      pulledProgs = added;
+    } catch (e) {
+      console.warn('userPrograms pull 실패:', e.message);
+    }
+  }
+
+  const msg = `✅ 동기화 완료\n\n` +
+              `🔼 PUSH: 로컬 프로그램 ${pushedProgs}건\n` +
+              `🔽 PULL: 다른 기기 신규 ${pulledProgs}건\n` +
+              `🔄 회원·게시글: ${syncOk ? '동기화됨' : '스킵'}\n` +
+              (wasBlocked ? '🔓 quota 락 해제됨\n' : '') +
+              `\n다른 기기들도 새로고침하면 즉시 반영됩니다.`;
+  alert(msg);
+  hideAdminModal();
+}
+window.forceSyncAll = forceSyncAll;
+
 // 빠른 삭제 — 카드의 ✕ 버튼 클릭 시
 // 삭제된 사용자 프로그램 보관소 (휴지통)
 const DELETED_PROGRAMS_KEY = 'fireSugiDeletedPrograms';

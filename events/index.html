@@ -64,6 +64,14 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
 .btn-primary{flex:1;padding:11px;border:0;border-radius:8px;background:#16a34a;color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:15px}
 .btn-danger{flex:1;padding:11px;border:0;border-radius:8px;background:#dc2626;color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:15px}
 .btn-secondary{flex:0 0 auto;padding:11px 18px;border:0;border-radius:8px;background:#e5e7eb;color:#374151;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px}
+/* === 텔레그램 안내 모달 === */
+.tg-modal-bx h3{color:#0088cc}
+.tg-steps{margin:0;padding-left:20px;color:#333;font-size:14px;line-height:1.8}
+.tg-steps li{margin-bottom:8px}
+.tg-steps .bot-name{display:inline-block;background:#f1f5f9;color:#0088cc;padding:2px 8px;border-radius:6px;font-weight:700;font-family:'JetBrains Mono',monospace;font-size:13px}
+.tg-bot-link{display:inline-block;background:#0088cc;color:#fff !important;text-decoration:none;padding:12px 22px;border-radius:10px;font-weight:700;margin-top:14px;font-size:15px;text-align:center}
+.tg-bot-link:hover{background:#0078b3;text-decoration:none}
+.tg-cron-note{background:#fef9c3;border-left:3px solid #ca8a04;padding:10px 12px;margin-top:14px;font-size:13px;color:#713f12;border-radius:6px}
 .modal-status{margin:12px 0 0;font-size:13px;font-weight:600;min-height:20px}
 .modal-status.ok{color:#16a34a}
 .modal-status.err{color:#dc2626}
@@ -79,6 +87,8 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
       <a href="../" class="back home-btn">🏠 홈으로 가기</a>
       <button type="button" class="back home-btn" style="background:#16a34a;color:#fff !important;border:0;cursor:pointer;font-family:inherit;font-size:14px;"
               onclick="document.getElementById('sub-modal').dataset.open='1'">📬 메일받기 신청</button>
+      <button type="button" class="back home-btn" style="background:#0088cc;color:#fff !important;border:0;cursor:pointer;font-family:inherit;font-size:14px;"
+              onclick="document.getElementById('tg-modal').dataset.open='1'" title="텔레그램으로 즉시 알림 받기">💬 텔레그램 받기</button>
       <button type="button" class="back" style="background:rgba(255,255,255,0.15);color:#fff !important;border:0;cursor:pointer;font-family:inherit;font-size:13px;padding:6px 14px;border-radius:999px;"
               onclick="quickUnsubscribe()">✉️ 메일 해지</button>
       <a id="admin-stocks-link"
@@ -163,6 +173,30 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
       <button type="button" class="btn-secondary" onclick="document.getElementById('unsub-modal').removeAttribute('data-open')">취소</button>
     </div>
     <p class="modal-status" id="unsub-status"></p>
+  </div>
+</div>
+
+<!-- 텔레그램 받기 안내 모달 -->
+<div class="modal-bd" id="tg-modal" onclick="if(event.target===this)this.removeAttribute('data-open')">
+  <div class="modal-bx tg-modal-bx">
+    <h3>💬 텔레그램으로 알림 받기</h3>
+    <p class="modal-desc">매일 09:30 KST 에 새 이벤트가 발견되면 텔레그램으로 자동 발송됩니다. 아래 3단계로 가입하세요 (1분 이내).</p>
+    <ol class="tg-steps">
+      <li>아래 <b>[💬 텔레그램 봇 열기]</b> 버튼 클릭 (또는 텔레그램에서 <span class="bot-name">@Multiagebot</span> 검색)</li>
+      <li>봇 화면에서 <b>[시작]</b> 또는 <code>/start</code> 보내기</li>
+      <li>완료 — 이제 신규 이벤트마다 알림 자동 도착</li>
+    </ol>
+    <a class="tg-bot-link" href="https://t.me/Multiagebot" target="_blank" rel="noopener" style="display:block;">
+      💬 텔레그램 봇 열기 (@Multiagebot)
+    </a>
+    <div class="tg-cron-note">
+      ⏰ <b>발송 시점:</b> 매일 오전 9시 30분<br>
+      🛡 <b>스팸 방지:</b> 신규 이벤트가 없는 날은 발송 안 됨<br>
+      ❌ <b>해지:</b> 텔레그램에서 봇 차단하면 즉시 중단
+    </div>
+    <div class="modal-actions" style="margin-top:14px;">
+      <button type="button" class="btn-secondary" onclick="document.getElementById('tg-modal').removeAttribute('data-open')" style="flex:1;">닫기</button>
+    </div>
   </div>
 </div>
 

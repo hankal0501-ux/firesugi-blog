@@ -27,6 +27,12 @@ jobs:
       - name: Collect news from RSS feeds
         run: node scripts/collect-news.js
 
+      - name: Send Telegram notification (신규 있을 때만)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/notify-telegram.js news
+
       - name: Commit & push if changed
         run: |
           git config user.name  "fire-sugi-bot"

@@ -4,3 +4,6 @@ node_modules/
 .env.local
 .claude/
 *.log
+
+# 텔레그램 발송 후 임시 파일 (collect-events 가 매번 새로 생성)
+events/_new-this-run.json

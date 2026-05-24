@@ -112,6 +112,7 @@ async function main() {
   existing.travel = existing.travel || [];
   existing.giveaways = existing.giveaways || [];
 
+  const newItemsByCategory = { travel: [], giveaways: [] };
   let totalNew = 0;
   for (const topic of TOPICS) {
     try {
@@ -124,6 +125,7 @@ async function main() {
         if (cand.url && seenUrls.has(cand.url)) continue;
         if (seenTitles.has(cand.title)) continue;
         existing[topic.key].unshift(cand);
+        newItemsByCategory[topic.key].push(cand);
         seenUrls.add(cand.url);
         seenTitles.add(cand.title);
         added++;
@@ -136,6 +138,9 @@ async function main() {
     }
     await new Promise(r => setTimeout(r, 1500));
   }
+
+  // 신규 항목을 별도 파일로 저장 (workflow가 텔레그램 발송용으로 읽음)
+  await fs.writeFile('events/_new-this-run.json', JSON.stringify(newItemsByCategory, null, 2), 'utf8');
 
   // 30일 초과 + 카테고리별 30건 제한
   existing.travel = pruneOld(existing.travel).slice(0, MAX_PER_CATEGORY);

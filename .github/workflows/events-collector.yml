@@ -4,7 +4,7 @@ on:
   schedule:
     # 매일 00:30 UTC = 09:30 KST 실행 (news-collector 09:00 KST와 30분 차이)
     - cron: '30 0 * * *'
-  workflow_dispatch:  # GitHub Actions 페이지에서 수동 실행 가능
+  workflow_dispatch:  # 수동 실행 가능
 
 permissions:
   contents: write
@@ -27,10 +27,18 @@ jobs:
       - name: Collect events from RSS feeds
         run: node scripts/collect-events.js
 
+      - name: Send Telegram notification (신규 있을 때만)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/notify-telegram.js events
+
       - name: Commit & push if changed
         run: |
           git config user.name  "fire-sugi-bot"
           git config user.email "bot@firesugi.local"
+          # 임시 파일은 커밋 안 함
+          rm -f events/_new-this-run.json
           git add events/events.json
           if git diff --cached --quiet; then
             echo "ℹ️  변경 없음 - 커밋 스킵"

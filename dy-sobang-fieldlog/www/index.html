@@ -54,9 +54,25 @@
     padding: 5px 10px !important;
     font-size: 10px !important;
     border-left-width: 2px !important;
+    cursor: pointer;
+    transition: background 0.15s;
   }
+  .header-addr:active { background: var(--bg-3) !important; }
   .header-addr .addr-text { font-size: 10px !important; }
   .header-addr .addr-icon { font-size: 11px !important; }
+  .header-addr.ok { border-left-color: var(--success); }
+  .header-addr.empty { border-left-color: var(--danger); }
+  .header-addr.loading { border-left-color: #fbbf24; }
+  .addr-refresh {
+    font-size: 9px;
+    opacity: 0.5;
+    margin-left: 4px;
+  }
+  .header-addr.loading .addr-refresh { animation: spin 1s linear infinite; opacity: 1; }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
   .header .stats {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px; color: var(--muted); margin-top: 4px;
@@ -719,9 +735,11 @@
   </div>
   <div class="title-row">
     <div class="title">사진 기록</div>
-    <div class="address-display compact header-addr" id="addressDisplay">
+    <div class="address-display compact header-addr" id="addressDisplay"
+         onclick="prefetchLocation(true)" title="탭하여 위치 새로고침">
       <span class="addr-icon">📍</span>
       <span class="addr-text" id="addressText">위치자동</span>
+      <span class="addr-refresh" id="addrRefresh">🔄</span>
     </div>
   </div>
   <div class="stats">
@@ -836,7 +854,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.4.0';
+  const APP_VERSION = '1.4.1';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -982,8 +1000,14 @@
     document.getElementById('addressText').textContent = text;
   }
 
-  function prefetchLocation() {
-    if (geoFetchInFlight || !navigator.geolocation) return;
+  function prefetchLocation(force) {
+    if (geoFetchInFlight) return;
+    // 이미 주소가 있고 force가 아니면 스킵 (캐시된 위치 재사용)
+    if (!force && currentAddress) return;
+    if (!navigator.geolocation) {
+      setAddressUI('위치 기능 미지원', 'empty');
+      return;
+    }
     geoFetchInFlight = true;
     setAddressUI('위치 확인 중…', 'loading');
     navigator.geolocation.getCurrentPosition(
@@ -997,18 +1021,22 @@
         const addr = await reverseGeocode(currentGps.lat, currentGps.lon);
         currentAddress = addr;
         if (addr) {
-          setAddressUI(addr, '');
+          setAddressUI(addr, 'ok');
         } else {
-          setAddressUI(`GPS ${currentGps.lat}, ${currentGps.lon} (주소 조회 실패)`, '');
+          setAddressUI(`GPS ${currentGps.lat}, ${currentGps.lon}`, 'ok');
         }
         geoFetchInFlight = false;
       },
       (err) => {
         console.warn('geolocation error:', err);
-        setAddressUI('위치 권한 없음 · 사진에 GPS 미포함', 'empty');
+        let msg = '위치 권한 없음';
+        if (err.code === 1) msg = '위치 권한 거부됨 (설정에서 허용)';
+        else if (err.code === 2) msg = '위치 신호 약함';
+        else if (err.code === 3) msg = '위치 timeout — 재시도';
+        setAddressUI(msg, 'empty');
         geoFetchInFlight = false;
       },
-      { timeout: 12000, enableHighAccuracy: true, maximumAge: 30000 }
+      { timeout: 15000, enableHighAccuracy: true, maximumAge: 60000 }
     );
   }
 
@@ -1892,6 +1920,10 @@
 
     // 앱 시작 시 자동 업데이트 확인 — 새 버전이면 모달 자동 표시
     setTimeout(() => checkForUpdates(true), 1500);
+
+    // 📍 자동 위치 가져오기 — 앱 시작 즉시 백그라운드로 GPS·주소 fetch
+    //    (카메라 버튼 누르기 전부터 미리 받아둠 → 촬영 후 바로 사용 가능)
+    setTimeout(() => prefetchLocation(), 600);
   })();
 </script>
 

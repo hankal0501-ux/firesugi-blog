@@ -5,7 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "collect": "node scripts/collect-news.js"
+    "collect": "node scripts/collect-news.js",
+    "collect:events": "node scripts/collect-events.js"
   },
   "dependencies": {
     "fast-xml-parser": "^4.5.0"

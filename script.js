@@ -595,7 +595,6 @@ const programData = {
     link: null
   },
   dy_sobang: {
-    featured: true,
     icon: '📸', name: '현장사진-음성,수기', tag: '현장기록 · 안드로이드',
     desc: '현장 사진 + 메모를 즉시 기록. GPS·주소·메모가 사진에 워터마크로 자동 합성되어 그 자체로 점검 보고서가 됩니다.',
     features: [
@@ -961,6 +960,36 @@ async function permanentDeleteUserProgram(key) {
   if (typeof logActivity === 'function') logActivity('영구삭제: ' + prog.name);
   renderPrograms();
 }
+
+// 빌트인 프로그램 영구 삭제 — 복원 불가, 페이지 로드 시 programData에서 제거
+const BUILTIN_FORGOTTEN_KEY = 'fireSugiBuiltinForgotten';
+function getForgottenBuiltins() {
+  return JSON.parse(localStorage.getItem(BUILTIN_FORGOTTEN_KEY) || '[]');
+}
+async function permanentDeleteBuiltin(key) {
+  if (!(await checkDeletePassword())) return;
+  const prog = programData[key];
+  if (!prog) return alert('해당 프로그램이 없습니다.');
+  if (prog.featured) return alert('⛔ 핵심 프로그램은 영구 삭제할 수 없습니다.');
+  if (!confirm(`"${prog.name}" 을(를) 영구 삭제합니다.\n⚠️ 휴지통에서도 사라지며 복원 불가.\n새로고침 후에도 다시 나타나지 않습니다.\n\n진행하시겠습니까?`)) return;
+
+  // 1) 영구 망각 목록에 추가
+  const forgotten = getForgottenBuiltins();
+  if (!forgotten.includes(key)) forgotten.push(key);
+  localStorage.setItem(BUILTIN_FORGOTTEN_KEY, JSON.stringify(forgotten));
+
+  // 2) hidden 목록에서 제거 (이미 hidden 이므로)
+  const arr = getHiddenPrograms().filter(k => k !== key);
+  saveHiddenPrograms(arr);
+
+  // 3) programData 런타임에서 제거
+  delete programData[key];
+
+  if (typeof logActivity === 'function') logActivity('빌트인 영구삭제: ' + (prog.name || key));
+  renderPrograms();
+  alert('✅ 영구 삭제 완료');
+}
+window.permanentDeleteBuiltin = permanentDeleteBuiltin;
 
 // 휴지통 비우기 — 사용자 프로그램 모두 영구 삭제
 async function emptyTrash() {
@@ -1364,6 +1393,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadUserPrograms() {
   const userProgs = getUserPrograms();
   Object.assign(programData, userProgs);
+  // 영구 삭제된 빌트인 제거 (featured 는 보호)
+  const forgotten = getForgottenBuiltins();
+  forgotten.forEach(key => {
+    if (programData[key] && !programData[key].featured) {
+      delete programData[key];
+    }
+  });
 }
 
 async function deleteUserProgram(key) {
@@ -1709,6 +1745,7 @@ function renderPrograms() {
                 <span class="trash-name">${esc(p.name)}</span>
                 <span class="trash-tag">${esc(p.tag)} · 빌트인</span>
                 <button class="btn-mini" onclick="restoreProgram('${k}')">↺ 복원</button>
+                <button class="btn-mini btn-mini-danger" onclick="permanentDeleteBuiltin('${k}')">🗑 영구삭제</button>
               </div>`;
           }).join('')}
         </div>`;

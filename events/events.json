@@ -51,6 +51,15 @@
   ],
   "giveaways": [
     {
+      "source_site": "현대불교",
+      "title": "\"송광사 옛날사진 콘테스트 응모하세요\"",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBKbmttNFVPV1plX0NzdDVOeVpZZmwxQWpiMTViTEVlUERvZERkWFBoWWsweWJ4b0s3RmRpNGlHZlhTbG94eXRGcHYzSWljRzdod0gyUXNXVnF1blF3eFJYTE1BY2dBbGloamRZcU5BYw?oc=5",
+      "created_at": "2026-05-11 04:30:33"
+    },
+    {
       "source_site": "뉴스락",
       "title": "하나증권, 국내주식 경품 추첨 이벤트...최대 300만원 혜택",
       "category": "공모전",
@@ -177,5 +186,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-05-24 21:46:44"
+  "last_updated": "2026-05-24 21:47:13"
 }

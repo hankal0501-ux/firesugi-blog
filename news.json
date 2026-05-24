@@ -1,5 +1,39 @@
 [
   {
+    "id": 1779590466109,
+    "topic": "최신기술",
+    "source": "해운의소리",
+    "emoji": "🚀",
+    "image": "🚀",
+    "color": "#0068c3",
+    "title": "해운조합, ‘연안여객선 AI화재탐지’ 해상실증 추진",
+    "summary": "해운조합, ‘연안여객선 AI화재탐지’ 해상실증 추진 해운의소리",
+    "fullDesc": "해운조합, ‘연안여객선 AI화재탐지’ 해상실증 추진 해운의소리",
+    "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE0wT1lZelM3ZlZqT3lnZG9rQXFReU50WnJmV3M5YU81bHZ0dWhZLXdtdHQzU1RTVkJpUVAxNU5wWUlnUVN3MXo1eVhVUzVMcUU3ZGZmSkdoTDhkbXJSajlKWkpwRkJ6SGpBSGhCdUxR0gFyQVVfeXFMTWVFc2xIRVBVdDBGa2VWaWEzUUNTWDZwS3JOdXQ3VGZsTGdsVDdiaFZUVlJ0QlZEUi1VVm5UUjZ1YURMZjdzVWZCUF9qOGJtQlBfTnh4cnpvTFlMSVhIcjF6YzV2MzVtZFB6R2Fob29pRW1R?oc=5",
+    "date": "2026.05.22",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-24T02:41:04.679Z",
+    "pubDate": "2026-05-22T21:51:45.000Z"
+  },
+  {
+    "id": 1779590468167,
+    "topic": "사고처벌",
+    "source": "로톡뉴스",
+    "emoji": "⚖️",
+    "image": "⚖️",
+    "color": "#c93030",
+    "title": "복도에 놓인 아이 자전거, 귀여운 민폐일까 소방법 위반일까?",
+    "summary": "복도에 놓인 아이 자전거, 귀여운 민폐일까 소방법 위반일까? 로톡뉴스",
+    "fullDesc": "복도에 놓인 아이 자전거, 귀여운 민폐일까 소방법 위반일까? 로톡뉴스",
+    "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFB6cGY4Q1pmYTdUcjBHQ2hIZGNfdDlnd1R1VS1GaEV1UFpvOER6eEo4YmJzWG1tUWRMdUk1MTBEV0lXUVFfZzVjQ0dMMlNHSDJRMWFadFdudHJMdw?oc=5",
+    "date": "2025.09.19",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-24T02:41:06.850Z",
+    "pubDate": "2025-09-19T07:00:00.000Z"
+  },
+  {
     "id": 1779503430584,
     "topic": "최신기술",
     "source": "아시아경제",
@@ -12,7 +46,7 @@
     "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE0zMUZRaXptOWp5eEFvUmFpbW5kTUpTVE4zQ00tQ0xncDV6dHotd2haUWFGUnF2S3J2NWx2TG9fcHpQM0MtaGpyVW94Tk1MdFhpaHRDTmcxc21XMGVLdjJWdg?oc=5",
     "date": "2026.05.22",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-23T02:30:26.129Z",
     "pubDate": "2026-05-22T04:10:18.000Z"
   },
@@ -29,7 +63,7 @@
     "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE02bjBNZ2JOU3lyelpBbWstbS1DaXhWaENBVU1QRnpoX0txQUk1d3dZMXJqZlRfZGczdzFUOUJHWWxxSm42Z2c?oc=5",
     "date": "2026.04.24",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-23T02:30:27.956Z",
     "pubDate": "2026-04-24T07:00:00.000Z"
   },
@@ -46,7 +80,7 @@
     "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBXdUtrR2RYOEtYQkVMT0l0Z25xUXo5V1l5a3A2b0pqc1VKOWl2aWY1SEpVM0hhWWtmbFdrbDQwWlA3OWs1YlB4UnNYLXRUNG9PZDVubC1SeExWUWxUSC1Qd3F5UWZwWjFVTWpNWHhGZVg?oc=5",
     "date": "2025.10.15",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-23T02:30:29.755Z",
     "pubDate": "2025-10-15T07:00:00.000Z"
   },

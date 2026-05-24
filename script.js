@@ -167,8 +167,7 @@ let boardDisplayCount = 5; // Initial number of posts to show
 function getPosts() { return JSON.parse(localStorage.getItem('fireSugiBoardPosts') || '[]'); }
 function savePosts(posts) {
   localStorage.setItem('fireSugiBoardPosts', JSON.stringify(posts));
-  // Firestore 동기화 (실패해도 무시)
-  if (typeof fbPushAllPosts === 'function') fbPushAllPosts(posts).catch(() => {});
+  // ⛔ Firestore 자동 push 비활성화 — 각 PC 독립 동작
 }
 
 function renderBoard() {

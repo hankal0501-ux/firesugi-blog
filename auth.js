@@ -386,6 +386,7 @@ function getOnlineUsers() {
 }
 
 // ===== UI UPDATE =====
+// 회원 UI 제거 후에도 호환 — 모든 DOM 접근 null-safe
 function updateAuthUI() {
   const user = getCurrentUser();
   const loginBtn = document.getElementById('authLoginBtn');
@@ -395,8 +396,8 @@ function updateAuthUI() {
   const adminLinks = document.querySelectorAll('.admin-only');
 
   if (user) {
-    loginBtn.style.display = 'none';
-    userInfo.style.display = 'flex';
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (userInfo) userInfo.style.display = 'flex';
     const tier = getTier(user);
     const meta = TIER_META[tier];
     if (tierPill) {
@@ -405,8 +406,8 @@ function updateAuthUI() {
     }
     if (userName) userName.textContent = user.id;
   } else {
-    loginBtn.style.display = 'inline-flex';
-    userInfo.style.display = 'none';
+    if (loginBtn) loginBtn.style.display = 'inline-flex';
+    if (userInfo) userInfo.style.display = 'none';
   }
   adminLinks.forEach(el => {
     el.style.display = isAdmin(user) ? '' : 'none';

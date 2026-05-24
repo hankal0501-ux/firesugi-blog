@@ -15,6 +15,28 @@ firebase.initializeApp(firebaseConfig);
 const fbDb = firebase.firestore();
 let fbSyncReady = true;
 
+// 할당량 초과 자동 차단 — 한 번 초과하면 12시간 동안 모든 Firebase 호출 스킵
+const QUOTA_KEY = 'fbQuotaExceededAt';
+const QUOTA_COOLDOWN_MS = 12 * 60 * 60 * 1000; // 12시간
+(function checkQuotaCooldown() {
+  const ts = parseInt(localStorage.getItem(QUOTA_KEY) || '0');
+  if (ts && (Date.now() - ts < QUOTA_COOLDOWN_MS)) {
+    fbSyncReady = false;
+    const hoursLeft = Math.ceil((QUOTA_COOLDOWN_MS - (Date.now() - ts)) / 3600000);
+    console.warn(`🚫 Firebase 할당량 초과 자동 차단 중 (약 ${hoursLeft}시간 후 자동 복구)`);
+  }
+})();
+function markQuotaExceeded() {
+  if (!fbSyncReady) return;
+  fbSyncReady = false;
+  localStorage.setItem(QUOTA_KEY, String(Date.now()));
+  console.error('🚫 Firestore 할당량 초과 감지 — 12시간 자동 차단 (다음 PST 자정 = KST 17시 리셋)');
+}
+function isQuotaError(e) {
+  const msg = (e?.message || '') + (e?.code || '');
+  return msg.includes('resource-exhausted') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED');
+}
+
 // ===== 회원 동기화 =====
 async function fbPushUser(user) {
   if (!fbSyncReady || !user || !user.id) return;
@@ -25,7 +47,8 @@ async function fbPushUser(user) {
     safe.syncedAt = Date.now();
     await fbDb.collection('users').doc(user.id).set(safe, { merge: true });
   } catch (e) {
-    console.warn('🔥 fbPushUser 실패:', user.id, e.message);
+    if (isQuotaError(e)) markQuotaExceeded();
+    else console.warn('🔥 fbPushUser 실패:', user.id, e.message);
   }
 }
 
@@ -46,7 +69,7 @@ async function fbPullUsers() {
     snap.forEach(doc => users.push(doc.data()));
     return users;
   } catch (e) {
-    console.warn('🔥 fbPullUsers 실패:', e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbPullUsers 실패:', e.message);
     return [];
   }
 }
@@ -56,7 +79,7 @@ async function fbDeleteUser(userId) {
   try {
     await fbDb.collection('users').doc(userId).delete();
   } catch (e) {
-    console.warn('🔥 fbDeleteUser 실패:', userId, e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbDeleteUser 실패:', userId, e.message);
   }
 }
 
@@ -67,7 +90,7 @@ async function fbPushPost(post) {
     const data = { ...post, id: String(post.id), syncedAt: Date.now() };
     await fbDb.collection('posts').doc(String(post.id)).set(data, { merge: true });
   } catch (e) {
-    console.warn('🔥 fbPushPost 실패:', post.id, e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbPushPost 실패:', post.id, e.message);
   }
 }
 
@@ -92,7 +115,7 @@ async function fbPullPosts() {
     });
     return posts;
   } catch (e) {
-    console.warn('🔥 fbPullPosts 실패:', e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbPullPosts 실패:', e.message);
     return [];
   }
 }
@@ -102,7 +125,7 @@ async function fbDeletePost(postId) {
   try {
     await fbDb.collection('posts').doc(String(postId)).delete();
   } catch (e) {
-    console.warn('🔥 fbDeletePost 실패:', postId, e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbDeletePost 실패:', postId, e.message);
   }
 }
 
@@ -120,7 +143,7 @@ async function fbPushLogs(logs) {
     });
     await batch.commit();
   } catch (e) {
-    console.warn('🔥 fbPushLogs 실패:', e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbPushLogs 실패:', e.message);
   }
 }
 
@@ -136,7 +159,7 @@ async function fbPullLogs() {
     snap.forEach(doc => logs.push(doc.data()));
     return logs.sort((a, b) => a.ts - b.ts);
   } catch (e) {
-    console.warn('🔥 fbPullLogs 실패:', e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbPullLogs 실패:', e.message);
     return [];
   }
 }
@@ -154,7 +177,7 @@ async function fbPushAnonVisits(visits) {
     });
     await batch.commit();
   } catch (e) {
-    console.warn('🔥 fbPushAnonVisits 실패:', e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbPushAnonVisits 실패:', e.message);
   }
 }
 
@@ -169,7 +192,7 @@ async function fbPullAnonVisits() {
     snap.forEach(doc => visits.push(doc.data()));
     return visits.sort((a, b) => a.ts - b.ts);
   } catch (e) {
-    console.warn('🔥 fbPullAnonVisits 실패:', e.message);
+    if (isQuotaError(e)) markQuotaExceeded(); else console.warn('🔥 fbPullAnonVisits 실패:', e.message);
     return [];
   }
 }

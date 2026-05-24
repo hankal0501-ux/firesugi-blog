@@ -1391,6 +1391,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 페이지 로드 시 user-added programs를 programData에 머지
 function loadUserPrograms() {
+  // 1) 일회성 마이그레이션: 모든 "개발중" 사용자 프로그램 자동 제거
+  //    (link 없거나 #이고, completed 도 false 인 것들 모두 삭제)
+  cleanupDevUserPrograms();
+
   const userProgs = getUserPrograms();
   Object.assign(programData, userProgs);
   // 영구 삭제된 빌트인 제거 (featured 는 보호)
@@ -1400,6 +1404,36 @@ function loadUserPrograms() {
       delete programData[key];
     }
   });
+}
+
+// 일회성 정리: 모든 개발중(미완료) 사용자 프로그램 영구 삭제
+const DEV_CLEANUP_KEY = 'fireSugiDevCleanupV2';
+function cleanupDevUserPrograms() {
+  if (localStorage.getItem(DEV_CLEANUP_KEY)) return; // 이미 실행됨
+  const userProgs = getUserPrograms();
+  const keys = Object.keys(userProgs);
+  if (keys.length === 0) {
+    localStorage.setItem(DEV_CLEANUP_KEY, String(Date.now()));
+    return;
+  }
+  const removed = [];
+  for (const [key, p] of Object.entries(userProgs)) {
+    const isDev = !p.completed && (!p.link || p.link === '#');
+    if (isDev) {
+      removed.push({ key, name: p.name || key });
+      delete userProgs[key];
+      delete programData[key];
+      // Firestore 에서도 삭제 (quota 살아있을 때만, 실패해도 무시)
+      if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+        fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
+      }
+    }
+  }
+  if (removed.length > 0) {
+    localStorage.setItem('fireSugiUserPrograms', JSON.stringify(userProgs));
+    console.log(`🧹 개발중 사용자 프로그램 ${removed.length}건 자동 제거:`, removed.map(r => r.name).join(', '));
+  }
+  localStorage.setItem(DEV_CLEANUP_KEY, String(Date.now()));
 }
 
 async function deleteUserProgram(key) {

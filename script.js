@@ -1312,9 +1312,9 @@ function triggerAddScreenshot(progKey) {
   input.click();
 }
 
-// 사진 교체 (특정 인덱스의 사진을 새 파일로 덮어쓰기)
-function triggerReplaceScreenshot(progKey, index) {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
+// 사진 교체 (특정 인덱스의 사진을 새 파일로 덮어쓰기) — 비번 보호
+async function triggerReplaceScreenshot(progKey, index) {
+  if (!(await checkDeletePassword())) return;
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/*';
@@ -1338,9 +1338,9 @@ function triggerReplaceScreenshot(progKey, index) {
   input.click();
 }
 
-// 사진 삭제
-function deleteScreenshot(progKey, index) {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
+// 사진 삭제 — 비번 보호
+async function deleteScreenshot(progKey, index) {
+  if (!(await checkDeletePassword())) return;
   if (!confirm('이 스크린샷을 삭제하시겠습니까?')) return;
   const arr = getProgramScreenshots(progKey);
   arr.splice(index, 1);
@@ -1349,9 +1349,9 @@ function deleteScreenshot(progKey, index) {
   showProgramDetail(progKey);
 }
 
-// 캡션 수정
-function editScreenshotCaption(progKey, index) {
-  if (!isAdmin()) return;
+// 캡션 수정 — 비번 보호
+async function editScreenshotCaption(progKey, index) {
+  if (!(await checkDeletePassword())) return;
   const arr = getProgramScreenshots(progKey);
   if (!arr[index]) return;
   const newCap = prompt('새 캡션:', arr[index].caption || '');
@@ -1361,9 +1361,9 @@ function editScreenshotCaption(progKey, index) {
   showProgramDetail(progKey);
 }
 
-// 순서 변경 (앞으로/뒤로)
-function moveScreenshot(progKey, index, dir) {
-  if (!isAdmin()) return;
+// 순서 변경 (앞으로/뒤로) — 비번 보호
+async function moveScreenshot(progKey, index, dir) {
+  if (!(await checkDeletePassword())) return;
   const arr = getProgramScreenshots(progKey);
   const target = index + dir;
   if (target < 0 || target >= arr.length) return;
@@ -1372,9 +1372,9 @@ function moveScreenshot(progKey, index, dir) {
   showProgramDetail(progKey);
 }
 
-// 기본값으로 복원
-function resetProgramScreenshots(progKey) {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
+// 기본값으로 복원 — 비번 보호
+async function resetProgramScreenshots(progKey) {
+  if (!(await checkDeletePassword())) return;
   if (!confirm('이 프로그램의 모든 사진을 초기값으로 되돌리시겠습니까?\n(추가/교체한 사진은 모두 사라집니다.)')) return;
   localStorage.removeItem(SCREENSHOTS_KEY(progKey));
   if (typeof logActivity === 'function') logActivity('사진 초기화: ' + progKey);
@@ -1544,7 +1544,8 @@ function showProgramDetail(key) {
 
   // 스크린샷 갤러리 (localStorage 우선, 기본값 fallback)
   const screenshots = getProgramScreenshots(key);
-  const admin = isAdmin();
+  // 공개 모드: 컨트롤은 항상 노출하되, 클릭 시 비번 prompt로 보호 (checkDeletePassword)
+  const admin = true;
   const screenshotsHtml = `
     <div class="detail-section">
       <h3>📸 스크린샷

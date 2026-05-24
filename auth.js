@@ -18,13 +18,24 @@ function hideAdminModal() {
   const m = document.getElementById('adminModal');
   if (m) m.style.display = 'none';
 }
-function doAdminLogin() {
+async function doAdminLogin() {
   const pw = (document.getElementById('adminPw') || {}).value || '';
   const err = document.getElementById('adminError');
-  if (pw !== ADMIN_PASSWORD) {
+
+  // 통합 비번 시스템 — script.js 의 verifyAdminPassword (해시 기반) 사용
+  // 본인이 변경한 새 비번도 통과, 기본값 dodan0501! 도 통과
+  let ok = false;
+  if (typeof verifyAdminPassword === 'function') {
+    try { ok = await verifyAdminPassword(pw); } catch (e) { console.warn('verify err:', e); }
+  }
+  // 폴백 — script.js 로드 안 됐을 때만 옛 하드코딩 비번 시도
+  if (!ok && pw === ADMIN_PASSWORD) ok = true;
+
+  if (!ok) {
     if (err) err.textContent = '❌ 비밀번호가 일치하지 않습니다.';
     return;
   }
+
   // 합성 관리자 사용자 등록 — 기존 isAdmin/getCurrentUser 체인이 그대로 동작하도록
   const adminUser = { id: SITE_OWNER_ID, role: 'admin', joinDate: new Date().toISOString().slice(0,10), lastLogin: Date.now() };
   const users = JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');

@@ -1,0 +1,11 @@
+{
+  "subscribers": [
+    {
+      "chat_id": 8162132714,
+      "name": "수신 나",
+      "joined_at": "2026-05-24T03:30:00Z"
+    }
+  ],
+  "last_offset": 0,
+  "updated_at": "2026-05-24T22:00:00Z"
+}

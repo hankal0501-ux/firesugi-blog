@@ -595,6 +595,7 @@ const programData = {
     link: null
   },
   dy_sobang: {
+    featured: true,
     icon: '📸', name: '현장사진-음성,수기', tag: '현장기록 · 안드로이드',
     desc: '현장 사진 + 메모를 즉시 기록. GPS·주소·메모가 사진에 워터마크로 자동 합성되어 그 자체로 점검 보고서가 됩니다.',
     features: [
@@ -1287,10 +1288,20 @@ function escSvg(s) {
 const HIDDEN_PROGS_KEY = 'fireSugiHiddenPrograms';
 
 function getHiddenPrograms() {
-  return JSON.parse(localStorage.getItem(HIDDEN_PROGS_KEY) || '[]');
+  // 핵심 프로그램(featured)이 실수로 hidden 목록에 들어있으면 자동 제거
+  let arr = JSON.parse(localStorage.getItem(HIDDEN_PROGS_KEY) || '[]');
+  const filtered = arr.filter(key => !(programData[key] && programData[key].featured));
+  if (filtered.length !== arr.length) {
+    localStorage.setItem(HIDDEN_PROGS_KEY, JSON.stringify(filtered));
+    console.log('🔧 핵심 프로그램 자동 복원:', arr.filter(k => !filtered.includes(k)).join(', '));
+    arr = filtered;
+  }
+  return arr;
 }
 function saveHiddenPrograms(arr) {
-  localStorage.setItem(HIDDEN_PROGS_KEY, JSON.stringify(arr));
+  // featured 보호 — hide 못함
+  const safe = arr.filter(key => !(programData[key] && programData[key].featured));
+  localStorage.setItem(HIDDEN_PROGS_KEY, JSON.stringify(safe));
 }
 async function deleteProgram(key) {
   // 빌트인 삭제도 매번 비번 입력

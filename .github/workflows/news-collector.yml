@@ -37,7 +37,7 @@ jobs:
         run: |
           git config user.name  "fire-sugi-bot"
           git config user.email "bot@firesugi.local"
-          git add news.json
+          git add news.json subscribers/telegram.json
           if git diff --cached --quiet; then
             echo "ℹ️  변경 없음 - 커밋 스킵"
           else

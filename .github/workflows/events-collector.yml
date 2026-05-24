@@ -37,15 +37,15 @@ jobs:
         run: |
           git config user.name  "fire-sugi-bot"
           git config user.email "bot@firesugi.local"
-          # 임시 파일은 커밋 안 함
           rm -f events/_new-this-run.json
-          git add events/events.json
+          git add events/events.json subscribers/telegram.json
           if git diff --cached --quiet; then
             echo "ℹ️  변경 없음 - 커밋 스킵"
           else
             TRAVEL=$(node -e "console.log(JSON.parse(require('fs').readFileSync('events/events.json')).travel.length)")
             GIVE=$(node -e "console.log(JSON.parse(require('fs').readFileSync('events/events.json')).giveaways.length)")
-            git commit -m "🎁 daily events update ($(date -u +%Y-%m-%d) · travel ${TRAVEL} · giveaways ${GIVE})"
+            SUBS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('subscribers/telegram.json')).subscribers.length)")
+            git commit -m "🎁 daily events ($(date -u +%Y-%m-%d) · travel ${TRAVEL} · give ${GIVE} · subs ${SUBS})"
             git push
             echo "✅ 푸시 완료"
           fi

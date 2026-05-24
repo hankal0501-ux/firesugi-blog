@@ -1,7 +1,7 @@
 {
-  "latest": "1.3.3",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.3.3.apk",
-  "notes": "1.3.3 - 📍위치자동을 '사진 기록' 제목 우측으로 이동 · 사진촬영 탭 색상 파랑(#2563eb)으로 변경(노란 카메라 버튼과 구분) · 새 버전(빨강) 신호등은 텍스트 배지 없이 LED만 표시",
+  "latest": "1.3.4",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.3.4.apk",
+  "notes": "1.3.4 - 리스트 선택 UX 개선: 카드 좌측 상단 빈 동그라미 아이콘 항상 표시, 카드 클릭 시 ✓ 자동 체크 + 파랑 테두리/배경 강조",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-24T00:00:00Z"

@@ -678,15 +678,35 @@
   }
   .list-action-btn:active { opacity: 0.8; }
 
-  /* 카드 체크박스 */
-  .record-card { position: relative; }
-  .record-chk {
+  /* 카드 클릭 선택 — 항상 보이는 체크 아이콘 + 선택 시 테두리/배경 강조 */
+  .record-card { position: relative; cursor: pointer; transition: border-color 0.15s, background 0.15s, box-shadow 0.15s; }
+  .record-card::before {
+    content: "";
     position: absolute;
     top: 8px; left: 8px;
-    width: 20px; height: 20px;
-    accent-color: var(--accent);
+    width: 22px; height: 22px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 50%;
     z-index: 2;
+    transition: background 0.15s, border-color 0.15s;
   }
+  .record-card.selected {
+    border: 2px solid #2563eb !important;
+    background: rgba(37, 99, 235, 0.08) !important;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+  }
+  .record-card.selected::before {
+    content: "✓";
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    line-height: 1;
+  }
+  /* 썸네일/본문 영역이 체크 아이콘과 안 겹치도록 좌측 패딩 */
+  .record-card .body, .record-card .thumb { padding-left: 4px; }
 </style>
 </head>
 <body>
@@ -816,7 +836,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.3.3';
+  const APP_VERSION = '1.3.4';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1499,8 +1519,7 @@
       const floorBadge = r.floor ? `<span class="floor-badge">${escapeHtml(r.floor)}</span>` : '';
       const memoHtml = r.memo ? escapeHtml(r.memo) : '<em>메모 없음</em>';
       const addrHtml = r.address ? `<div class="addr">📍 ${escapeHtml(r.address)}</div>` : '';
-      return `<div class="record-card">
-        <input type="checkbox" class="record-chk" data-id="${r.id}">
+      return `<div class="record-card" data-id="${r.id}">
         ${thumb}
         <div class="body">
           <div class="meta">${dateStr} ${time}${gpsInfo}</div>
@@ -1525,8 +1544,13 @@
       });
     });
 
-    list.querySelectorAll('.record-chk').forEach(chk => {
-      chk.addEventListener('change', updateSelectedInfo);
+    // 카드 클릭 → 선택 토글 (단, ⬆ 공유 / ✕ 삭제 버튼 클릭 시는 제외)
+    list.querySelectorAll('.record-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.actions')) return;
+        card.classList.toggle('selected');
+        updateSelectedInfo();
+      });
     });
     updateSelectedInfo();
     // 탭 카운트 갱신
@@ -1565,12 +1589,12 @@
 
   // ===== 선택 카운트 표시 =====
   function getSelectedIds() {
-    return Array.from(document.querySelectorAll('.record-chk:checked'))
+    return Array.from(document.querySelectorAll('.record-card.selected'))
       .map(c => parseInt(c.getAttribute('data-id')));
   }
   function updateSelectedInfo() {
     const n = getSelectedIds().length;
-    const total = document.querySelectorAll('.record-chk').length;
+    const total = document.querySelectorAll('.record-card').length;
     const info = document.getElementById('selectedInfo');
     if (info) info.textContent = `${n} / ${total}건 선택됨`;
     const all = document.getElementById('chkSelectAll');
@@ -1578,7 +1602,9 @@
   }
   document.getElementById('chkSelectAll').addEventListener('change', (e) => {
     const checked = e.currentTarget.checked;
-    document.querySelectorAll('.record-chk').forEach(c => { c.checked = checked; });
+    document.querySelectorAll('.record-card').forEach(c => {
+      c.classList.toggle('selected', checked);
+    });
     updateSelectedInfo();
   });
 

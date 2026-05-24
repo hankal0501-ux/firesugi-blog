@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="소방안전 전문 블로그 - 화재안전기준, 소방시설, 법률 공부 프로그램과 소식을 공유합니다.">
   <title>Fire-Sugi 소방안전 블로그</title>
-  <link rel="stylesheet" href="style.css?v=20260524s">
+  <link rel="stylesheet" href="style.css?v=20260524t">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -18,7 +18,7 @@
       <a href="#" class="logo" onclick="showTab('home')">
         <div class="logo-icon">🔥</div>
         <span>Fire-Sugi</span>
-        <span class="logo-ver" title="현재 버전">v20260524s</span>
+        <span class="logo-ver" title="현재 버전">v20260524t</span>
       </a>
       <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
       <nav>
@@ -30,14 +30,9 @@
         <a href="#" data-tab="forms" onclick="showTab('forms')">서식자료</a>
         <a href="#" data-tab="board" onclick="showTab('board')">게시판</a>
         <a href="events/" target="_self" class="nav-events">🎁 이벤트</a>
-        <a href="#" class="admin-only" data-tab="dashboard" onclick="showTab('dashboard')" style="display:none;">접속상황판</a>
       </nav>
       <div class="auth-area">
         <button class="btn btn-outline btn-sm" id="authLoginBtn" onclick="showAdminModal()">🔐 관리자</button>
-        <div class="user-info" id="authUserInfo" style="display:none;">
-          <span class="tier-pill" id="authTierPill">👑 관리자</span>
-          <button class="btn btn-outline btn-sm" onclick="exitAdminMode()">로그아웃</button>
-        </div>
       </div>
     </div>
   </header>
@@ -574,271 +569,6 @@
     </section>
   </div>
 
-  <!-- ===================== TAB: MEMBER INFO (회원정보) ===================== -->
-  <div class="tab-page" id="tab-members-info">
-    <section class="tab-section">
-      <div class="section-inner">
-        <div class="section-header">
-          <div class="tag">🪪 Membership</div>
-          <h2>회원정보</h2>
-          <p>Fire-Sugi 회원 가입 안내, 혜택, 마이페이지를 확인하세요.</p>
-        </div>
-
-        <div class="member-info-grid">
-          <!-- 좌: 마이페이지 또는 가입유도 -->
-          <div class="mi-card mi-mypage" id="miMyArea"></div>
-
-          <!-- 우: 회원 등급/혜택 -->
-          <div class="mi-card">
-            <h3>💎 회원 등급 · 혜택</h3>
-            <div class="grade-list">
-              <div class="grade-row">
-                <div class="grade-badge bronze">🥉 일반회원</div>
-                <ul>
-                  <li>모든 프로그램 무료 이용</li>
-                  <li>게시판 글쓰기·댓글</li>
-                  <li>화재안전기준 학습 도구</li>
-                </ul>
-              </div>
-              <div class="grade-row">
-                <div class="grade-badge silver">🥈 정회원</div>
-                <ul>
-                  <li>일반회원 혜택 + 기술자료 다운로드</li>
-                  <li>점검 지적서 자동생성 무제한</li>
-                  <li>월간 법령 업데이트 알림</li>
-                </ul>
-              </div>
-              <div class="grade-row">
-                <div class="grade-badge gold">👑 프리미엄</div>
-                <ul>
-                  <li>정회원 혜택 + 우선 기술지원</li>
-                  <li>맞춤형 양식 제작 요청</li>
-                  <li>1:1 법령 자문(분기 1회)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 통합 회원 현황 / 관리 (관리자 전용) -->
-        <div class="mi-card admin-only" style="margin-top:18px; display:none;">
-          <div class="kfma-block-header" style="margin-bottom:14px;">
-            <h3>👥 회원 현황 <span class="admin-badge-inline">관리자 전용</span></h3>
-            <span class="kfma-sub">권한 변경 · 차단 · 삭제 · 통계 확인</span>
-          </div>
-
-          <!-- 관리자 통계 (관리자에게만 표시) -->
-          <div class="admin-stats admin-only" style="display:none;">
-            <div class="stat-box"><div class="sb-label">전체 회원</div><div class="sb-value" id="mTotal">0</div></div>
-            <div class="stat-box"><div class="sb-label">관리자</div><div class="sb-value" id="mAdmins">0</div></div>
-            <div class="stat-box"><div class="sb-label">차단된 회원</div><div class="sb-value danger" id="mBanned">0</div></div>
-            <div class="stat-box"><div class="sb-label">현재 온라인</div><div class="sb-value online" id="mOnline">0</div></div>
-          </div>
-
-          <div class="board-toolbar" style="margin-bottom:14px;">
-            <div class="board-count">전체 <span id="memberCount">0</span>명</div>
-            <div class="board-search">
-              <input type="text" id="memberSearchInput" placeholder="아이디로 검색" onkeyup="renderMembers()">
-              <button class="btn-search" onclick="renderMembers()">🔍</button>
-            </div>
-          </div>
-          <div class="board-table-wrap">
-            <table class="board-table kfma-table" id="memberTable">
-              <thead><tr>
-                <th class="col-no">번호</th>
-                <th>아이디</th>
-                <th style="width:100px;">가입일</th>
-                <th style="width:120px;">마지막 접속</th>
-                <th style="width:70px; text-align:center;">게시글</th>
-                <th style="width:90px;">역할</th>
-                <th style="width:90px;">상태</th>
-                <th style="width:90px;">이웃</th>
-                <th class="admin-only" style="display:none; width:280px;">관리</th>
-              </tr></thead>
-              <tbody id="memberBody"></tbody>
-            </table>
-          </div>
-          <div class="board-empty" id="memberEmpty" style="display:none;">📭 가입된 회원이 없습니다.</div>
-        </div>
-
-        <!-- 가입 절차 -->
-        <div class="mi-card" style="margin-top:18px;">
-          <h3>📝 가입 절차</h3>
-          <div class="signup-steps">
-            <div class="ss-step"><div class="ss-num">1</div><div><b>회원가입</b><p>아이디·비밀번호 입력 후 약관 동의</p></div></div>
-            <div class="ss-step"><div class="ss-num">2</div><div><b>등급 선택</b><p>일반/정회원/프리미엄 중 선택</p></div></div>
-            <div class="ss-step"><div class="ss-num">3</div><div><b>승인 대기</b><p>정회원 이상은 관리자 승인(평일 24시간 이내)</p></div></div>
-            <div class="ss-step"><div class="ss-num">4</div><div><b>이용 시작</b><p>모든 자료·도구 이용 가능</p></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ===================== TAB: DASHBOARD (admin) ===================== -->
-  <div class="tab-page" id="tab-dashboard">
-    <section class="tab-section">
-      <div class="section-inner">
-        <div class="section-header">
-          <div class="tag">📊 Live Dashboard</div>
-          <h2>접속 상황판</h2>
-          <p>실시간 접속자 현황과 활동 로그를 확인합니다. (30초마다 자동 갱신)</p>
-        </div>
-
-        <div class="admin-stats">
-          <div class="stat-box accent">
-            <div class="sb-label">현재 온라인 (회원)</div>
-            <div class="sb-value online" id="dOnline">0</div>
-            <div class="sb-sub" id="dOnlineSub">최근 5분 이내 활동</div>
-          </div>
-          <div class="stat-box">
-            <div class="sb-label">오늘 회원 접속</div>
-            <div class="sb-value" id="dToday">0</div>
-            <div class="sb-sub" id="dTodaySub">오늘 활동 회원 수</div>
-          </div>
-          <div class="stat-box">
-            <div class="sb-label">오늘 일반인 방문</div>
-            <div class="sb-value" id="dAnonToday">0</div>
-            <div class="sb-sub">비로그인 방문 (브라우저별)</div>
-          </div>
-          <div class="stat-box">
-            <div class="sb-label">7일 일반인</div>
-            <div class="sb-value" id="dAnonWeek">0</div>
-            <div class="sb-sub">최근 7일 익명 방문</div>
-          </div>
-          <div class="stat-box">
-            <div class="sb-label">7일 회원활동</div>
-            <div class="sb-value" id="dWeek">0</div>
-            <div class="sb-sub">최근 7일 로그 합계</div>
-          </div>
-          <div class="stat-box">
-            <div class="sb-label">총 게시글</div>
-            <div class="sb-value" id="dPosts">0</div>
-            <div class="sb-sub" id="dPostsSub">전체 게시글 수</div>
-          </div>
-        </div>
-        <p class="anon-note">
-          ℹ️ <b>일반인 통계 한계</b>: localStorage 기반이라 <b>본인 브라우저 방문만</b> 집계됩니다.
-          전체 사이트 방문 통계는 <a href="https://github.com/hankal0501-ux/firesugi-blog/graphs/traffic" target="_blank">GitHub Traffic ↗</a>
-          또는 Google Analytics 연동을 권장합니다.
-        </p>
-
-        <!-- 🔥 Firebase 실시간 동기화 상태 -->
-        <div class="dash-card" style="margin-bottom:18px; background:linear-gradient(135deg,#fff4d4,#fff);">
-          <div class="dash-card-header">
-            <h3>🔥 Firebase 통합 DB 상태</h3>
-            <button class="btn btn-primary btn-sm" onclick="showFirebaseStatus()">🔄 상태 확인</button>
-          </div>
-          <div id="firebaseStatus" style="font-size:0.86rem; line-height:1.7;">
-            <p style="color:var(--text-muted);">[🔄 상태 확인] 버튼을 클릭해 Firestore와 동기화 상태를 확인하세요.</p>
-          </div>
-        </div>
-
-        <!-- 데이터 백업·복원 (관리자 기기간 수동 동기화) -->
-        <div class="dash-card" style="margin-bottom:18px; background:linear-gradient(135deg,var(--c-amber-light),#fff);">
-          <div class="dash-card-header">
-            <h3>🔄 데이터 백업·복원 (기기간 동기화)</h3>
-          </div>
-          <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:12px; line-height:1.6;">
-            ℹ️ localStorage 한계 때문에 회원·게시글 데이터는 <b>이 브라우저에만</b> 저장됩니다.<br>
-            <b>📤 내보내기</b>로 JSON 파일 받고 → 다른 기기(모바일 등)에서 <b>📥 가져오기</b>하면 모든 회원·글이 옮겨집니다.
-          </p>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn btn-primary btn-sm" onclick="exportAllData()">📤 전체 데이터 내보내기 (JSON)</button>
-            <button class="btn btn-outline btn-sm" onclick="importAllData()">📥 다른 기기에서 가져오기</button>
-          </div>
-          <p style="font-size:0.78rem; color:var(--text-muted); margin-top:8px;">
-            포함: 회원·게시글·활동로그·익명방문·이웃관계·클릭통계·스크린샷
-          </p>
-        </div>
-
-        <!-- 어제 활동 요약 -->
-        <div class="dash-card" style="margin-bottom:18px;">
-          <div class="dash-card-header">
-            <h3>📅 어제 활동 요약 <span id="dYesterdayDate" class="kfma-sub"></span></h3>
-            <button class="btn btn-outline btn-sm" onclick="renderDashboard()">↻ 새로고침</button>
-          </div>
-          <div class="yesterday-grid">
-            <div class="yest-box">
-              <div class="yest-num" id="dYestSignups">0</div>
-              <div class="yest-lab">🆕 신규 가입</div>
-            </div>
-            <div class="yest-box">
-              <div class="yest-num" id="dYestLogins">0</div>
-              <div class="yest-lab">🔑 로그인</div>
-            </div>
-            <div class="yest-box">
-              <div class="yest-num" id="dYestPosts">0</div>
-              <div class="yest-lab">✏️ 글작성</div>
-            </div>
-            <div class="yest-box">
-              <div class="yest-num" id="dYestAnon">0</div>
-              <div class="yest-lab">🌍 익명 방문</div>
-            </div>
-            <div class="yest-box">
-              <div class="yest-num" id="dYestActive">0</div>
-              <div class="yest-lab">💚 활동 회원</div>
-            </div>
-          </div>
-          <div class="yest-section">
-            <h4>🆕 어제 가입한 회원</h4>
-            <div id="dYestSignupList" class="yest-list"></div>
-          </div>
-          <div class="yest-section">
-            <h4>📜 어제 활동 로그</h4>
-            <div id="dYestLogList" class="yest-list"></div>
-          </div>
-        </div>
-
-        <div class="dashboard-grid">
-          <!-- 7일 차트 -->
-          <div class="dash-card">
-            <div class="dash-card-header">
-              <h3>📈 일자별 활동량 (최근 7일)</h3>
-              <button class="btn btn-outline btn-sm" onclick="renderDashboard()">↻ 새로고침</button>
-            </div>
-            <div class="bar-chart" id="dChart"></div>
-          </div>
-
-          <!-- 현재 온라인 사용자 -->
-          <div class="dash-card">
-            <div class="dash-card-header"><h3>🟢 현재 접속 중</h3></div>
-            <div id="dOnlineList" class="online-list"></div>
-          </div>
-
-          <!-- 최근 로그 -->
-          <div class="dash-card dash-full">
-            <div class="dash-card-header">
-              <h3>📜 최근 활동 로그</h3>
-              <div style="display:flex; gap:6px;">
-                <select id="dLogFilter" onchange="renderDashboard()" class="dash-select">
-                  <option value="all">전체</option>
-                  <option value="로그인">로그인</option>
-                  <option value="로그아웃">로그아웃</option>
-                  <option value="회원가입">회원가입</option>
-                  <option value="글작성">글작성</option>
-                  <option value="페이지">페이지접속</option>
-                </select>
-                <button class="btn btn-outline btn-sm" onclick="clearLogs()">🗑️ 로그 초기화</button>
-              </div>
-            </div>
-            <div class="board-table-wrap">
-              <table class="board-table">
-                <thead><tr>
-                  <th style="width:160px;">시각</th>
-                  <th style="width:120px;">아이디</th>
-                  <th>활동</th>
-                  <th style="width:100px;">브라우저</th>
-                </tr></thead>
-                <tbody id="dLogBody"></tbody>
-              </table>
-            </div>
-            <div class="board-empty" id="dLogEmpty" style="display:none;">📭 활동 로그가 없습니다.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
 
   <!-- ===================== MODALS ===================== -->
 
@@ -957,14 +687,12 @@
         <a href="#" onclick="showTab('laws')">법령정보</a>
         <a href="#" onclick="showTab('tech')">기술자료</a>
         <a href="#" onclick="showTab('forms')">서식자료</a>
-        <a href="#" onclick="showTab('members-info')">회원정보</a>
         <a href="#" onclick="showTab('news')">최신 뉴스 검색</a>
         <a href="#" onclick="showTab('board')">게시판</a>
-        <a href="#" class="admin-only" onclick="showTab('dashboard')" style="display:none;">접속상황판</a>
       </div>
       <p>© 2026 Fire-Sugi 소방안전 블로그. All rights reserved.</p>
       <p class="version-info">
-        <span class="ver-badge">v20260524s</span>
+        <span class="ver-badge">v20260524t</span>
         <span class="ver-date">최종 수정 2026.05.22</span>
         <a href="https://github.com/hankal0501-ux/firesugi-blog/commits/main" target="_blank" class="ver-link">📝 수정 이력</a>
       </p>
@@ -976,9 +704,9 @@
   <!-- Firebase v10 Compat SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script src="firebase-sync.js?v=20260524s"></script>
+  <script src="firebase-sync.js?v=20260524t"></script>
 
-  <script src="auth.js?v=20260524s"></script>
-  <script src="script.js?v=20260524s"></script>
+  <script src="auth.js?v=20260524t"></script>
+  <script src="script.js?v=20260524t"></script>
 </body>
 </html>

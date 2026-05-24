@@ -624,12 +624,7 @@ function getUserPrograms() {
 }
 function saveUserPrograms(obj) {
   localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(obj));
-  // Firestore 동기화
-  if (typeof fbDb !== 'undefined') {
-    Object.entries(obj).forEach(([key, p]) => {
-      fbDb.collection('userPrograms').doc(key).set(p, { merge: true }).catch(() => {});
-    });
-  }
+  // ⛔ Firestore 자동 push 비활성화 — 각 PC 독립 동작
 }
 
 // ============================================================
@@ -792,9 +787,7 @@ async function quickDeleteProgram(key) {
     delete userProgs[key];
     delete programData[key];
     localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(userProgs));
-    if (typeof fbDb !== 'undefined') {
-      fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
-    }
+    // ⛔ Firestore 자동 push 비활성화
   } else {
     // 빌트인 — 숨김 (programData에서 안 지움, 휴지통의 hidden 영역에서 복원 가능)
     const hidden = getHiddenPrograms();
@@ -1248,9 +1241,7 @@ async function deleteUserProgram(key) {
   delete all[key];
   delete programData[key];
   localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(all));
-  if (typeof fbDb !== 'undefined') {
-    fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
-  }
+  // ⛔ Firestore 자동 push 비활성화
   logActivity('프로그램 삭제: ' + name);
   hideProgramDetail();
   renderPrograms();

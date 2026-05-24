@@ -18,17 +18,17 @@ function hideAdminModal() {
   const m = document.getElementById('adminModal');
   if (m) m.style.display = 'none';
 }
+const ADMIN_AUTO_KEY = 'fireSugiAdminAutoEnter';
+
 async function doAdminLogin() {
   const pw = (document.getElementById('adminPw') || {}).value || '';
   const err = document.getElementById('adminError');
+  const remember = document.getElementById('adminRemember')?.checked;
 
-  // 통합 비번 시스템 — script.js 의 verifyAdminPassword (해시 기반) 사용
-  // 본인이 변경한 새 비번도 통과, 기본값 dodan0501! 도 통과
   let ok = false;
   if (typeof verifyAdminPassword === 'function') {
     try { ok = await verifyAdminPassword(pw); } catch (e) { console.warn('verify err:', e); }
   }
-  // 폴백 — script.js 로드 안 됐을 때만 옛 하드코딩 비번 시도
   if (!ok && pw === ADMIN_PASSWORD) ok = true;
 
   if (!ok) {
@@ -36,7 +36,7 @@ async function doAdminLogin() {
     return;
   }
 
-  // 합성 관리자 사용자 등록 — 기존 isAdmin/getCurrentUser 체인이 그대로 동작하도록
+  // 합성 관리자 사용자 등록
   const adminUser = { id: SITE_OWNER_ID, role: 'admin', joinDate: new Date().toISOString().slice(0,10), lastLogin: Date.now() };
   const users = JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');
   const idx = users.findIndex(u => u.id === SITE_OWNER_ID);
@@ -44,16 +44,52 @@ async function doAdminLogin() {
   else users.push(adminUser);
   localStorage.setItem(AUTH_KEY, JSON.stringify(users));
   localStorage.setItem(SESSION_KEY, JSON.stringify(adminUser));
+
+  // 🔓 "자동 진입" 체크 → 비번 해시 저장하여 다음 페이지 로드 시 자동 로그인
+  if (remember) {
+    try {
+      if (typeof sha256 === 'function') {
+        const hash = await sha256(pw);
+        localStorage.setItem(ADMIN_AUTO_KEY, hash);
+      }
+    } catch (e) { console.warn('자동진입 저장 실패:', e); }
+  } else {
+    localStorage.removeItem(ADMIN_AUTO_KEY);
+  }
+
   hideAdminModal();
   if (typeof updateAuthUI === 'function') updateAuthUI();
   if (typeof logActivity === 'function') logActivity('🛡 관리자 모드 진입', SITE_OWNER_ID);
-  alert('✅ 관리자 모드 진입 완료. 페이지가 자동 새로고침됩니다.');
+  alert('✅ 관리자 모드 진입 완료' + (remember ? ' · 자동 진입 저장됨' : ''));
   location.reload();
 }
+
+// 페이지 로드 시 자동 진입 — localStorage 의 해시가 현재 활성 해시와 일치하면 세션 자동 부여
+async function tryAutoAdminEnter() {
+  const savedHash = localStorage.getItem(ADMIN_AUTO_KEY);
+  if (!savedHash) return false;
+  if (typeof getActiveAdminHash !== 'function') return false;
+  // 저장된 해시와 현재 admin 해시가 같으면 자동 진입
+  if (savedHash === getActiveAdminHash() && !getCurrentUser()) {
+    const adminUser = { id: SITE_OWNER_ID, role: 'admin', joinDate: new Date().toISOString().slice(0,10), lastLogin: Date.now() };
+    const users = JSON.parse(localStorage.getItem(AUTH_KEY) || '[]');
+    const idx = users.findIndex(u => u.id === SITE_OWNER_ID);
+    if (idx >= 0) users[idx] = { ...users[idx], ...adminUser };
+    else users.push(adminUser);
+    localStorage.setItem(AUTH_KEY, JSON.stringify(users));
+    localStorage.setItem(SESSION_KEY, JSON.stringify(adminUser));
+    console.log('🔓 관리자 자동 진입 완료');
+    return true;
+  }
+  return false;
+}
+window.tryAutoAdminEnter = tryAutoAdminEnter;
 function exitAdminMode() {
   localStorage.removeItem(SESSION_KEY);
   sessionStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem('fireSugiAdminAutoEnter');  // 자동 진입도 해제
   if (typeof logActivity === 'function') logActivity('관리자 모드 종료', SITE_OWNER_ID);
+  alert('🚪 관리자 모드 종료됨');
   location.reload();
 }
 // 하위 호환 — 기존 코드의 showLoginModal/showSignupModal/logout 호출은 관리자 모달로 대체
@@ -386,15 +422,18 @@ function getOnlineUsers() {
 }
 
 // ===== UI UPDATE =====
-// 회원 UI 제거 후 — 관리자 로그인 시 버튼이 '🛡 관리자 모드'로 바뀜 + 클릭 시 메뉴
 function updateAuthUI() {
   const loginBtn = document.getElementById('authLoginBtn');
   const adminLinks = document.querySelectorAll('.admin-only');
   const admin = (typeof isAdmin === 'function') ? isAdmin() : false;
 
+  // OUT 버튼 동적 생성/제거 — 관리자 모드 진입 시에만 표시
+  let outBtn = document.getElementById('authOutBtn');
+  const authArea = document.querySelector('.auth-area');
+
   if (loginBtn) {
     if (admin) {
-      loginBtn.innerHTML = '🛡 관리자 모드';
+      loginBtn.innerHTML = '🛡 관리자 모드 LOGIN';
       loginBtn.classList.remove('btn-outline');
       loginBtn.classList.add('btn-primary', 'admin-active');
       loginBtn.setAttribute('onclick', 'showAdminMenu()');
@@ -403,6 +442,18 @@ function updateAuthUI() {
       loginBtn.style.borderColor = '#03c75a';
       loginBtn.style.fontWeight = '700';
       loginBtn.title = '관리자 모드 활성 — 클릭하여 메뉴 열기';
+
+      // OUT 버튼 추가
+      if (!outBtn && authArea) {
+        outBtn = document.createElement('button');
+        outBtn.id = 'authOutBtn';
+        outBtn.className = 'btn btn-outline btn-sm';
+        outBtn.innerHTML = '🚪 OUT';
+        outBtn.title = '관리자 모드 종료';
+        outBtn.style.cssText = 'background:#fff; color:#dc2626; border:1.5px solid #dc2626; font-weight:700; margin-left:6px;';
+        outBtn.setAttribute('onclick', "if(confirm('🚪 관리자 모드를 종료하시겠습니까?'))exitAdminMode();");
+        authArea.appendChild(outBtn);
+      }
     } else {
       loginBtn.innerHTML = '🔐 관리자';
       loginBtn.classList.remove('btn-primary', 'admin-active');
@@ -413,6 +464,9 @@ function updateAuthUI() {
       loginBtn.style.borderColor = '';
       loginBtn.style.fontWeight = '';
       loginBtn.title = '관리자 모드 진입 (비밀번호 필요)';
+
+      // OUT 버튼 제거
+      if (outBtn) outBtn.remove();
     }
   }
   adminLinks.forEach(el => {
@@ -664,6 +718,9 @@ document.addEventListener('DOMContentLoaded', () => {
     saveUsers(users);
     console.log('🛡 누락된 본인 계정 자동 복구:', me.id);
   }
+
+  // 🔓 저장된 비번 해시로 자동 관리자 진입 시도 (실패해도 무관)
+  tryAutoAdminEnter().then(() => updateAuthUI());
 
   updateAuthUI();
   // 페이지 진입 로그

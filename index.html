@@ -19,7 +19,7 @@
       <a href="#" class="logo" onclick="showTab('home')">
         <div class="logo-icon">🔥</div>
         <span>Fire-Sugi</span>
-        <span class="logo-ver" title="현재 버전">v20260524z5</span>
+        <span class="logo-ver" title="현재 버전">v20260524z6</span>
       </a>
       <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
       <nav>
@@ -601,6 +601,9 @@
       <div class="form-group"><label>관리자 비밀번호</label>
         <input type="password" id="adminPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doAdminLogin()">
       </div>
+      <label style="display:flex; align-items:center; gap:6px; font-size:0.82rem; color:var(--text-secondary); margin:-4px 0 10px; cursor:pointer;">
+        <input type="checkbox" id="adminRemember" style="margin:0;"> 🔓 이 기기에 저장 (다음부터 자동 진입)
+      </label>
       <div class="form-error" id="adminError"></div>
       <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doAdminLogin()">확인</button>
       <hr style="margin:18px 0 12px; border:none; border-top:1px dashed var(--border);">
@@ -714,7 +717,7 @@
       </div>
       <p>© 2026 Fire-Sugi 소방안전 블로그. All rights reserved.</p>
       <p class="version-info">
-        <span class="ver-badge">v20260524z5</span>
+        <span class="ver-badge">v20260524z6</span>
         <span class="ver-date">최종 수정 2026.05.22</span>
         <a href="https://github.com/hankal0501-ux/firesugi-blog/commits/main" target="_blank" class="ver-link">📝 수정 이력</a>
       </p>

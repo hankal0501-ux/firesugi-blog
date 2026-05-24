@@ -268,7 +268,36 @@ async function initFirebaseSync() {
       if (typeof programData !== 'undefined') Object.assign(programData, mergedUserProgs);
       console.log(`🔥 사용자 추가 프로그램: ${Object.keys(mergedUserProgs).length}건`);
       if (typeof renderPrograms === 'function') renderPrograms();
-    } catch (e) { console.warn('userPrograms sync 실패:', e.message); }
+    } catch (e) {
+      if (isQuotaError(e)) markQuotaExceeded();
+      else console.warn('userPrograms sync 실패:', e.message);
+    }
+
+    // ─ 스크린샷(사진) 동기화 ─ updatedAt 비교로 더 새 거 덮어쓰기
+    try {
+      const shotSnap = await fbDb.collection('programScreenshots').get();
+      let pulledShots = 0;
+      shotSnap.forEach(doc => {
+        const k = 'fireSugiShots_' + doc.id;
+        const remote = doc.data();
+        const metaRaw = localStorage.getItem(k + '_meta');
+        const localUpdated = (() => { try { return JSON.parse(metaRaw || '{}').updatedAt || 0; } catch { return 0; } })();
+        if (!remote.shots || !Array.isArray(remote.shots)) return;
+        // remote 가 더 새 거면 덮어쓰기
+        if (!localStorage.getItem(k) || (remote.updatedAt && remote.updatedAt > localUpdated)) {
+          localStorage.setItem(k, JSON.stringify(remote.shots));
+          localStorage.setItem(k + '_meta', JSON.stringify({ updatedAt: remote.updatedAt || Date.now() }));
+          pulledShots++;
+        }
+      });
+      if (pulledShots > 0) {
+        console.log(`📸 스크린샷 ${pulledShots}건 pull 완료`);
+        if (typeof renderPrograms === 'function') renderPrograms();
+      }
+    } catch (e) {
+      if (isQuotaError(e)) markQuotaExceeded();
+      else console.warn('스크린샷 sync 실패:', e.message);
+    }
 
     // 본 기기의 데이터도 Firestore로 푸시 (양방향 sync 보장)
     await fbPushAllUsers(mergedUsers);

@@ -110,7 +110,7 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
     <h2 class="page-title">여행 특가 · 무료 응모/경품 이벤트</h2>
     <p class="meta">최신 정보 갱신: <strong>2026-05-17 16:19:40</strong> · 페이지 자동 새로고침(10분)</p>
     <div class="manual-actions">
-      <button class="manual-btn" onclick="manualCollect()">🔄 지금 수동 수집</button>
+      <button class="manual-btn admin-only-btn" id="btnManualCollect" onclick="manualCollect()" style="display:none;">🔄 지금 수동 수집 (관리자)</button>
       <button class="manual-btn refresh" onclick="refreshEvents()">⟳ 페이지 새로고침</button>
       <span class="manual-hint" id="manualHint"></span>
     </div>
@@ -352,7 +352,7 @@ function refreshEvents() {
   }));
 })();
 
-// === 관리자 판별 — Fire-Sugi 메인의 로그인 상태 읽어서 settings 링크 노출 ===
+// === 관리자 판별 — Fire-Sugi 메인의 로그인 상태 읽어서 관리자 전용 UI 노출 ===
 (function(){
   try {
     const session = localStorage.getItem('fireSugiSession') || sessionStorage.getItem('fireSugiSession');
@@ -366,11 +366,30 @@ function refreshEvents() {
       if (link) link.style.display = 'inline-block';
       const stocks = document.getElementById('admin-stocks-link');
       if (stocks) stocks.style.display = 'inline-block';
+      // 🔄 수동 수집 버튼 (관리자 전용)
+      document.querySelectorAll('.admin-only-btn').forEach(el => { el.style.display = ''; });
     }
   } catch (e) {
     /* 무시 */
   }
 })();
+
+// 관리자가 아니면서 manualCollect 호출하려고 하면 차단
+const _originalManualCollect = window.manualCollect;
+window.manualCollect = function() {
+  const session = localStorage.getItem('fireSugiSession') || sessionStorage.getItem('fireSugiSession');
+  if (!session) { alert('🔒 관리자만 사용할 수 있습니다.\n메인 페이지에서 관리자 로그인 후 이용하세요.'); return; }
+  try {
+    const user = JSON.parse(session);
+    const users = JSON.parse(localStorage.getItem('fireSugiUsers') || '[]');
+    const dbUser = users.find(u => u.id === user.id);
+    if (!dbUser || dbUser.role !== 'admin') {
+      alert('🔒 관리자 권한이 없습니다.');
+      return;
+    }
+  } catch (e) { alert('🔒 인증 확인 실패'); return; }
+  _originalManualCollect();
+};
 </script>
 </body>
 </html>

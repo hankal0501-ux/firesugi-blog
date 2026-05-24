@@ -328,17 +328,12 @@ async function showFirebaseStatus() {
   `;
 }
 
-// 🔥 자동 동기화 재활성화 (할당량 안전 모드)
-// - 페이지 로드 시 1회 sync (1.5초 후)
-// - 이후 5분(300초)마다 sync (이전: 30초 → 10배 감소로 quota 절감)
-// - 가시 상태일 때만 실행
-// - 일 예상 호출: 약 288회 × 8 ops/cycle ≈ 2,300 ops (Spark 한도 50K 안에 충분)
+// 🔥 Firebase sync — 변경 시에만 동작 (자동 인터벌 제거)
+// - 페이지 로드 시 1회 pull (다른 기기 변경분 받아옴)
+// - 작성·삭제는 save* 함수에서 직접 push (변경분만)
+// - 주기 자동 갱신 없음 → 일 호출량 최소화
+// 즉시 갱신 필요 시: F5 새로고침 또는 관리자 모달 [🔄 즉시 동기화]
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(initFirebaseSync, 1500);
 });
-setInterval(() => {
-  if (document.visibilityState === 'visible') {
-    initFirebaseSync();
-  }
-}, 300000); // 5분
-console.log('🔥 Firebase 자동 sync 활성화 (5분 주기, 가시 상태일 때만)');
+console.log('🔥 Firebase sync — 로드 시 1회 + 변경 시에만 (자동 갱신 없음)');

@@ -575,9 +575,9 @@ function saveUserPrograms(obj) {
 // - 변경하려면 네이버 이메일 OR 폰번호 본인 인증 필요
 // ============================================================
 
-// 기본 password 해시 (= 'FireSugi#2026-Hankal@Secure!')
-// 첫 로그인 후 즉시 changeAdminPassword() 호출해 변경 권장
-const DEFAULT_PWD_HASH = '4ae5afde210e289b1d6fb317741976b1ac554561dcf53e245b9b2a8d0d96be8e';
+// 기본 password 해시 (= 'dodan0501!')
+// 사용자가 익숙한 기존 비번으로 환원. 본인이 더 강한 비번으로 바꾸려면 changeAdminPassword() 호출
+const DEFAULT_PWD_HASH = '161a1e1429d73e85fcb329d6211247a88c000c241e5d68ec6c11353799da4119';
 const PWD_KEY_LOCAL = 'fireSugiAdminPwdHash_v3';
 const PWD_AUTH_SESSION = 'progAuth_v3';
 
@@ -594,8 +594,16 @@ async function sha256(text) {
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+// 이전 강제 변경된 default 해시 (FireSugi#2026-Hankal@Secure!) — 자동 제거
+const LEGACY_DEFAULT_HASH = '4ae5afde210e289b1d6fb317741976b1ac554561dcf53e245b9b2a8d0d96be8e';
+
 function getActiveAdminHash() {
-  return localStorage.getItem(PWD_KEY_LOCAL) || DEFAULT_PWD_HASH;
+  const stored = localStorage.getItem(PWD_KEY_LOCAL);
+  if (stored === LEGACY_DEFAULT_HASH) {
+    localStorage.removeItem(PWD_KEY_LOCAL);
+    return DEFAULT_PWD_HASH;
+  }
+  return stored || DEFAULT_PWD_HASH;
 }
 
 async function verifyAdminPassword(pw) {

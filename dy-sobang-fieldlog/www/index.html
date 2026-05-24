@@ -836,7 +836,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.3.4';
+  const APP_VERSION = '1.3.5';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1608,34 +1608,85 @@
     updateSelectedInfo();
   });
 
+  // 여러 파일 한 번에 공유 — files 배열로 단일 share intent 호출
+  async function shareMultipleJpegs(recs) {
+    const valid = recs.filter(r => r && r.photo);
+    if (valid.length === 0) { toast('공유할 사진 없음'); return; }
+
+    // Web: 순차 다운로드 (브라우저는 multi-file share API 미지원)
+    if (!window.Capacitor?.isNativePlatform?.() || !Capacitor.Plugins?.Filesystem || !Capacitor.Plugins?.Share) {
+      let done = 0;
+      for (const rec of valid) {
+        const ok = await saveJpeg(rec.photo, buildFilename(rec));
+        if (ok) done++;
+        await new Promise(r => setTimeout(r, 200));
+      }
+      toast(`${done}/${valid.length}건 다운로드 완료`);
+      return;
+    }
+
+    const { Filesystem, Share } = Capacitor.Plugins;
+    toast(`${valid.length}건 준비 중...`);
+
+    // 1단계: 모든 파일을 cache에 미리 작성 → URI 수집
+    const uris = [];
+    for (const rec of valid) {
+      try {
+        const filename = buildFilename(rec);
+        const base64 = rec.photo.split(',')[1];
+        const res = await Filesystem.writeFile({
+          path: filename,
+          data: base64,
+          directory: 'CACHE'
+        });
+        uris.push(res.uri);
+      } catch (e) {
+        console.warn('cache write 실패:', e);
+      }
+    }
+
+    if (uris.length === 0) { toast('파일 준비 실패'); return; }
+
+    // 2단계: 모든 파일을 files 배열로 단일 Share.share 호출
+    try {
+      await Share.share({
+        title: `대영소방 사진기록 (${uris.length}건)`,
+        files: uris,
+        dialogTitle: `${uris.length}건 공유 / 저장`
+      });
+      toast(`${uris.length}건 공유 시트 열림`);
+    } catch (e) {
+      if (e?.message?.includes('canceled')) {
+        toast('공유 취소됨');
+      } else {
+        console.error('multi-share 실패:', e);
+        // 폴백: 순차 단일 공유
+        toast('단일 공유 폴백 모드');
+        let done = 0;
+        for (const rec of valid) {
+          const ok = await saveJpeg(rec.photo, buildFilename(rec));
+          if (ok) done++;
+          await new Promise(r => setTimeout(r, 500));
+        }
+        toast(`${done}/${valid.length}건 처리 완료`);
+      }
+    }
+  }
+
   // ===== 선택 공유 =====
   document.getElementById('btnShareSelected').addEventListener('click', async () => {
     const ids = getSelectedIds();
     if (ids.length === 0) { toast('선택된 항목 없음'); return; }
-    if (!confirm(`${ids.length}건의 사진을 순차로 공유합니다.\n각 사진마다 저장 위치를 선택하세요.`)) return;
-    let done = 0;
-    for (const id of ids) {
-      const rec = records.find(r => r.id === id);
-      if (!rec?.photo) continue;
-      const ok = await saveJpeg(rec.photo, buildFilename(rec));
-      if (ok) done++;
-      await new Promise(r => setTimeout(r, 200));
-    }
-    toast(`${done}/${ids.length}건 공유 완료`);
+    if (!confirm(`${ids.length}건을 한 번에 공유합니다.`)) return;
+    const recs = ids.map(id => records.find(r => r.id === id));
+    await shareMultipleJpegs(recs);
   });
 
   // ===== 전체 공유 =====
   document.getElementById('btnShareAll').addEventListener('click', async () => {
     if (records.length === 0) { toast('공유할 기록 없음'); return; }
-    if (!confirm(`전체 ${records.length}건의 사진을 순차로 공유합니다.\n각 사진마다 저장 위치를 선택하세요.`)) return;
-    let done = 0;
-    for (const rec of records) {
-      if (!rec.photo) continue;
-      const ok = await saveJpeg(rec.photo, buildFilename(rec));
-      if (ok) done++;
-      await new Promise(r => setTimeout(r, 200));
-    }
-    toast(`${done}/${records.length}건 공유 완료`);
+    if (!confirm(`전체 ${records.length}건을 한 번에 공유합니다.`)) return;
+    await shareMultipleJpegs(records);
   });
 
   // ===== 선택 삭제 =====

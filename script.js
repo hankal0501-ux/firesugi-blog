@@ -267,28 +267,33 @@ function loadMorePosts() {
 }
 
 function toggleWriteForm() {
-  const user = getCurrentUser();
-  if (!user) { alert('로그인이 필요합니다.'); showLoginModal(); return; }
+  // 누구나 작성 가능 — 인증 제거
   const f = document.getElementById('writeForm');
   f.style.display = f.style.display === 'none' ? 'block' : 'none';
 }
 
 function submitPost() {
-  const user = getCurrentUser();
-  if (!user) return;
   const title = document.getElementById('postTitle').value.trim();
   const content = document.getElementById('postContent').value.trim();
   const secret = document.getElementById('postSecret').checked;
   if (!title || !content) { alert('제목과 내용을 입력하세요.'); return; }
+  // 작성자 닉네임: 입력 필드가 있으면 그 값, 없거나 비우면 익명 + 4자리 ID
+  const nickEl = document.getElementById('postAuthor');
+  let author = (nickEl && nickEl.value.trim()) || '';
+  if (!author) {
+    const tail = Math.floor(Math.random() * 9000 + 1000);
+    author = `익명_${tail}`;
+  }
   const posts = getPosts();
   const now = new Date();
   const date = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
-  posts.push({ id: Date.now(), author: user.id, title, content, date, views: 0, secret, comments: [] });
+  posts.push({ id: Date.now(), author, title, content, date, views: 0, secret, comments: [] });
   savePosts(posts);
-  logActivity('글작성: ' + title.slice(0, 30), user.id);
+  logActivity('글작성: ' + title.slice(0, 30), author);
   document.getElementById('postTitle').value = '';
   document.getElementById('postContent').value = '';
   document.getElementById('postSecret').checked = false;
+  if (nickEl) nickEl.value = '';
   toggleWriteForm();
   renderBoard();
   renderHomeBoard();
@@ -318,16 +323,14 @@ function closePostModal() {
   currentPostId = null;
 }
 
-function deletePost() {
+async function deletePost() {
   if (!currentPostId) return;
-  const user = getCurrentUser();
-  const posts = getPosts();
-  const post = posts.find(p => p.id === currentPostId);
-  if (post && user && user.id !== post.author) { alert('작성자만 삭제할 수 있습니다.'); return; }
-  if (!confirm('삭제하시겠습니까?')) return;
+  // 관리자만 삭제 가능 — 비번 prompt
+  if (!(await checkDeletePassword())) return;
+  if (!confirm('이 글을 삭제하시겠습니까?')) return;
   const deletedId = currentPostId;
+  const posts = getPosts();
   savePosts(posts.filter(p => p.id !== currentPostId));
-  // Firestore에서도 삭제
   if (typeof fbDeletePost === 'function') fbDeletePost(deletedId).catch(() => {});
   closePostModal(); renderBoard();
 }
@@ -342,20 +345,26 @@ function renderComments(post) {
 }
 
 function submitComment() {
-  const user = getCurrentUser();
-  if (!user) { alert('로그인이 필요합니다.'); showLoginModal(); return; }
   const input = document.getElementById('commentInput');
   const text = input.value.trim();
   if (!text) return;
+  // 댓글 작성자: 닉네임 필드가 있으면 그 값, 없으면 익명
+  const nickEl = document.getElementById('commentAuthor');
+  let author = (nickEl && nickEl.value.trim()) || '';
+  if (!author) {
+    const tail = Math.floor(Math.random() * 9000 + 1000);
+    author = `익명_${tail}`;
+  }
   const posts = getPosts();
   const post = posts.find(p => p.id === currentPostId);
   if (!post) return;
   if (!post.comments) post.comments = [];
   const now = new Date();
   const date = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  post.comments.push({ author: user.id, text, date });
+  post.comments.push({ author, text, date });
   savePosts(posts);
   input.value = '';
+  if (nickEl) nickEl.value = '';
   renderComments(post);
 }
 

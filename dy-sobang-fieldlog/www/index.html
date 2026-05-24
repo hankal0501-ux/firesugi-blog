@@ -836,7 +836,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.3.5';
+  const APP_VERSION = '1.4.0';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1319,10 +1319,9 @@
     return `${site}_${floor}_${memo}_${ymd}_${hm}.jpg`;
   }
 
-  // 입력완료 시 자동 호출 — 갤러리/Pictures 폴더에 silent 저장 (share sheet 없음)
+  // 입력완료 시 자동 호출 — 갤러리에 silent 저장 후 URI 반환 (썸네일만 IndexedDB에 저장하기 위함)
   async function saveToGallerySilent(dataUrl, filename) {
     if (!window.Capacitor?.isNativePlatform?.() || !Capacitor.Plugins?.Filesystem) {
-      // 웹: 다운로드 폴더로 자동 저장
       try {
         const blob = await (await fetch(dataUrl)).blob();
         const url = URL.createObjectURL(blob);
@@ -1331,41 +1330,59 @@
         document.body.appendChild(a); a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        return 'web-download';
-      } catch (e) { console.warn('web auto-save 실패:', e); return false; }
+        return { location: 'web-download', uri: null, path: null, directory: null };
+      } catch (e) { console.warn('web auto-save 실패:', e); return null; }
     }
     const base64 = dataUrl.split(',')[1];
     const { Filesystem } = Capacitor.Plugins;
-    // 1순위: 공용 Pictures/대영소방 (갤러리 인덱싱 가능)
+    const targets = [
+      { dir: 'EXTERNAL_STORAGE', path: 'Pictures/대영소방/' + filename, label: 'Pictures/대영소방' },
+      { dir: 'DOCUMENTS', path: '대영소방/' + filename, label: 'Documents/대영소방' },
+      { dir: 'EXTERNAL', path: '대영소방/' + filename, label: 'External/대영소방' }
+    ];
+    for (const t of targets) {
+      try {
+        const res = await Filesystem.writeFile({
+          path: t.path, data: base64, directory: t.dir, recursive: true
+        });
+        return { location: t.label, uri: res.uri, path: t.path, directory: t.dir };
+      } catch (e) { console.warn(t.dir + ' 실패:', e.message); }
+    }
+    console.error('모든 silent 저장 실패');
+    return null;
+  }
+
+  // 썸네일 생성 — 원본 dataUrl → 가로/세로 200px 이하 JPEG (~5-15KB)
+  async function makeThumbnail(dataUrl, maxSize = 220, quality = 0.7) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = () => resolve(dataUrl); // 폴백
+      img.src = dataUrl;
+    });
+  }
+
+  // 저장된 파일의 base64 데이터 다시 읽기 (공유 시 사용)
+  async function readFullPhotoFromDisk(rec) {
+    if (!rec.fsPath || !rec.fsDirectory) return null;
+    if (!Capacitor.Plugins?.Filesystem) return null;
     try {
-      await Filesystem.writeFile({
-        path: 'Pictures/대영소방/' + filename,
-        data: base64,
-        directory: 'EXTERNAL_STORAGE',
-        recursive: true
+      const res = await Capacitor.Plugins.Filesystem.readFile({
+        path: rec.fsPath,
+        directory: rec.fsDirectory
       });
-      return 'Pictures/대영소방';
-    } catch (e) { console.warn('EXTERNAL_STORAGE 실패:', e); }
-    // 2순위: Documents/대영소방 (파일 앱에서 확인 가능)
-    try {
-      await Filesystem.writeFile({
-        path: '대영소방/' + filename,
-        data: base64,
-        directory: 'DOCUMENTS',
-        recursive: true
-      });
-      return 'Documents/대영소방';
-    } catch (e) { console.warn('DOCUMENTS 실패:', e); }
-    // 3순위: 외부 데이터 디렉터리
-    try {
-      await Filesystem.writeFile({
-        path: '대영소방/' + filename,
-        data: base64,
-        directory: 'EXTERNAL',
-        recursive: true
-      });
-      return 'External/대영소방';
-    } catch (e) { console.error('모든 silent 저장 실패:', e); return false; }
+      return 'data:image/jpeg;base64,' + res.data;
+    } catch (e) {
+      console.warn('readFile 실패:', e.message);
+      return null;
+    }
   }
 
   // ⬆ 공유 버튼 전용 — share sheet 열어 사용자가 갤러리/드라이브/카톡 등 선택
@@ -1441,7 +1458,7 @@
     saveBtn.textContent = '합성 중...';
 
     try {
-      // Bake all metadata as watermark onto the JPEG
+      // 1) 워터마크 합성 (메타데이터 burn-in)
       const stamped = await stampPhoto(currentPhoto, {
         site, floor, memo,
         address: currentAddress,
@@ -1449,30 +1466,46 @@
         datetimeStr
       });
 
+      // 2) 휴대폰 갤러리에 원본 파일 silent 저장 → URI/path 받기
+      saveBtn.textContent = '저장 중...';
+      const tempRec = { id: Date.now(), timestamp: now.toISOString(), site, floor, memo };
+      const filename = buildFilename(tempRec);
+      const savedInfo = await saveToGallerySilent(stamped, filename);
+
+      // 3) 썸네일 생성 (~10KB) — IndexedDB에는 썸네일만 저장
+      saveBtn.textContent = '썸네일 생성...';
+      const thumbnail = await makeThumbnail(stamped, 220, 0.7);
+
       const rec = {
-        id: Date.now(),
+        id: tempRec.id,
         timestamp: now.toISOString(),
         site, floor, memo,
         address: currentAddress,
         gps: currentGps,
-        photo: stamped
+        thumbnail,                          // 작은 프리뷰 (~10KB)
+        filename,                           // 갤러리 파일명
+        fileLocation: savedInfo?.location,  // 'Pictures/대영소방' 등
+        fsPath: savedInfo?.path,            // 다시 읽기용 path
+        fsDirectory: savedInfo?.directory,  // 다시 읽기용 directory
+        fileUri: savedInfo?.uri             // Share용 직접 URI
+        // ⚠️ rec.photo (full base64) 더 이상 저장 안 함 → 용량 절감
       };
+      // 갤러리 저장 실패 시에만 full photo 백업 (구형 폰 대비)
+      if (!savedInfo) {
+        rec.photo = stamped;
+        console.warn('갤러리 저장 실패 — full photo로 폴백');
+      }
 
       records.unshift(rec);
       await Store.put(rec);
       updateSiteList();
       renderList();
 
-      // 휴대폰 갤러리/Pictures 폴더에도 자동 저장 (silent — share sheet 없음)
-      const filename = buildFilename(rec);
-      saveBtn.textContent = '저장 중...';
-      const savedTo = await saveToGallerySilent(stamped, filename);
-
       resetCurrent();
-      if (savedTo) {
-        toast(`리스트 + 폰 저장 완료 (${savedTo})`);
+      if (savedInfo) {
+        toast(`✅ 폰 저장 완료 (${savedInfo.location}) · 리스트엔 썸네일만`);
       } else {
-        toast('리스트 저장됨 (폰 저장 실패)');
+        toast('⚠️ 폰 저장 실패 — 리스트엔 원본 보관');
       }
     } catch(e) {
       console.error('save error:', e);
@@ -1511,9 +1544,11 @@
       const date = new Date(r.timestamp);
       const time = `${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
       const dateStr = `${date.getMonth()+1}/${date.getDate()}`;
-      const thumb = r.photo
-        ? `<img class="thumb" src="${r.photo}" alt="">`
-        : `<div class="thumb">사진없음</div>`;
+      // 썸네일 우선 (~10KB), 폴백으로 full photo (구형 레코드)
+      const previewSrc = r.thumbnail || r.photo;
+      const thumb = previewSrc
+        ? `<img class="thumb" src="${previewSrc}" alt="" loading="lazy">`
+        : `<div class="thumb">📷</div>`;
       const gpsInfo = r.gps ? ' · GPS' : '';
       const siteText = escapeHtml(r.site || '미지정');
       const floorBadge = r.floor ? `<span class="floor-badge">${escapeHtml(r.floor)}</span>` : '';
@@ -1538,9 +1573,8 @@
       btn.addEventListener('click', async (e) => {
         const id = parseInt(e.currentTarget.getAttribute('data-id'));
         const rec = records.find(r => r.id === id);
-        if (!rec || !rec.photo) { toast('사진 없음'); return; }
-        const filename = buildFilename(rec);
-        await saveJpeg(rec.photo, filename);
+        if (!rec) { toast('기록 없음'); return; }
+        await shareSingleRecord(rec);
       });
     });
 
@@ -1608,46 +1642,76 @@
     updateSelectedInfo();
   });
 
-  // 여러 파일 한 번에 공유 — files 배열로 단일 share intent 호출
+  // 단일 레코드 공유 — 갤러리 파일 URI를 그대로 share intent 에 전달
+  async function shareSingleRecord(rec) {
+    if (!rec) { toast('기록 없음'); return; }
+
+    // 네이티브: fileUri 가 있으면 디스크 파일 직접 공유 (IndexedDB 데이터 안 거침)
+    if (window.Capacitor?.isNativePlatform?.() && Capacitor.Plugins?.Share && rec.fileUri) {
+      try {
+        await Capacitor.Plugins.Share.share({
+          title: rec.filename || buildFilename(rec),
+          files: [rec.fileUri],
+          dialogTitle: '저장 / 공유'
+        });
+        return;
+      } catch (e) {
+        if (e?.message?.includes('canceled')) return;
+        console.warn('fileUri share 실패, full 데이터로 폴백:', e.message);
+      }
+    }
+
+    // 폴백: full photo 데이터로 공유 (구형 레코드 또는 fileUri 누락)
+    let dataUrl = rec.photo;
+    if (!dataUrl && rec.fsPath) {
+      dataUrl = await readFullPhotoFromDisk(rec);
+    }
+    if (!dataUrl) { toast('사진 파일을 찾을 수 없음 — 갤러리에서 삭제됐을 수 있음'); return; }
+    await saveJpeg(dataUrl, rec.filename || buildFilename(rec));
+  }
+
+  // 여러 파일 한 번에 공유 — fileUri 배열로 단일 share intent 호출 (디스크 직접 참조)
   async function shareMultipleJpegs(recs) {
-    const valid = recs.filter(r => r && r.photo);
+    const valid = recs.filter(r => r && (r.fileUri || r.photo || r.fsPath));
     if (valid.length === 0) { toast('공유할 사진 없음'); return; }
 
-    // Web: 순차 다운로드 (브라우저는 multi-file share API 미지원)
-    if (!window.Capacitor?.isNativePlatform?.() || !Capacitor.Plugins?.Filesystem || !Capacitor.Plugins?.Share) {
+    // Web 폴백
+    if (!window.Capacitor?.isNativePlatform?.() || !Capacitor.Plugins?.Share) {
       let done = 0;
       for (const rec of valid) {
-        const ok = await saveJpeg(rec.photo, buildFilename(rec));
-        if (ok) done++;
+        await shareSingleRecord(rec);
+        done++;
         await new Promise(r => setTimeout(r, 200));
       }
-      toast(`${done}/${valid.length}건 다운로드 완료`);
+      toast(`${done}/${valid.length}건 처리`);
       return;
     }
 
     const { Filesystem, Share } = Capacitor.Plugins;
     toast(`${valid.length}건 준비 중...`);
 
-    // 1단계: 모든 파일을 cache에 미리 작성 → URI 수집
+    // URI 수집 — fileUri 있으면 그대로, 없으면 cache에 임시 작성
     const uris = [];
     for (const rec of valid) {
+      if (rec.fileUri) {
+        uris.push(rec.fileUri);
+        continue;
+      }
+      // 구형 레코드: rec.photo 가 있으면 cache 에 임시로 써서 URI 만듦
+      const base64 = (rec.photo || '').split(',')[1];
+      if (!base64) continue;
       try {
-        const filename = buildFilename(rec);
-        const base64 = rec.photo.split(',')[1];
         const res = await Filesystem.writeFile({
-          path: filename,
+          path: rec.filename || buildFilename(rec),
           data: base64,
           directory: 'CACHE'
         });
         uris.push(res.uri);
-      } catch (e) {
-        console.warn('cache write 실패:', e);
-      }
+      } catch (e) { console.warn('cache write 실패:', e); }
     }
 
     if (uris.length === 0) { toast('파일 준비 실패'); return; }
 
-    // 2단계: 모든 파일을 files 배열로 단일 Share.share 호출
     try {
       await Share.share({
         title: `대영소방 사진기록 (${uris.length}건)`,
@@ -1656,19 +1720,12 @@
       });
       toast(`${uris.length}건 공유 시트 열림`);
     } catch (e) {
-      if (e?.message?.includes('canceled')) {
-        toast('공유 취소됨');
-      } else {
-        console.error('multi-share 실패:', e);
-        // 폴백: 순차 단일 공유
-        toast('단일 공유 폴백 모드');
-        let done = 0;
-        for (const rec of valid) {
-          const ok = await saveJpeg(rec.photo, buildFilename(rec));
-          if (ok) done++;
-          await new Promise(r => setTimeout(r, 500));
-        }
-        toast(`${done}/${valid.length}건 처리 완료`);
+      if (e?.message?.includes('canceled')) { toast('공유 취소됨'); return; }
+      console.error('multi-share 실패:', e);
+      toast('공유 실패 — 단일 폴백 시도');
+      for (const rec of valid) {
+        await shareSingleRecord(rec);
+        await new Promise(r => setTimeout(r, 500));
       }
     }
   }

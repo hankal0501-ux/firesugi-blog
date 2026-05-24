@@ -1,7 +1,7 @@
 {
-  "latest": "1.3.5",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.3.5.apk",
-  "notes": "1.3.5 - 다중 공유 버그 수정: 선택/전체 공유 시 파일별 share intent 반복 호출 → files 배열 단일 호출로 변경, 카톡·드라이브 등이 모든 파일을 한 번에 받음",
+  "latest": "1.4.0",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.4.0.apk",
+  "notes": "1.4.0 - 용량 100배 절감: IndexedDB에 썸네일(~10KB)만 저장, 원본은 폰 갤러리(Pictures/대영소방)에. 공유 시 디스크 파일 URI 직접 전달 → 데이터 거치지 않음. 구형 레코드 자동 호환.",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-24T00:00:00Z"

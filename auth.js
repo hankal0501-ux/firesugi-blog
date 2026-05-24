@@ -386,33 +386,66 @@ function getOnlineUsers() {
 }
 
 // ===== UI UPDATE =====
-// 회원 UI 제거 후에도 호환 — 모든 DOM 접근 null-safe
+// 회원 UI 제거 후 — 관리자 로그인 시 버튼이 '🛡 관리자 모드'로 바뀜 + 클릭 시 메뉴
 function updateAuthUI() {
-  const user = getCurrentUser();
   const loginBtn = document.getElementById('authLoginBtn');
-  const userInfo = document.getElementById('authUserInfo');
-  const userName = document.getElementById('authUserName');
-  const tierPill = document.getElementById('authTierPill');
   const adminLinks = document.querySelectorAll('.admin-only');
+  const admin = (typeof isAdmin === 'function') ? isAdmin() : false;
 
-  if (user) {
-    if (loginBtn) loginBtn.style.display = 'none';
-    if (userInfo) userInfo.style.display = 'flex';
-    const tier = getTier(user);
-    const meta = TIER_META[tier];
-    if (tierPill) {
-      tierPill.className = 'tier-pill ' + meta.cssClass;
-      tierPill.textContent = meta.icon + ' ' + meta.label;
+  if (loginBtn) {
+    if (admin) {
+      loginBtn.innerHTML = '🛡 관리자 모드';
+      loginBtn.classList.remove('btn-outline');
+      loginBtn.classList.add('btn-primary', 'admin-active');
+      loginBtn.setAttribute('onclick', 'showAdminMenu()');
+      loginBtn.style.background = 'linear-gradient(135deg,#03c75a,#02a64a)';
+      loginBtn.style.color = '#fff';
+      loginBtn.style.borderColor = '#03c75a';
+      loginBtn.style.fontWeight = '700';
+      loginBtn.title = '관리자 모드 활성 — 클릭하여 메뉴 열기';
+    } else {
+      loginBtn.innerHTML = '🔐 관리자';
+      loginBtn.classList.remove('btn-primary', 'admin-active');
+      loginBtn.classList.add('btn-outline');
+      loginBtn.setAttribute('onclick', 'showAdminModal()');
+      loginBtn.style.background = '';
+      loginBtn.style.color = '';
+      loginBtn.style.borderColor = '';
+      loginBtn.style.fontWeight = '';
+      loginBtn.title = '관리자 모드 진입 (비밀번호 필요)';
     }
-    if (userName) userName.textContent = user.id;
-  } else {
-    if (loginBtn) loginBtn.style.display = 'inline-flex';
-    if (userInfo) userInfo.style.display = 'none';
   }
   adminLinks.forEach(el => {
-    el.style.display = isAdmin(user) ? '' : 'none';
+    el.style.display = admin ? '' : 'none';
   });
 }
+
+// 관리자 모드 활성 시 — [🛡 관리자 모드] 버튼 클릭하면 액션 메뉴
+function showAdminMenu() {
+  const action = prompt(
+    '🛡 관리자 모드 메뉴\n\n' +
+    '입력하세요:\n' +
+    '  1 = 🔑 비밀번호 변경\n' +
+    '  2 = 🔄 모든 기기 즉시 동기화\n' +
+    '  3 = 🚪 관리자 모드 종료\n' +
+    '  취소(또는 빈값) = 닫기'
+  );
+  if (!action) return;
+  const a = action.trim();
+  if (a === '1') {
+    if (typeof changeAdminPassword === 'function') changeAdminPassword();
+  } else if (a === '2') {
+    if (typeof forceSyncAll === 'function') forceSyncAll();
+    else alert('동기화 함수 미로드 - 새로고침 후 다시 시도');
+  } else if (a === '3') {
+    if (confirm('관리자 모드를 종료할까요?\n다음 관리 작업 시 비밀번호 재입력 필요.')) {
+      exitAdminMode();
+    }
+  } else {
+    alert('1·2·3 중 하나를 입력하세요.');
+  }
+}
+window.showAdminMenu = showAdminMenu;
 
 // ===== MODALS =====
 function showLoginModal() {

@@ -837,9 +837,54 @@ async function forceSyncAll() {
     }
   }
 
+  // 5) 스크린샷(사진) 동기화 — programScreenshots 컬렉션
+  let pushedShots = 0, pulledShots = 0;
+  if (typeof fbDb !== 'undefined') {
+    try {
+      // PUSH: 로컬의 fireSugiShots_* 키 모두 Firestore 로
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (!k || !k.startsWith('fireSugiShots_')) continue;
+        const progKey = k.replace('fireSugiShots_', '');
+        const shots = JSON.parse(localStorage.getItem(k) || '[]');
+        if (!shots.length) continue;
+        // Firestore 문서 한도 1MB — 큰 base64 이미지는 경고
+        const size = JSON.stringify(shots).length;
+        if (size > 950 * 1024) {
+          console.warn(`스크린샷 ${progKey} 크기 ${(size/1024).toFixed(0)}KB → 1MB 한도 근접, 스킵`);
+          continue;
+        }
+        try {
+          await fbDb.collection('programScreenshots').doc(progKey).set({ shots, updatedAt: Date.now() }, { merge: true });
+          pushedShots++;
+        } catch (e) {
+          console.warn('스크린샷 push 실패:', progKey, e.message);
+          if (e?.message?.includes('resource-exhausted')) break;
+        }
+      }
+      // PULL: Firestore programScreenshots → 로컬에 없거나 더 오래된 것만 덮어쓰기
+      const snap = await fbDb.collection('programScreenshots').get();
+      snap.forEach(doc => {
+        const k = 'fireSugiShots_' + doc.id;
+        const remote = doc.data();
+        const localRaw = localStorage.getItem(k);
+        const localUpdatedAt = (() => { try { return JSON.parse(localStorage.getItem(k + '_meta') || '{}').updatedAt || 0; } catch { return 0; } })();
+        if (!localRaw || (remote.updatedAt && remote.updatedAt > localUpdatedAt)) {
+          if (remote.shots && Array.isArray(remote.shots)) {
+            localStorage.setItem(k, JSON.stringify(remote.shots));
+            localStorage.setItem(k + '_meta', JSON.stringify({ updatedAt: remote.updatedAt }));
+            pulledShots++;
+          }
+        }
+      });
+    } catch (e) {
+      console.warn('screenshots sync 실패:', e.message);
+    }
+  }
+
   const msg = `✅ 동기화 완료\n\n` +
-              `🔼 PUSH: 로컬 프로그램 ${pushedProgs}건\n` +
-              `🔽 PULL: 다른 기기 신규 ${pulledProgs}건\n` +
+              `🔼 PUSH: 프로그램 ${pushedProgs}건 · 사진 ${pushedShots}건\n` +
+              `🔽 PULL: 신규 프로그램 ${pulledProgs}건 · 신규 사진 ${pulledShots}건\n` +
               `🔄 회원·게시글: ${syncOk ? '동기화됨' : '스킵'}\n` +
               (wasBlocked ? '🔓 quota 락 해제됨\n' : '') +
               `\n다른 기기들도 새로고침하면 즉시 반영됩니다.`;
@@ -1437,6 +1482,16 @@ function getProgramScreenshots(progKey) {
 function saveProgramScreenshots(progKey, arr) {
   try {
     localStorage.setItem(SCREENSHOTS_KEY(progKey), JSON.stringify(arr));
+    localStorage.setItem(SCREENSHOTS_KEY(progKey) + '_meta', JSON.stringify({ updatedAt: Date.now() }));
+    // 변경 시 즉시 Firestore push (quota 살아있을 때만)
+    if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+      const size = JSON.stringify(arr).length;
+      if (size <= 950 * 1024) {
+        fbDb.collection('programScreenshots').doc(progKey)
+          .set({ shots: arr, updatedAt: Date.now() }, { merge: true })
+          .catch(e => console.warn('스크린샷 자동 push 실패:', e.message));
+      }
+    }
   } catch (e) {
     alert('⚠️ 저장 실패: ' + e.message + '\n\n사진이 너무 큽니다. 압축된 이미지(<1MB)를 사용해 주세요.');
   }

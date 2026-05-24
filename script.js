@@ -171,44 +171,46 @@ function savePosts(posts) {
 }
 
 function renderBoard() {
+  const admin = isAdmin();
   const allPosts = getPosts().sort((a, b) => b.id - a.id);
-  const filteredPosts = allPosts.filter(p => 
-    p.title.toLowerCase().includes(boardSearchQuery.toLowerCase()) || 
+  // 비공개 글: 관리자만 목록에 노출, 일반인은 완전히 숨김
+  const visiblePosts = allPosts.filter(p => admin || (p.visibility !== 'private' && !p.secret));
+  const filteredPosts = visiblePosts.filter(p =>
+    p.title.toLowerCase().includes(boardSearchQuery.toLowerCase()) ||
     p.content.toLowerCase().includes(boardSearchQuery.toLowerCase()) ||
     p.author.toLowerCase().includes(boardSearchQuery.toLowerCase())
   );
-  
+
   const tbody = document.getElementById('boardBody');
   const empty = document.getElementById('boardEmpty');
   const table = document.getElementById('boardTable');
   const pagination = document.getElementById('boardPagination');
-  
+
   document.getElementById('boardCount').textContent = filteredPosts.length;
-  
-  if (!filteredPosts.length) { 
-    table.style.display = 'none'; 
-    empty.style.display = 'block'; 
+
+  if (!filteredPosts.length) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
     pagination.style.display = 'none';
-    return; 
+    return;
   }
-  
-  table.style.display = 'table'; 
+
+  table.style.display = 'table';
   empty.style.display = 'none';
-  
+
   const displayPosts = filteredPosts.slice(0, boardDisplayCount);
   pagination.style.display = filteredPosts.length > boardDisplayCount ? 'block' : 'none';
-  
-  const user = getCurrentUser();
+
   tbody.innerHTML = displayPosts.map((post) => {
-    const isSecret = post.secret;
-    const canView = !isSecret || (user && (user.id === post.author));
+    const isPrivate = post.visibility === 'private' || post.secret;
+    const hasPw = !!post.viewPwHash;
     const isBot = post.author === BOT_AUTHOR || post.autoWritten;
-    const isNeighborPost = user && typeof isNeighbor === 'function' && isNeighbor(post.author);
-    const titleHtml = isSecret
-      ? `<span class="secret-icon">🔒</span>${canView ? esc(post.title) : '비밀글입니다.'}`
-      : esc(post.title);
-    const authorHtml = `${esc(post.author)}${isBot ? ' <span class="bot-tag">🤖</span>' : ''}${isNeighborPost ? ' <span class="nb-tag" title="이웃">🤝</span>' : ''}`;
-    return `<tr onclick="${canView ? `viewPost(${post.id})` : `alert('비밀글은 작성자만 볼 수 있습니다.')`}">
+    let icon = '';
+    if (isPrivate) icon = '<span class="secret-icon">🔒</span>';
+    else if (hasPw) icon = '<span class="secret-icon" title="비번 보호">🔑</span>';
+    const titleHtml = icon + esc(post.title);
+    const authorHtml = `${esc(post.author)}${isBot ? ' <span class="bot-tag">🤖</span>' : ''}`;
+    return `<tr onclick="viewPost(${post.id})">
       <td class="col-no" style="text-align:center;">${allPosts.indexOf(post) + 1}</td>
       <td class="col-title td-title">${titleHtml}</td>
       <td class="col-author">${authorHtml}</td>
@@ -222,7 +224,10 @@ function renderBoard() {
 function renderHomeBoard() {
   const host = document.getElementById('homeBoardList');
   if (!host) return;
-  const posts = getPosts().sort((a, b) => b.id - a.id).slice(0, 5);
+  const admin = isAdmin();
+  // 비공개 글은 관리자만 표시
+  const allRecent = getPosts().sort((a, b) => b.id - a.id);
+  const posts = allRecent.filter(p => admin || (p.visibility !== 'private' && !p.secret)).slice(0, 5);
   const me = getCurrentUser();
   if (!posts.length) {
     host.innerHTML = `
@@ -272,37 +277,84 @@ function toggleWriteForm() {
   f.style.display = f.style.display === 'none' ? 'block' : 'none';
 }
 
-function submitPost() {
+async function submitPost() {
   const title = document.getElementById('postTitle').value.trim();
   const content = document.getElementById('postContent').value.trim();
-  const secret = document.getElementById('postSecret').checked;
   if (!title || !content) { alert('제목과 내용을 입력하세요.'); return; }
-  // 작성자 닉네임: 입력 필드가 있으면 그 값, 없거나 비우면 익명 + 4자리 ID
+
+  // 공개/비공개 (라디오)
+  const visEl = document.querySelector('input[name="postVisibility"]:checked');
+  const visibility = visEl ? visEl.value : 'public';
+
+  // 글 비번 (선택) — SHA-256 으로 해시 저장
+  const pwEl = document.getElementById('postPw');
+  const pwRaw = (pwEl && pwEl.value) || '';
+  let viewPwHash = null;
+  if (pwRaw) {
+    try { viewPwHash = await sha256(pwRaw); } catch (e) { console.warn('hash err:', e); }
+  }
+
+  // 닉네임
   const nickEl = document.getElementById('postAuthor');
   let author = (nickEl && nickEl.value.trim()) || '';
   if (!author) {
     const tail = Math.floor(Math.random() * 9000 + 1000);
     author = `익명_${tail}`;
   }
+
   const posts = getPosts();
   const now = new Date();
   const date = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
-  posts.push({ id: Date.now(), author, title, content, date, views: 0, secret, comments: [] });
+  posts.push({
+    id: Date.now(),
+    author, title, content, date,
+    views: 0,
+    visibility,        // 'public' | 'private'
+    viewPwHash,        // 글 열람 비번 (옵션)
+    secret: visibility === 'private',  // 하위 호환
+    comments: []
+  });
   savePosts(posts);
-  logActivity('글작성: ' + title.slice(0, 30), author);
+  logActivity(`글작성(${visibility}): ${title.slice(0, 30)}`, author);
+
   document.getElementById('postTitle').value = '';
   document.getElementById('postContent').value = '';
-  document.getElementById('postSecret').checked = false;
+  if (pwEl) pwEl.value = '';
   if (nickEl) nickEl.value = '';
+  document.getElementById('visPublic').checked = true;
   toggleWriteForm();
   renderBoard();
   renderHomeBoard();
 }
 
-function viewPost(id) {
+async function viewPost(id) {
   const posts = getPosts();
   const post = posts.find(p => p.id === id);
   if (!post) return;
+  const admin = isAdmin();
+
+  // 비공개 글은 관리자만 (이론상 도달 못 함, 안전 차단)
+  if ((post.visibility === 'private' || post.secret) && !admin) {
+    alert('🔒 비공개 글은 관리자만 열람할 수 있습니다.');
+    return;
+  }
+
+  // 글 비번 보호 — 세션당 1회 인증 캐시
+  if (post.viewPwHash && !admin) {
+    const cacheKey = 'postPwOK_' + id;
+    if (sessionStorage.getItem(cacheKey) !== '1') {
+      const pw = prompt(`🔑 "${post.title}" — 글 비밀번호:`);
+      if (pw === null) return;
+      let inputHash = '';
+      try { inputHash = await sha256(pw); } catch (e) {}
+      if (inputHash !== post.viewPwHash) {
+        alert('❌ 비밀번호가 일치하지 않습니다.');
+        return;
+      }
+      sessionStorage.setItem(cacheKey, '1');
+    }
+  }
+
   post.views = (post.views || 0) + 1;
   savePosts(posts); renderBoard();
   currentPostId = id;
@@ -311,7 +363,10 @@ function viewPost(id) {
   document.getElementById('modalDate').textContent = '📅 ' + post.date;
   document.getElementById('modalViews').textContent = '👁️ 조회 ' + post.views;
   document.getElementById('modalBody').textContent = post.content;
-  document.getElementById('modalCategory').textContent = post.secret ? '🔒 비밀글' : '자유게시판';
+  let cat = '자유게시판';
+  if (post.visibility === 'private' || post.secret) cat = '🔒 비공개';
+  else if (post.viewPwHash) cat = '🔑 비번 보호';
+  document.getElementById('modalCategory').textContent = cat;
   renderComments(post);
   document.getElementById('postModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
@@ -625,8 +680,16 @@ async function verifyAdminPassword(pw) {
   }
 }
 
-// 등록용 — 세션당 1회
-async function checkProgPassword() {
+// 관리자 로그인 상태면 비번 prompt 건너뛰고 짧은 확인만
+function _adminConfirm(label) {
+  return confirm(`✅ 관리자 — ${label || '관리 작업'} 확인합니다.\n진행하시겠습니까?`);
+}
+
+// 등록용 — 세션당 1회 (관리자는 매번 짧은 확인만)
+async function checkProgPassword(label) {
+  if (typeof isAdmin === 'function' && isAdmin()) {
+    return _adminConfirm(label || '등록');
+  }
   if (sessionStorage.getItem(PWD_AUTH_SESSION) === 'ok') return true;
   const pw = prompt('🔐 관리자 비밀번호:');
   if (pw === null) return false;
@@ -638,8 +701,11 @@ async function checkProgPassword() {
   return true;
 }
 
-// 삭제용 — 매번 입력
-async function checkDeletePassword() {
+// 삭제용 — 일반인은 매번 비번, 관리자는 confirm만
+async function checkDeletePassword(label) {
+  if (typeof isAdmin === 'function' && isAdmin()) {
+    return _adminConfirm(label || '삭제·편집');
+  }
   const pw = prompt('🔐 삭제 비밀번호:');
   if (pw === null) return false;
   if (!(await verifyAdminPassword(pw))) {

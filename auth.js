@@ -74,7 +74,10 @@ function getUsers() {
 }
 function saveUsers(users) {
   localStorage.setItem(AUTH_KEY, JSON.stringify(users));
-  // ⛔ Firestore 자동 push 비활성화 — 각 PC 독립 동작 (할당량 초과 방지)
+  // 사용자 변경 시에만 Firestore push (자동 인터벌과 별도)
+  if (typeof fbPushAllUsers === 'function') {
+    fbPushAllUsers(users).catch(() => {});
+  }
 }
 function getCurrentUser() {
   // localStorage(기억하기 ON) 우선, 없으면 sessionStorage(기억하기 OFF)

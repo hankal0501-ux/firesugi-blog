@@ -328,10 +328,17 @@ async function showFirebaseStatus() {
   `;
 }
 
-// ⛔ 자동 동기화 비활성화 — Firestore 할당량 초과 방지, 각 PC 독립 동작
-// 필요 시 관리자 모달의 [🔄 즉시 동기화] 버튼으로 수동 실행 가능
-console.log('🔌 Firebase 자동 sync 비활성화됨 (수동 동기화만 가능)');
-
-// (참고) 자동 sync를 다시 켜고 싶으면 아래 주석 해제:
-// document.addEventListener('DOMContentLoaded', () => { setTimeout(initFirebaseSync, 800); });
-// setInterval(() => { if (document.visibilityState === 'visible') initFirebaseSync(); }, 30000);
+// 🔥 자동 동기화 재활성화 (할당량 안전 모드)
+// - 페이지 로드 시 1회 sync (1.5초 후)
+// - 이후 5분(300초)마다 sync (이전: 30초 → 10배 감소로 quota 절감)
+// - 가시 상태일 때만 실행
+// - 일 예상 호출: 약 288회 × 8 ops/cycle ≈ 2,300 ops (Spark 한도 50K 안에 충분)
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(initFirebaseSync, 1500);
+});
+setInterval(() => {
+  if (document.visibilityState === 'visible') {
+    initFirebaseSync();
+  }
+}, 300000); // 5분
+console.log('🔥 Firebase 자동 sync 활성화 (5분 주기, 가시 상태일 때만)');

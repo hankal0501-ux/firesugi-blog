@@ -167,7 +167,8 @@ let boardDisplayCount = 5; // Initial number of posts to show
 function getPosts() { return JSON.parse(localStorage.getItem('fireSugiBoardPosts') || '[]'); }
 function savePosts(posts) {
   localStorage.setItem('fireSugiBoardPosts', JSON.stringify(posts));
-  // ⛔ Firestore 자동 push 비활성화 — 각 PC 독립 동작
+  // 변경 시에만 push (자동 인터벌과 별도)
+  if (typeof fbPushAllPosts === 'function') fbPushAllPosts(posts).catch(() => {});
 }
 
 function renderBoard() {
@@ -624,7 +625,12 @@ function getUserPrograms() {
 }
 function saveUserPrograms(obj) {
   localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(obj));
-  // ⛔ Firestore 자동 push 비활성화 — 각 PC 독립 동작
+  // 변경 시에만 push (자동 인터벌과 별도)
+  if (typeof fbDb !== 'undefined') {
+    Object.entries(obj).forEach(([key, p]) => {
+      fbDb.collection('userPrograms').doc(key).set(p, { merge: true }).catch(() => {});
+    });
+  }
 }
 
 // ============================================================
@@ -787,7 +793,9 @@ async function quickDeleteProgram(key) {
     delete userProgs[key];
     delete programData[key];
     localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(userProgs));
-    // ⛔ Firestore 자동 push 비활성화
+    if (typeof fbDb !== 'undefined') {
+      fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
+    }
   } else {
     // 빌트인 — 숨김 (programData에서 안 지움, 휴지통의 hidden 영역에서 복원 가능)
     const hidden = getHiddenPrograms();
@@ -1241,7 +1249,9 @@ async function deleteUserProgram(key) {
   delete all[key];
   delete programData[key];
   localStorage.setItem(USER_PROGRAMS_KEY, JSON.stringify(all));
-  // ⛔ Firestore 자동 push 비활성화
+  if (typeof fbDb !== 'undefined') {
+    fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
+  }
   logActivity('프로그램 삭제: ' + name);
   hideProgramDetail();
   renderPrograms();

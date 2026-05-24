@@ -22,6 +22,18 @@
     --danger: #ff3b30;
     --success: #34c759;
   }
+  /* 주간 모드 — 흰 배경 (강한 햇빛에서 잘 보임) */
+  html[data-theme="light"] {
+    --bg: #ffffff;
+    --bg-2: #f4f6fb;
+    --bg-3: #e8ecf5;
+    --border: #c8cfdb;
+    --text: #1a1d28;
+    --muted: #5a6478;
+    --accent: #f59e0b;
+    --danger: #dc2626;
+    --success: #059669;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', -apple-system, sans-serif; min-height: 100vh; }
   body { padding-bottom: 80px; }
@@ -63,6 +75,23 @@
   .header-addr.ok { border-left-color: var(--success); }
   .header-addr.empty { border-left-color: var(--danger); }
   .header-addr.loading { border-left-color: #fbbf24; }
+  /* 주간/야간 테마 토글 버튼 */
+  .theme-toggle {
+    flex: 0 0 auto;
+    width: 38px; height: 32px;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    padding: 0;
+  }
+  .theme-toggle:hover { transform: scale(1.05); }
+  .theme-toggle:active { opacity: 0.7; }
+  html[data-theme="light"] .theme-toggle { border-color: var(--accent); }
   .addr-refresh {
     font-size: 9px;
     opacity: 0.5;
@@ -741,6 +770,9 @@
       <span class="addr-text" id="addressText">위치자동</span>
       <span class="addr-refresh" id="addrRefresh">🔄</span>
     </div>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="주간/야간 테마 전환">
+      <span id="themeIcon">🌙</span>
+    </button>
   </div>
   <div class="stats">
     <span class="status-dot"></span>
@@ -854,7 +886,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.4.1';
+  const APP_VERSION = '1.5.0';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1922,9 +1954,25 @@
     setTimeout(() => checkForUpdates(true), 1500);
 
     // 📍 자동 위치 가져오기 — 앱 시작 즉시 백그라운드로 GPS·주소 fetch
-    //    (카메라 버튼 누르기 전부터 미리 받아둠 → 촬영 후 바로 사용 가능)
     setTimeout(() => prefetchLocation(), 600);
+
+    // 🌙☀️ 저장된 테마 적용 (light=주간, 미설정=야간 기본)
+    const savedTheme = localStorage.getItem('fieldlog-theme');
+    if (savedTheme === 'light') applyTheme('light');
+    else applyTheme('dark');
   })();
+
+  // 주간/야간 테마 전환
+  function applyTheme(mode) {
+    document.documentElement.setAttribute('data-theme', mode);
+    const icon = document.getElementById('themeIcon');
+    if (icon) icon.textContent = mode === 'light' ? '☀️' : '🌙';
+    localStorage.setItem('fieldlog-theme', mode);
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+    applyTheme(cur === 'light' ? 'dark' : 'light');
+  }
 </script>
 
 </body>

@@ -70,10 +70,8 @@ async function buildEventsMessage() {
       const src = esc(it.source_site || '');
       lines.push(`• <a href="${esc(it.url)}">${t}</a>${src ? ` <i>(${src})</i>` : ''}`);
     });
-    lines.push('');
   }
-  lines.push(`🔗 <a href="https://hankal0501-ux.github.io/firesugi-blog/events/">전체 보기 →</a>`);
-  return lines.join('\n');
+  return lines.join('\n').trim();
 }
 
 async function buildNewsMessage() {
@@ -96,9 +94,7 @@ async function buildNewsMessage() {
     const topic = esc(n.topic || '');
     lines.push(`${n.emoji || '📰'} <a href="${esc(n.url)}">${t}</a> <i>(${topic})</i>`);
   });
-  lines.push('');
-  lines.push(`🔗 <a href="https://hankal0501-ux.github.io/firesugi-blog/#news">전체 보기 →</a>`);
-  return lines.join('\n');
+  return lines.join('\n').trim();
 }
 
 async function main() {

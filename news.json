@@ -1,5 +1,39 @@
 [
   {
+    "id": 1779677410901,
+    "topic": "최신기술",
+    "source": "컨슈머타임스",
+    "emoji": "🚀",
+    "image": "🚀",
+    "color": "#0068c3",
+    "title": "해운조합, 해수부·HD한국조선해양과 '연안여객선 AI 화재탐지' 해상실증 착수",
+    "summary": "해운조합, 해수부·HD한국조선해양과 '연안여객선 AI 화재탐지' 해상실증 착수 컨슈머타임스",
+    "fullDesc": "해운조합, 해수부·HD한국조선해양과 '연안여객선 AI 화재탐지' 해상실증 착수 컨슈머타임스",
+    "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5NUjJFYVFIWHNEZEJGTjRkQmtyOTNmamVtRXc5WURNUlFkMXlMdW9XQVdiOGtQdzlwQ2VlbjF6Y21PQmNSd0JWRlFQR3FWQjZZVHFlMWh0LXg2aFFIY1ZVc3hTT1BKZDdCOFE?oc=5",
+    "date": "2026.05.24",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-25T02:50:01.043Z",
+    "pubDate": "2026-05-24T11:52:00.000Z"
+  },
+  {
+    "id": 1779677409531,
+    "topic": "사고처벌",
+    "source": "로톡뉴스",
+    "emoji": "⚖️",
+    "image": "⚖️",
+    "color": "#c93030",
+    "title": "빌라 옥상에 '개인 식물원' 차린 이웃…단순 민폐 아닌 명백한 '소방법' 위반",
+    "summary": "빌라 옥상에 '개인 식물원' 차린 이웃…단순 민폐 아닌 명백한 '소방법' 위반 로톡뉴스",
+    "fullDesc": "빌라 옥상에 '개인 식물원' 차린 이웃…단순 민폐 아닌 명백한 '소방법' 위반 로톡뉴스",
+    "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5kV2VBbVdZOG5STEVtNWljQnpwVHg0cXdTWnUxWEVBMmM2X3lDQjFXWGNOYTNQTkUzTzlTbVF2aHBad040WHFxQm54eEV0TWd4SDMxMHdoamZIUQ?oc=5",
+    "date": "2025.08.18",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-25T02:50:03.220Z",
+    "pubDate": "2025-08-18T07:00:00.000Z"
+  },
+  {
     "id": 1779590466109,
     "topic": "최신기술",
     "source": "해운의소리",
@@ -12,7 +46,7 @@
     "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE0wT1lZelM3ZlZqT3lnZG9rQXFReU50WnJmV3M5YU81bHZ0dWhZLXdtdHQzU1RTVkJpUVAxNU5wWUlnUVN3MXo1eVhVUzVMcUU3ZGZmSkdoTDhkbXJSajlKWkpwRkJ6SGpBSGhCdUxR0gFyQVVfeXFMTWVFc2xIRVBVdDBGa2VWaWEzUUNTWDZwS3JOdXQ3VGZsTGdsVDdiaFZUVlJ0QlZEUi1VVm5UUjZ1YURMZjdzVWZCUF9qOGJtQlBfTnh4cnpvTFlMSVhIcjF6YzV2MzVtZFB6R2Fob29pRW1R?oc=5",
     "date": "2026.05.22",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-24T02:41:04.679Z",
     "pubDate": "2026-05-22T21:51:45.000Z"
   },
@@ -29,7 +63,7 @@
     "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFB6cGY4Q1pmYTdUcjBHQ2hIZGNfdDlnd1R1VS1GaEV1UFpvOER6eEo4YmJzWG1tUWRMdUk1MTBEV0lXUVFfZzVjQ0dMMlNHSDJRMWFadFdudHJMdw?oc=5",
     "date": "2025.09.19",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-24T02:41:06.850Z",
     "pubDate": "2025-09-19T07:00:00.000Z"
   },

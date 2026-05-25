@@ -1,7 +1,7 @@
 {
-  "latest": "1.5.3",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.5.3.apk",
-  "notes": "1.5.3 - 글자 크기 ↑↑ (이미지 폭 1/40, 최소 28px) · 사업장 1.6배·메모 1.2배·주소+날짜 한 줄 결합 · GPS 시각 표시 제거 (속성 메타데이터로만)",
+  "latest": "1.5.4",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.5.4.apk",
+  "notes": "1.5.4 - 주소 자동 조회 BigDataCloud API 우선 사용 (한국 주소 정확도 ↑, API 키 불필요) · Nominatim 폴백 유지 · 콘솔 로그 강화 (어디서 가져왔는지 표시)",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-24T00:00:00Z"

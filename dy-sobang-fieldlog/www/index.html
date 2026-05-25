@@ -886,7 +886,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.5.3';
+  const APP_VERSION = '1.5.4';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1073,21 +1073,51 @@
   }
 
   async function reverseGeocode(lat, lon) {
-    // Free Nominatim API. Korean addresses adequate for general use.
-    // Swap to Kakao Local API for production-grade Korean addressing (see README).
+    // 1순위: BigDataCloud (무료, API 키 불필요, 한국어 직접 지원)
+    try {
+      const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`;
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if (res.ok) {
+        const d = await res.json();
+        // 한국식 주소 조립: 시/도 > 구/군 > 동/면 > 도로명
+        const parts = [];
+        if (d.principalSubdivision) parts.push(d.principalSubdivision);   // 부산광역시
+        if (d.city && d.city !== d.principalSubdivision) parts.push(d.city); // 강서구
+        if (d.locality && d.locality !== d.city) parts.push(d.locality);     // 명지동
+        // localityInfo.administrative 에서 더 상세 행정구역
+        const admin = (d.localityInfo?.administrative || []).map(x => x.name);
+        admin.forEach(n => { if (n && !parts.includes(n) && parts.length < 5) parts.push(n); });
+        if (parts.length > 0) {
+          console.log('📍 [BigDataCloud]', parts.join(' '));
+          return parts.join(' ');
+        }
+      } else {
+        console.warn('BigDataCloud HTTP', res.status);
+      }
+    } catch (e) {
+      console.warn('BigDataCloud 실패:', e.message);
+    }
+
+    // 2순위 폴백: Nominatim (OpenStreetMap)
     try {
       const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ko&zoom=18`;
-      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-      if (!res.ok) return null;
+      const res = await fetch(url, {
+        headers: { 'Accept': 'application/json', 'Accept-Language': 'ko' }
+      });
+      if (!res.ok) {
+        console.warn('Nominatim HTTP', res.status);
+        return null;
+      }
       const data = await res.json();
-      // Nominatim returns Western-order display_name; reverse for Korean order
       if (data.display_name) {
         const parts = data.display_name.split(',').map(s => s.trim()).reverse();
-        return parts.slice(0, 6).join(' ');  // skip country at end
+        const addr = parts.slice(0, 6).join(' ');
+        console.log('📍 [Nominatim]', addr);
+        return addr;
       }
       return null;
-    } catch(e) {
-      console.warn('reverseGeocode failed:', e);
+    } catch (e) {
+      console.warn('Nominatim 실패:', e.message);
       return null;
     }
   }

@@ -1,7 +1,7 @@
 {
-  "latest": "1.7.0",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.7.0.apk",
-  "notes": "1.7.0 - 카메라 앱과 동일한 Google 주소! @capacitor-community/native-geocoder 추가 → Android Geocoder(Google Play Services) 사용 → BigDataCloud → Nominatim 3단계 폴백",
+  "latest": "1.7.1",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.7.1.apk",
+  "notes": "1.7.1 - 1.7.0 빌드 실패(잘못된 패키지명) 수정 · NativeGeocoder 코드는 유지(있으면 사용, 없으면 자동 폴백) · 진단 로그 + 3단계 폴백 동작",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-25T00:00:00Z"

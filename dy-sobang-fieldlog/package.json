@@ -17,7 +17,6 @@
     "@capacitor/geolocation": "^6.0.1",
     "@capacitor/share": "^6.0.2",
     "@capacitor/status-bar": "^6.0.2",
-    "@capacitor-community/native-geocoder": "^4.0.1",
     "@capacitor-community/speech-recognition": "^6.0.0"
   },
   "devDependencies": {

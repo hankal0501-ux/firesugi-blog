@@ -1,7 +1,7 @@
 {
-  "latest": "1.8.1",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.1.apk",
-  "notes": "1.8.1 - EXIF 에 주소·메모·사업장·층 텍스트도 함께 주입 → 갤러리 상세화면에서 카카오 주소 텍스트 확인 가능 · ImageDescription/Artist/Copyright/UserComment 필드 사용",
+  "latest": "1.8.2",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.2.apk",
+  "notes": "1.8.2 ⭐ 핵심 수정 - AndroidManifest.xml 에 위치·카메라·녹음·저장 권한 강제 주입 (Capacitor 자동 병합 실패 우회) → 1.8.1 까지의 '위치 권한 거부' 문제 해결",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-25T00:00:00Z"

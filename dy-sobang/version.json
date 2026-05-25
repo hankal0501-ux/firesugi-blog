@@ -1,7 +1,7 @@
 {
-  "latest": "1.8.0",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.0.apk",
-  "notes": "1.8.0 - 🥇 Kakao Local API 1순위 (한국 주소 최고 정확도, 도로명 우선) → NativeGeocoder → BigDataCloud → Nominatim 4단계 폴백 · 워터마크에 카카오 정확 주소 자동 표시",
+  "latest": "1.8.1",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.1.apk",
+  "notes": "1.8.1 - EXIF 에 주소·메모·사업장·층 텍스트도 함께 주입 → 갤러리 상세화면에서 카카오 주소 텍스트 확인 가능 · ImageDescription/Artist/Copyright/UserComment 필드 사용",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-25T00:00:00Z"

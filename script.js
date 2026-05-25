@@ -174,12 +174,14 @@ function savePosts(posts) {
 function renderBoard() {
   const admin = isAdmin();
   const allPosts = getPosts().sort((a, b) => b.id - a.id);
-  // 비공개 글: 관리자만 목록에 노출, 일반인은 완전히 숨김
-  const visiblePosts = allPosts.filter(p => admin || (p.visibility !== 'private' && !p.secret));
+  // 비공개 글: 일반인도 목록(제목·닉네임)은 보임. 내용은 viewPost 에서 차단
+  const visiblePosts = allPosts;
   const filteredPosts = visiblePosts.filter(p =>
     p.title.toLowerCase().includes(boardSearchQuery.toLowerCase()) ||
-    p.content.toLowerCase().includes(boardSearchQuery.toLowerCase()) ||
-    p.author.toLowerCase().includes(boardSearchQuery.toLowerCase())
+    p.author.toLowerCase().includes(boardSearchQuery.toLowerCase()) ||
+    // 비공개 글은 내용 검색에서 제외 (관리자만)
+    ((p.visibility !== 'private' && !p.secret) || admin) &&
+      p.content.toLowerCase().includes(boardSearchQuery.toLowerCase())
   );
 
   const tbody = document.getElementById('boardBody');
@@ -226,9 +228,9 @@ function renderHomeBoard() {
   const host = document.getElementById('homeBoardList');
   if (!host) return;
   const admin = isAdmin();
-  // 비공개 글은 관리자만 표시
+  // 비공개 글: 일반인도 제목·닉네임은 보임. 내용은 viewPost 에서 차단
   const allRecent = getPosts().sort((a, b) => b.id - a.id);
-  const posts = allRecent.filter(p => admin || (p.visibility !== 'private' && !p.secret)).slice(0, 5);
+  const posts = allRecent.slice(0, 5);
   const me = getCurrentUser();
   if (!posts.length) {
     host.innerHTML = `
@@ -239,15 +241,12 @@ function renderHomeBoard() {
     return;
   }
   host.innerHTML = posts.map(p => {
-    const isSecret = p.secret;
-    const canView = !isSecret || (me && me.id === p.author);
-    const title = isSecret
-      ? `<span class="hb-lock">🔒</span> ${canView ? esc(p.title) : '비밀글입니다'}`
-      : esc(p.title);
+    // 제목·닉네임은 항상 보임. 내용은 viewPost 에서 차단
+    const isPrivate = (p.visibility === 'private' || p.secret);
+    const lockIcon = isPrivate ? '<span class="hb-lock">🔒</span> ' : '';
+    const title = lockIcon + esc(p.title);
     const isBot = p.author === 'FireSugi-Bot' || p.autoWritten;
-    const onclickAction = canView
-      ? `showTab('board'); setTimeout(()=>viewPost(${p.id}), 80);`
-      : `alert('🔒 비밀글은 작성자만 볼 수 있습니다.');`;
+    const onclickAction = `showTab('board'); setTimeout(()=>viewPost(${p.id}), 80);`;
     return `
       <div class="hb-item" onclick="${onclickAction}">
         <div class="hb-title">${title}${isBot ? ' <span class="hb-tag-bot">🤖 AUTO</span>' : ''}</div>

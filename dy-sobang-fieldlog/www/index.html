@@ -886,7 +886,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.5.1';
+  const APP_VERSION = '1.5.2';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1123,13 +1123,14 @@
         }
 
         ctx.textBaseline = 'bottom';
-        ctx.textAlign = 'left';
+        ctx.textAlign = 'center';   // 가운데 정렬
+        const cx = Math.round(W / 2);
         let y = H - pad;
 
         // Line 1 (bottom): 사업장 · 층수  ← biggest, yellow
         const headline = [info.site, info.floor].filter(Boolean).join(' · ') || '사업장 미지정';
         ctx.font = `900 ${Math.round(baseFont * 1.35)}px "Noto Sans KR", sans-serif`;
-        drawTextStroke(headline, pad, y, '#ffd60a');
+        drawTextStroke(headline, cx, y, '#ffd60a');
         y -= Math.round(baseFont * 1.7);
 
         // Line 2: 자유입력 메모  ← white, medium
@@ -1137,7 +1138,7 @@
           ctx.font = `600 ${Math.round(baseFont * 1.0)}px "Noto Sans KR", sans-serif`;
           const lines = wrapText(ctx, info.memo, W - pad * 2, 2);
           for (let i = lines.length - 1; i >= 0; i--) {
-            drawTextStroke(lines[i], pad, y, '#ffffff');
+            drawTextStroke(lines[i], cx, y, '#ffffff');
             y -= Math.round(baseFont * 1.25);
           }
         }
@@ -1147,13 +1148,13 @@
           ctx.font = `400 ${Math.round(baseFont * 0.95)}px "Noto Sans KR", sans-serif`;
           const addrLines = wrapText(ctx, '📍 ' + info.address, W - pad * 2, 2);
           for (let i = addrLines.length - 1; i >= 0; i--) {
-            drawTextStroke(addrLines[i], pad, y, '#ffffff');
+            drawTextStroke(addrLines[i], cx, y, '#ffffff');
             y -= Math.round(baseFont * 1.15);
           }
         } else {
           // 주소 미수집 시 안내 (위치 권한 거부됐을 때만 표시)
           ctx.font = `400 ${Math.round(baseFont * 0.8)}px "Noto Sans KR", sans-serif`;
-          drawTextStroke('📍 주소 미수집 (위치 권한 확인)', pad, y, '#fbbf24');
+          drawTextStroke('📍 주소 미수집 (위치 권한 확인)', cx, y, '#fbbf24');
           y -= Math.round(baseFont * 1.1);
         }
 
@@ -1161,13 +1162,13 @@
         if (info.gps) {
           ctx.font = `700 ${Math.round(baseFont * 0.78)}px "JetBrains Mono", monospace`;
           const gpsLine = `🛰 ${info.gps.lat}, ${info.gps.lon}  ±${info.gps.accuracy}m`;
-          drawTextStroke(gpsLine, pad, y, '#a7f3d0');
+          drawTextStroke(gpsLine, cx, y, '#a7f3d0');
           y -= Math.round(baseFont * 1.05);
         }
 
         // Line 5 (top of bottom block): datetime
         ctx.font = `700 ${Math.round(baseFont * 0.78)}px "JetBrains Mono", monospace`;
-        drawTextStroke(info.datetimeStr, pad, y, '#e8ecf3');
+        drawTextStroke(info.datetimeStr, cx, y, '#e8ecf3');
 
         // Top-right brand watermark (외곽선 적용)
         ctx.textAlign = 'right';

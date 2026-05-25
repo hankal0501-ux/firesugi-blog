@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": 1779743037847,
+    "author": "FireSugi-Bot",
+    "title": "🤖 법령 업데이트 — 화재안전기준 개정 요약",
+    "content": "NFTC 203 개정안: 자동화재탐지설비 감지기 설치 간격 완화, 발신기 표시등 위치 명확화. 시행일 확인 필수.\n\n———\n🤖 Fire-Sugi 자동 글쓰기 (GitHub Actions)",
+    "date": "2026.05.25",
+    "views": 0,
+    "visibility": "public",
+    "secret": false,
+    "comments": [],
+    "autoWritten": true
+  }
+]

@@ -112,40 +112,7 @@ jobs:
 
       - name: 10) android/app/build.gradle 에 signing config 자동 주입
         working-directory: dy-sobang-fieldlog
-        run: |
-          GRADLE=android/app/build.gradle
-          if grep -q "signingConfigs.release" $GRADLE; then
-            echo "ℹ️  이미 signing config 적용됨"
-          else
-            # android { 직후에 signingConfigs 블록 삽입
-            python3 - <<'PYEOF'
-import re
-p = 'android/app/build.gradle'
-with open(p, 'r', encoding='utf-8') as f:
-    content = f.read()
-inject = """
-    signingConfigs {
-        release {
-            storeFile file('../../keystore/release-key.jks')
-            storePassword 'dysobang2026'
-            keyAlias 'dy-sobang'
-            keyPassword 'dysobang2026'
-        }
-    }
-"""
-# 'android {' 다음 줄에 signingConfigs 삽입
-content = re.sub(r'(android\s*\{[^\n]*\n)', r'\1' + inject, content, count=1)
-# buildTypes.release 에 signingConfig 추가
-content = re.sub(
-    r'(buildTypes\s*\{\s*release\s*\{)',
-    r'\1\n            signingConfig signingConfigs.release',
-    content, count=1
-)
-with open(p, 'w', encoding='utf-8') as f:
-    f.write(content)
-print('✅ build.gradle 패치 완료')
-PYEOF
-          fi
+        run: python3 scripts/patch-gradle.py
 
       - name: 11) Gradle 캐시 복원
         uses: actions/cache@v4

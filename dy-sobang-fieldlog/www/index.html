@@ -888,7 +888,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.7.2';
+  const APP_VERSION = '1.8.0';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1116,13 +1116,14 @@
   }
   window.showDiagnostic = showDiagnostic;
 
-  // 통합 GET — Capacitor 네이티브 HTTP 우선 (CORS 우회), fetch 폴백 + timeout
-  async function nativeGetJson(url, timeoutMs = 8000) {
+  // 통합 GET — Capacitor 네이티브 HTTP 우선 (CORS 우회), fetch 폴백 + timeout + 커스텀 헤더
+  async function nativeGetJson(url, timeoutMs = 8000, extraHeaders = {}) {
+    const baseHeaders = { 'Accept': 'application/json', 'Accept-Language': 'ko' };
+    const headers = Object.assign({}, baseHeaders, extraHeaders);
     if (window.Capacitor?.Plugins?.CapacitorHttp) {
       try {
         const res = await window.Capacitor.Plugins.CapacitorHttp.get({
-          url, headers: { 'Accept': 'application/json', 'Accept-Language': 'ko' },
-          connectTimeout: timeoutMs, readTimeout: timeoutMs
+          url, headers, connectTimeout: timeoutMs, readTimeout: timeoutMs
         });
         if (res.status >= 200 && res.status < 300) {
           return typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
@@ -1133,10 +1134,7 @@
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
-      const res = await fetch(url, {
-        headers: { 'Accept': 'application/json', 'Accept-Language': 'ko' },
-        signal: ctrl.signal
-      });
+      const res = await fetch(url, { headers, signal: ctrl.signal });
       clearTimeout(tid);
       if (!res.ok) { console.warn('🌐 fetch HTTP', res.status); return null; }
       return await res.json();
@@ -1147,10 +1145,34 @@
     }
   }
 
+  // Kakao Local REST API 키 (도메인/플랫폼 제한으로 보호)
+  const KAKAO_REST_KEY = '48fba5dc3abff5e3024856f29157041a';
+
   async function reverseGeocode(lat, lon) {
     diagPush('🔍', 'reverseGeocode 시작: ' + lat + ', ' + lon);
 
-    // 1순위: 네이티브 Android Geocoder (Google Play Services 사용 — 카메라 앱과 동일)
+    // 🥇 1순위: Kakao Local — 한국 주소 최고 정확도 (도로명·지번 둘 다)
+    try {
+      const kUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`;
+      const k = await nativeGetJson(kUrl, 8000, { 'Authorization': 'KakaoAK ' + KAKAO_REST_KEY });
+      const doc = k?.documents?.[0];
+      if (doc) {
+        // 도로명주소 우선, 없으면 지번주소
+        const road = doc.road_address?.address_name;
+        const jibun = doc.address?.address_name;
+        const addr = road || jibun;
+        if (addr) {
+          diagPush('✅', '[Kakao] ' + addr);
+          return addr;
+        }
+      } else {
+        diagPush('⚠️', 'Kakao 응답 documents 비어있음');
+      }
+    } catch (e) {
+      diagPush('⚠️', 'Kakao 실패: ' + e.message + ' — BigDataCloud 폴백');
+    }
+
+    // 2순위: 네이티브 Android Geocoder (Google Play Services, 플러그인 미설치 시 스킵)
     if (window.Capacitor?.Plugins?.NativeGeocoder) {
       try {
         const NG = window.Capacitor.Plugins.NativeGeocoder;
@@ -1185,7 +1207,7 @@
       diagPush('🔧', 'NativeGeocoder 플러그인 미설치 — 외부 API 사용');
     }
 
-    // 2순위: BigDataCloud (무료 외부 API)
+    // 3순위: BigDataCloud (무료 외부 API)
     const url1 = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`;
     const d = await nativeGetJson(url1);
     if (d) {
@@ -1202,7 +1224,7 @@
       }
     }
 
-    // 3순위: Nominatim
+    // 4순위: Nominatim
     const url2 = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ko&zoom=18`;
     const n = await nativeGetJson(url2);
     if (n?.display_name) {

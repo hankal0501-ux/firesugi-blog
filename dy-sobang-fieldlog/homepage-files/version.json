@@ -1,7 +1,7 @@
 {
-  "latest": "1.7.2",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.7.2.apk",
-  "notes": "1.7.2 - 사진 속성에 GPS 위치 자동 주입 (piexifjs로 EXIF 메타데이터 박음) → Google Photos/사진 앱에서 카메라 앱처럼 지도 표시 가능",
+  "latest": "1.8.0",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.0.apk",
+  "notes": "1.8.0 - 🥇 Kakao Local API 1순위 (한국 주소 최고 정확도, 도로명 우선) → NativeGeocoder → BigDataCloud → Nominatim 4단계 폴백 · 워터마크에 카카오 정확 주소 자동 표시",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-25T00:00:00Z"

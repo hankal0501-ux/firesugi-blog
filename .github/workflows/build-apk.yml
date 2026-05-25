@@ -100,7 +100,8 @@ jobs:
             cd ..
             git config user.name  "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add dy-sobang-fieldlog/keystore/release-key.jks
+            # .jks 는 gitignore 되어 있으므로 -f 로 강제 추가
+            git add -f dy-sobang-fieldlog/keystore/release-key.jks
             git commit -m "build: 영구 release keystore 자동 생성 (모든 APK 동일 서명 → 패키지 충돌 해소) [skip ci]"
             git push
             cd dy-sobang-fieldlog

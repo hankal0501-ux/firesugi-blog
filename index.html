@@ -19,7 +19,7 @@
       <a href="#" class="logo" onclick="showTab('home')">
         <div class="logo-icon">🔥</div>
         <span>Fire-Sugi</span>
-        <span class="logo-ver" title="현재 버전">v20260526b</span>
+        <span class="logo-ver" title="현재 버전">v20260526c</span>
       </a>
       <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
       <nav>
@@ -376,9 +376,12 @@
               <input type="text" id="boardSearchInput" placeholder="검색어를 입력하세요..." onkeyup="if(event.key==='Enter')searchBoard()">
               <button class="btn-search" onclick="searchBoard()">🔍</button>
             </div>
-            <button class="btn btn-outline btn-sm" onclick="autoWritePost(); alert('✅ 자동글 1건 작성 완료'); renderBoard();">🤖 자동글 가져오기</button>
+          </div>
+          <!-- 글쓰기 액션 줄 (확실히 보이도록 별도 행) -->
+          <div style="display:flex; gap:8px; margin:8px 0 18px; justify-content:flex-end; flex-wrap:wrap;">
+            <button class="btn btn-outline btn-sm admin-only" style="display:none;" onclick="autoWritePost(); alert('✅ 자동글 1건 작성 완료'); renderBoard();">🤖 자동글 가져오기</button>
             <button class="btn btn-outline btn-sm admin-only" style="display:none;" onclick="adminAutoWriteBatch(prompt('몇 건 만들까요? (1~20)', '5'))">⚡ 일괄 자동글</button>
-            <button class="btn btn-primary" onclick="toggleWriteForm()">✏️ 글쓰기</button>
+            <button class="btn btn-primary" style="background:#03c75a; color:#fff; padding:10px 22px; font-weight:700;" onclick="toggleWriteForm()">✏️ 글쓰기</button>
           </div>
           <div class="write-form" id="writeForm" style="display:none;">
             <div class="form-row">
@@ -722,7 +725,7 @@
       </div>
       <p>© 2026 Fire-Sugi 소방안전 블로그. All rights reserved.</p>
       <p class="version-info">
-        <span class="ver-badge">v20260526b</span>
+        <span class="ver-badge">v20260526c</span>
         <span class="ver-date">최종 수정 2026.05.22</span>
         <a href="https://github.com/hankal0501-ux/firesugi-blog/commits/main" target="_blank" class="ver-link">📝 수정 이력</a>
       </p>

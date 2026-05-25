@@ -2901,11 +2901,12 @@ button, .btn, a.btn, .quick-shortcut, .kfma-tab,
 .ns-item b { color: #02a64a !important; }
 /* 검색 입력창 포커스 — 연한 그린 */
 #newsSearchInput:focus { border-color: #02a64a !important; box-shadow: 0 0 0 3px rgba(2,166,74,0.12) !important; }
-/* 토픽 필터 탭 active — 연한 블루 */
+/* 토픽 필터 탭 active — 진한 블루 + 흰 글자 (모바일 가독성 ↑) */
 #newsFilterTabs .kfma-tab.active {
-  background: #d6e0ff !important;
-  color: #2a3c8d !important;
-  border-color: #b8c5f0 !important;
+  background: #1c5cd6 !important;
+  color: #ffffff !important;
+  border-color: #1c5cd6 !important;
+  font-weight: 700 !important;
 }
 
 /* ========================================================

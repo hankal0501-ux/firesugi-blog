@@ -278,6 +278,26 @@ function toggleWriteForm() {
   f.style.display = f.style.display === 'none' ? 'block' : 'none';
 }
 
+// 게시판 요청 양식 자동 채우기 — 이름·이메일·주소·요청글 템플릿
+function insertPostTemplate() {
+  const ta = document.getElementById('postContent');
+  if (!ta) return;
+  const template =
+    '이름: \n' +
+    '이메일: \n' +
+    '주소(시·동): \n' +
+    '요청글: \n';
+  if (ta.value && !confirm('현재 입력된 내용을 양식으로 덮어쓰시겠습니까?')) return;
+  ta.value = template;
+  ta.focus();
+  // 첫 줄 '이름: ' 다음으로 커서 이동
+  ta.setSelectionRange(4, 4);
+  // 비공개 자동 권장 (개인정보 보호)
+  const priv = document.getElementById('visPrivate');
+  if (priv) priv.checked = true;
+}
+window.insertPostTemplate = insertPostTemplate;
+
 async function submitPost() {
   const title = document.getElementById('postTitle').value.trim();
   const content = document.getElementById('postContent').value.trim();

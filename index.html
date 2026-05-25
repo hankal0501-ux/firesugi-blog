@@ -19,7 +19,7 @@
       <a href="#" class="logo" onclick="showTab('home')">
         <div class="logo-icon">🔥</div>
         <span>Fire-Sugi</span>
-        <span class="logo-ver" title="현재 버전">v20260524z8</span>
+        <span class="logo-ver" title="현재 버전">v20260526a</span>
       </a>
       <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
       <nav>
@@ -385,7 +385,12 @@
               <div class="form-group" style="width:160px;"><label>닉네임 (선택)</label><input type="text" id="postAuthor" placeholder="비우면 익명_XXXX" maxlength="20"></div>
               <div class="form-group" style="flex:1;"><label>제목</label><input type="text" id="postTitle" placeholder="제목을 입력하세요"></div>
             </div>
-            <div class="form-group"><label>내용</label><textarea id="postContent" placeholder="내용을 입력하세요" rows="6"></textarea></div>
+            <div class="form-group">
+              <label>내용
+                <button type="button" class="btn-tiny" onclick="insertPostTemplate()" style="margin-left:8px; font-size:0.75rem; padding:2px 8px; background:#eef4ff; border:1px solid var(--naver-blue); color:var(--naver-blue); border-radius:6px; cursor:pointer;">📋 양식 채우기</button>
+              </label>
+              <textarea id="postContent" placeholder="내용 (또는 [📋 양식 채우기] 버튼 클릭)&#10;&#10;예시:&#10;이름: 홍길동&#10;이메일: hong@example.com&#10;주소(시·동): 부산 강서구 명지동&#10;요청글: ..." rows="8"></textarea>
+            </div>
             <div class="form-row" style="gap:16px; align-items:flex-end;">
               <div class="form-group" style="flex:0 0 auto;">
                 <label>공개 설정</label>
@@ -717,7 +722,7 @@
       </div>
       <p>© 2026 Fire-Sugi 소방안전 블로그. All rights reserved.</p>
       <p class="version-info">
-        <span class="ver-badge">v20260524z8</span>
+        <span class="ver-badge">v20260526a</span>
         <span class="ver-date">최종 수정 2026.05.22</span>
         <a href="https://github.com/hankal0501-ux/firesugi-blog/commits/main" target="_blank" class="ver-link">📝 수정 이력</a>
       </p>

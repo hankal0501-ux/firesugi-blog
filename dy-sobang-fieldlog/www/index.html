@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- piexifjs — JPEG EXIF GPS 메타데이터 주입용 (카메라 앱처럼 위치정보 박음) -->
+<script src="https://cdn.jsdelivr.net/npm/piexifjs@1.0.6/piexif.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#0a0e1a">
@@ -886,7 +888,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.7.1';
+  const APP_VERSION = '1.7.2';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1495,6 +1497,51 @@
     return `${site}_${floor}_${memo}_${ymd}_${hm}.jpg`;
   }
 
+  // JPEG dataUrl 에 EXIF GPS 메타데이터 주입 — 카메라 앱처럼 사진 속성에 위치 표시
+  function injectExifGps(dataUrl, gps, datetimeStr) {
+    if (!gps || !gps.lat || !gps.lon) return dataUrl;
+    if (typeof piexif === 'undefined') {
+      diagPush('⚠️', 'piexifjs 로드 안 됨 — EXIF GPS 스킵 (CDN 차단?)');
+      return dataUrl;
+    }
+    try {
+      const lat = Math.abs(gps.lat);
+      const lon = Math.abs(gps.lon);
+      const GPS = piexif.GPSIFD;
+      const gpsIfd = {};
+      gpsIfd[GPS.GPSLatitudeRef]  = gps.lat >= 0 ? 'N' : 'S';
+      gpsIfd[GPS.GPSLatitude]     = piexif.GPSHelper.degToDmsRational(lat);
+      gpsIfd[GPS.GPSLongitudeRef] = gps.lon >= 0 ? 'E' : 'W';
+      gpsIfd[GPS.GPSLongitude]    = piexif.GPSHelper.degToDmsRational(lon);
+      if (gps.accuracy != null) {
+        gpsIfd[GPS.GPSHPositioningError] = [Math.round(gps.accuracy * 100), 100];
+      }
+      // 0th IFD — 촬영 시각, 제조사
+      const zerothIfd = {};
+      zerothIfd[piexif.ImageIFD.Make]  = 'DY-Sobang';
+      zerothIfd[piexif.ImageIFD.Model] = 'FieldLog';
+      if (datetimeStr) {
+        // EXIF datetime 형식: 'YYYY:MM:DD HH:MM:SS'
+        const exifDate = datetimeStr.replace(/-/g, ':').slice(0, 19);
+        zerothIfd[piexif.ImageIFD.DateTime] = exifDate;
+      }
+      const exifIfd = {};
+      if (datetimeStr) {
+        const exifDate = datetimeStr.replace(/-/g, ':').slice(0, 19);
+        exifIfd[piexif.ExifIFD.DateTimeOriginal]  = exifDate;
+        exifIfd[piexif.ExifIFD.DateTimeDigitized] = exifDate;
+      }
+      const exifObj = { '0th': zerothIfd, Exif: exifIfd, GPS: gpsIfd };
+      const exifBytes = piexif.dump(exifObj);
+      const newDataUrl = piexif.insert(exifBytes, dataUrl);
+      diagPush('🛰', 'EXIF GPS 주입 OK: ' + gps.lat + ', ' + gps.lon);
+      return newDataUrl;
+    } catch (e) {
+      diagPush('❌', 'EXIF 주입 실패: ' + e.message);
+      return dataUrl;
+    }
+  }
+
   // 입력완료 시 자동 호출 — 갤러리에 silent 저장 후 URI 반환 (썸네일만 IndexedDB에 저장하기 위함)
   async function saveToGallerySilent(dataUrl, filename) {
     if (!window.Capacitor?.isNativePlatform?.() || !Capacitor.Plugins?.Filesystem) {
@@ -1646,7 +1693,9 @@
       saveBtn.textContent = '저장 중...';
       const tempRec = { id: Date.now(), timestamp: now.toISOString(), site, floor, memo };
       const filename = buildFilename(tempRec);
-      const savedInfo = await saveToGallerySilent(stamped, filename);
+      // EXIF GPS 메타데이터 주입 (사진 속성에 위치 표시 — 카메라 앱처럼)
+      const stampedWithExif = injectExifGps(stamped, currentGps, datetimeStr);
+      const savedInfo = await saveToGallerySilent(stampedWithExif, filename);
 
       // 3) 썸네일 생성 (~10KB) — IndexedDB에는 썸네일만 저장
       saveBtn.textContent = '썸네일 생성...';

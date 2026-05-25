@@ -886,7 +886,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.5.0';
+  const APP_VERSION = '1.5.1';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1108,14 +1108,19 @@
         const pad = Math.round(W * 0.025);
         const baseFont = Math.max(18, Math.round(W / 55));
 
-        // Bottom gradient backdrop for readability
-        const overlayH = Math.round(H * 0.28);
-        const grad = ctx.createLinearGradient(0, H - overlayH, 0, H);
-        grad.addColorStop(0, 'rgba(0,0,0,0)');
-        grad.addColorStop(0.4, 'rgba(0,0,0,0.55)');
-        grad.addColorStop(1, 'rgba(0,0,0,0.92)');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, H - overlayH, W, overlayH);
+        // 그라데이션 배경 제거 — 글자에 검정 외곽선 + drop shadow 로 가독성 확보
+        const outlineW = Math.max(2, Math.round(baseFont * 0.18));
+        function drawTextStroke(text, x, y, fillColor) {
+          // 검정 외곽선
+          ctx.lineWidth = outlineW;
+          ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+          ctx.lineJoin = 'round';
+          ctx.miterLimit = 2;
+          ctx.strokeText(text, x, y);
+          // 본 색상으로 채우기
+          ctx.fillStyle = fillColor;
+          ctx.fillText(text, x, y);
+        }
 
         ctx.textBaseline = 'bottom';
         ctx.textAlign = 'left';
@@ -1124,51 +1129,53 @@
         // Line 1 (bottom): 사업장 · 층수  ← biggest, yellow
         const headline = [info.site, info.floor].filter(Boolean).join(' · ') || '사업장 미지정';
         ctx.font = `900 ${Math.round(baseFont * 1.35)}px "Noto Sans KR", sans-serif`;
-        ctx.fillStyle = '#ffd60a';
-        ctx.fillText(headline, pad, y);
+        drawTextStroke(headline, pad, y, '#ffd60a');
         y -= Math.round(baseFont * 1.7);
 
         // Line 2: 자유입력 메모  ← white, medium
         if (info.memo) {
           ctx.font = `600 ${Math.round(baseFont * 1.0)}px "Noto Sans KR", sans-serif`;
-          ctx.fillStyle = '#ffffff';
-          // Wrap long memo to 2 lines if needed
           const lines = wrapText(ctx, info.memo, W - pad * 2, 2);
           for (let i = lines.length - 1; i >= 0; i--) {
-            ctx.fillText(lines[i], pad, y);
+            drawTextStroke(lines[i], pad, y, '#ffffff');
             y -= Math.round(baseFont * 1.25);
           }
         }
 
-        // Line 3: 주소
+        // Line 3: 주소 (자동 GPS 역지오코딩 결과)
         if (info.address) {
-          ctx.font = `400 ${Math.round(baseFont * 0.85)}px "Noto Sans KR", sans-serif`;
-          ctx.fillStyle = '#c8d0e0';
+          ctx.font = `400 ${Math.round(baseFont * 0.95)}px "Noto Sans KR", sans-serif`;
           const addrLines = wrapText(ctx, '📍 ' + info.address, W - pad * 2, 2);
           for (let i = addrLines.length - 1; i >= 0; i--) {
-            ctx.fillText(addrLines[i], pad, y);
-            y -= Math.round(baseFont * 1.05);
+            drawTextStroke(addrLines[i], pad, y, '#ffffff');
+            y -= Math.round(baseFont * 1.15);
           }
+        } else {
+          // 주소 미수집 시 안내 (위치 권한 거부됐을 때만 표시)
+          ctx.font = `400 ${Math.round(baseFont * 0.8)}px "Noto Sans KR", sans-serif`;
+          drawTextStroke('📍 주소 미수집 (위치 권한 확인)', pad, y, '#fbbf24');
+          y -= Math.round(baseFont * 1.1);
         }
 
-        // Line 4 (top of overlay): datetime + GPS  ← small, gray, monospace
-        ctx.font = `700 ${Math.round(baseFont * 0.75)}px "JetBrains Mono", monospace`;
-        ctx.fillStyle = '#8893a8';
-        let metaLine = info.datetimeStr;
+        // Line 4: GPS 좌표 (있을 때만 별도 줄)
         if (info.gps) {
-          metaLine += `  ·  ${info.gps.lat}, ${info.gps.lon}  ·  ±${info.gps.accuracy}m`;
+          ctx.font = `700 ${Math.round(baseFont * 0.78)}px "JetBrains Mono", monospace`;
+          const gpsLine = `🛰 ${info.gps.lat}, ${info.gps.lon}  ±${info.gps.accuracy}m`;
+          drawTextStroke(gpsLine, pad, y, '#a7f3d0');
+          y -= Math.round(baseFont * 1.05);
         }
-        ctx.fillText(metaLine, pad, y);
 
-        // Top-right brand watermark
-        ctx.font = `900 ${Math.round(baseFont * 0.95)}px "Noto Sans KR", sans-serif`;
+        // Line 5 (top of bottom block): datetime
+        ctx.font = `700 ${Math.round(baseFont * 0.78)}px "JetBrains Mono", monospace`;
+        drawTextStroke(info.datetimeStr, pad, y, '#e8ecf3');
+
+        // Top-right brand watermark (외곽선 적용)
         ctx.textAlign = 'right';
         ctx.textBaseline = 'top';
-        ctx.fillStyle = 'rgba(255,214,10,0.92)';
-        ctx.fillText('대영소방', W - pad, pad);
+        ctx.font = `900 ${Math.round(baseFont * 0.95)}px "Noto Sans KR", sans-serif`;
+        drawTextStroke('대영소방', W - pad, pad, '#ffd60a');
         ctx.font = `700 ${Math.round(baseFont * 0.55)}px "JetBrains Mono", monospace`;
-        ctx.fillStyle = 'rgba(232,236,243,0.7)';
-        ctx.fillText('FIELD LOG', W - pad, pad + Math.round(baseFont * 1.1));
+        drawTextStroke('FIELD LOG', W - pad, pad + Math.round(baseFont * 1.1), '#e8ecf3');
 
         resolve(canvas.toDataURL('image/jpeg', 0.98));
       };

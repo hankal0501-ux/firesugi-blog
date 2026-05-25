@@ -1,7 +1,7 @@
 {
-  "latest": "1.5.0",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.5.0.apk",
-  "notes": "1.5.0 - 주간(☀️)/야간(🌙) 테마 토글 추가 (헤더 위치자동 옆) · 강한 햇빛에서 잘 보이는 흰 배경 옵션 · 선택값 localStorage 영구 저장",
+  "latest": "1.5.1",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.5.1.apk",
+  "notes": "1.5.1 - 사진 워터마크 그라데이션 배경 제거 (아래 어두움 사라짐) · 글자에 검정 외곽선으로 가독성 확보 · 주소·GPS 자동 별도 줄로 표시 · 위치 권한 거부 시 안내",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-24T00:00:00Z"

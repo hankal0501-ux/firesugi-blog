@@ -68,7 +68,7 @@ jobs:
             npm install
           fi
 
-      - name: 7) Android 플랫폼 추가 (최초 1회)
+      - name: 7) Android 플랫폼 추가 (매 빌드 — fresh runner)
         working-directory: dy-sobang-fieldlog
         run: |
           if [ ! -d android ]; then
@@ -79,7 +79,75 @@ jobs:
         working-directory: dy-sobang-fieldlog
         run: npx cap sync android
 
-      - name: 9) Gradle 캐시 복원
+      - name: 9) 영구 keystore 자동 생성 (최초 1회) + repo commit
+        working-directory: dy-sobang-fieldlog
+        run: |
+          KS_DIR=keystore
+          KS_FILE=$KS_DIR/release-key.jks
+          mkdir -p $KS_DIR
+          if [ ! -f $KS_FILE ]; then
+            echo "🔑 영구 keystore 생성 중 (최초 1회)..."
+            keytool -genkeypair -v \
+              -keystore $KS_FILE \
+              -alias dy-sobang \
+              -keyalg RSA -keysize 2048 \
+              -validity 10000 \
+              -storepass dysobang2026 \
+              -keypass dysobang2026 \
+              -dname "CN=DY-Sobang FieldLog, O=Daeyoung Sobang, L=Busan, C=KR"
+            echo "✅ keystore 생성 완료 — repo에 commit 후 모든 빌드에서 재사용"
+            # 최초 1회 git commit
+            cd ..
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add dy-sobang-fieldlog/keystore/release-key.jks
+            git commit -m "build: 영구 release keystore 자동 생성 (모든 APK 동일 서명 → 패키지 충돌 해소) [skip ci]"
+            git push
+            cd dy-sobang-fieldlog
+          else
+            echo "ℹ️  keystore 이미 존재 — 재사용"
+          fi
+          # SHA-256 fingerprint 출력 (디버깅용)
+          keytool -list -v -keystore $KS_FILE -storepass dysobang2026 -alias dy-sobang | grep "SHA256:" | head -1
+
+      - name: 10) android/app/build.gradle 에 signing config 자동 주입
+        working-directory: dy-sobang-fieldlog
+        run: |
+          GRADLE=android/app/build.gradle
+          if grep -q "signingConfigs.release" $GRADLE; then
+            echo "ℹ️  이미 signing config 적용됨"
+          else
+            # android { 직후에 signingConfigs 블록 삽입
+            python3 - <<'PYEOF'
+import re
+p = 'android/app/build.gradle'
+with open(p, 'r', encoding='utf-8') as f:
+    content = f.read()
+inject = """
+    signingConfigs {
+        release {
+            storeFile file('../../keystore/release-key.jks')
+            storePassword 'dysobang2026'
+            keyAlias 'dy-sobang'
+            keyPassword 'dysobang2026'
+        }
+    }
+"""
+# 'android {' 다음 줄에 signingConfigs 삽입
+content = re.sub(r'(android\s*\{[^\n]*\n)', r'\1' + inject, content, count=1)
+# buildTypes.release 에 signingConfig 추가
+content = re.sub(
+    r'(buildTypes\s*\{\s*release\s*\{)',
+    r'\1\n            signingConfig signingConfigs.release',
+    content, count=1
+)
+with open(p, 'w', encoding='utf-8') as f:
+    f.write(content)
+print('✅ build.gradle 패치 완료')
+PYEOF
+          fi
+
+      - name: 11) Gradle 캐시 복원
         uses: actions/cache@v4
         with:
           path: |
@@ -88,42 +156,43 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('dy-sobang-fieldlog/android/**/*.gradle*', 'dy-sobang-fieldlog/android/**/gradle-wrapper.properties') }}
           restore-keys: gradle-${{ runner.os }}-
 
-      - name: 10) APK 빌드 (debug)
+      - name: 12) APK 빌드 (release, 영구 keystore 서명)
         working-directory: dy-sobang-fieldlog/android
         run: |
           chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleRelease --no-daemon
 
-      - name: 11) APK + 다운로드 페이지 배포 폴더로 복사
+      - name: 13) APK + 다운로드 페이지 배포 폴더로 복사
         run: |
           mkdir -p dy-sobang
-          cp dy-sobang-fieldlog/android/app/build/outputs/apk/debug/app-debug.apk \
+          cp dy-sobang-fieldlog/android/app/build/outputs/apk/release/app-release.apk \
              dy-sobang/dy-sobang-fieldlog-${{ steps.ver.outputs.version }}.apk
           cp dy-sobang-fieldlog/homepage-files/index.html  dy-sobang/index.html
           cp dy-sobang-fieldlog/homepage-files/version.json dy-sobang/version.json
           ls -lh dy-sobang/
 
-      - name: 12) Artifact 업로드 (백업·다운로드 가능)
+      - name: 14) Artifact 업로드 (백업·다운로드 가능)
         uses: actions/upload-artifact@v4
         with:
           name: dy-sobang-fieldlog-v${{ steps.ver.outputs.version }}
           path: dy-sobang/dy-sobang-fieldlog-*.apk
           retention-days: 90
 
-      - name: 13) dy-sobang/ 폴더 변경사항 커밋 & 푸시
+      - name: 15) dy-sobang/ 폴더 변경사항 커밋 & 푸시
         run: |
+          git pull --rebase || true
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dy-sobang/
           if git diff --cached --quiet; then
             echo "ℹ️ 변경사항 없음 — 커밋 생략"
           else
-            git commit -m "build: DY-Sobang v${{ steps.ver.outputs.version }} APK [skip ci]"
+            git commit -m "build: DY-Sobang v${{ steps.ver.outputs.version }} APK (release, 영구 keystore) [skip ci]"
             git push
             echo "✅ dy-sobang/ 푸시 완료 → 1~2분 뒤 GitHub Pages 배포 → 폰 자동 업데이트 알림"
           fi
 
-      - name: 14) 요약
+      - name: 16) 요약
         run: |
           echo "===================================="
           echo "📦 빌드 완료: v${{ steps.ver.outputs.version }}"

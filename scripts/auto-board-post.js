@@ -1,0 +1,74 @@
+// =============================================================
+// Fire-Sugi 게시판 자동글 — GitHub Actions cron 매일 1건
+// - board-auto.json 에 누적 (최대 200건 유지)
+// - 페이지 로드 시 script.js 가 fetch 해서 로컬 posts 에 머지
+// =============================================================
+import fs from 'node:fs/promises';
+
+const POOL = [
+  { title: '안전 점검 — 겨울철 난방기구 화재 예방', content: '겨울철 화재 사고의 70%가 난방기구 부주의입니다. 전기장판·전기히터·콘센트 과부하 점검 체크리스트 5가지로 미연에 방지합시다.' },
+  { title: '실무 팁 — 점검 지적서 작성 노하우', content: '지적사항을 명확히 기록하려면 ① 위치 ② 위반 조항 ③ 사진 ④ 시정 기한 4요소가 필수. 모호한 표현은 후속 분쟁 원인.' },
+  { title: '월간 리포트 — 우리 동네 화재 통계', content: '이번 달 관할 구역 화재 발생 5건 중 4건이 다중이용업소. 화재 감지기 미작동이 주요 원인. 일제 점검 권장.' },
+  { title: '교육 자료 — 의용소방대 기본 교육 정리', content: '소화기 사용법(P-A-S-S), 옥내소화전 사용 절차, 소방통로 확보 의무 등 핵심 5장 요약. 신규 대원 교육 자료로 활용.' },
+  { title: '사례 분석 — 물류창고 화재 원인과 교훈', content: '최근 발생한 물류창고 화재 사례 분석: 자동화재탐지설비 오작동 + 스프링클러 정지 + 방화구획 미흡 3가지 복합 원인.' },
+  { title: '법령 업데이트 — 화재안전기준 개정 요약', content: 'NFTC 203 개정안: 자동화재탐지설비 감지기 설치 간격 완화, 발신기 표시등 위치 명확화. 시행일 확인 필수.' },
+  { title: '🔧 소방시설 점검 체크리스트 — 봄철 특별점검', content: '소화기 압력게이지, 옥내소화전 방수압, 자동화재탐지설비 작동, 스프링클러 헤드 막힘 등 7대 항목.' },
+  { title: '경험담 — 첫 점검에서 놓치기 쉬운 5가지', content: '신입 점검자가 자주 놓치는 항목: ① 비상조명등 작동 ② 피난구 잠김 ③ 방화문 폐쇄력 ④ 가스누설경보기 ⑤ 완강기 설치.' },
+  { title: '질문 — 옥상 헬리포트 도장 주기는?', content: '옥상 헬리포트 H 표시 도색 재도장 주기에 관한 규정 출처와 일반적 관리 기준 공유 부탁드립니다.' },
+  { title: '공유 — 자동화재탐지설비 오작동 줄이는 법', content: '먼지·습기로 인한 오작동이 잦으면 ① 감지기 청소 6개월 1회 ② 환기 개선 ③ 광전식 감지기 교체 검토.' },
+  { title: '안내 — 다음 달 화재안전조사 일정', content: '관할 소방서에서 다음 달 둘째 주 화재안전조사 예정. 다중이용업소 대상 사전 점검 권장.' },
+  { title: '팁 — 소방시설 종합조회로 즉시 진단', content: '건물 주소만 입력하면 설치된 소방시설 종류·점검 이력 즉시 조회. AI 분석으로 누락 가능성도 자동 표시.' }
+];
+
+const FILE = 'board-auto.json';
+const MAX_POSTS = 200;
+const BOT = 'FireSugi-Bot';
+
+async function main() {
+  let existing = [];
+  try {
+    existing = JSON.parse(await fs.readFile(FILE, 'utf8'));
+    console.log(`📂 기존 ${existing.length}건 로드`);
+  } catch {
+    console.log('📂 board-auto.json 없음 - 새로 생성');
+  }
+
+  // 오늘 이미 작성됐는지 체크 (idempotent — 같은 날 재실행해도 중복 안 함)
+  const today = (() => {
+    const d = new Date();
+    return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+  })();
+  const todayCount = existing.filter(p => p.date === today).length;
+  if (todayCount > 0) {
+    console.log(`⏭  오늘(${today}) 이미 ${todayCount}건 작성됨 — 스킵`);
+    return;
+  }
+
+  // 중복 안 된 제목 우선 선택
+  const usedTitles = new Set(existing.map(p => p.title.replace(/^🤖 /, '')));
+  const unused = POOL.filter(t => !usedTitles.has(t.title));
+  const pick = (unused.length ? unused : POOL)[Math.floor(Math.random() * (unused.length ? unused.length : POOL.length))];
+
+  const newPost = {
+    id: Date.now() + Math.floor(Math.random() * 1000),
+    author: BOT,
+    title: '🤖 ' + pick.title,
+    content: pick.content + '\n\n———\n🤖 Fire-Sugi 자동 글쓰기 (GitHub Actions)',
+    date: today,
+    views: 0,
+    visibility: 'public',
+    secret: false,
+    comments: [],
+    autoWritten: true
+  };
+
+  const merged = [...existing, newPost].slice(-MAX_POSTS);
+  await fs.writeFile(FILE, JSON.stringify(merged, null, 2), 'utf8');
+  console.log(`✅ 신규 1건 추가: ${newPost.title}`);
+  console.log(`   전체: ${merged.length}건`);
+}
+
+main().catch(e => {
+  console.error('💥 자동글 작성 실패:', e);
+  process.exit(1);
+});

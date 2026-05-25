@@ -62,9 +62,40 @@ document.addEventListener('DOMContentLoaded', () => {
   autoAddDailyNews();
   // 원격 news.json 페치 (GitHub Actions 자동수집 결과)
   fetchRemoteNews();
-  // 자동 글쓰기 — 일일 1회
+  // 자동 글쓰기 — 일일 1회 (클라이언트 폴백)
   autoWriteDailyIfDue();
+  // 원격 board-auto.json 페치 (GitHub Actions cron 결과)
+  fetchRemoteBoardPosts();
 });
+
+// ===== REMOTE BOARD AUTO POSTS (GitHub Actions cron) =====
+async function fetchRemoteBoardPosts() {
+  try {
+    const res = await fetch('board-auto.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) return;
+    const remote = await res.json();
+    if (!Array.isArray(remote) || !remote.length) return;
+
+    const local = getPosts();
+    const localIds = new Set(local.map(p => String(p.id)));
+    const localTitles = new Set(local.map(p => p.title));
+
+    const newOnes = remote.filter(r =>
+      !localIds.has(String(r.id)) && !localTitles.has(r.title)
+    );
+    if (!newOnes.length) return;
+
+    const merged = [...newOnes, ...local];
+    savePosts(merged);
+    console.log(`📝 원격 게시판 자동글 ${newOnes.length}건 동기화 (전체 ${merged.length}건)`);
+    if (typeof renderBoard === 'function' && document.getElementById('tab-board')) {
+      renderBoard();
+      renderHomeBoard();
+    }
+  } catch (e) {
+    console.log('ℹ️  board-auto.json 페치 스킵:', e.message);
+  }
+}
 
 // ===== REMOTE NEWS FETCH (GitHub Actions 결과 가져오기) =====
 async function fetchRemoteNews() {

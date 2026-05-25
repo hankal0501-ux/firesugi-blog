@@ -886,7 +886,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.6.0';
+  const APP_VERSION = '1.6.1';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1032,44 +1032,74 @@
     document.getElementById('addressText').textContent = text;
   }
 
-  function prefetchLocation(force) {
-    if (geoFetchInFlight) return;
-    // 이미 주소가 있고 force가 아니면 스킵 (캐시된 위치 재사용)
-    if (!force && currentAddress) return;
-    if (!navigator.geolocation) {
-      setAddressUI('위치 기능 미지원', 'empty');
-      return;
-    }
-    geoFetchInFlight = true;
-    setAddressUI('위치 확인 중…', 'loading');
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        currentGps = {
+  // 통합 GPS — Capacitor Geolocation 네이티브 우선, navigator 폴백
+  async function getNativePosition() {
+    // 1) @capacitor/geolocation 네이티브 (권한 처리 + 더 정확)
+    if (window.Capacitor?.Plugins?.Geolocation) {
+      try {
+        const Geo = window.Capacitor.Plugins.Geolocation;
+        // 권한 먼저 요청
+        try { await Geo.requestPermissions({ permissions: ['location'] }); } catch (e) {}
+        const pos = await Geo.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 60000
+        });
+        console.log('✅ Capacitor Geolocation:', pos.coords);
+        return {
           lat: +pos.coords.latitude.toFixed(6),
           lon: +pos.coords.longitude.toFixed(6),
           accuracy: Math.round(pos.coords.accuracy)
         };
-        setAddressUI(`GPS ${currentGps.lat}, ${currentGps.lon} · 주소 변환 중…`, 'loading');
-        const addr = await reverseGeocode(currentGps.lat, currentGps.lon);
-        currentAddress = addr;
-        if (addr) {
-          setAddressUI(addr, 'ok');
-        } else {
-          setAddressUI(`GPS ${currentGps.lat}, ${currentGps.lon}`, 'ok');
-        }
-        geoFetchInFlight = false;
-      },
-      (err) => {
-        console.warn('geolocation error:', err);
-        let msg = '위치 권한 없음';
-        if (err.code === 1) msg = '위치 권한 거부됨 (설정에서 허용)';
-        else if (err.code === 2) msg = '위치 신호 약함';
-        else if (err.code === 3) msg = '위치 timeout — 재시도';
-        setAddressUI(msg, 'empty');
-        geoFetchInFlight = false;
-      },
-      { timeout: 15000, enableHighAccuracy: true, maximumAge: 60000 }
-    );
+      } catch (e) {
+        console.warn('Capacitor Geolocation 실패, navigator 폴백:', e.message);
+      }
+    }
+    // 2) navigator.geolocation 폴백
+    if (!navigator.geolocation) throw new Error('지원 안 됨');
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          console.log('✅ navigator Geolocation:', pos.coords);
+          resolve({
+            lat: +pos.coords.latitude.toFixed(6),
+            lon: +pos.coords.longitude.toFixed(6),
+            accuracy: Math.round(pos.coords.accuracy)
+          });
+        },
+        (err) => reject(err),
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+      );
+    });
+  }
+
+  async function prefetchLocation(force) {
+    if (geoFetchInFlight) return;
+    if (!force && currentAddress) return;
+    geoFetchInFlight = true;
+    setAddressUI('📡 위치 확인 중…', 'loading');
+    try {
+      const gps = await getNativePosition();
+      currentGps = gps;
+      setAddressUI(`📡 GPS OK · 주소 변환 중…`, 'loading');
+      const addr = await reverseGeocode(gps.lat, gps.lon);
+      currentAddress = addr;
+      if (addr) {
+        setAddressUI(addr, 'ok');
+      } else {
+        setAddressUI(`GPS ${gps.lat}, ${gps.lon} (주소조회 실패)`, 'ok');
+      }
+    } catch (err) {
+      console.warn('🌐 위치 가져오기 실패:', err);
+      let msg = '위치 권한 없음';
+      const code = err?.code || err?.errorMessage || '';
+      if (code === 1 || String(code).includes('denied')) msg = '⚠️ 위치 권한 거부됨 (설정에서 허용)';
+      else if (code === 2 || String(code).includes('unavailable')) msg = '⚠️ 위치 신호 약함';
+      else if (code === 3 || String(code).includes('timeout')) msg = '⚠️ 위치 timeout';
+      setAddressUI(msg, 'empty');
+    } finally {
+      geoFetchInFlight = false;
+    }
   }
 
   // 통합 GET — Capacitor 네이티브 HTTP 우선 (CORS 우회), fetch 폴백 + timeout

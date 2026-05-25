@@ -1,7 +1,7 @@
 {
-  "latest": "1.6.0",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.6.0.apk",
-  "notes": "1.6.0 - 영구 release keystore (모든 빌드 같은 서명, 1회 제거 후 OTA 영구) · CapacitorHttp 활성화 (CORS 우회) · 주소 fetch 8s timeout + 콘솔 진단 강화 · BigDataCloud → Nominatim 2단계 폴백",
+  "latest": "1.6.1",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.6.1.apk",
+  "notes": "1.6.1 - GPS 가져오기를 Capacitor Geolocation 네이티브 플러그인 우선 사용 (권한 자동 요청 + 더 정확) · navigator.geolocation 폴백 · 콘솔 로그 ✅/⚠️ 강화 · 진단용 위치 상태 표시",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-05-25T00:00:00Z"

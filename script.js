@@ -731,30 +731,33 @@ async function verifyAdminPassword(pw) {
   }
 }
 
-// 관리자 로그인 상태면 짧은 확인만, 비관리자는 차단
-function _adminConfirm(label) {
-  return confirm(`✅ 관리자 — ${label || '관리 작업'} 확인합니다.\n진행하시겠습니까?`);
-}
-
+// 비관리자 차단 헬퍼
 function _blockNonAdmin() {
   alert('🔒 관리자만 수정·편집할 수 있습니다.\n\n[🔐 관리자] 버튼으로 먼저 로그인하세요.');
   return false;
 }
 
-// 등록용 — 관리자만 (비관리자는 차단)
-async function checkProgPassword(label) {
-  if (typeof isAdmin === 'function' && isAdmin()) {
-    return _adminConfirm(label || '등록');
+// 모든 편집·삭제 액션 — 관리자 모드 진입 + 매 클릭 비번 확인 (이중 보안)
+async function _adminPasswordPrompt(label) {
+  const pw = prompt(`🔐 ${label || '관리 작업'} — 비밀번호 확인:`);
+  if (pw === null) return false;
+  if (!(await verifyAdminPassword(pw))) {
+    alert('❌ 비밀번호가 일치하지 않습니다.');
+    return false;
   }
-  return _blockNonAdmin();
+  return true;
 }
 
-// 삭제·편집용 — 관리자만 (비관리자는 차단)
+// 등록용 — 관리자 + 비번
+async function checkProgPassword(label) {
+  if (!(typeof isAdmin === 'function' && isAdmin())) return _blockNonAdmin();
+  return _adminPasswordPrompt(label || '등록');
+}
+
+// 삭제·편집용 — 관리자 + 비번
 async function checkDeletePassword(label) {
-  if (typeof isAdmin === 'function' && isAdmin()) {
-    return _adminConfirm(label || '삭제·편집');
-  }
-  return _blockNonAdmin();
+  if (!(typeof isAdmin === 'function' && isAdmin())) return _blockNonAdmin();
+  return _adminPasswordPrompt(label || '삭제·편집');
 }
 
 // 비밀번호 변경 — 네이버 OR 폰번호 본인 인증 후 변경

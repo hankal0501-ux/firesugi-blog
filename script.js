@@ -883,13 +883,17 @@ function renderVisitStats() {
   const month = monthly[monthly.length - 1].count;
   const total = allTs.length;
 
-  // 프로그램 클릭(접속) 통계
+  // 프로그램 클릭(접속) 통계 — 모든 프로그램 표시 (클릭 0 포함)
   const progClicks = (typeof getProgramClicks === 'function') ? getProgramClicks() : {};
   const totalProgClicks = Object.values(progClicks).reduce((s, p) => s + (p.count || 0), 0);
-  const progEntries = Object.entries(progClicks)
-    .map(([k, v]) => ({ key: k, name: (programData[k]?.name) || k, count: v.count || 0, lastClick: v.lastClick }))
-    .sort((a, b) => b.count - a.count);
-  const topProgs = progEntries.slice(0, 5);
+  // programData 의 모든 프로그램 + clicks 머지
+  const allProgs = Object.entries(programData).map(([k, p]) => ({
+    key: k,
+    name: p.name || k,
+    icon: p.icon || '📦',
+    count: progClicks[k]?.count || 0,
+    lastClick: progClicks[k]?.lastClick || null
+  })).sort((a, b) => b.count - a.count);
 
   document.getElementById('statsSummary').innerHTML = `
     <div class="ss-card"><div class="ss-num">${todayCount}</div><div class="ss-lab">오늘 방문</div></div>
@@ -905,7 +909,7 @@ function renderVisitStats() {
   document.getElementById('dailyChart').innerHTML = renderBars(daily);
   document.getElementById('monthlyChart').innerHTML = renderBars(monthly);
 
-  // 프로그램별 다운로드 TOP 5 — 동적 섹션 추가/갱신
+  // 프로그램별 클릭(다운로드) — 모든 프로그램 표시 (0회 포함)
   let progSection = document.getElementById('progDownloadSection');
   if (!progSection) {
     progSection = document.createElement('div');
@@ -913,24 +917,21 @@ function renderVisitStats() {
     progSection.className = 'stats-section';
     document.getElementById('monthlyChart').parentElement.after(progSection);
   }
-  if (progEntries.length === 0) {
-    progSection.innerHTML = '<h3 style="font-size:1rem; margin:18px 0 10px;">📥 프로그램 다운로드 TOP 5</h3><p style="color:var(--text-muted); font-size:0.85rem; padding:8px;">아직 접속된 프로그램이 없습니다.</p>';
-  } else {
-    const maxClick = Math.max(1, ...topProgs.map(p => p.count));
-    progSection.innerHTML = `
-      <h3 style="font-size:1rem; margin:18px 0 10px;">📥 프로그램 다운로드 TOP 5 (전체 ${progEntries.length}개)</h3>
-      <div class="prog-rank-list">
-        ${topProgs.map((p, i) => {
-          const pct = Math.round((p.count / maxClick) * 100);
-          return `<div class="prog-rank-row">
-            <span class="prog-rank-no">${i+1}</span>
-            <span class="prog-rank-name">${esc(p.name)}</span>
-            <div class="prog-rank-barbg"><div class="prog-rank-bar" style="width:${pct}%;"></div></div>
-            <span class="prog-rank-count">${p.count}회</span>
-          </div>`;
-        }).join('')}
-      </div>`;
-  }
+  const maxClick = Math.max(1, ...allProgs.map(p => p.count));
+  progSection.innerHTML = `
+    <h3 style="font-size:1rem; margin:18px 0 10px;">📥 프로그램별 클릭 (전체 ${allProgs.length}개 · 합계 ${totalProgClicks}회)</h3>
+    <div class="prog-rank-list">
+      ${allProgs.map((p, i) => {
+        const pct = Math.round((p.count / maxClick) * 100);
+        const dim = p.count === 0 ? ' style="opacity:0.5;"' : '';
+        return `<div class="prog-rank-row"${dim}>
+          <span class="prog-rank-no">${i+1}</span>
+          <span class="prog-rank-name">${p.icon} ${esc(p.name)}</span>
+          <div class="prog-rank-barbg"><div class="prog-rank-bar" style="width:${pct}%;"></div></div>
+          <span class="prog-rank-count">${p.count}회</span>
+        </div>`;
+      }).join('')}
+    </div>`;
 }
 
 function renderBars(data) {

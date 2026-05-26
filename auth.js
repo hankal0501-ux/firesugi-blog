@@ -1,27 +1,3 @@
-// 🛡 isAdmin 우회 방지 — 함수 재정의 시 자동 복구
-// (함수 hoisting 으로 이미 window.isAdmin 에 진짜 함수가 들어있으므로 그것을 보존)
-(function lockIsAdmin() {
-  let _realIsAdmin = (typeof window.isAdmin === 'function') ? window.isAdmin : null;
-  try {
-    Object.defineProperty(window, 'isAdmin', {
-      configurable: false,
-      get() { return _realIsAdmin; },
-      set(fn) {
-        if (typeof fn !== 'function') return;  // null·true·false 강제 무시
-        // 함수 본문에 SESSION_KEY/verifyAdminPassword/getCurrentUser 키워드 없으면 거부
-        const src = fn.toString();
-        if (!src.includes('SESSION_KEY') && !src.includes('verifyAdminPassword') && !src.includes('getCurrentUser')) {
-          console.warn('🛡 isAdmin 재정의 차단 — 가짜 함수 거부');
-          return;
-        }
-        _realIsAdmin = fn;
-      }
-    });
-  } catch (e) {
-    console.warn('isAdmin 보호 설정 실패:', e);
-  }
-})();
-
 // ===== ADMIN-ONLY MODE (회원 ID 시스템 폐지 — 단일 관리자 비밀번호만) =====
 // 일반 방문자는 로그인 없이 콘텐츠 열람. 이 PW는 10X 발송·선정기준 편집 등 관리 기능 전용.
 const AUTH_KEY = 'fireSugiUsers';
@@ -780,3 +756,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') doSignup();
   });
 });
+
+// 🛡 isAdmin 우회 방지 — 외부 코드가 가짜 함수로 재정의하는 것을 차단
+// (auth.js 맨 끝에 배치 — 위 isAdmin 함수가 이미 정의된 후 실행되어야 함)
+(function lockIsAdmin() {
+  try {
+    const _real = window.isAdmin;
+    if (typeof _real !== 'function') return;  // 진짜 함수 없으면 보호 안 함
+    let _cur = _real;
+    Object.defineProperty(window, 'isAdmin', {
+      configurable: false,
+      get() { return _cur; },
+      set(fn) {
+        if (typeof fn !== 'function') return;
+        const src = fn.toString();
+        if (!src.includes('SESSION_KEY') && !src.includes('verifyAdminPassword') && !src.includes('getCurrentUser')) {
+          console.warn('🛡 isAdmin 재정의 차단 — 가짜 함수 거부');
+          return;
+        }
+        _cur = fn;
+      }
+    });
+  } catch (e) {
+    console.warn('isAdmin 보호 설정 실패:', e);
+  }
+})();

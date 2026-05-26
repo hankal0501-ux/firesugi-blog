@@ -967,6 +967,12 @@ window.exportStatsCSV = exportStatsCSV;
 
 // 🔄 모든 기기 즉시 동기화 — Firebase quota 락 해제 + push/pull 강제
 async function forceSyncAll() {
+  // 🛡 관리자 전용 — 일반 방문자는 사용 불가
+  const admin = (typeof isAdmin === 'function') ? isAdmin() : false;
+  if (!admin) {
+    alert('🔒 관리자 전용 기능입니다.\n\n먼저 [🔐 관리자] 버튼으로 로그인하세요.');
+    return;
+  }
   if (!confirm('🔄 모든 기기 즉시 동기화\n\n로컬 데이터를 Firestore에 강제 push 하고, 다른 기기의 변경분을 pull 합니다.\n\n진행하시겠습니까?')) return;
 
   // 1) Firebase quota 자동차단 락 해제

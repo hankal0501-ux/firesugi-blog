@@ -2501,7 +2501,14 @@ nav a[data-tab="records"] { display: none !important; }
   background: var(--bg-secondary); border: 1px solid var(--border);
   border-radius: 8px; padding: 12px; text-align: center;
 }
-.stats-summary .ss-num { font-size: 1.4rem; font-weight: 800; color: var(--naver-green); }
+/* 통계 카드 숫자 — 기존 .ss-num (가입 절차용 녹색 동그라미)와 충돌 회피 */
+.stats-summary .ss-num {
+  width: auto !important; height: auto !important; min-width: 0 !important;
+  background: transparent !important; color: var(--naver-green) !important;
+  border-radius: 0 !important; display: block !important;
+  font-size: 1.6rem !important; font-weight: 800 !important;
+  line-height: 1.1 !important;
+}
 .stats-summary .ss-lab { font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px; }
 .stats-chart {
   display: flex; align-items: flex-end; gap: 4px;

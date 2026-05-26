@@ -481,7 +481,8 @@ function showAdminMenu() {
     '입력하세요:\n' +
     '  1 = 🔑 비밀번호 변경\n' +
     '  2 = 🔄 모든 기기 즉시 동기화\n' +
-    '  3 = 🚪 관리자 모드 종료\n' +
+    '  3 = 📊 접속 통계 그래프\n' +
+    '  4 = 🚪 관리자 모드 종료\n' +
     '  취소(또는 빈값) = 닫기'
   );
   if (!action) return;
@@ -492,11 +493,14 @@ function showAdminMenu() {
     if (typeof forceSyncAll === 'function') forceSyncAll();
     else alert('동기화 함수 미로드 - 새로고침 후 다시 시도');
   } else if (a === '3') {
+    if (typeof showVisitStats === 'function') showVisitStats();
+    else alert('통계 함수 미로드 - 새로고침 후 다시 시도');
+  } else if (a === '4') {
     if (confirm('관리자 모드를 종료할까요?\n다음 관리 작업 시 비밀번호 재입력 필요.')) {
       exitAdminMode();
     }
   } else {
-    alert('1·2·3 중 하나를 입력하세요.');
+    alert('1~4 중 하나를 입력하세요.');
   }
 }
 window.showAdminMenu = showAdminMenu;

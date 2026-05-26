@@ -817,6 +817,115 @@ async function changeAdminPassword() {
 // 글로벌 노출 (다른 모듈/HTML inline onclick에서 호출 가능)
 window.changeAdminPassword = changeAdminPassword;
 
+// ============================================================
+// 📊 접속 통계 그래프 — 관리자 전용
+// ============================================================
+function showVisitStats() {
+  if (typeof isAdmin !== 'function' || !isAdmin()) {
+    alert('🔒 관리자만 사용할 수 있습니다.');
+    return;
+  }
+  const modal = document.getElementById('statsModal');
+  if (!modal) return;
+  renderVisitStats();
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function hideStatsModal() {
+  const modal = document.getElementById('statsModal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+window.showVisitStats = showVisitStats;
+window.hideStatsModal = hideStatsModal;
+
+function renderVisitStats() {
+  const logs = JSON.parse(localStorage.getItem('fireSugiAccessLogs') || '[]');
+  const anonVisits = JSON.parse(localStorage.getItem('fireSugiAnonVisits') || '[]');
+  // 모든 접속 이벤트 통합 (ts 만 필요)
+  const allTs = [
+    ...logs.map(l => l.ts),
+    ...anonVisits.map(v => v.ts)
+  ].filter(t => t && !isNaN(t)).sort((a, b) => a - b);
+
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  // 일별 (최근 30일)
+  const daily = [];
+  for (let i = 29; i >= 0; i--) {
+    const day = new Date(today.getTime() - i * 86400000);
+    const next = new Date(day.getTime() + 86400000);
+    const count = allTs.filter(t => t >= day.getTime() && t < next.getTime()).length;
+    daily.push({
+      label: `${day.getMonth()+1}/${day.getDate()}`,
+      fullLabel: `${day.getFullYear()}-${pad(day.getMonth()+1)}-${pad(day.getDate())}`,
+      count
+    });
+  }
+
+  // 월별 (최근 12개월)
+  const monthly = [];
+  for (let i = 11; i >= 0; i--) {
+    const mStart = new Date(today.getFullYear(), today.getMonth() - i, 1);
+    const mEnd = new Date(today.getFullYear(), today.getMonth() - i + 1, 1);
+    const count = allTs.filter(t => t >= mStart.getTime() && t < mEnd.getTime()).length;
+    monthly.push({
+      label: `${mStart.getFullYear().toString().slice(2)}.${pad(mStart.getMonth()+1)}`,
+      fullLabel: `${mStart.getFullYear()}-${pad(mStart.getMonth()+1)}`,
+      count
+    });
+  }
+
+  // 요약
+  const todayCount = daily[daily.length - 1].count;
+  const week = daily.slice(-7).reduce((s, d) => s + d.count, 0);
+  const month = monthly[monthly.length - 1].count;
+  const total = allTs.length;
+  document.getElementById('statsSummary').innerHTML = `
+    <div class="ss-card"><div class="ss-num">${todayCount}</div><div class="ss-lab">오늘</div></div>
+    <div class="ss-card"><div class="ss-num">${week}</div><div class="ss-lab">최근 7일</div></div>
+    <div class="ss-card"><div class="ss-num">${month}</div><div class="ss-lab">이번 달</div></div>
+    <div class="ss-card"><div class="ss-num">${total}</div><div class="ss-lab">전체</div></div>
+  `;
+
+  document.getElementById('dailyChart').innerHTML = renderBars(daily);
+  document.getElementById('monthlyChart').innerHTML = renderBars(monthly);
+}
+
+function renderBars(data) {
+  const max = Math.max(1, ...data.map(d => d.count));
+  return data.map(d => {
+    const h = Math.max(2, Math.round((d.count / max) * 160));
+    return `<div class="bar ${d.count === 0 ? 'zero' : ''}" style="height:${h}px;" title="${d.fullLabel}: ${d.count}회">
+      <span class="bar-val">${d.count}</span>
+      <span class="bar-lab">${d.label}</span>
+    </div>`;
+  }).join('');
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function exportStatsCSV() {
+  const logs = JSON.parse(localStorage.getItem('fireSugiAccessLogs') || '[]');
+  const anonVisits = JSON.parse(localStorage.getItem('fireSugiAnonVisits') || '[]');
+  const all = [
+    ...logs.map(l => ({ ts: l.ts, type: 'log', detail: l.action || '', user: l.id || '' })),
+    ...anonVisits.map(v => ({ ts: v.ts, type: 'visit', detail: '', user: v.anonId || '' }))
+  ].filter(r => r.ts).sort((a, b) => b.ts - a.ts);
+  const csv = ['date,time,type,user,detail'];
+  all.forEach(r => {
+    const d = new Date(r.ts);
+    csv.push(`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())},${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())},${r.type},${(r.user||'').replace(/,/g,'')},${(r.detail||'').replace(/,/g,'')}`);
+  });
+  const blob = new Blob(['﻿' + csv.join('\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `fire-sugi-stats-${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+window.exportStatsCSV = exportStatsCSV;
+
 // 🔄 모든 기기 즉시 동기화 — Firebase quota 락 해제 + push/pull 강제
 async function forceSyncAll() {
   if (!confirm('🔄 모든 기기 즉시 동기화\n\n로컬 데이터를 Firestore에 강제 push 하고, 다른 기기의 변경분을 pull 합니다.\n\n진행하시겠습니까?')) return;

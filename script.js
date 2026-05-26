@@ -930,6 +930,81 @@ function renderVisitStats() {
         </div>`;
       }).join('')}
     </div>`;
+
+  // 📍 일별 IP 펼치기 — 날짜 클릭 시 그날의 IP 목록 표시
+  renderDailyIpSection(logs, anonVisits);
+}
+
+// 일별 IP 그룹화 + 펼치기 UI
+function renderDailyIpSection(logs, anonVisits) {
+  const all = [
+    ...logs.map(l => ({ ts: l.ts, ip: l.ip || '', who: l.id || '익명', ua: l.ua || '', kind: 'log' })),
+    ...anonVisits.map(v => ({ ts: v.ts, ip: v.ip || '', who: v.anonId || '익명', ua: v.ua || '', kind: 'visit' }))
+  ].filter(r => r.ts).sort((a, b) => b.ts - a.ts);
+
+  // 날짜별 그룹화
+  const byDay = {};
+  all.forEach(r => {
+    const d = new Date(r.ts);
+    const key = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    if (!byDay[key]) byDay[key] = [];
+    byDay[key].push(r);
+  });
+  const days = Object.keys(byDay).sort().reverse().slice(0, 30); // 최근 30일
+
+  let ipSection = document.getElementById('dailyIpSection');
+  if (!ipSection) {
+    ipSection = document.createElement('div');
+    ipSection.id = 'dailyIpSection';
+    ipSection.className = 'stats-section';
+    document.getElementById('progDownloadSection').after(ipSection);
+  }
+
+  if (!days.length) {
+    ipSection.innerHTML = `<h3 style="font-size:1rem; margin:18px 0 10px;">📍 일별 IP 목록</h3>
+      <p style="color:#888; font-size:0.85rem;">아직 IP 기록이 없습니다. (IP는 v20260526w+ 부터 수집)</p>`;
+    return;
+  }
+
+  ipSection.innerHTML = `
+    <h3 style="font-size:1rem; margin:18px 0 10px;">📍 일별 IP 목록 — 날짜 클릭하여 펼치기</h3>
+    <div class="daily-ip-list">
+      ${days.map(day => {
+        const rows = byDay[day];
+        // IP 별 카운트
+        const ipMap = {};
+        rows.forEach(r => {
+          const ipKey = r.ip || '(미수집)';
+          if (!ipMap[ipKey]) ipMap[ipKey] = { count: 0, samples: [] };
+          ipMap[ipKey].count++;
+          if (ipMap[ipKey].samples.length < 3) {
+            ipMap[ipKey].samples.push({ ts: r.ts, who: r.who, ua: r.ua });
+          }
+        });
+        const uniqIps = Object.keys(ipMap).length;
+        const totalHits = rows.length;
+        return `<details class="daily-ip-day" style="margin-bottom:6px; background:#f7f9fc; border:1px solid #e5eaf2; border-radius:6px;">
+          <summary style="padding:10px 14px; cursor:pointer; font-weight:600; font-size:0.9rem; user-select:none;">
+            📅 ${day} <span style="color:#1c5cd6;">· ${totalHits}회 접속</span> <span style="color:#888;">· 고유 IP ${uniqIps}개</span>
+          </summary>
+          <div style="padding:8px 14px 12px; font-size:0.82rem;">
+            ${Object.entries(ipMap).sort((a,b) => b[1].count - a[1].count).map(([ip, info]) => `
+              <div style="padding:6px 0; border-top:1px dashed #d8dde6;">
+                <div style="font-family:monospace; font-weight:600; color:${ip === '(미수집)' ? '#999' : '#1c5cd6'};">
+                  ${esc(ip)} <span style="color:#666; font-weight:400;">· ${info.count}회</span>
+                </div>
+                <div style="color:#666; font-size:0.78rem; margin-top:3px; line-height:1.5;">
+                  ${info.samples.map(s => {
+                    const d = new Date(s.ts);
+                    return `${pad(d.getHours())}:${pad(d.getMinutes())} · ${esc(s.who)} · ${esc(s.ua)}`;
+                  }).join(' / ')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </details>`;
+      }).join('')}
+    </div>`;
 }
 
 function renderBars(data) {

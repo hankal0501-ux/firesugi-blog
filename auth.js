@@ -354,6 +354,40 @@ function getAnonId() {
 function getAnonVisits() {
   return JSON.parse(localStorage.getItem(ANON_VISITS_KEY) || '[]');
 }
+
+// 🌐 클라이언트 IP — 세션당 1회 외부 API 호출 후 캐싱
+let _clientIpCache = sessionStorage.getItem('fireSugiClientIp') || '';
+async function ensureClientIp() {
+  if (_clientIpCache) return _clientIpCache;
+  try {
+    const r = await fetch('https://api.bigdatacloud.net/data/client-ip');
+    if (!r.ok) return '';
+    const j = await r.json();
+    const ip = j.ipString || '';
+    if (ip) {
+      _clientIpCache = ip;
+      sessionStorage.setItem('fireSugiClientIp', ip);
+      // 직전에 ip 없이 기록된 방문/로그에 retroactive 채워넣기
+      try {
+        const visits = JSON.parse(localStorage.getItem(ANON_VISITS_KEY) || '[]');
+        let changed = false;
+        for (let i = visits.length - 1; i >= 0 && i >= visits.length - 3; i--) {
+          if (!visits[i].ip) { visits[i].ip = ip; changed = true; }
+        }
+        if (changed) localStorage.setItem(ANON_VISITS_KEY, JSON.stringify(visits));
+        const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
+        let changed2 = false;
+        for (let i = logs.length - 1; i >= 0 && i >= logs.length - 3; i--) {
+          if (!logs[i].ip) { logs[i].ip = ip; changed2 = true; }
+        }
+        if (changed2) localStorage.setItem(LOG_KEY, JSON.stringify(logs));
+      } catch(e) {}
+    }
+    return ip;
+  } catch (e) { return ''; }
+}
+window.ensureClientIp = ensureClientIp;
+
 function trackAnonVisit() {
   if (getCurrentUser()) return; // 로그인된 경우는 기존 logActivity로 기록됨
   const anonId = getAnonId();
@@ -361,7 +395,7 @@ function trackAnonVisit() {
   // 같은 anonId가 1시간 이내 방문 기록 있으면 스킵 (중복 방지)
   const lastSame = visits.filter(v => v.anonId === anonId).pop();
   if (lastSame && Date.now() - lastSame.ts < 60 * 60 * 1000) return;
-  visits.push({ ts: Date.now(), anonId, ua: getBrowserName() });
+  visits.push({ ts: Date.now(), anonId, ua: getBrowserName(), ip: _clientIpCache || '' });
   // 최대 500개 유지
   if (visits.length > 500) visits.splice(0, visits.length - 500);
   localStorage.setItem(ANON_VISITS_KEY, JSON.stringify(visits));
@@ -381,7 +415,8 @@ function logActivity(action, userId) {
     ts: Date.now(),
     id,
     action,
-    ua: getBrowserName()
+    ua: getBrowserName(),
+    ip: _clientIpCache || ''
   });
   saveLogs(logs);
 }
@@ -741,6 +776,8 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     trackAnonVisit();  // 비로그인 — 익명 방문 추적
   }
+  // 🌐 IP 비동기 조회 — 받은 후 직전 기록에 retroactive 채워넣기
+  ensureClientIp();
   // 30초마다 온라인 핑 + 상황판 갱신
   setInterval(() => {
     pingOnline();

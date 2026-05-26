@@ -443,15 +443,16 @@ function updateAuthUI() {
       loginBtn.style.fontWeight = '700';
       loginBtn.title = '관리자 모드 활성 — 클릭하여 메뉴 열기';
 
-      // 📊 통계 버튼 추가 (관리자 전용)
+      // 📊 통계 아이콘 버튼 (관리자 전용, 작은 아이콘만)
       let statsBtn = document.getElementById('authStatsBtn');
       if (!statsBtn && authArea) {
         statsBtn = document.createElement('button');
         statsBtn.id = 'authStatsBtn';
-        statsBtn.className = 'btn btn-outline btn-sm';
-        statsBtn.innerHTML = '📊 통계';
-        statsBtn.title = '접속 통계 (일·월별 그래프)';
-        statsBtn.style.cssText = 'background:#e8f5ff; color:#1c5cd6; border:1.5px solid #1c5cd6; font-weight:700; margin-left:6px;';
+        statsBtn.innerHTML = '📊';
+        statsBtn.title = '접속 통계 (관리자 전용)';
+        statsBtn.style.cssText = 'background:transparent; color:inherit; border:none; padding:4px 6px; margin-left:4px; font-size:1.1rem; cursor:pointer; opacity:0.6; transition:opacity 0.15s; line-height:1;';
+        statsBtn.onmouseenter = () => { statsBtn.style.opacity = '1'; };
+        statsBtn.onmouseleave = () => { statsBtn.style.opacity = '0.6'; };
         statsBtn.setAttribute('onclick', 'showVisitStats()');
         authArea.appendChild(statsBtn);
       }

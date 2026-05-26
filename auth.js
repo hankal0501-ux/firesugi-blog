@@ -433,28 +433,25 @@ function updateAuthUI() {
 
   if (loginBtn) {
     if (admin) {
-      loginBtn.innerHTML = '🛡 관리자 모드 LOGIN';
+      loginBtn.innerHTML = '🛡 ADMIN';
       loginBtn.classList.remove('btn-outline');
       loginBtn.classList.add('btn-primary', 'admin-active');
       loginBtn.setAttribute('onclick', 'showAdminMenu()');
-      loginBtn.style.background = 'linear-gradient(135deg,#03c75a,#02a64a)';
-      loginBtn.style.color = '#fff';
-      loginBtn.style.borderColor = '#03c75a';
-      loginBtn.style.fontWeight = '700';
+      loginBtn.style.cssText = 'background:linear-gradient(135deg,#03c75a,#02a64a) !important; color:#fff !important; border:1px solid #03c75a !important; font-weight:700 !important; font-size:0.78rem !important; padding:6px 12px !important;';
       loginBtn.title = '관리자 모드 활성 — 클릭하여 메뉴 열기';
 
-      // 📊 통계 플로팅 아이콘 — 우측 상단 고정 (관리자만 보임, 직접 접근)
+      // 📊 통계 아이콘 — auth-area 안에 인라인 배치 (확실히 보이게)
       let statsBtn = document.getElementById('authStatsBtn');
-      if (!statsBtn) {
+      if (!statsBtn && authArea) {
         statsBtn = document.createElement('button');
         statsBtn.id = 'authStatsBtn';
         statsBtn.innerHTML = '📊';
         statsBtn.title = '접속 통계 (관리자 전용)';
-        statsBtn.style.cssText = 'position:fixed !important; bottom:80px !important; right:20px !important; z-index:99999 !important; width:52px !important; height:52px !important; border-radius:50% !important; background:#1c5cd6 !important; color:#fff !important; border:none !important; font-size:1.5rem !important; cursor:pointer !important; box-shadow:0 6px 16px rgba(28,92,214,0.5) !important; display:flex !important; align-items:center !important; justify-content:center !important; line-height:1 !important; padding:0 !important;';
-        statsBtn.onmouseenter = () => { statsBtn.style.transform = 'scale(1.1)'; statsBtn.style.boxShadow = '0 6px 18px rgba(28,92,214,0.6)'; };
-        statsBtn.onmouseleave = () => { statsBtn.style.transform = 'scale(1)'; statsBtn.style.boxShadow = '0 4px 12px rgba(28,92,214,0.4)'; };
+        statsBtn.style.cssText = 'background:#1c5cd6 !important; color:#fff !important; border:none !important; border-radius:6px !important; padding:6px 10px !important; font-size:0.95rem !important; cursor:pointer !important; line-height:1 !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; min-width:34px !important; margin-left:4px !important;';
         statsBtn.setAttribute('onclick', 'showVisitStats()');
-        document.body.appendChild(statsBtn);
+        // loginBtn 다음 위치에 삽입
+        if (loginBtn.nextSibling) authArea.insertBefore(statsBtn, loginBtn.nextSibling);
+        else authArea.appendChild(statsBtn);
       }
 
       // OUT 버튼 추가

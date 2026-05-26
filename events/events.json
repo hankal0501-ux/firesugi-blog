@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "울진 덕구온천호텔 할인 예약 특가 확인 방법 총정리",
+      "detail": "브런치",
+      "url": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1FWXJiOEtDdEdxbUZFY2hBZ3Z5Q2l1SkExcHhvUS1PVlVXWDhUOV83RTVDM1dkSE9MXzhtak84dWEtRGdNeHpn?oc=5",
+      "site": "gnews_브런치",
+      "created_at": "2026-05-14 07:00:00"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "평창 라마다 호텔 할인 예약 정보",
       "detail": "브런치",
       "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5yTW56dXBrdjh1LU5hUFBHc2RBc1RIQzdDOW1uakpoZFczNXE4bzBGa2lBNjVQUnZ5NWZscFV0a0hpejlJN29USVFiZVhGcFllOTBj?oc=5",
@@ -50,6 +58,15 @@
     }
   ],
   "giveaways": [
+    {
+      "source_site": "뉴스핌",
+      "title": "하나증권, 7월까지 최대 300만원 경품 추첨 이벤트",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1WUDNoSXo4Ri1INEl6ZU5NbTNsRkVrbmR0QVlZZDQzT2VlZ0ZlMTlGME5aUkx2TW9hUVhSYV9uVmE5XzBGYVE3eHFOZTcyTDQwaUk0UzVvWHJjTHda?oc=5",
+      "created_at": "2026-05-04 07:00:00"
+    },
     {
       "source_site": "현대불교",
       "title": "\"송광사 옛날사진 콘테스트 응모하세요\"",
@@ -186,5 +203,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-05-25 05:02:35"
+  "last_updated": "2026-05-26 04:42:47"
 }

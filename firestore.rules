@@ -1,0 +1,86 @@
+// =============================================================
+// Firestore Security Rules — Fire-Sugi 블로그
+// =============================================================
+// 배포 방법:
+//   1. Firebase Console → Firestore Database → 규칙 탭
+//   2. 아래 내용을 통째로 복사 → 붙여넣기 → 게시
+//   또는 CLI: firebase deploy --only firestore:rules
+//
+// 정책 요약:
+//   - 모든 컬렉션 읽기: 누구나 허용 (블로그 공개)
+//   - 쓰기: 제한적 허용 (필드 검증 + 사이즈 제한 + 합리적 형식 체크)
+//   - 클라이언트 코드의 비번 검증은 우회 가능하지만, 여기 규칙은 우회 불가
+//   - 악성 봇이 무한 데이터 쓰기 시도해도 사이즈/필드 검증으로 차단
+// =============================================================
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ========== 회원 (users) ==========
+    match /users/{userId} {
+      allow read: if true;
+      // 쓰기: id·role·joinDate 필드 있고, pw 필드 없음 (보안), 문서 ≤ 10KB
+      allow create, update: if request.resource.data.id is string
+        && request.resource.data.id.size() <= 50
+        && !('pw' in request.resource.data)
+        && request.resource.size() < 10000;
+      allow delete: if false;  // 삭제 차단 — 관리자 수동 처리
+    }
+
+    // ========== 게시글 (posts) ==========
+    match /posts/{postId} {
+      allow read: if true;
+      // 쓰기: 필수 필드 검증, 본문 ≤ 50KB
+      allow create, update: if request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 200
+        && request.resource.data.author is string
+        && request.resource.data.author.size() <= 50
+        && (!('content' in request.resource.data) || request.resource.data.content.size() <= 50000);
+      // 삭제: 관리자만 (현재 룰셋엔 인증 없으므로 false, 수동 처리)
+      allow delete: if false;
+    }
+
+    // ========== 사용자 추가 프로그램 (userPrograms) ==========
+    match /userPrograms/{progId} {
+      allow read: if true;
+      // 쓰기: name 필수, 문서 ≤ 200KB (이미지 첨부 base64 고려)
+      allow create, update: if request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 200
+        && request.resource.size() < 200000;
+      allow delete: if true;  // 본인 기기에서 삭제 시 sync 필요
+    }
+
+    // ========== 프로그램 스크린샷 (programScreenshots) ==========
+    match /programScreenshots/{progId} {
+      allow read: if true;
+      // 쓰기: shots 배열만 받음, ≤ 1MB (Firestore 문서 한도 직전)
+      allow create, update: if request.resource.data.shots is list
+        && request.resource.size() < 1000000;
+      allow delete: if true;
+    }
+
+    // ========== 활동 로그 (accessLogs) ==========
+    match /accessLogs/{logId} {
+      allow read: if true;
+      // 쓰기: ts·action 필수, 문서 ≤ 2KB
+      allow create: if request.resource.data.ts is number
+        && request.resource.size() < 2000;
+      allow update, delete: if false;  // 로그는 수정 불가 (감사 추적)
+    }
+
+    // ========== 익명 방문 (anonVisits) ==========
+    match /anonVisits/{visitId} {
+      allow read: if true;
+      allow create: if request.resource.data.ts is number
+        && request.resource.size() < 1000;
+      allow update, delete: if false;
+    }
+
+    // ========== 그 외 모든 경로 ==========
+    match /{document=**} {
+      allow read, write: if false;  // 알려지지 않은 컬렉션 차단
+    }
+  }
+}

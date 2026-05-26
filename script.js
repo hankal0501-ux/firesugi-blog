@@ -2167,9 +2167,21 @@ function openSecureLink(key) {
     alert('⏳ 아직 배포되지 않은 프로그램입니다.');
     return;
   }
+  // 🛡 보안 — HTTP 링크는 사용자 확인 (HTTPS 강제 권장)
+  if (data.link.startsWith('http://')) {
+    const ok = confirm(
+      '⚠️ 보안 경고\n\n' +
+      '이 프로그램은 암호화되지 않은 HTTP 로 연결됩니다.\n' +
+      '도청·MITM 공격 위험이 있습니다.\n\n' +
+      '계속 진행하시겠습니까?'
+    );
+    if (!ok) return;
+  }
+  // 안전한 외부 새 탭 열기 (rel=noopener — opener 접근 차단)
   const a = document.createElement('a');
   a.href = data.link;
   a.target = '_blank';
+  a.rel = 'noopener noreferrer';
   a.style.display = 'none';
   document.body.appendChild(a);
   a.click();

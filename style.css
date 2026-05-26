@@ -2492,35 +2492,40 @@ nav a[data-tab="records"] { display: none !important; }
 /* 게시판 글쓰기 버튼은 일반인도 사용 가능하게 노출 */
 .board-toolbar > .btn-primary { display: inline-flex !important; }
 
-/* ===== 접속 통계 모달 차트 ===== */
+/* ===== 접속 통계 모달 차트 — 컴팩트 모드 ===== */
 .stats-summary {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px; margin-bottom: 14px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 6px; margin-bottom: 8px;
 }
 .stats-summary .ss-card {
   background: var(--bg-secondary); border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px; text-align: center;
+  border-radius: 6px; padding: 5px 8px; text-align: center;
 }
-/* 통계 카드 숫자 — 기존 .ss-num (가입 절차용 녹색 동그라미)와 충돌 회피 */
 .stats-summary .ss-num {
   width: auto !important; height: auto !important; min-width: 0 !important;
   background: transparent !important; color: var(--naver-green) !important;
   border-radius: 0 !important; display: block !important;
-  font-size: 1.6rem !important; font-weight: 800 !important;
+  font-size: 1.1rem !important; font-weight: 800 !important;
   line-height: 1.1 !important;
 }
-.stats-summary .ss-lab { font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px; }
+.stats-summary .ss-lab { font-size: 0.66rem; color: var(--text-secondary); margin-top: 1px; }
+/* 일별·월별 차트 2열 배치 — 한 줄 컴팩트 */
+.stats-charts-row {
+  display: grid; grid-template-columns: 1.7fr 1fr; gap: 8px;
+  align-items: start;
+}
+.stats-h3 { font-size: 0.74rem; margin: 4px 0 3px; font-weight: 700; color: var(--text-secondary); }
 .stats-chart {
-  display: flex; align-items: flex-end; gap: 4px;
-  height: 180px; padding: 8px 4px;
+  display: flex; align-items: flex-end; gap: 2px;
+  height: 50px; padding: 4px 4px 10px;
   background: linear-gradient(to top, #f7f9fc 0%, #fff 100%);
-  border: 1px solid var(--border); border-radius: 8px;
-  overflow-x: auto;
+  border: 1px solid var(--border); border-radius: 6px;
+  overflow: hidden;
 }
 .stats-chart .bar {
-  flex: 1 0 18px; min-width: 14px;
+  flex: 1 1 0; min-width: 3px;
   background: linear-gradient(to top, #1c5cd6, #4a8cff);
-  border-radius: 3px 3px 0 0;
+  border-radius: 2px 2px 0 0;
   position: relative;
   transition: opacity 0.15s;
   cursor: pointer;
@@ -2528,43 +2533,53 @@ nav a[data-tab="records"] { display: none !important; }
 .stats-chart .bar:hover { opacity: 0.75; }
 .stats-chart .bar.zero { background: #e8eaf0; }
 .stats-chart .bar .bar-lab {
-  position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
-  font-size: 0.62rem; color: var(--text-muted);
+  position: absolute; bottom: -11px; left: 50%; transform: translateX(-50%);
+  font-size: 0.5rem; color: var(--text-muted);
   white-space: nowrap;
 }
+#dailyChart .bar .bar-lab { display: none; }
+#dailyChart .bar:nth-child(5n) .bar-lab,
+#dailyChart .bar:last-child .bar-lab { display: block; }
 .stats-chart .bar .bar-val {
-  position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
-  font-size: 0.7rem; color: var(--naver-blue); font-weight: 700;
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  font-size: 0.6rem; color: var(--naver-blue); font-weight: 700;
   white-space: nowrap;
   opacity: 0;
+  pointer-events: none;
 }
 .stats-chart .bar:hover .bar-val { opacity: 1; }
-.stats-section { margin-top: 8px; padding-bottom: 16px; }
+.stats-section { margin-top: 4px; padding-bottom: 4px; }
+@media (max-width: 720px) {
+  .stats-charts-row { grid-template-columns: 1fr; }
+}
 
-/* 프로그램 다운로드 랭킹 */
-.prog-rank-list { display: flex; flex-direction: column; gap: 6px; }
+/* 프로그램 다운로드 랭킹 — 2열 컴팩트 (한눈에 보기) */
+.prog-rank-list {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px 8px;
+}
 .prog-rank-row {
-  display: grid; grid-template-columns: 28px 1fr 120px 60px;
-  align-items: center; gap: 10px;
-  padding: 8px 10px;
-  background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px;
+  display: grid; grid-template-columns: 18px 1fr 60px 42px;
+  align-items: center; gap: 6px;
+  padding: 3px 6px;
+  background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 4px;
+  min-width: 0;
 }
 .prog-rank-no {
   background: var(--naver-blue); color: #fff;
-  border-radius: 50%; width: 24px; height: 24px;
+  border-radius: 50%; width: 18px; height: 18px;
   display: inline-flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 0.78rem;
+  font-weight: 800; font-size: 0.66rem;
 }
 .prog-rank-row:nth-child(1) .prog-rank-no { background: #ffd60a; color: #000; }
 .prog-rank-row:nth-child(2) .prog-rank-no { background: #c0c8d2; color: #000; }
 .prog-rank-row:nth-child(3) .prog-rank-no { background: #cd7f32; }
-.prog-rank-name { font-weight: 600; color: var(--text-primary); font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.prog-rank-barbg { background: #eef2f8; border-radius: 4px; height: 8px; overflow: hidden; }
+.prog-rank-name { font-weight: 600; color: var(--text-primary); font-size: 0.72rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.prog-rank-barbg { background: #eef2f8; border-radius: 3px; height: 5px; overflow: hidden; }
 .prog-rank-bar { background: linear-gradient(90deg, #1c5cd6, #4a8cff); height: 100%; transition: width 0.3s; }
-.prog-rank-count { text-align: right; font-weight: 700; color: var(--naver-blue); font-size: 0.85rem; }
-@media (max-width: 600px) {
-  .prog-rank-row { grid-template-columns: 24px 1fr 60px; }
-  .prog-rank-barbg { display: none; }
+.prog-rank-count { text-align: right; font-weight: 700; color: var(--naver-blue); font-size: 0.7rem; }
+@media (max-width: 720px) {
+  .prog-rank-list { grid-template-columns: 1fr; }
+  .prog-rank-row { grid-template-columns: 18px 1fr 50px 36px; }
 }
 /* 자동글·일괄 자동글 등 관리자 전용 outline 버튼은 .admin-only 클래스로 별도 제어 */
 /* 비활성 잠긴 버튼 → 활성처럼 보이게 (스타일만) */

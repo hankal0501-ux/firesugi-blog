@@ -913,11 +913,14 @@ function renderVisitStats() {
     progSection = document.createElement('div');
     progSection.id = 'progDownloadSection';
     progSection.className = 'stats-section';
-    document.getElementById('monthlyChart').parentElement.after(progSection);
+    // 차트 2열 grid 행 다음(밖)에 삽입 — grid 안에 들어가면 3번째 칸이 됨
+    const chartsRow = document.querySelector('.stats-charts-row')
+      || document.getElementById('monthlyChart').parentElement;
+    chartsRow.after(progSection);
   }
   const maxClick = Math.max(1, ...allProgs.map(p => p.count));
   progSection.innerHTML = `
-    <h3 style="font-size:1rem; margin:18px 0 10px;">📥 프로그램별 클릭 (전체 ${allProgs.length}개 · 합계 ${totalProgClicks}회)</h3>
+    <h3 class="stats-h3" style="margin:6px 0 4px;">📥 프로그램별 클릭 (전체 ${allProgs.length}개 · 합계 ${totalProgClicks}회)</h3>
     <div class="prog-rank-list">
       ${allProgs.map((p, i) => {
         const pct = Math.round((p.count / maxClick) * 100);
@@ -961,13 +964,13 @@ function renderDailyIpSection(logs, anonVisits) {
   }
 
   if (!days.length) {
-    ipSection.innerHTML = `<h3 style="font-size:1rem; margin:18px 0 10px;">📍 일별 IP 목록</h3>
+    ipSection.innerHTML = `<h3 class="stats-h3" style="margin:6px 0 4px;">📍 일별 IP 목록</h3>
       <p style="color:#888; font-size:0.85rem;">아직 IP 기록이 없습니다. (IP는 v20260526w+ 부터 수집)</p>`;
     return;
   }
 
   ipSection.innerHTML = `
-    <h3 style="font-size:1rem; margin:18px 0 10px;">📍 일별 IP 목록 — 날짜 클릭하여 펼치기</h3>
+    <h3 class="stats-h3" style="margin:6px 0 4px;">📍 일별 IP 목록 — 날짜 클릭하여 펼치기</h3>
     <div class="daily-ip-list">
       ${days.map(day => {
         const rows = byDay[day];
@@ -1009,8 +1012,9 @@ function renderDailyIpSection(logs, anonVisits) {
 
 function renderBars(data) {
   const max = Math.max(1, ...data.map(d => d.count));
+  // 차트 height 50px - padding 14px = 36px 가용, 여유 빼고 최대 32px
   return data.map(d => {
-    const h = Math.max(2, Math.round((d.count / max) * 160));
+    const h = Math.max(2, Math.round((d.count / max) * 32));
     return `<div class="bar ${d.count === 0 ? 'zero' : ''}" style="height:${h}px;" title="${d.fullLabel}: ${d.count}회">
       <span class="bar-val">${d.count}</span>
       <span class="bar-lab">${d.label}</span>

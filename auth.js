@@ -1,3 +1,22 @@
+// 🛡 isAdmin 우회 방지 — 함수 재정의 시 자동 복구
+(function lockIsAdmin() {
+  let _realIsAdmin = null;
+  Object.defineProperty(window, 'isAdmin', {
+    configurable: false,
+    get() { return _realIsAdmin; },
+    set(fn) {
+      if (typeof fn !== 'function') return;  // null·true·false 강제 무시
+      // 함수 본문에 'verifyAdminPassword' 또는 'SESSION_KEY' 키워드 없으면 거부 (가짜 함수 차단)
+      const src = fn.toString();
+      if (!src.includes('SESSION_KEY') && !src.includes('verifyAdminPassword') && !src.includes('getCurrentUser')) {
+        console.warn('🛡 isAdmin 재정의 차단 — 가짜 함수 거부');
+        return;
+      }
+      _realIsAdmin = fn;
+    }
+  });
+})();
+
 // ===== ADMIN-ONLY MODE (회원 ID 시스템 폐지 — 단일 관리자 비밀번호만) =====
 // 일반 방문자는 로그인 없이 콘텐츠 열람. 이 PW는 10X 발송·선정기준 편집 등 관리 기능 전용.
 const AUTH_KEY = 'fireSugiUsers';

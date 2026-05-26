@@ -731,39 +731,30 @@ async function verifyAdminPassword(pw) {
   }
 }
 
-// 관리자 로그인 상태면 비번 prompt 건너뛰고 짧은 확인만
+// 관리자 로그인 상태면 짧은 확인만, 비관리자는 차단
 function _adminConfirm(label) {
   return confirm(`✅ 관리자 — ${label || '관리 작업'} 확인합니다.\n진행하시겠습니까?`);
 }
 
-// 등록용 — 세션당 1회 (관리자는 매번 짧은 확인만)
+function _blockNonAdmin() {
+  alert('🔒 관리자만 수정·편집할 수 있습니다.\n\n[🔐 관리자] 버튼으로 먼저 로그인하세요.');
+  return false;
+}
+
+// 등록용 — 관리자만 (비관리자는 차단)
 async function checkProgPassword(label) {
   if (typeof isAdmin === 'function' && isAdmin()) {
     return _adminConfirm(label || '등록');
   }
-  if (sessionStorage.getItem(PWD_AUTH_SESSION) === 'ok') return true;
-  const pw = prompt('🔐 관리자 비밀번호:');
-  if (pw === null) return false;
-  if (!(await verifyAdminPassword(pw))) {
-    alert('❌ 비밀번호가 일치하지 않습니다.');
-    return false;
-  }
-  sessionStorage.setItem(PWD_AUTH_SESSION, 'ok');
-  return true;
+  return _blockNonAdmin();
 }
 
-// 삭제용 — 일반인은 매번 비번, 관리자는 confirm만
+// 삭제·편집용 — 관리자만 (비관리자는 차단)
 async function checkDeletePassword(label) {
   if (typeof isAdmin === 'function' && isAdmin()) {
     return _adminConfirm(label || '삭제·편집');
   }
-  const pw = prompt('🔐 삭제 비밀번호:');
-  if (pw === null) return false;
-  if (!(await verifyAdminPassword(pw))) {
-    alert('❌ 비밀번호가 일치하지 않습니다.');
-    return false;
-  }
-  return true;
+  return _blockNonAdmin();
 }
 
 // 비밀번호 변경 — 네이버 OR 폰번호 본인 인증 후 변경

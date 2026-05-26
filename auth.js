@@ -450,7 +450,7 @@ function updateAuthUI() {
         statsBtn.id = 'authStatsBtn';
         statsBtn.innerHTML = '📊';
         statsBtn.title = '접속 통계 (관리자 전용)';
-        statsBtn.style.cssText = 'position:fixed; top:14px; right:14px; z-index:9999; width:44px; height:44px; border-radius:50%; background:#1c5cd6; color:#fff; border:none; font-size:1.3rem; cursor:pointer; box-shadow:0 4px 12px rgba(28,92,214,0.4); transition:transform 0.15s, box-shadow 0.15s; display:flex; align-items:center; justify-content:center; line-height:1; padding:0;';
+        statsBtn.style.cssText = 'position:fixed !important; bottom:80px !important; right:20px !important; z-index:99999 !important; width:52px !important; height:52px !important; border-radius:50% !important; background:#1c5cd6 !important; color:#fff !important; border:none !important; font-size:1.5rem !important; cursor:pointer !important; box-shadow:0 6px 16px rgba(28,92,214,0.5) !important; display:flex !important; align-items:center !important; justify-content:center !important; line-height:1 !important; padding:0 !important;';
         statsBtn.onmouseenter = () => { statsBtn.style.transform = 'scale(1.1)'; statsBtn.style.boxShadow = '0 6px 18px rgba(28,92,214,0.6)'; };
         statsBtn.onmouseleave = () => { statsBtn.style.transform = 'scale(1)'; statsBtn.style.boxShadow = '0 4px 12px rgba(28,92,214,0.4)'; };
         statsBtn.setAttribute('onclick', 'showVisitStats()');

@@ -1,20 +1,25 @@
 // 🛡 isAdmin 우회 방지 — 함수 재정의 시 자동 복구
+// (함수 hoisting 으로 이미 window.isAdmin 에 진짜 함수가 들어있으므로 그것을 보존)
 (function lockIsAdmin() {
-  let _realIsAdmin = null;
-  Object.defineProperty(window, 'isAdmin', {
-    configurable: false,
-    get() { return _realIsAdmin; },
-    set(fn) {
-      if (typeof fn !== 'function') return;  // null·true·false 강제 무시
-      // 함수 본문에 'verifyAdminPassword' 또는 'SESSION_KEY' 키워드 없으면 거부 (가짜 함수 차단)
-      const src = fn.toString();
-      if (!src.includes('SESSION_KEY') && !src.includes('verifyAdminPassword') && !src.includes('getCurrentUser')) {
-        console.warn('🛡 isAdmin 재정의 차단 — 가짜 함수 거부');
-        return;
+  let _realIsAdmin = (typeof window.isAdmin === 'function') ? window.isAdmin : null;
+  try {
+    Object.defineProperty(window, 'isAdmin', {
+      configurable: false,
+      get() { return _realIsAdmin; },
+      set(fn) {
+        if (typeof fn !== 'function') return;  // null·true·false 강제 무시
+        // 함수 본문에 SESSION_KEY/verifyAdminPassword/getCurrentUser 키워드 없으면 거부
+        const src = fn.toString();
+        if (!src.includes('SESSION_KEY') && !src.includes('verifyAdminPassword') && !src.includes('getCurrentUser')) {
+          console.warn('🛡 isAdmin 재정의 차단 — 가짜 함수 거부');
+          return;
+        }
+        _realIsAdmin = fn;
       }
-      _realIsAdmin = fn;
-    }
-  });
+    });
+  } catch (e) {
+    console.warn('isAdmin 보호 설정 실패:', e);
+  }
 })();
 
 // ===== ADMIN-ONLY MODE (회원 ID 시스템 폐지 — 단일 관리자 비밀번호만) =====

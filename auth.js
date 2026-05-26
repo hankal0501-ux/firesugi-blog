@@ -443,16 +443,18 @@ function updateAuthUI() {
       loginBtn.style.fontWeight = '700';
       loginBtn.title = '관리자 모드 활성 — 클릭하여 메뉴 열기';
 
-      // 📊 통계 아이콘 버튼 (관리자 전용, 작은 아이콘)
+      // 📊 통계 플로팅 아이콘 — 우측 상단 고정 (관리자만 보임, 직접 접근)
       let statsBtn = document.getElementById('authStatsBtn');
-      if (!statsBtn && authArea) {
+      if (!statsBtn) {
         statsBtn = document.createElement('button');
         statsBtn.id = 'authStatsBtn';
         statsBtn.innerHTML = '📊';
         statsBtn.title = '접속 통계 (관리자 전용)';
-        statsBtn.style.cssText = 'display:inline-flex !important; align-items:center; justify-content:center; background:#f0f4ff; color:#1c5cd6; border:1.5px solid #1c5cd6; border-radius:8px; padding:6px 10px; margin-left:6px; font-size:1.1rem; cursor:pointer; line-height:1; min-width:38px; height:36px;';
+        statsBtn.style.cssText = 'position:fixed; top:14px; right:14px; z-index:9999; width:44px; height:44px; border-radius:50%; background:#1c5cd6; color:#fff; border:none; font-size:1.3rem; cursor:pointer; box-shadow:0 4px 12px rgba(28,92,214,0.4); transition:transform 0.15s, box-shadow 0.15s; display:flex; align-items:center; justify-content:center; line-height:1; padding:0;';
+        statsBtn.onmouseenter = () => { statsBtn.style.transform = 'scale(1.1)'; statsBtn.style.boxShadow = '0 6px 18px rgba(28,92,214,0.6)'; };
+        statsBtn.onmouseleave = () => { statsBtn.style.transform = 'scale(1)'; statsBtn.style.boxShadow = '0 4px 12px rgba(28,92,214,0.4)'; };
         statsBtn.setAttribute('onclick', 'showVisitStats()');
-        authArea.appendChild(statsBtn);
+        document.body.appendChild(statsBtn);
       }
 
       // OUT 버튼 추가
@@ -496,9 +498,8 @@ function showAdminMenu() {
     '입력하세요:\n' +
     '  1 = 🔑 비밀번호 변경\n' +
     '  2 = 🔄 모든 기기 즉시 동기화\n' +
-    '  3 = 📊 접속 통계 그래프\n' +
-    '  4 = 🚪 관리자 모드 종료\n' +
-    '  취소(또는 빈값) = 닫기'
+    '  취소(또는 빈값) = 닫기\n\n' +
+    '📊 통계는 우상단 파랑 아이콘 · 🚪 종료는 OUT 버튼 사용'
   );
   if (!action) return;
   const a = action.trim();
@@ -507,15 +508,8 @@ function showAdminMenu() {
   } else if (a === '2') {
     if (typeof forceSyncAll === 'function') forceSyncAll();
     else alert('동기화 함수 미로드 - 새로고침 후 다시 시도');
-  } else if (a === '3') {
-    if (typeof showVisitStats === 'function') showVisitStats();
-    else alert('통계 함수 미로드 - 새로고침 후 다시 시도');
-  } else if (a === '4') {
-    if (confirm('관리자 모드를 종료할까요?\n다음 관리 작업 시 비밀번호 재입력 필요.')) {
-      exitAdminMode();
-    }
   } else {
-    alert('1~4 중 하나를 입력하세요.');
+    alert('1·2 중 하나를 입력하세요.');
   }
 }
 window.showAdminMenu = showAdminMenu;

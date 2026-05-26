@@ -737,27 +737,31 @@ function _blockNonAdmin() {
   return false;
 }
 
-// 모든 편집·삭제 액션 — 관리자 모드 진입 + 매 클릭 비번 확인 (이중 보안)
-async function _adminPasswordPrompt(label) {
-  const pw = prompt(`🔐 ${label || '관리 작업'} — 비밀번호 확인:`);
+// 한 번 비번 통과 후 세션 동안 자동 통과 (탭 닫히면 리셋)
+async function _adminPasswordOnce(label) {
+  // 이미 인증됨 — 그냥 통과
+  if (sessionStorage.getItem(PWD_AUTH_SESSION) === 'ok') return true;
+  // 첫 클릭 — 비번 prompt
+  const pw = prompt(`🔐 ${label || '관리 작업'} — 비밀번호 (이번 한 번만, 이후 자동 통과):`);
   if (pw === null) return false;
   if (!(await verifyAdminPassword(pw))) {
     alert('❌ 비밀번호가 일치하지 않습니다.');
     return false;
   }
+  sessionStorage.setItem(PWD_AUTH_SESSION, 'ok');
   return true;
 }
 
-// 등록용 — 관리자 + 비번
+// 등록용 — 관리자 + 세션당 1회 비번
 async function checkProgPassword(label) {
   if (!(typeof isAdmin === 'function' && isAdmin())) return _blockNonAdmin();
-  return _adminPasswordPrompt(label || '등록');
+  return _adminPasswordOnce(label || '등록');
 }
 
-// 삭제·편집용 — 관리자 + 비번
+// 삭제·편집용 — 관리자 + 세션당 1회 비번
 async function checkDeletePassword(label) {
   if (!(typeof isAdmin === 'function' && isAdmin())) return _blockNonAdmin();
-  return _adminPasswordPrompt(label || '삭제·편집');
+  return _adminPasswordOnce(label || '삭제·편집');
 }
 
 // 비밀번호 변경 — 네이버 OR 폰번호 본인 인증 후 변경

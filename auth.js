@@ -87,6 +87,7 @@ window.tryAutoAdminEnter = tryAutoAdminEnter;
 function exitAdminMode() {
   localStorage.removeItem(SESSION_KEY);
   sessionStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem('progAuth_v3');  // 편집 인증도 리셋
   localStorage.removeItem('fireSugiAdminAutoEnter');  // 자동 진입도 해제
   if (typeof logActivity === 'function') logActivity('관리자 모드 종료', SITE_OWNER_ID);
   alert('🚪 관리자 모드 종료됨');

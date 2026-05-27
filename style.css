@@ -2097,16 +2097,22 @@ html { -webkit-text-size-adjust: 100%; }
   letter-spacing:0.3px;
 }
 .news-card-title {
-  font-size:1rem; font-weight:800; line-height:1.4;
+  font-size:1.02rem; font-weight:700; line-height:1.35;
   color:var(--text-primary);
   display:-webkit-box; -webkit-line-clamp:2; line-clamp:2;
   -webkit-box-orient:vertical; overflow:hidden;
 }
 .news-card-summary {
-  font-size:0.86rem; color:var(--text-secondary);
-  line-height:1.6; flex:1;
+  font-size:0.78rem; color:var(--text-muted);
+  line-height:1.5; flex:1; font-weight:400;
   display:-webkit-box; -webkit-line-clamp:3; line-clamp:3;
   -webkit-box-orient:vertical; overflow:hidden;
+}
+/* 본문에 우연히 들어간 강조 태그(b/strong)도 일반 텍스트처럼 — 색·굵기 강제 해제 */
+.news-card-summary b,
+.news-card-summary strong {
+  font-weight:400 !important;
+  color:inherit !important;
 }
 .news-card-footer {
   display:flex; align-items:center; justify-content:space-between;

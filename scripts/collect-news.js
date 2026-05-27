@@ -64,10 +64,60 @@ async function fetchTopic(topic) {
 
   // 최신순(pubDate desc) 정렬 → 상위 5개 후보 반환 (중복 시 다음 후보로 폴백)
   items.sort((a, b) => new Date(b.pubDate || 0) - new Date(a.pubDate || 0));
-  return items.slice(0, 5).map(it => normalizeItem(it, topic));
+  // normalizeItem 이 fetch 로 본문 보강하므로 await 필요
+  const top = items.slice(0, 5);
+  const normalized = [];
+  for (const it of top) normalized.push(await normalizeItem(it, topic));
+  return normalized;
 }
 
-function normalizeItem(item, topic) {
+// 원문 URL 에서 본문 발췌 (meta description + og:description + 첫 문단들) — 최소 4줄 보장
+async function enrichArticleBody(url) {
+  if (!url) return '';
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.7'
+      },
+      redirect: 'follow'
+    });
+    if (!res.ok) return '';
+    const html = await res.text();
+    // 메타 디스크립션 추출
+    const ogDesc = html.match(/<meta[^>]+(?:property|name)=["']og:description["'][^>]+content=["']([^"']+)["']/i)?.[1]
+                || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:description["']/i)?.[1] || '';
+    const metaDesc = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i)?.[1]
+                  || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']description["']/i)?.[1] || '';
+    // 본문 첫 문단 3개 추출 (50자 이상 인 것만)
+    const paragraphs = [];
+    const pRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+    let m;
+    while ((m = pRegex.exec(html)) && paragraphs.length < 5) {
+      const t = m[1]
+        .replace(/<[^>]+>/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+        .replace(/&[a-z]+;/gi, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      if (t.length >= 40 && !/^(저작권|Copyright|관련 ?기사|구독|좋아요)/i.test(t)) {
+        paragraphs.push(t);
+      }
+    }
+    const combined = [ogDesc, metaDesc, ...paragraphs]
+      .filter(Boolean)
+      .filter((s, i, arr) => arr.indexOf(s) === i) // 중복 제거
+      .join('\n\n');
+    return combined.slice(0, 1500); // 최대 1500자
+  } catch (e) {
+    console.warn(`     ⚠ 본문 추출 실패: ${e.message}`);
+    return '';
+  }
+}
+
+async function normalizeItem(item, topic) {
   const rawTitle = String(item.title || '').trim();
   // Google News 제목 형식: "제목 - 출처명" → 분리
   const m = rawTitle.match(/^(.+?)\s+-\s+([^-]+)$/);
@@ -79,12 +129,17 @@ function normalizeItem(item, topic) {
   else if (item.link?.['#text']) link = item.link['#text'];
   else if (item['atom:link']?.['@_href']) link = item['atom:link']['@_href'];
 
-  const desc = String(item.description || '')
+  const rssDesc = String(item.description || '')
     .replace(/<[^>]+>/g, '')
     .replace(/&nbsp;/g, ' ')
     .replace(/&[a-z]+;/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
+
+  // 원문 페이지에서 본문 발췌 (4줄 이상 목표)
+  const articleBody = await enrichArticleBody(link);
+  // 본문이 있으면 우선, 없으면 RSS 디스크립션 사용
+  const desc = articleBody && articleBody.length > rssDesc.length ? articleBody : rssDesc;
 
   // 카드 요약(중간 길이) + 상세 모달용 풀텍스트 분리
   const summary = desc.slice(0, 500) + (desc.length > 500 ? '…' : '');

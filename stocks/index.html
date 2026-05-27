@@ -138,6 +138,9 @@ footer{padding:18px 0;color:#888;font-size:12px;text-align:center}
     <div class="header-actions">
       <a href="../" class="home-btn">🏠 Fire-Sugi 홈</a>
       <a href="../events/" class="back">↗ 이벤트 알림</a>
+      <button type="button" id="manual-refresh-btn" class="send-btn"
+              style="background:linear-gradient(135deg,#16a34a,#0a8a3a);"
+              onclick="refreshLivePrices(true)" title="개별 주가를 강제로 다시 불러옵니다 (1일 1회 자동 + 수동 무제한)">🔄 지금 갱신</button>
       <button type="button" id="admin-send-btn"
               class="send-btn" style="display:none;"
               onclick="sendStockReport()">📤 텔레그램·메일 전송</button>
@@ -367,10 +370,23 @@ function fmtPrice(v, market) {
 }
 function pctColor(v) { return v >= 0 ? '#dc2626' : '#2563eb'; }
 
-async function refreshLivePrices() {
+// 개별 주가는 1일 1회만 자동 갱신, 지수는 60초마다 — manualForce=true 면 둘 다 강제 갱신
+const STOCK_ROW_DAILY_KEY = 'fireSugiStockRowLastUpdate';
+const DAY_MS = 86400000;
+function getLastStockUpdate() { return parseInt(localStorage.getItem(STOCK_ROW_DAILY_KEY) || '0', 10); }
+function shouldRefreshStockRows() { return Date.now() - getLastStockUpdate() > DAY_MS; }
+function formatSinceLast() {
+  const last = getLastStockUpdate();
+  if (!last) return '미수집';
+  const d = new Date(last);
+  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+async function refreshLivePrices(manualForce) {
   if (!ALL_SYMBOLS.length) return;
   const status = document.getElementById('live-status');
   const tick = document.getElementById('live-tick');
+  const updateRows = manualForce === true || shouldRefreshStockRows();
   try {
     const url = PRICES_URL + '?symbols=' + encodeURIComponent(ALL_SYMBOLS.join(','));
     const resp = await fetch(url, {cache: 'no-store'});
@@ -380,8 +396,8 @@ async function refreshLivePrices() {
     }
     const data = await resp.json();
     let updated = 0;
-    // 1) 종목 테이블 행 갱신
-    document.querySelectorAll('.data-row').forEach(row => {
+    // 1) 종목 테이블 행 갱신 — 1일 1회 또는 수동 강제 시에만
+    if (updateRows) document.querySelectorAll('.data-row').forEach(row => {
       const sym = row.dataset.symbol;
       const p = data[sym];
       if (!p) return;
@@ -436,11 +452,16 @@ async function refreshLivePrices() {
         prevEl.textContent = '전일 ' + (v>=0?'+':'') + v.toFixed(2) + '%';
       }
     });
+    // 주가행 업데이트 시각 기록 (수동/자동 무관)
+    if (updateRows) {
+      localStorage.setItem(STOCK_ROW_DAILY_KEY, String(Date.now()));
+    }
     const now = new Date();
     const hms = String(now.getHours()).padStart(2,'0') + ':'
               + String(now.getMinutes()).padStart(2,'0') + ':'
               + String(now.getSeconds()).padStart(2,'0');
-    if (status) status.textContent = '🟢 실시간 갱신 ' + hms + ' (' + updated + '/' + ALL_SYMBOLS.length + ')';
+    const rowsNote = updateRows ? `종목 ${updated}건 갱신` : `지수만 갱신 · 종목 ${formatSinceLast()} 기준`;
+    if (status) status.textContent = '🟢 ' + hms + ' · ' + rowsNote;
     if (tick) {
       tick.style.opacity = '0.3';
       setTimeout(() => { tick.style.opacity = '1'; }, 200);
@@ -449,7 +470,8 @@ async function refreshLivePrices() {
     if (status) status.textContent = '⚠ 네트워크 오류 (정적 데이터 표시 중)';
   }
 }
-// 페이지 로드 직후 1회 + 60초마다
+window.refreshLivePrices = refreshLivePrices;
+// 페이지 로드 직후 1회 (개별 주가는 마지막 갱신이 24h 지났을 때만) + 지수는 60초마다
 refreshLivePrices();
 setInterval(refreshLivePrices, 60000);
 // 탭 가시성 변경 시 즉시 갱신

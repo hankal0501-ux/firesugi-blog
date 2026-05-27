@@ -2383,17 +2383,19 @@ function renderProgramCommentsHtml(key) {
     <h3>💬 댓글 <span class="prog-comment-count">${cnt}</span></h3>
     <div class="prog-comments-list">${list}</div>
     <div class="prog-comment-write">
-      <input type="text" class="prog-cmt-author" id="progCmtAuthor_${key}" placeholder="닉네임 (선택 — 비우면 익명_XXXX)" maxlength="20">
-      <textarea class="prog-cmt-input" id="progCmtInput_${key}" placeholder="이 프로그램에 대한 의견·질문·후기를 남겨주세요" rows="2" maxlength="500"></textarea>
-      <div class="prog-cmt-options">
-        <label class="prog-cmt-toggle">
+      <div class="prog-cmt-row">
+        <input type="text" class="prog-cmt-author" id="progCmtAuthor_${key}" placeholder="닉네임" maxlength="20"
+               title="비우면 익명_XXXX 자동 부여">
+        <input type="text" class="prog-cmt-input" id="progCmtInput_${key}" placeholder="이 프로그램 의견·질문·후기 — Enter 로 등록" maxlength="500"
+               onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitProgramComment('${key}')}">
+        <label class="prog-cmt-toggle" title="🔒 비공개: 비밀번호 아는 사람만 본문 열람">
           <input type="checkbox" id="progCmtPrivate_${key}" onchange="togglePrivateInput('${key}')">
-          🔒 비공개 (비밀번호 아는 사람만 열람)
+          🔒
         </label>
-        <input type="password" class="prog-cmt-pwd" id="progCmtPwd_${key}" placeholder="비공개 비밀번호 (4자 이상)" style="display:none;" maxlength="20">
+        <input type="password" class="prog-cmt-pwd" id="progCmtPwd_${key}" placeholder="비번 4자+" style="display:none;" maxlength="20">
         <button class="btn btn-primary btn-sm prog-cmt-submit" onclick="submitProgramComment('${key}')">등록</button>
       </div>
-      <p class="prog-cmt-note">※ 댓글은 모든 단말에서 동기화됩니다. 비공개 선택 시 비밀번호를 분실하면 본인도 다시 볼 수 없습니다.</p>
+      <p class="prog-cmt-note">※ Enter 로 등록 · 모든 단말 동기화 · 비공개 비번 분실 시 본인도 못 봄</p>
     </div>`;
 }
 

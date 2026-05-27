@@ -2426,17 +2426,25 @@ html { -webkit-text-size-adjust: 100%; }
 .prog-comment-text { font-size: 0.92rem; color: var(--text-primary); line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
 .prog-comment-locked { cursor: pointer; color: var(--text-muted); font-style: italic; padding: 6px 10px; background: #f5f0d8; border: 1px dashed #d4c47a; border-radius: 6px; text-align: center; transition: all 0.15s; }
 .prog-comment-locked:hover { background: #e8df97; color: #6a4f00; }
-.prog-comment-write { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
-.prog-comment-write .prog-cmt-author,
-.prog-comment-write .prog-cmt-input,
-.prog-comment-write .prog-cmt-pwd { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; margin-bottom: 8px; font-family: inherit; }
-.prog-comment-write .prog-cmt-input { resize: vertical; min-height: 56px; }
-.prog-cmt-options { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.prog-cmt-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; user-select: none; }
-.prog-cmt-toggle input[type="checkbox"] { margin: 0; }
-.prog-cmt-submit { margin-left: auto; }
-.prog-cmt-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; margin-bottom: 0; }
+.prog-comment-write { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
+/* 한 줄 컴팩트 행 — 닉네임 · 본문(flex) · 🔒 · 비번 · 등록 */
+.prog-cmt-row { display: flex; align-items: stretch; gap: 6px; }
+.prog-cmt-row > input,
+.prog-cmt-row > .prog-cmt-toggle { box-sizing: border-box; padding: 7px 9px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; font-family: inherit; background: #fff; }
+.prog-cmt-row .prog-cmt-author { flex: 0 0 110px; min-width: 0; }
+.prog-cmt-row .prog-cmt-input { flex: 1 1 auto; min-width: 0; }
+.prog-cmt-row .prog-cmt-toggle { display: inline-flex; align-items: center; gap: 4px; font-size: 0.9rem; color: var(--text-secondary); cursor: pointer; user-select: none; padding: 7px 8px; }
+.prog-cmt-row .prog-cmt-toggle input[type="checkbox"] { margin: 0; }
+.prog-cmt-row .prog-cmt-pwd { flex: 0 0 90px; min-width: 0; }
+.prog-cmt-row .prog-cmt-submit { flex: 0 0 auto; white-space: nowrap; }
+.prog-cmt-note { font-size: 0.72rem; color: var(--text-muted); margin: 6px 2px 0; }
 @media (max-width: 600px) {
+  .prog-cmt-row { flex-wrap: wrap; gap: 4px; }
+  .prog-cmt-row .prog-cmt-author { flex: 1 1 100%; }
+  .prog-cmt-row .prog-cmt-input { flex: 1 1 100%; }
+  .prog-cmt-row .prog-cmt-toggle,
+  .prog-cmt-row .prog-cmt-pwd,
+  .prog-cmt-row .prog-cmt-submit { flex: 0 1 auto; }
   .prog-comment-header { gap: 6px; }
   .prog-comment-date { margin-left: 0; width: 100%; }
 }

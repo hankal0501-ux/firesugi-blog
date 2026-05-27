@@ -1,5 +1,39 @@
 [
   {
+    "id": 1779850117725,
+    "topic": "최신기술",
+    "source": "티스토리",
+    "emoji": "🚀",
+    "image": "🚀",
+    "color": "#0068c3",
+    "title": "티엑스알로보틱스, ‘국제소방안전박람회’ 스마트 소방 솔루션 시연 성료",
+    "summary": "티엑스알로보틱스, ‘국제소방안전박람회’ 스마트 소방 솔루션 시연 성료 티스토리",
+    "fullDesc": "티엑스알로보틱스, ‘국제소방안전박람회’ 스마트 소방 솔루션 시연 성료 티스토리",
+    "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE0wYTRtekRCLVF3bU1SVWJCOE5jNEllMjJVUDZnb3hsUHpjVGpxcWNIMVpUdkJPTVVJWDJVcXR4RWRENjA2Y3otSy12cw?oc=5",
+    "date": "2026.05.26",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-27T02:48:34.577Z",
+    "pubDate": "2026-05-26T02:54:00.000Z"
+  },
+  {
+    "id": 1779850117053,
+    "topic": "논문연구",
+    "source": "FPN-소방방재신문",
+    "emoji": "📚",
+    "image": "📚",
+    "color": "#6020a8",
+    "title": "한국화재소방학회-베트남 소방대학교, 소방 분야 학술 교류 위해 맞손 - FPN-소방방재신문",
+    "summary": "한국화재소방학회-베트남 소방대학교, 소방 분야 학술 교류 위해 맞손 FPN-소방방재신문",
+    "fullDesc": "한국화재소방학회-베트남 소방대학교, 소방 분야 학술 교류 위해 맞손 FPN-소방방재신문",
+    "url": "https://news.google.com/rss/articles/CBMiREFVX3lxTE80NjRzMW13bjliUjRHRUNuQXh4RVVzQUFsUDdVcHppcjJsZnI2MUtwWkFEaE95Smxsa2U3Q3NfLXVVYUZr?oc=5",
+    "date": "2026.05.25",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-27T02:48:36.479Z",
+    "pubDate": "2026-05-25T07:08:00.000Z"
+  },
+  {
     "id": 1779763119132,
     "topic": "최신기술",
     "source": "v.daum.net",
@@ -12,7 +46,7 @@
     "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE5nVV9PSGxQeU0zaWtsTU83OUU4cDBBRzlXUmFzYUVYZEVuamx4aDBudVU0WUNTX1Z2REQyVjN2R04yMTBET2c?oc=5",
     "date": "2026.05.25",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-26T02:38:32.016Z",
     "pubDate": "2026-05-25T15:27:57.000Z"
   },
@@ -29,7 +63,7 @@
     "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTFBhMjRpNWtDamJoNkx0Sjd3em05bWkxanpwd3ZBVmdjbWpoWjlCSE9XVlFZYllRNmdjVVM4bi05NGlCVEV3dmc?oc=5",
     "date": "2026.05.25",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-26T02:38:33.882Z",
     "pubDate": "2026-05-25T07:08:00.000Z"
   },

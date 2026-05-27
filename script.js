@@ -917,8 +917,9 @@ function renderVisitStats() {
   // 프로그램 클릭(접속) 통계 — 모든 프로그램 표시 (클릭 0 포함)
   const progClicks = (typeof getProgramClicks === 'function') ? getProgramClicks() : {};
   const totalProgClicks = Object.values(progClicks).reduce((s, p) => s + (p.count || 0), 0);
-  // AI 프로그램 그리드와 동일한 순서로 정렬 (getProgramRankMap 헬퍼 사용)
-  // → 통계 N번 = AI 프로그램 카드 뱃지 N번 완전 일치
+  // AI 프로그램 그리드와 동일한 순서(프로그램 정의 순서, featured 우선)로 정렬
+  // → 통계 N번 = AI 프로그램 카드 N번째 위치 완전 일치
+  const rankMap = getProgramRankMap();
   const hidden = (typeof getHiddenPrograms === 'function') ? getHiddenPrograms() : [];
   const allProgs = Object.entries(programData)
     .filter(([k]) => !hidden.includes(k))
@@ -929,7 +930,7 @@ function renderVisitStats() {
       count: progClicks[k]?.count || 0,
       lastClick: progClicks[k]?.lastClick || null
     }))
-    .sort((a, b) => b.count - a.count);
+    .sort((a, b) => (rankMap[a.key] || 9999) - (rankMap[b.key] || 9999));
 
   document.getElementById('statsSummary').innerHTML = `
     <div class="ss-card"><div class="ss-num">${todayCount}</div><div class="ss-lab">오늘 방문</div></div>
@@ -2295,23 +2296,21 @@ function hideProgramDetail() {
 }
 
 // ============================================================
-// 클릭 횟수 기반 통합 랭킹 — 통계 모달과 AI 프로그램 그리드가 동일한 번호를 보이도록
-// 양쪽 모두 이 헬퍼만 호출해서 정렬 → 같은 프로그램은 같은 번호가 부여됨
+// 프로그램 정의 순서 기반 통합 번호 — 통계 모달과 AI 프로그램 그리드가 동일한 번호를 보이도록
+// featured(👑 CORE) 가 1번, 나머지는 programData 정의 순서대로 2, 3, 4...
+// 클릭 횟수와 무관하게 카드 위치 = 통계 번호 가 항상 일치
 // ============================================================
 function getProgramRankMap() {
   const hidden = (typeof getHiddenPrograms === 'function') ? getHiddenPrograms() : [];
-  const clicks = (typeof getProgramClicks === 'function') ? getProgramClicks() : {};
-  const sortedKeys = Object.keys(programData)
-    .filter(k => !hidden.includes(k))
-    .sort((a, b) => {
-      const aC = clicks[a]?.count || 0;
-      const bC = clicks[b]?.count || 0;
-      if (aC !== bC) return bC - aC;
-      // 동률 시 programData 정의 순서 유지 (Object.keys 가 보장)
-      return 0;
+  const sortedEntries = Object.entries(programData)
+    .filter(([k]) => !hidden.includes(k))
+    .sort(([, a], [, b]) => {
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+      return 0; // 정의 순서 유지 (Object.entries 가 insertion order 보장)
     });
   const map = {};
-  sortedKeys.forEach((k, i) => { map[k] = i + 1; });
+  sortedEntries.forEach(([k], i) => { map[k] = i + 1; });
   return map;
 }
 

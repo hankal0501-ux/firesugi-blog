@@ -2103,16 +2103,15 @@ html { -webkit-text-size-adjust: 100%; }
   -webkit-box-orient:vertical; overflow:hidden;
 }
 .news-card-summary {
-  font-size:0.78rem; color:var(--text-muted);
-  line-height:1.5; flex:1; font-weight:400;
+  font-size:0.82rem; color:var(--text-secondary);
+  line-height:1.55; flex:1; font-weight:400;
   display:-webkit-box; -webkit-line-clamp:3; line-clamp:3;
   -webkit-box-orient:vertical; overflow:hidden;
 }
-/* 본문에 우연히 들어간 강조 태그(b/strong)도 일반 텍스트처럼 — 색·굵기 강제 해제 */
+/* 본문에 우연히 들어간 강조 태그(b/strong)는 굵기만 일반화 — 색은 표준 본문색 유지 */
 .news-card-summary b,
 .news-card-summary strong {
   font-weight:400 !important;
-  color:inherit !important;
 }
 .news-card-footer {
   display:flex; align-items:center; justify-content:space-between;

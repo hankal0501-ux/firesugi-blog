@@ -2042,7 +2042,8 @@ function renderProgramCardHtml(key, p, rank) {
     : '<span class="prog-status prog-dev">개발중</span>';
   // 항상 실제 desc 노출 — 편집한 내용이 카드에 즉시 보이도록. 상태는 뱃지로 구분.
   const desc = `<p>${esc(p.desc || '')}</p>`;
-  const rankBadge = rank ? `<span class="card-rank-no" title="클릭 랭킹 ${rank}위">${rank}</span>` : '';
+  const rankClass = rank === 1 ? ' rank-gold' : rank === 2 ? ' rank-silver' : rank === 3 ? ' rank-bronze' : '';
+  const rankBadge = rank ? `<span class="card-rank-no${rankClass}" title="클릭 랭킹 ${rank}위">${rank}</span>` : '';
 
   if (isFeatured) {
     return `
@@ -2084,26 +2085,26 @@ function renderPrograms() {
   const hidden = getHiddenPrograms();
   const admin = isAdmin();
 
-  // 통계 모달과 동일한 순서(클릭 횟수 DESC) — 같은 번호로 매칭되게
+  // 번호 뱃지는 클릭 랭킹(DESC) 기준 — 통계 모달과 동일
   const progClicks = (typeof getProgramClicks === 'function') ? getProgramClicks() : {};
+  const visibleKeys = Object.keys(programData).filter(k => !hidden.includes(k));
+  const rankByKey = {};
+  [...visibleKeys]
+    .sort((a, b) => (progClicks[b]?.count || 0) - (progClicks[a]?.count || 0))
+    .forEach((k, i) => { rankByKey[k] = i + 1; });
+
+  // 표시 순서는 개발 순서(programData 정의 순서) — featured 만 맨 앞으로 보장
   const all = Object.entries(programData)
     .filter(([k]) => !hidden.includes(k))
-    .sort(([keyA, a], [keyB, b]) => {
-      const aClicks = progClicks[keyA]?.count || 0;
-      const bClicks = progClicks[keyB]?.count || 0;
-      if (aClicks !== bClicks) return bClicks - aClicks;
-      // 동률 시: featured > 완료 > 개발중
+    .sort(([, a], [, b]) => {
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
-      const aDone = !!a.completed || (!!a.link && a.link !== '#');
-      const bDone = !!b.completed || (!!b.link && b.link !== '#');
-      if (aDone !== bDone) return aDone ? -1 : 1;
-      return 0;
+      return 0; // 정의 순서 그대로 → 새로 추가된 프로그램이 뒤로
     });
 
   if (gridCompleted) {
     gridCompleted.innerHTML = all.length
-      ? all.map(([k, p], i) => renderProgramCardHtml(k, p, i + 1)).join('')
+      ? all.map(([k, p]) => renderProgramCardHtml(k, p, rankByKey[k])).join('')
       : '<div class="empty-state">📭 등록된 프로그램이 없습니다.</div>';
   }
   // devProgramsGrid는 더 이상 사용 안 함 (탭 삭제됨)

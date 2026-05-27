@@ -2404,10 +2404,10 @@ html { -webkit-text-size-adjust: 100%; }
   box-shadow: 0 2px 4px rgba(0,0,0,0.12);
   pointer-events: none;
 }
-/* DOM 순서 = 클릭 랭킹 순서이므로 :nth-child 로 메달 색 적용 */
-#programsGrid .program-card:nth-child(1) .card-rank-no { background: #ffd60a; color: #000; }
-#programsGrid .program-card:nth-child(2) .card-rank-no { background: #c0c8d2; color: #000; }
-#programsGrid .program-card:nth-child(3) .card-rank-no { background: #cd7f32; }
+/* 메달 색은 클릭 랭킹 번호 기준 — 카드 위치(DOM)와 무관 */
+.card-rank-no.rank-gold { background: #ffd60a; color: #000; }
+.card-rank-no.rank-silver { background: #c0c8d2; color: #000; }
+.card-rank-no.rank-bronze { background: #cd7f32; }
 .program-card:hover .card-del-btn { opacity: 1; }
 .card-del-btn:hover {
   background: #ffe0e0;

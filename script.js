@@ -2093,14 +2093,10 @@ function renderPrograms() {
   // 번호 뱃지는 클릭 랭킹(DESC) 기준 — 통계 모달과 완전히 동일 (같은 헬퍼 사용)
   const rankByKey = getProgramRankMap();
 
-  // 표시 순서는 개발 순서(programData 정의 순서) — featured 만 맨 앞으로 보장
+  // 표시 순서 = 클릭 랭킹 순서 → 앞에서부터 1, 2, 3, 4... 카드 위치가 통계 번호와 1:1 일치
   const all = Object.entries(programData)
     .filter(([k]) => !hidden.includes(k))
-    .sort(([, a], [, b]) => {
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-      return 0; // 정의 순서 그대로 → 새로 추가된 프로그램이 뒤로
-    });
+    .sort(([keyA], [keyB]) => (rankByKey[keyA] || 9999) - (rankByKey[keyB] || 9999));
 
   if (gridCompleted) {
     gridCompleted.innerHTML = all.length

@@ -490,17 +490,8 @@ function updateAuthUI() {
         else authArea.appendChild(statsBtn);
       }
 
-      // OUT 버튼 추가
-      if (!outBtn && authArea) {
-        outBtn = document.createElement('button');
-        outBtn.id = 'authOutBtn';
-        outBtn.className = 'btn btn-outline btn-sm';
-        outBtn.innerHTML = '🚪 OUT';
-        outBtn.title = '관리자 모드 종료';
-        outBtn.style.cssText = 'background:#fff; color:#dc2626; border:1.5px solid #dc2626; font-weight:700; margin-left:6px;';
-        outBtn.setAttribute('onclick', "if(confirm('🚪 관리자 모드를 종료하시겠습니까?'))exitAdminMode();");
-        authArea.appendChild(outBtn);
-      }
+      // OUT 버튼은 헤더에 노출하지 않음 — 관리자 메뉴 안(showAdminMenu) 에 [3] 항목으로 통합
+      if (outBtn) outBtn.remove();
     } else {
       // 비관리자: 통계 버튼 제거
       const statsBtn = document.getElementById('authStatsBtn');
@@ -515,7 +506,7 @@ function updateAuthUI() {
       loginBtn.style.fontWeight = '';
       loginBtn.title = '관리자 모드 진입 (비밀번호 필요)';
 
-      // OUT 버튼 제거
+      // 잔여 OUT 버튼 있으면 제거
       if (outBtn) outBtn.remove();
     }
   }
@@ -531,8 +522,9 @@ function showAdminMenu() {
     '입력하세요:\n' +
     '  1 = 🔑 비밀번호 변경\n' +
     '  2 = 🔄 모든 기기 즉시 동기화\n' +
+    '  3 = 🚪 관리자 모드 종료 (OUT)\n' +
     '  취소(또는 빈값) = 닫기\n\n' +
-    '📊 통계는 우상단 파랑 아이콘 · 🚪 종료는 OUT 버튼 사용'
+    '📊 통계는 우상단 파랑 아이콘'
   );
   if (!action) return;
   const a = action.trim();
@@ -541,8 +533,13 @@ function showAdminMenu() {
   } else if (a === '2') {
     if (typeof forceSyncAll === 'function') forceSyncAll();
     else alert('동기화 함수 미로드 - 새로고침 후 다시 시도');
+  } else if (a === '3') {
+    if (confirm('🚪 관리자 모드를 종료하시겠습니까?')) {
+      if (typeof exitAdminMode === 'function') exitAdminMode();
+      else alert('exitAdminMode 함수 미로드 - 새로고침 후 다시 시도');
+    }
   } else {
-    alert('1·2 중 하나를 입력하세요.');
+    alert('1·2·3 중 하나를 입력하세요.');
   }
 }
 window.showAdminMenu = showAdminMenu;

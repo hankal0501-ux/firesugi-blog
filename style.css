@@ -2409,6 +2409,47 @@ html { -webkit-text-size-adjust: 100%; }
 .card-rank-no.rank-silver { background: #c0c8d2; color: #000; }
 .card-rank-no.rank-bronze { background: #cd7f32; }
 
+/* ===== 관리자 메뉴 아이콘 그리드 모달 ===== */
+.admin-menu-modal h2 { display: flex; align-items: center; gap: 6px; }
+.admin-menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.admin-menu-btn {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  padding: 18px 12px;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: inherit;
+  min-height: 110px;
+}
+.admin-menu-btn:hover {
+  background: #e8f5ff;
+  border-color: var(--naver-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(28,92,214,0.18);
+}
+.admin-menu-btn .amb-icon {
+  font-size: 2.1rem; line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+}
+.admin-menu-btn .amb-label {
+  font-size: 0.82rem; font-weight: 700; color: var(--text-primary);
+  text-align: center; line-height: 1.35;
+}
+.admin-menu-btn-danger { grid-column: 1 / -1; }
+.admin-menu-btn-danger:hover {
+  background: #ffe8e8;
+  border-color: #dc2626;
+  box-shadow: 0 6px 16px rgba(220,38,38,0.2);
+}
+.admin-menu-btn-danger:hover .amb-label { color: #dc2626; }
+
 /* ===== 프로그램별 댓글 (공개/비공개) ===== */
 .program-comments-section { margin-top: 18px; padding-top: 16px; border-top: 2px solid var(--border); }
 .program-comments-section h3 { display: flex; align-items: center; gap: 8px; font-size: 1.05rem; margin-bottom: 12px; color: var(--text-primary); }

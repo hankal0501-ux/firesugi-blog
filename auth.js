@@ -515,32 +515,52 @@ function updateAuthUI() {
   });
 }
 
-// 관리자 모드 활성 시 — [🛡 관리자 모드] 버튼 클릭하면 액션 메뉴
+// 관리자 모드 활성 시 — 아이콘 그리드 모달
 function showAdminMenu() {
-  const action = prompt(
-    '🛡 관리자 모드 메뉴\n\n' +
-    '입력하세요:\n' +
-    '  1 = 🔑 비밀번호 변경\n' +
-    '  2 = 🔄 모든 기기 즉시 동기화\n' +
-    '  3 = 🚪 관리자 모드 종료 (OUT)\n' +
-    '  취소(또는 빈값) = 닫기\n\n' +
-    '📊 통계는 우상단 파랑 아이콘'
-  );
-  if (!action) return;
-  const a = action.trim();
-  if (a === '1') {
-    if (typeof changeAdminPassword === 'function') changeAdminPassword();
-  } else if (a === '2') {
-    if (typeof forceSyncAll === 'function') forceSyncAll();
-    else alert('동기화 함수 미로드 - 새로고침 후 다시 시도');
-  } else if (a === '3') {
-    if (confirm('🚪 관리자 모드를 종료하시겠습니까?')) {
-      if (typeof exitAdminMode === 'function') exitAdminMode();
-      else alert('exitAdminMode 함수 미로드 - 새로고침 후 다시 시도');
+  // 이미 열려있으면 토글로 닫기
+  const existing = document.getElementById('adminMenuModal');
+  if (existing) { existing.remove(); return; }
+
+  const overlay = document.createElement('div');
+  overlay.id = 'adminMenuModal';
+  overlay.className = 'modal-overlay';
+  overlay.style.display = 'flex';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+  const close = "document.getElementById('adminMenuModal') && document.getElementById('adminMenuModal').remove()";
+  overlay.innerHTML = `
+    <div class="modal-content admin-menu-modal" style="max-width:420px;">
+      <button class="modal-close" onclick="${close}">✕</button>
+      <h2 style="font-size:1.15rem; margin-bottom:6px;">🛡 관리자 모드 메뉴</h2>
+      <p style="color:var(--text-secondary); font-size:0.78rem; margin-bottom:16px;">
+        원하는 기능 아이콘을 클릭하세요 · 📊 통계는 우상단 파랑 아이콘
+      </p>
+      <div class="admin-menu-grid">
+        <button class="admin-menu-btn" onclick="${close}; if(typeof changeAdminPassword==='function') changeAdminPassword();">
+          <span class="amb-icon">🔑</span>
+          <span class="amb-label">비밀번호<br>변경</span>
+        </button>
+        <button class="admin-menu-btn" onclick="${close}; if(typeof forceSyncAll==='function') forceSyncAll(); else alert('동기화 함수 미로드 — 새로고침 후 다시 시도');">
+          <span class="amb-icon">🔄</span>
+          <span class="amb-label">모든 기기<br>즉시 동기화</span>
+        </button>
+        <button class="admin-menu-btn admin-menu-btn-danger" onclick="if(confirm('🚪 관리자 모드를 종료하시겠습니까?')){${close}; if(typeof exitAdminMode==='function') exitAdminMode(); else alert('exitAdminMode 미로드');}">
+          <span class="amb-icon">🚪</span>
+          <span class="amb-label">관리자 모드<br>종료 (OUT)</span>
+        </button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  // Esc 키로 닫기
+  const onEsc = (e) => {
+    if (e.key === 'Escape') {
+      const m = document.getElementById('adminMenuModal');
+      if (m) m.remove();
+      document.removeEventListener('keydown', onEsc);
     }
-  } else {
-    alert('1·2·3 중 하나를 입력하세요.');
-  }
+  };
+  document.addEventListener('keydown', onEsc);
 }
 window.showAdminMenu = showAdminMenu;
 

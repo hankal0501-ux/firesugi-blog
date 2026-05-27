@@ -3136,8 +3136,9 @@ function highlightKeyTerms(html) {
     .replace(/(NF[TPS]C\s*\d{3})/g, '<b class="kw-law">$1</b>');
 }
 
-function deleteNews(id) {
-  if (!isAdmin()) return alert('관리자만 가능합니다.');
+async function deleteNews(id) {
+  // 관리자 확인 + 세션당 1회 비밀번호 (checkDeletePassword 내부에 isAdmin 가드 포함)
+  if (!(await checkDeletePassword('뉴스 삭제'))) return;
   if (!confirm('이 뉴스를 삭제하시겠습니까?')) return;
   saveNews(getNews().filter(n => n.id !== id));
   if (typeof logActivity === 'function') logActivity('뉴스 삭제: id=' + id);

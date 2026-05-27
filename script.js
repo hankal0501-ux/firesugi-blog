@@ -3014,10 +3014,6 @@ function renderNews() {
       : '';
     return `
     <article class="news-card-naver" style="border-top:5px solid ${color}; box-shadow:0 4px 14px ${color}1a, 0 1px 3px rgba(0,0,0,0.08);">
-      <div class="news-thumb-naver" style="background:linear-gradient(135deg, ${color}, ${color}aa); border-bottom:0;">
-        <span class="news-emoji" style="filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25));">${thumbEmoji}</span>
-        ${n.autoAdded ? '<span class="news-auto-badge" style="background:rgba(255,255,255,0.92); color:#222;">🤖 자동</span>' : ''}
-      </div>
       <div class="news-card-body" onclick="showNewsDetail('${n.id}')" style="cursor:pointer;">
         <div class="news-card-meta">
           ${topicBadge}
@@ -3052,7 +3048,6 @@ function showNewsDetail(id) {
   document.getElementById('newsModalMeta').innerHTML = `
     ${topicBadge}
     <span class="news-source-chip" style="background:${color}cc;">${esc(n.source)}</span>
-    ${n.autoAdded ? '<span class="news-modal-tag">🤖 자동수집</span>' : ''}
     ${n.isNew ? '<span class="badge-new">NEW</span>' : ''}
   `;
   document.getElementById('newsModalTitle').textContent = n.title;

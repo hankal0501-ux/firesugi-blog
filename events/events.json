@@ -59,6 +59,15 @@
   ],
   "giveaways": [
     {
+      "source_site": "스마트투데이",
+      "title": "하나증권, 국내주식 경품 추첨 이벤트..\"최대 300만원 혜택\"",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE50UktnUzJOZEI5NVVQRmFXRVRNbTNOTGU1Vmx1TmhoZkJKakp2MXRoR3Q3UWoyWUl6RTZvVzBKc0xzWmFXLUFXMmNMRkttZjJTTmlVaXY3Y1ZlTzlEekJJ?oc=5",
+      "created_at": "2026-05-04 07:00:00"
+    },
+    {
       "source_site": "뉴스핌",
       "title": "하나증권, 7월까지 최대 300만원 경품 추첨 이벤트",
       "category": "공모전",
@@ -203,5 +212,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-05-26 04:42:47"
+  "last_updated": "2026-05-27 04:55:05"
 }

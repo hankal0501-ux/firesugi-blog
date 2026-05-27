@@ -2391,6 +2391,23 @@ html { -webkit-text-size-adjust: 100%; }
   z-index: 5;
 }
 .program-card { position: relative; }
+/* 클릭 랭킹 번호 뱃지 — 통계 모달의 prog-rank-no 와 동일한 룰로 1·2·3위 색상 */
+.card-rank-no {
+  position: absolute;
+  top: 8px; left: 8px;
+  background: var(--naver-blue); color: #fff;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.88rem;
+  z-index: 6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  pointer-events: none;
+}
+/* DOM 순서 = 클릭 랭킹 순서이므로 :nth-child 로 메달 색 적용 */
+#programsGrid .program-card:nth-child(1) .card-rank-no { background: #ffd60a; color: #000; }
+#programsGrid .program-card:nth-child(2) .card-rank-no { background: #c0c8d2; color: #000; }
+#programsGrid .program-card:nth-child(3) .card-rank-no { background: #cd7f32; }
 .program-card:hover .card-del-btn { opacity: 1; }
 .card-del-btn:hover {
   background: #ffe0e0;
@@ -2517,10 +2534,10 @@ nav a[data-tab="records"] { display: none !important; }
 .stats-h3 { font-size: 0.74rem; margin: 4px 0 3px; font-weight: 700; color: var(--text-secondary); }
 .stats-chart {
   display: flex; align-items: flex-end; gap: 2px;
-  height: 50px; padding: 4px 4px 10px;
+  height: 50px; padding: 4px 4px 2px;
   background: linear-gradient(to top, #f7f9fc 0%, #fff 100%);
   border: 1px solid var(--border); border-radius: 6px;
-  overflow: hidden;
+  overflow: visible;  /* 라벨이 차트 바깥(아래)으로 살짝 빠져나가도록 */
 }
 .stats-chart .bar {
   flex: 1 1 0; min-width: 3px;
@@ -2532,14 +2549,20 @@ nav a[data-tab="records"] { display: none !important; }
 }
 .stats-chart .bar:hover { opacity: 0.75; }
 .stats-chart .bar.zero { background: #e8eaf0; }
+/* X축 라벨 — 차트 아래에 작게 노출 (월별·일별 5n 둘 다) */
 .stats-chart .bar .bar-lab {
   position: absolute; bottom: -11px; left: 50%; transform: translateX(-50%);
-  font-size: 0.5rem; color: var(--text-muted);
+  font-size: 0.48rem; color: var(--text-secondary);
   white-space: nowrap;
+  pointer-events: none;
 }
+/* 일별 30칸은 겹치므로 5칸+마지막만 노출 (예: 5/2, 5/7, ..., 5/27) */
 #dailyChart .bar .bar-lab { display: none; }
 #dailyChart .bar:nth-child(5n) .bar-lab,
-#dailyChart .bar:last-child .bar-lab { display: block; }
+#dailyChart .bar:last-child .bar-lab {
+  display: block; font-weight: 600;
+}
+/* 월별 12칸은 다 노출 (예: 25.06 ... 26.05) */
 .stats-chart .bar .bar-val {
   position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
   font-size: 0.6rem; color: var(--naver-blue); font-weight: 700;
@@ -2548,7 +2571,8 @@ nav a[data-tab="records"] { display: none !important; }
   pointer-events: none;
 }
 .stats-chart .bar:hover .bar-val { opacity: 1; }
-.stats-section { margin-top: 4px; padding-bottom: 4px; }
+/* 라벨 공간 확보 — 차트 아래 14px 여유 */
+.stats-section { margin-top: 4px; padding-bottom: 16px; }
 @media (max-width: 720px) {
   .stats-charts-row { grid-template-columns: 1fr; }
 }

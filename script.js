@@ -664,6 +664,31 @@ const programData = {
     platform: 'Android (APK 직접 설치)',
     techStack: 'Capacitor 6 + IndexedDB + 네이티브 STT · GitHub Actions 자동 빌드',
     workflow: '사진 촬영 + 음성 받아쓰기 → 워터마크 자동 합성 → 즉시 공유 → 자동 업데이트로 신규 버전 배포'
+  },
+  inspection_board: {
+    icon: '📋', name: '점검상황 게시판', tag: '진행관리 · 일정관리',
+    desc: '점검 사업장별 마감일과 진행 단계를 한 화면에서 추적하는 내부 운영 게시판입니다. 초기파일 → 점검내역서 → 팀장확인 → 보고서·점검표 → confirm → 소방서제출까지 8단계 워크플로를 행 단위로 시각화하여 누락 없이 흐름을 관리합니다. (외부 공개 URL 없음 — 내부 보안)',
+    features: [
+      { title: '📅 마감일·Time-Line 시각화', desc: '사업장별 마감일을 자동 정렬하고 Time-Line 막대로 진행도(D-Day)를 한눈에 표시. 마감 임박 건을 즉시 식별.' },
+      { title: '✅ 8단계 워크플로 추적', desc: '배치확인서 · 점검내역서(예전원본·별지) · 팀장확인 · 보고서-최종 · 점검표-최종 · 보고서확인-팀장 · confirm확인 · 소방서제출 8단계를 ⚫(완료)/⚪(미완료) 토글로 관리.' },
+      { title: '🔄 사업장 검색·연월 필터·다단말 동기화', desc: '사업장명 즉시 검색, 연도·월 셀렉터, 동기화 대기 상태 표시 — 여러 단말 간 진행 상태 공유.' }
+    ],
+    howto: [
+      '1. 상단 [전체 32 / 진행 32 / 완료 0] 카운터로 전체 진행 분포를 확인합니다.',
+      '2. 사업장 검색 / 연도·월 필터로 대상 범위를 좁히고, 마감일 컬럼 기준 정렬을 확인합니다.',
+      '3. 각 행의 8단계 셀(배치확인서 → 점검내역서 → 팀장확인 → 보고서·점검표 → confirm → 소방서제출)을 단계가 끝날 때마다 ⚫(완료)로 토글합니다.',
+      '4. Time-Line 막대로 마감 임박 사업장 우선 처리하고, 동기화 대기 상태에서 다른 단말로 자동 반영됩니다.'
+    ],
+    link: null,
+    completed: true,
+    version: 'ver 2.9 (내부 운영판)',
+    platform: '브라우저 (PC 권장) · 내부 시스템',
+    techStack: '게시판 단계 추적 · 다단말 동기화',
+    workflow: '사업장 등록 → 마감일·단계 입력 → 8단계 토글 → confirm → 소방서 제출',
+    screenshots: [
+      { url: 'images/inspection-board.png',
+        caption: '전체 사업장 목록 — 마감일 정렬 + Time-Line + 8단계 진행 체크 (초기파일·점검·보고서·컨펌·전달)' }
+    ]
   }
 };
 
@@ -736,6 +761,14 @@ function _blockNonAdmin() {
   alert('🔒 관리자만 수정·편집할 수 있습니다.\n\n[🔐 관리자] 버튼으로 먼저 로그인하세요.');
   return false;
 }
+
+// 파일 업로드 label 클릭 가드 — 파일 선택창이 뜨기 전에 관리자 여부 검사
+function _guardAdminUpload(actionName) {
+  if (typeof isAdmin === 'function' && isAdmin()) return true;
+  alert('🔒 관리자 전용 기능입니다.\n\n[' + (actionName || '업로드') + ']은(는) 관리자만 사용할 수 있습니다.\n먼저 헤더의 [🔐 관리자] 버튼으로 로그인하세요.');
+  return false;
+}
+window._guardAdminUpload = _guardAdminUpload;
 
 // 한 번 비번 통과 후 세션 동안 자동 통과 (탭 닫히면 리셋)
 async function _adminPasswordOnce(label) {
@@ -1418,16 +1451,18 @@ async function editProgramLink(key) {
   }
 
   const userProgs = getUserPrograms();
+  const newLink = trimmed || null;
   if (userProgs[key]) {
-    userProgs[key].link = trimmed || null;
+    userProgs[key].link = newLink;
     saveUserPrograms(userProgs);
-    programData[key].link = trimmed || null;
   } else {
-    programData[key].link = trimmed || null;
-    alert('⚠️ 빌트인 프로그램 — 메모리 변경됨. 영구 변경은 script.js의 programData 직접 수정 필요.');
+    // 빌트인 프로그램 — 오버라이드 localStorage 에 저장하여 새로고침 후에도 유지
+    setBuiltinOverride(key, { link: newLink });
   }
+  programData[key].link = newLink;
   if (typeof logActivity === 'function') logActivity(`URL 편집: ${key} → ${trimmed || '(없음)'}`);
   showProgramDetail(key);
+  renderPrograms();
 }
 
 // 완료/개발중 상태 토글 — URL/파일 유무와 독립
@@ -1442,6 +1477,9 @@ async function toggleProgramStatus(key) {
   if (userProgs[key]) {
     userProgs[key].completed = newCompleted;
     saveUserPrograms(userProgs);
+  } else {
+    // 빌트인 프로그램 — 오버라이드 localStorage 에 저장
+    setBuiltinOverride(key, { completed: newCompleted });
   }
   programData[key].completed = newCompleted;
   if (typeof logActivity === 'function') logActivity(`상태 토글: ${key} → ${newCompleted ? '완료' : '개발중'}`);
@@ -1533,19 +1571,23 @@ async function editProgramContent(key) {
   if (newDesc === null) return;
 
   const userProgs = getUserPrograms();
+  const finalName = newName.trim();
+  const finalTag = newTag.trim() || prog.tag;
+  const finalDesc = newDesc.trim() || prog.desc;
   if (userProgs[key]) {
-    userProgs[key].name = newName.trim();
-    userProgs[key].tag = newTag.trim() || prog.tag;
-    userProgs[key].desc = newDesc.trim() || prog.desc;
+    userProgs[key].name = finalName;
+    userProgs[key].tag = finalTag;
+    userProgs[key].desc = finalDesc;
     saveUserPrograms(userProgs);
   } else {
-    alert('⚠️ 빌트인 프로그램 — 메모리만 변경됩니다.\n영구 변경은 script.js의 programData 직접 수정 필요.');
+    // 빌트인 프로그램 — 오버라이드 localStorage 에 저장 (새로고침 후에도 유지)
+    setBuiltinOverride(key, { name: finalName, tag: finalTag, desc: finalDesc });
   }
-  programData[key].name = newName.trim();
-  programData[key].tag = newTag.trim() || prog.tag;
-  programData[key].desc = newDesc.trim() || prog.desc;
+  programData[key].name = finalName;
+  programData[key].tag = finalTag;
+  programData[key].desc = finalDesc;
 
-  if (typeof logActivity === 'function') logActivity(`내용 편집: ${key} (${newName.trim()})`);
+  if (typeof logActivity === 'function') logActivity(`내용 편집: ${key} (${finalName})`);
   showProgramDetail(key);
   renderPrograms();
   alert('✅ 내용이 수정되었습니다.');
@@ -1685,6 +1727,31 @@ function loadUserPrograms() {
   forgotten.forEach(key => {
     if (programData[key] && !programData[key].featured) {
       delete programData[key];
+    }
+  });
+  // 2) 빌트인 프로그램 오버라이드(편집·완료 토글) 적용 — 새로고침 후에도 유지
+  applyBuiltinOverrides();
+}
+
+// ===== 빌트인 프로그램 오버라이드 (편집·완료 토글이 새로고침 후에도 유지되도록) =====
+const BUILTIN_OVERRIDES_KEY = 'fireSugiBuiltinOverrides';
+
+function getBuiltinOverrides() {
+  try { return JSON.parse(localStorage.getItem(BUILTIN_OVERRIDES_KEY) || '{}'); }
+  catch { return {}; }
+}
+function setBuiltinOverride(key, patch) {
+  const all = getBuiltinOverrides();
+  all[key] = { ...(all[key] || {}), ...patch, updatedAt: Date.now() };
+  localStorage.setItem(BUILTIN_OVERRIDES_KEY, JSON.stringify(all));
+}
+function applyBuiltinOverrides() {
+  const all = getBuiltinOverrides();
+  Object.entries(all).forEach(([key, patch]) => {
+    if (programData[key]) {
+      // updatedAt 는 메타데이터라 카드에 노출 안 되게 분리해서 적용
+      const { updatedAt, ...rest } = patch;
+      Object.assign(programData[key], rest);
     }
   });
 }
@@ -1950,25 +2017,37 @@ async function moveScreenshot(progKey, index, dir) {
 // 기본값으로 복원 — 비번 보호
 async function resetProgramScreenshots(progKey) {
   if (!(await checkDeletePassword())) return;
-  if (!confirm('이 프로그램의 모든 사진을 초기값으로 되돌리시겠습니까?\n(추가/교체한 사진은 모두 사라집니다.)')) return;
+  if (!confirm('이 프로그램의 모든 사진을 초기값으로 되돌리시겠습니까?\n(추가/교체한 사진은 모두 사라집니다.)\n\n⚠️ 모든 단말에서 즉시 반영됩니다.')) return;
+  // 1) 로컬 키·메타 모두 제거
   localStorage.removeItem(SCREENSHOTS_KEY(progKey));
+  localStorage.removeItem(SCREENSHOTS_KEY(progKey) + '_meta');
+  // 2) Firestore 문서도 삭제 — 안 그러면 다음 sync 때 PULL 되어 다시 살아남
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    try {
+      await fbDb.collection('programScreenshots').doc(progKey).delete();
+      console.log('🗑 Firestore 스크린샷 삭제:', progKey);
+    } catch (e) {
+      console.warn('Firestore 스크린샷 삭제 실패 (다음 동기화 때 다시 살아날 수 있음):', e.message);
+    }
+  }
   if (typeof logActivity === 'function') logActivity('사진 초기화: ' + progKey);
   showProgramDetail(progKey);
 }
 
-function renderProgramCardHtml(key, p) {
+function renderProgramCardHtml(key, p, rank) {
   const isDone = !!p.completed || (!!p.link && p.link !== '#');
   const isFeatured = !!p.featured;
   const statusBadge = isDone
     ? '<span class="prog-status prog-done">완료</span>'
     : '<span class="prog-status prog-dev">개발중</span>';
-  const desc = isDone
-    ? `<p>${esc(p.desc)}</p>`
-    : `<p class="prog-dev-msg">현재 개발 중입니다. 곧 공개 예정.</p>`;
+  // 항상 실제 desc 노출 — 편집한 내용이 카드에 즉시 보이도록. 상태는 뱃지로 구분.
+  const desc = `<p>${esc(p.desc || '')}</p>`;
+  const rankBadge = rank ? `<span class="card-rank-no" title="클릭 랭킹 ${rank}위">${rank}</span>` : '';
 
   if (isFeatured) {
     return `
       <div class="program-card is-featured ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
+        ${rankBadge}
         <div class="featured-ribbon">${esc(p.ribbonText || '👑 CORE · AI 메인 ⭐')}</div>
         <div class="featured-stars">${p.stars || '⭐⭐⭐'}</div>
         <div class="prog-header">
@@ -1988,6 +2067,7 @@ function renderProgramCardHtml(key, p) {
 
   return `
     <div class="program-card ${isDone ? '' : 'is-dev'}" onclick="showProgramDetail('${key}')">
+      ${rankBadge}
       <div class="card-icon">${p.icon}</div>
       <div class="prog-header">
         <h3>${esc(p.name)}</h3>
@@ -2004,24 +2084,26 @@ function renderPrograms() {
   const hidden = getHiddenPrograms();
   const admin = isAdmin();
 
-  // 모든 프로그램을 한 그리드(programsGrid)에 통합 표시
-  // featured 최우선, 완료 다음, 개발중 마지막
+  // 통계 모달과 동일한 순서(클릭 횟수 DESC) — 같은 번호로 매칭되게
+  const progClicks = (typeof getProgramClicks === 'function') ? getProgramClicks() : {};
   const all = Object.entries(programData)
     .filter(([k]) => !hidden.includes(k))
-    .sort(([, a], [, b]) => {
-      // featured 최우선
+    .sort(([keyA, a], [keyB, b]) => {
+      const aClicks = progClicks[keyA]?.count || 0;
+      const bClicks = progClicks[keyB]?.count || 0;
+      if (aClicks !== bClicks) return bClicks - aClicks;
+      // 동률 시: featured > 완료 > 개발중
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
-      // 완료된 것 먼저
-      const aDone = !!a.link && a.link !== '#';
-      const bDone = !!b.link && b.link !== '#';
+      const aDone = !!a.completed || (!!a.link && a.link !== '#');
+      const bDone = !!b.completed || (!!b.link && b.link !== '#');
       if (aDone !== bDone) return aDone ? -1 : 1;
       return 0;
     });
 
   if (gridCompleted) {
     gridCompleted.innerHTML = all.length
-      ? all.map(([k, p]) => renderProgramCardHtml(k, p)).join('')
+      ? all.map(([k, p], i) => renderProgramCardHtml(k, p, i + 1)).join('')
       : '<div class="empty-state">📭 등록된 프로그램이 없습니다.</div>';
   }
   // devProgramsGrid는 더 이상 사용 안 함 (탭 삭제됨)
@@ -2176,11 +2258,13 @@ function showProgramDetail(key) {
             : `<button class="top-action-btn top-action-done" onclick="toggleProgramStatus('${key}')" title="완료로 표시 (🔐 비번)">✅ 완료</button>`}
           <button class="top-action-btn" onclick="editProgramContent('${key}')" title="이름·설명·기능 편집 (🔐 비번)">✏️ 편집</button>
           <button class="top-action-btn" onclick="editProgramLink('${key}')" title="URL 편집 (🔐 비번)">📝 URL</button>
-          <label class="top-action-btn" style="cursor:pointer; margin:0;" title="스크린샷 추가 (🔐 비번)">
+          <label class="top-action-btn" style="cursor:pointer; margin:0;" title="스크린샷 추가 (🔐 관리자 전용)"
+                 onclick="if(!_guardAdminUpload('스크린샷 추가')){event.preventDefault();return false;}">
             📷 사진
             <input type="file" accept="image/*" style="display:none;" onchange="uploadProgramScreenshot('${key}', this)">
           </label>
-          <label class="top-action-btn" style="cursor:pointer; margin:0;" title="파일 첨부 (🔐 비번)">
+          <label class="top-action-btn" style="cursor:pointer; margin:0;" title="파일 첨부 (🔐 관리자 전용)"
+                 onclick="if(!_guardAdminUpload('파일 첨부')){event.preventDefault();return false;}">
             📎 파일
             <input type="file" accept="image/*,application/pdf,.zip" style="display:none;" onchange="uploadProgramAttachment('${key}', this)">
           </label>
@@ -2188,9 +2272,9 @@ function showProgramDetail(key) {
         </div>
       </div>
       ${metaHtml}
+      <div class="detail-section detail-section-access"><h3>🔗 접속 / 바로가기</h3>${linkHtml}</div>
       <div class="detail-section"><h3>📌 소개</h3><p>${esc(data.desc)}</p></div>
       ${screenshotsHtml}
-      <div class="detail-section"><h3>🔗 접속 / 바로가기</h3>${linkHtml}</div>
       ${data.attachment ? `
         <div class="detail-section">
           <h3>📎 첨부 파일</h3>

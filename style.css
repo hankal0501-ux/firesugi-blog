@@ -2408,6 +2408,39 @@ html { -webkit-text-size-adjust: 100%; }
 .card-rank-no.rank-gold { background: #ffd60a; color: #000; }
 .card-rank-no.rank-silver { background: #c0c8d2; color: #000; }
 .card-rank-no.rank-bronze { background: #cd7f32; }
+
+/* ===== 프로그램별 댓글 (공개/비공개) ===== */
+.program-comments-section { margin-top: 18px; padding-top: 16px; border-top: 2px solid var(--border); }
+.program-comments-section h3 { display: flex; align-items: center; gap: 8px; font-size: 1.05rem; margin-bottom: 12px; color: var(--text-primary); }
+.prog-comment-count { background: var(--naver-blue); color: #fff; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+.prog-comments-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.prog-comment-empty { color: var(--text-secondary); font-size: 0.88rem; text-align: center; padding: 16px; background: var(--bg-secondary); border-radius: 8px; }
+.prog-comment-item { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.prog-comment-header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.prog-comment-author { font-weight: 700; color: var(--text-primary); font-size: 0.88rem; }
+.prog-comment-private-badge { background: #fff4d4; color: #8a6500; border: 1px solid #e6c878; border-radius: 4px; padding: 1px 6px; font-size: 0.7rem; font-weight: 600; }
+.prog-comment-public-badge { background: #e6f8ee; color: #167c44; border: 1px solid #a8dcb8; border-radius: 4px; padding: 1px 6px; font-size: 0.7rem; font-weight: 600; }
+.prog-comment-date { color: var(--text-muted); font-size: 0.75rem; margin-left: auto; }
+.prog-comment-del { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; padding: 2px 4px; border-radius: 3px; transition: all 0.15s; }
+.prog-comment-del:hover { background: #ffe0e0; color: #c93030; }
+.prog-comment-text { font-size: 0.92rem; color: var(--text-primary); line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+.prog-comment-locked { cursor: pointer; color: var(--text-muted); font-style: italic; padding: 6px 10px; background: #f5f0d8; border: 1px dashed #d4c47a; border-radius: 6px; text-align: center; transition: all 0.15s; }
+.prog-comment-locked:hover { background: #e8df97; color: #6a4f00; }
+.prog-comment-write { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.prog-comment-write .prog-cmt-author,
+.prog-comment-write .prog-cmt-input,
+.prog-comment-write .prog-cmt-pwd { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; margin-bottom: 8px; font-family: inherit; }
+.prog-comment-write .prog-cmt-input { resize: vertical; min-height: 56px; }
+.prog-cmt-options { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.prog-cmt-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; user-select: none; }
+.prog-cmt-toggle input[type="checkbox"] { margin: 0; }
+.prog-cmt-submit { margin-left: auto; }
+.prog-cmt-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; margin-bottom: 0; }
+@media (max-width: 600px) {
+  .prog-comment-header { gap: 6px; }
+  .prog-comment-date { margin-left: 0; width: 100%; }
+}
+
 .program-card:hover .card-del-btn { opacity: 1; }
 .card-del-btn:hover {
   background: #ffe0e0;

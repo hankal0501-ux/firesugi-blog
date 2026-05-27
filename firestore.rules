@@ -61,6 +61,15 @@ service cloud.firestore {
       allow delete: if true;
     }
 
+    // ========== 프로그램 댓글 (programComments) ==========
+    match /programComments/{progId} {
+      allow read: if true;
+      // 쓰기: comments 배열만 받음, ≤ 1MB
+      allow create, update: if request.resource.data.comments is list
+        && request.resource.size() < 1000000;
+      allow delete: if true;
+    }
+
     // ========== 활동 로그 (accessLogs) ==========
     match /accessLogs/{logId} {
       allow read: if true;

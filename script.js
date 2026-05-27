@@ -917,14 +917,19 @@ function renderVisitStats() {
   // 프로그램 클릭(접속) 통계 — 모든 프로그램 표시 (클릭 0 포함)
   const progClicks = (typeof getProgramClicks === 'function') ? getProgramClicks() : {};
   const totalProgClicks = Object.values(progClicks).reduce((s, p) => s + (p.count || 0), 0);
-  // programData 의 모든 프로그램 + clicks 머지
-  const allProgs = Object.entries(programData).map(([k, p]) => ({
-    key: k,
-    name: p.name || k,
-    icon: p.icon || '📦',
-    count: progClicks[k]?.count || 0,
-    lastClick: progClicks[k]?.lastClick || null
-  })).sort((a, b) => b.count - a.count);
+  // AI 프로그램 그리드와 동일한 순서로 정렬 (getProgramRankMap 헬퍼 사용)
+  // → 통계 N번 = AI 프로그램 카드 뱃지 N번 완전 일치
+  const hidden = (typeof getHiddenPrograms === 'function') ? getHiddenPrograms() : [];
+  const allProgs = Object.entries(programData)
+    .filter(([k]) => !hidden.includes(k))
+    .map(([k, p]) => ({
+      key: k,
+      name: p.name || k,
+      icon: p.icon || '📦',
+      count: progClicks[k]?.count || 0,
+      lastClick: progClicks[k]?.lastClick || null
+    }))
+    .sort((a, b) => b.count - a.count);
 
   document.getElementById('statsSummary').innerHTML = `
     <div class="ss-card"><div class="ss-num">${todayCount}</div><div class="ss-lab">오늘 방문</div></div>
@@ -2085,13 +2090,8 @@ function renderPrograms() {
   const hidden = getHiddenPrograms();
   const admin = isAdmin();
 
-  // 번호 뱃지는 클릭 랭킹(DESC) 기준 — 통계 모달과 동일
-  const progClicks = (typeof getProgramClicks === 'function') ? getProgramClicks() : {};
-  const visibleKeys = Object.keys(programData).filter(k => !hidden.includes(k));
-  const rankByKey = {};
-  [...visibleKeys]
-    .sort((a, b) => (progClicks[b]?.count || 0) - (progClicks[a]?.count || 0))
-    .forEach((k, i) => { rankByKey[k] = i + 1; });
+  // 번호 뱃지는 클릭 랭킹(DESC) 기준 — 통계 모달과 완전히 동일 (같은 헬퍼 사용)
+  const rankByKey = getProgramRankMap();
 
   // 표시 순서는 개발 순서(programData 정의 순서) — featured 만 맨 앞으로 보장
   const all = Object.entries(programData)
@@ -2286,22 +2286,8 @@ function showProgramDetail(key) {
             ? `<div style="margin-top:12px;"><img src="${data.attachment.data}" alt="${esc(data.attachment.name)}" style="max-width:100%; border:1px solid var(--border); border-radius:8px;"></div>`
             : ''}
         </div>` : ''}
-      <div class="detail-section detail-admin-zone">
-        <h3>🛠 관리 영역 (🔐 비밀번호 필요)</h3>
-        <div class="admin-actions-row">
-          ${isDone
-            ? `<button class="btn btn-outline btn-sm" onclick="toggleProgramStatus('${key}')" style="color:#c98b30;">🚧 개발중으로 표시</button>`
-            : `<button class="btn btn-primary btn-sm" onclick="toggleProgramStatus('${key}')" style="background:#03c75a; border-color:#03c75a;">✅ 완료로 표시</button>`}
-          <button class="btn btn-outline btn-sm" onclick="editProgramLink('${key}')">📝 URL 편집</button>
-          <label class="btn btn-outline btn-sm" style="cursor:pointer; margin:0;">
-            📎 파일 올리기 (이미지·PDF·ZIP, 3MB)
-            <input type="file" accept="image/*,application/pdf,.zip" style="display:none;" onchange="uploadProgramAttachment('${key}', this)">
-          </label>
-          ${data.attachment ? `<button class="btn btn-outline btn-sm" onclick="removeProgramAttachment('${key}')" style="color:#c93030;">🗑 첨부 제거</button>` : ''}
-        </div>
-        <p style="margin-top:8px; font-size:0.82rem; color:var(--text-muted);">
-          ℹ️ <b>완료/개발중</b>은 위 토글 버튼으로 직접 결정합니다. URL과 파일은 각각 독립적으로 등록 가능 — URL만, 파일만, 둘 다 모두 가능합니다.
-        </p>
+      <div class="detail-section program-comments-section" id="progCommentsSection_${key}">
+        ${renderProgramCommentsHtml(key)}
       </div>
     </div>`;
   window.scrollTo(0, 0);
@@ -2311,6 +2297,185 @@ function hideProgramDetail() {
   document.getElementById('programList').style.display = 'block';
   document.getElementById('programDetail').style.display = 'none';
 }
+
+// ============================================================
+// 클릭 횟수 기반 통합 랭킹 — 통계 모달과 AI 프로그램 그리드가 동일한 번호를 보이도록
+// 양쪽 모두 이 헬퍼만 호출해서 정렬 → 같은 프로그램은 같은 번호가 부여됨
+// ============================================================
+function getProgramRankMap() {
+  const hidden = (typeof getHiddenPrograms === 'function') ? getHiddenPrograms() : [];
+  const clicks = (typeof getProgramClicks === 'function') ? getProgramClicks() : {};
+  const sortedKeys = Object.keys(programData)
+    .filter(k => !hidden.includes(k))
+    .sort((a, b) => {
+      const aC = clicks[a]?.count || 0;
+      const bC = clicks[b]?.count || 0;
+      if (aC !== bC) return bC - aC;
+      // 동률 시 programData 정의 순서 유지 (Object.keys 가 보장)
+      return 0;
+    });
+  const map = {};
+  sortedKeys.forEach((k, i) => { map[k] = i + 1; });
+  return map;
+}
+
+// ============================================================
+// 프로그램별 댓글 시스템 — 공개 / 비공개(비밀번호 보호) 선택
+// ============================================================
+const PROG_COMMENTS_KEY = (key) => `fireSugiProgComments_${key}`;
+const PROG_COMMENT_REVEALED_KEY = (key) => `fireSugiProgCommentRevealed_${key}`;
+
+function getProgramComments(key) {
+  try { return JSON.parse(localStorage.getItem(PROG_COMMENTS_KEY(key)) || '[]'); }
+  catch { return []; }
+}
+function saveProgramComments(key, arr) {
+  const now = Date.now();
+  localStorage.setItem(PROG_COMMENTS_KEY(key), JSON.stringify(arr));
+  localStorage.setItem(PROG_COMMENTS_KEY(key) + '_meta', JSON.stringify({ updatedAt: now }));
+  // Firestore push (quota 살아있을 때만)
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    const size = JSON.stringify(arr).length;
+    if (size <= 950 * 1024) {
+      fbDb.collection('programComments').doc(key)
+        .set({ comments: arr, updatedAt: now }, { merge: true })
+        .catch(e => console.warn('댓글 push 실패:', e.message));
+    }
+  }
+}
+function getRevealedComments(key) {
+  try { return JSON.parse(sessionStorage.getItem(PROG_COMMENT_REVEALED_KEY(key)) || '[]'); }
+  catch { return []; }
+}
+function markCommentRevealed(key, id) {
+  const arr = getRevealedComments(key);
+  if (!arr.includes(id)) {
+    arr.push(id);
+    sessionStorage.setItem(PROG_COMMENT_REVEALED_KEY(key), JSON.stringify(arr));
+  }
+}
+
+function renderProgramCommentsHtml(key) {
+  const comments = getProgramComments(key);
+  const revealed = getRevealedComments(key);
+  const adminMode = (typeof isAdmin === 'function') && isAdmin();
+  const cnt = comments.length;
+  const list = cnt ? comments.map(c => {
+    const isPrivate = !!c.passwordHash;
+    const canShow = !isPrivate || revealed.includes(c.id) || adminMode;
+    const textHtml = canShow
+      ? `<div class="prog-comment-text">${esc(c.text)}</div>`
+      : `<div class="prog-comment-text prog-comment-locked" onclick="revealProgramComment('${key}', '${c.id}')">
+           🔒 비공개 댓글 — 클릭하여 비밀번호 입력
+         </div>`;
+    return `<div class="prog-comment-item">
+      <div class="prog-comment-header">
+        <span class="prog-comment-author">👤 ${esc(c.author)}</span>
+        ${isPrivate ? '<span class="prog-comment-private-badge">🔒 비공개</span>' : '<span class="prog-comment-public-badge">🌐 공개</span>'}
+        <span class="prog-comment-date">${esc(c.date)}</span>
+        <button class="prog-comment-del" onclick="deleteProgramComment('${key}', '${c.id}')" title="삭제">🗑</button>
+      </div>
+      ${textHtml}
+    </div>`;
+  }).join('') : '<p class="prog-comment-empty">아직 댓글이 없습니다. 첫 번째로 의견을 남겨보세요!</p>';
+
+  return `
+    <h3>💬 댓글 <span class="prog-comment-count">${cnt}</span></h3>
+    <div class="prog-comments-list">${list}</div>
+    <div class="prog-comment-write">
+      <input type="text" class="prog-cmt-author" id="progCmtAuthor_${key}" placeholder="닉네임 (선택 — 비우면 익명_XXXX)" maxlength="20">
+      <textarea class="prog-cmt-input" id="progCmtInput_${key}" placeholder="이 프로그램에 대한 의견·질문·후기를 남겨주세요" rows="2" maxlength="500"></textarea>
+      <div class="prog-cmt-options">
+        <label class="prog-cmt-toggle">
+          <input type="checkbox" id="progCmtPrivate_${key}" onchange="togglePrivateInput('${key}')">
+          🔒 비공개 (비밀번호 아는 사람만 열람)
+        </label>
+        <input type="password" class="prog-cmt-pwd" id="progCmtPwd_${key}" placeholder="비공개 비밀번호 (4자 이상)" style="display:none;" maxlength="20">
+        <button class="btn btn-primary btn-sm prog-cmt-submit" onclick="submitProgramComment('${key}')">등록</button>
+      </div>
+      <p class="prog-cmt-note">※ 댓글은 모든 단말에서 동기화됩니다. 비공개 선택 시 비밀번호를 분실하면 본인도 다시 볼 수 없습니다.</p>
+    </div>`;
+}
+
+function togglePrivateInput(key) {
+  const cb = document.getElementById(`progCmtPrivate_${key}`);
+  const pwd = document.getElementById(`progCmtPwd_${key}`);
+  if (cb && pwd) pwd.style.display = cb.checked ? 'block' : 'none';
+}
+window.togglePrivateInput = togglePrivateInput;
+
+function refreshProgCommentSection(key) {
+  const sec = document.getElementById(`progCommentsSection_${key}`);
+  if (sec) sec.innerHTML = renderProgramCommentsHtml(key);
+}
+
+async function submitProgramComment(key) {
+  const authorEl = document.getElementById(`progCmtAuthor_${key}`);
+  const inputEl = document.getElementById(`progCmtInput_${key}`);
+  const privateEl = document.getElementById(`progCmtPrivate_${key}`);
+  const pwdEl = document.getElementById(`progCmtPwd_${key}`);
+  if (!inputEl) return;
+  const text = inputEl.value.trim();
+  if (!text) return alert('댓글 내용을 입력하세요.');
+  let author = (authorEl && authorEl.value.trim()) || '';
+  if (!author) author = `익명_${Math.floor(Math.random() * 9000 + 1000)}`;
+
+  let passwordHash = null;
+  if (privateEl && privateEl.checked) {
+    const pwd = (pwdEl && pwdEl.value) || '';
+    if (pwd.length < 4) return alert('비공개 댓글은 4자 이상 비밀번호가 필요합니다.');
+    passwordHash = await sha256(pwd);
+  }
+
+  const now = new Date();
+  const date = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const id = `c${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  const arr = getProgramComments(key);
+  arr.push({ id, author, text, date, passwordHash });
+  saveProgramComments(key, arr);
+  if (passwordHash) markCommentRevealed(key, id); // 작성자는 자신의 비공개 글 즉시 볼 수 있게
+  if (typeof logActivity === 'function') logActivity(`프로그램 댓글 등록: ${key} (${author}${passwordHash ? ' · 비공개' : ''})`);
+  refreshProgCommentSection(key);
+}
+window.submitProgramComment = submitProgramComment;
+
+async function revealProgramComment(key, id) {
+  const arr = getProgramComments(key);
+  const c = arr.find(x => x.id === id);
+  if (!c) return;
+  if (!c.passwordHash) { markCommentRevealed(key, id); refreshProgCommentSection(key); return; }
+  const pwd = prompt('🔒 비공개 댓글 — 비밀번호 입력:');
+  if (pwd === null) return;
+  const h = await sha256(pwd);
+  if (h !== c.passwordHash) return alert('비밀번호가 일치하지 않습니다.');
+  markCommentRevealed(key, id);
+  refreshProgCommentSection(key);
+}
+window.revealProgramComment = revealProgramComment;
+
+async function deleteProgramComment(key, id) {
+  const arr = getProgramComments(key);
+  const c = arr.find(x => x.id === id);
+  if (!c) return;
+  const adminMode = (typeof isAdmin === 'function') && isAdmin();
+  if (!adminMode) {
+    // 비관리자: 비공개 댓글이면 본인 비번 확인 / 공개 댓글이면 삭제 불가 안내
+    if (!c.passwordHash) {
+      return alert('🔒 공개 댓글은 관리자만 삭제할 수 있습니다.');
+    }
+    const pwd = prompt('🔐 본인 댓글 삭제 — 작성 시 입력한 비밀번호:');
+    if (pwd === null) return;
+    const h = await sha256(pwd);
+    if (h !== c.passwordHash) return alert('비밀번호가 일치하지 않습니다.');
+  } else {
+    if (!confirm(`이 댓글을 삭제하시겠습니까?\n작성자: ${c.author}`)) return;
+  }
+  const next = arr.filter(x => x.id !== id);
+  saveProgramComments(key, next);
+  if (typeof logActivity === 'function') logActivity(`프로그램 댓글 삭제: ${key} (${c.author})`);
+  refreshProgCommentSection(key);
+}
+window.deleteProgramComment = deleteProgramComment;
 
 // 프로그램 클릭 횟수 카운터 (localStorage)
 const PROG_CLICKS_KEY = 'fireSugiProgramClicks';

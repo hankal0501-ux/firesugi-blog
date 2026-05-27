@@ -299,6 +299,28 @@ async function initFirebaseSync() {
       else console.warn('스크린샷 sync 실패:', e.message);
     }
 
+    // ─ 프로그램 댓글(programComments) 동기화 ─ updatedAt 비교로 더 새 거 덮어쓰기
+    try {
+      const cmtSnap = await fbDb.collection('programComments').get();
+      let pulledCmts = 0;
+      cmtSnap.forEach(doc => {
+        const k = 'fireSugiProgComments_' + doc.id;
+        const remote = doc.data();
+        if (!remote.comments || !Array.isArray(remote.comments)) return;
+        const metaRaw = localStorage.getItem(k + '_meta');
+        const localUpdated = (() => { try { return JSON.parse(metaRaw || '{}').updatedAt || 0; } catch { return 0; } })();
+        if (!localStorage.getItem(k) || (remote.updatedAt && remote.updatedAt > localUpdated)) {
+          localStorage.setItem(k, JSON.stringify(remote.comments));
+          localStorage.setItem(k + '_meta', JSON.stringify({ updatedAt: remote.updatedAt || Date.now() }));
+          pulledCmts++;
+        }
+      });
+      if (pulledCmts > 0) console.log(`💬 프로그램 댓글 ${pulledCmts}건 pull 완료`);
+    } catch (e) {
+      if (isQuotaError(e)) markQuotaExceeded();
+      else console.warn('프로그램 댓글 sync 실패:', e.message);
+    }
+
     // 본 기기의 데이터도 Firestore로 푸시 (양방향 sync 보장)
     await fbPushAllUsers(mergedUsers);
     await fbPushAllPosts(mergedPosts);

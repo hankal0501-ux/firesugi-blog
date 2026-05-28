@@ -84,24 +84,30 @@ async function fetchAndExtract(url) {
   } catch { return ''; }
 }
 
-// 폴백 — 제목·메타데이터 기반 구조화 본문 (최소 4줄 보장)
+// 한글 조사 자동 선택 — 종성(받침) 유무로 이/가, 은/는, 을/를 결정
+function picksParticle(word, pair) {
+  const last = (word || '').slice(-1);
+  const code = last.charCodeAt(0);
+  if (code < 0xAC00 || code > 0xD7A3) return pair[1]; // 한글 아니면 vowel form
+  const hasJongseong = (code - 0xAC00) % 28 !== 0;
+  return hasJongseong ? pair[0] : pair[1];
+}
+
+// 폴백 — 제목·메타데이터 기반 일반 문단 (이모지·구조 prefix 없이 자연스러운 보통체)
 function generateFallbackBody(n) {
   const topicDesc = {
-    '최신기술': '소방·화재안전 분야의 신기술·스마트 솔루션·AI 적용 사례를 다루는 기사입니다.',
+    '최신기술': '소방·화재안전 분야의 신기술과 스마트 솔루션, AI 적용 사례를 다루는 기사입니다.',
     '논문연구': '화재공학·소방연구·학술적 분석을 다루는 연구·논문 기반 기사입니다.',
     '사고처벌': '화재사고·소방법 위반·안전관리 책임 등 사법적·행정적 처분 관련 기사입니다.'
   }[n.topic] || '소방·화재안전 분야의 최신 동향을 다루는 기사입니다.';
+  const srcParticle = picksParticle(n.source, ['이', '가']);
 
   return [
-    `📰 ${n.title}`,
-    '',
+    `${n.title}에 대한 보도 내용입니다.`,
     topicDesc,
-    '',
-    `📅 등록일 ${n.date} · 🏷 출처 ${n.source} · 주제 ${n.topic}`,
-    '',
-    '🔗 원문에서 자세한 내용·관련 사진·통계·현장 보고를 확인할 수 있습니다.',
-    '우측 [원문 기사 보기 ↗] 버튼으로 출처 사이트로 이동하세요.'
-  ].join('\n');
+    `${n.source}${srcParticle} ${n.date}에 보도한 ${n.topic} 분야 기사로, 관련 사진·통계·현장 보고를 포함한 자세한 내용은 원문 페이지에서 확인할 수 있습니다.`,
+    '우측 원문 기사 보기 버튼으로 출처 사이트로 이동하여 전체 내용을 확인하세요.'
+  ].join('\n\n');
 }
 
 async function enrichOne(n) {
@@ -137,7 +143,9 @@ async function main() {
     const n = candidates[i];
     process.stdout.write(`[${i + 1}/${candidates.length}] ${n.title.slice(0, 45)}\n`);
     const body = await enrichOne(n);
-    if (body && body.length > (n.fullDesc?.length || 0)) {
+    // --force 시에는 길이 무관하게 덮어쓰기, 아니면 더 긴 경우만
+    const shouldUpdate = body && (force || body.length > (n.fullDesc?.length || 0));
+    if (shouldUpdate) {
       n.fullDesc = body;
       n.summary = body.slice(0, 500) + (body.length > 500 ? '…' : '');
       console.log(`     ✅ ${body.length}자 (라인 ${body.split('\n').length})`);

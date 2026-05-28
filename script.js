@@ -621,7 +621,7 @@ const programData = {
       '2. 하단 [⚡ 소방시설 자동 판정]을 클릭하면 중앙에 [강화기준 — 신규 허가 시 적용]과 [당시 소방시설] 카드가 동시에 표시됩니다.',
       '3. 좌상단 7개 탭(시설조회·개정연혁·설치판정·AI 도우미·당시법 판정·당시법 시설·시설별 기준)에서 원하는 모드 선택 후 우측 보고서로 PDF 출력 또는 점검 지적서로 연계.'
     ],
-    link: 'http://firelaw.duckdns.org/login.html',
+    link: 'https://firelaw.duckdns.org/',
     version: 'v1.4.0 (24remte-control)',
     platform: '브라우저 (PC 권장) · SQLite FTS5 백엔드',
     techStack: 'SQLite FTS5 + 909MB DB · PDF 자동추출 · LLM(AI 도우미)',
@@ -1739,8 +1739,37 @@ function loadUserPrograms() {
       delete programData[key];
     }
   });
-  // 2) 빌트인 프로그램 오버라이드(편집·완료 토글) 적용 — 새로고침 후에도 유지
+  // 2) 일회성 마이그레이션: historical 의 link 가 옛 http://login.html 이면 오버라이드 제거
+  migrateOldFirelawUrl();
+  // 3) 빌트인 프로그램 오버라이드(편집·완료 토글) 적용 — 새로고침 후에도 유지
   applyBuiltinOverrides();
+}
+
+// 일회성 — historical(소방시설 종합조회) 의 옛 URL 오버라이드 정리
+const FIRELAW_URL_MIGRATION_KEY = 'fireSugiFirelawUrlMigratedV2';
+function migrateOldFirelawUrl() {
+  if (localStorage.getItem(FIRELAW_URL_MIGRATION_KEY)) return;
+  const all = getBuiltinOverrides();
+  const h = all.historical;
+  if (h && h.link && /firelaw\.duckdns\.org\/login\.html/.test(h.link)) {
+    delete h.link;
+    // historical 오버라이드에 updatedAt 외 다른 키 없으면 키 자체 제거
+    const keys = Object.keys(h).filter(k => k !== 'updatedAt');
+    if (keys.length === 0) {
+      delete all.historical;
+    } else {
+      h.updatedAt = Date.now();
+    }
+    localStorage.setItem(BUILTIN_OVERRIDES_KEY, JSON.stringify(all));
+    // Firestore 에도 갱신 push — 다른 단말 동기화
+    if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+      fbDb.collection('builtinOverrides').doc('global')
+        .set({ overrides: all, updatedAt: Date.now() }, { merge: true })
+        .catch(e => console.warn('마이그레이션 push 실패:', e.message));
+    }
+    console.log('🔄 historical link 옛 URL 오버라이드 제거 → 새 default 적용');
+  }
+  localStorage.setItem(FIRELAW_URL_MIGRATION_KEY, String(Date.now()));
 }
 
 // ===== 빌트인 프로그램 오버라이드 (편집·완료 토글이 새로고침 후에도 유지되도록) =====

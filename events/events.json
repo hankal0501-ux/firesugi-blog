@@ -2,6 +2,30 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "호텔 할인·무료 차량까지…가든그로브 화학사고에 주민 지원 본격화",
+      "detail": "미주중앙일보",
+      "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9GYklLQ3lzeVpZUE50VFlxWk9jRlQwYTUxYW9MN1FDTi1HdEQ5WUxELVdDMWR4V0Jzc1JVSGR1MVllV1pNTjhkUWNJa1NweVVLUEg4T0E2YURhcEp2d2dmNHpB?oc=5",
+      "site": "gnews_미주중앙일보",
+      "created_at": "2026-05-27 04:51:00"
+    },
+    {
+      "kind": "🎁 여행 특가",
+      "title": "티웨이 할인코드 항공권 특가 2026",
+      "detail": "브런치",
+      "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBaQ3N0UHBYZmtzUS1idGljMXZ0YU5YekVGVEtSZ09QNFpfc3NVOVgxemJONEJodXd3MUMyZTV1NTc0aktTNFFJag?oc=5",
+      "site": "gnews_브런치",
+      "created_at": "2026-05-27 05:26:47"
+    },
+    {
+      "kind": "🎁 여행 특가",
+      "title": "“여행 특가 상품 알아서 척척” 하나투어, 챗GPT 전용 앱 출시",
+      "detail": "v.daum.net",
+      "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1rUng3TGhUTDBHSUhocmVMQWE0MHpCUVNqOU1aMlJrVVpXaklKWUsyc241VnlTNHVvY0FhYjVuV2dfdS1qQ29fQTBuSDN3enc?oc=5",
+      "site": "gnews_v.daum.net",
+      "created_at": "2026-05-27 06:05:37"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "울진 덕구온천호텔 할인 예약 특가 확인 방법 총정리",
       "detail": "브런치",
       "url": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1FWXJiOEtDdEdxbUZFY2hBZ3Z5Q2l1SkExcHhvUS1PVlVXWDhUOV83RTVDM1dkSE9MXzhtak84dWEtRGdNeHpn?oc=5",
@@ -58,6 +82,15 @@
     }
   ],
   "giveaways": [
+    {
+      "source_site": "마일드경제",
+      "title": "하나증권, 국내주식 경품 추첨 이벤트 재개 “최대 300만원 혜택”",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9kVHByd0hZTU84cWZjb0t5U0trOHdiejFkN2dwc1pXOF9IY2N0Ny1xVExOYWtNd3Jpbm9WWENiek5nbWhHOW5vN3RNN2NmQnJiLUxkc2dXTG85dTJfaUVyRFd4VVNjZjlrNERV?oc=5",
+      "created_at": "2026-05-05 07:00:00"
+    },
     {
       "source_site": "스마트투데이",
       "title": "하나증권, 국내주식 경품 추첨 이벤트..\"최대 300만원 혜택\"",
@@ -212,5 +245,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-05-27 04:55:05"
+  "last_updated": "2026-05-28 04:49:31"
 }

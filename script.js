@@ -2319,6 +2319,7 @@ function getProgramRankMap() {
 // ============================================================
 const PROG_COMMENTS_KEY = (key) => `fireSugiProgComments_${key}`;
 const PROG_COMMENT_REVEALED_KEY = (key) => `fireSugiProgCommentRevealed_${key}`;
+const PROG_COMMENT_OWNED_KEY = (key) => `fireSugiProgCommentOwned_${key}`; // 작성자 본인 식별 (영구)
 
 function getProgramComments(key) {
   try { return JSON.parse(localStorage.getItem(PROG_COMMENTS_KEY(key)) || '[]'); }
@@ -2349,30 +2350,88 @@ function markCommentRevealed(key, id) {
     sessionStorage.setItem(PROG_COMMENT_REVEALED_KEY(key), JSON.stringify(arr));
   }
 }
+// 작성자 본인 식별 — localStorage 에 ID 영구 저장 (세션·브라우저 재시작 후에도 유지)
+function getOwnedComments(key) {
+  try { return JSON.parse(localStorage.getItem(PROG_COMMENT_OWNED_KEY(key)) || '[]'); }
+  catch { return []; }
+}
+function markOwned(key, id) {
+  const arr = getOwnedComments(key);
+  if (!arr.includes(id)) {
+    arr.push(id);
+    localStorage.setItem(PROG_COMMENT_OWNED_KEY(key), JSON.stringify(arr));
+  }
+}
+function isOwnComment(key, id) {
+  return getOwnedComments(key).includes(id);
+}
+// 댓글 트리에서 id 로 댓글(또는 답글) 찾기
+function findCommentById(arr, id) {
+  for (const c of arr) {
+    if (c.id === id) return { comment: c, parent: null };
+    if (Array.isArray(c.replies)) {
+      for (const r of c.replies) {
+        if (r.id === id) return { comment: r, parent: c };
+      }
+    }
+  }
+  return null;
+}
+
+function renderCommentItem(key, c, depth) {
+  const adminMode = (typeof isAdmin === 'function') && isAdmin();
+  const revealed = getRevealedComments(key).includes(c.id);
+  const own = isOwnComment(key, c.id);
+  const isPrivate = !!c.passwordHash;
+  const canShow = !isPrivate || own || revealed || adminMode;
+  const canEdit = own || adminMode;
+  const replies = Array.isArray(c.replies) ? c.replies : [];
+
+  const textHtml = canShow
+    ? `<div class="prog-comment-text">${esc(c.text)}</div>`
+    : `<div class="prog-comment-text prog-comment-locked" onclick="revealProgramComment('${key}', '${c.id}')">
+         🔒 비공개 댓글 — 클릭하여 비밀번호 입력
+       </div>`;
+
+  // depth 0 댓글에만 답글 토글, depth 1(답글) 에는 없음
+  const replyArea = depth === 0 ? `
+    <div class="prog-comment-actions">
+      <button class="prog-reply-btn" onclick="toggleReplyForm('${key}', '${c.id}')">↩ 답글</button>
+      ${replies.length ? `<span class="prog-reply-count">답글 ${replies.length}</span>` : ''}
+    </div>
+    <div class="prog-reply-form" id="replyForm_${c.id}" style="display:none;">
+      <input type="text" class="prog-cmt-author" id="replyAuthor_${c.id}" placeholder="닉네임" maxlength="20">
+      <input type="text" class="prog-cmt-input" id="replyInput_${c.id}" placeholder="답글 — Enter 로 등록" maxlength="300"
+             onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitProgramReply('${key}','${c.id}')}">
+      <label class="prog-cmt-toggle" title="🔒 비공개">
+        <input type="checkbox" id="replyPrivate_${c.id}" onchange="toggleReplyPrivate('${c.id}')"> 🔒
+      </label>
+      <input type="password" class="prog-cmt-pwd" id="replyPwd_${c.id}" placeholder="비번 4자+" style="display:none;" maxlength="20">
+      <button class="btn btn-primary btn-sm" onclick="submitProgramReply('${key}','${c.id}')">등록</button>
+    </div>
+    ${replies.length ? `<div class="prog-replies">${replies.map(r => renderCommentItem(key, r, 1)).join('')}</div>` : ''}
+  ` : '';
+
+  return `<div class="prog-comment-item ${depth ? 'prog-comment-reply' : ''}">
+    <div class="prog-comment-header">
+      <span class="prog-comment-author">${depth ? '↳ ' : '👤 '}${esc(c.author)}</span>
+      ${isPrivate ? '<span class="prog-comment-private-badge">🔒 비공개</span>' : '<span class="prog-comment-public-badge">🌐 공개</span>'}
+      ${own ? '<span class="prog-comment-own-badge" title="내가 작성한 댓글">⭐ 내 글</span>' : ''}
+      <span class="prog-comment-date">${esc(c.date)}</span>
+      ${canEdit ? `<button class="prog-comment-edit" onclick="editProgramComment('${key}', '${c.id}')" title="수정">✏️</button>` : ''}
+      <button class="prog-comment-del" onclick="deleteProgramComment('${key}', '${c.id}')" title="삭제">🗑</button>
+    </div>
+    ${textHtml}
+    ${replyArea}
+  </div>`;
+}
 
 function renderProgramCommentsHtml(key) {
   const comments = getProgramComments(key);
-  const revealed = getRevealedComments(key);
-  const adminMode = (typeof isAdmin === 'function') && isAdmin();
   const cnt = comments.length;
-  const list = cnt ? comments.map(c => {
-    const isPrivate = !!c.passwordHash;
-    const canShow = !isPrivate || revealed.includes(c.id) || adminMode;
-    const textHtml = canShow
-      ? `<div class="prog-comment-text">${esc(c.text)}</div>`
-      : `<div class="prog-comment-text prog-comment-locked" onclick="revealProgramComment('${key}', '${c.id}')">
-           🔒 비공개 댓글 — 클릭하여 비밀번호 입력
-         </div>`;
-    return `<div class="prog-comment-item">
-      <div class="prog-comment-header">
-        <span class="prog-comment-author">👤 ${esc(c.author)}</span>
-        ${isPrivate ? '<span class="prog-comment-private-badge">🔒 비공개</span>' : '<span class="prog-comment-public-badge">🌐 공개</span>'}
-        <span class="prog-comment-date">${esc(c.date)}</span>
-        <button class="prog-comment-del" onclick="deleteProgramComment('${key}', '${c.id}')" title="삭제">🗑</button>
-      </div>
-      ${textHtml}
-    </div>`;
-  }).join('') : '<p class="prog-comment-empty">아직 댓글이 없습니다. 첫 번째로 의견을 남겨보세요!</p>';
+  const list = cnt
+    ? comments.map(c => renderCommentItem(key, c, 0)).join('')
+    : '<p class="prog-comment-empty">아직 댓글이 없습니다. 첫 번째로 의견을 남겨보세요!</p>';
 
   return `
     <h3>💬 댓글 <span class="prog-comment-count">${cnt}</span></h3>
@@ -2390,7 +2449,7 @@ function renderProgramCommentsHtml(key) {
         <input type="password" class="prog-cmt-pwd" id="progCmtPwd_${key}" placeholder="비번 4자+" style="display:none;" maxlength="20">
         <button class="btn btn-primary btn-sm prog-cmt-submit" onclick="submitProgramComment('${key}')">등록</button>
       </div>
-      <p class="prog-cmt-note">※ Enter 로 등록 · 모든 단말 동기화 · 비공개 비번 분실 시 본인도 못 봄</p>
+      <p class="prog-cmt-note">※ 비밀댓글은 작성자와 관리자만 본문·수정 가능 (이 기기에 작성자 식별 저장) · Enter 로 등록</p>
     </div>`;
 }
 
@@ -2404,6 +2463,14 @@ window.togglePrivateInput = togglePrivateInput;
 function refreshProgCommentSection(key) {
   const sec = document.getElementById(`progCommentsSection_${key}`);
   if (sec) sec.innerHTML = renderProgramCommentsHtml(key);
+}
+
+function makeCommentDate() {
+  const n = new Date();
+  return `${n.getFullYear()}.${String(n.getMonth()+1).padStart(2,'0')}.${String(n.getDate()).padStart(2,'0')} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+}
+function makeCommentId() {
+  return `c${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
 async function submitProgramComment(key) {
@@ -2424,22 +2491,70 @@ async function submitProgramComment(key) {
     passwordHash = await sha256(pwd);
   }
 
-  const now = new Date();
-  const date = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  const id = `c${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  const id = makeCommentId();
   const arr = getProgramComments(key);
-  arr.push({ id, author, text, date, passwordHash });
+  arr.push({ id, author, text, date: makeCommentDate(), passwordHash, replies: [] });
   saveProgramComments(key, arr);
-  if (passwordHash) markCommentRevealed(key, id); // 작성자는 자신의 비공개 글 즉시 볼 수 있게
+  markOwned(key, id); // 작성자 본인 식별 영구 저장 (브라우저 재시작 후에도 본인 글 인식)
+  if (passwordHash) markCommentRevealed(key, id);
   if (typeof logActivity === 'function') logActivity(`프로그램 댓글 등록: ${key} (${author}${passwordHash ? ' · 비공개' : ''})`);
   refreshProgCommentSection(key);
 }
 window.submitProgramComment = submitProgramComment;
 
+// 답글 등록
+function toggleReplyForm(key, parentId) {
+  const form = document.getElementById(`replyForm_${parentId}`);
+  if (form) form.style.display = form.style.display === 'none' ? 'flex' : 'none';
+}
+window.toggleReplyForm = toggleReplyForm;
+
+function toggleReplyPrivate(parentId) {
+  const cb = document.getElementById(`replyPrivate_${parentId}`);
+  const pwd = document.getElementById(`replyPwd_${parentId}`);
+  if (cb && pwd) pwd.style.display = cb.checked ? 'block' : 'none';
+}
+window.toggleReplyPrivate = toggleReplyPrivate;
+
+async function submitProgramReply(key, parentId) {
+  const authorEl = document.getElementById(`replyAuthor_${parentId}`);
+  const inputEl = document.getElementById(`replyInput_${parentId}`);
+  const privateEl = document.getElementById(`replyPrivate_${parentId}`);
+  const pwdEl = document.getElementById(`replyPwd_${parentId}`);
+  if (!inputEl) return;
+  const text = inputEl.value.trim();
+  if (!text) return alert('답글 내용을 입력하세요.');
+  let author = (authorEl && authorEl.value.trim()) || '';
+  if (!author) author = `익명_${Math.floor(Math.random() * 9000 + 1000)}`;
+
+  let passwordHash = null;
+  if (privateEl && privateEl.checked) {
+    const pwd = (pwdEl && pwdEl.value) || '';
+    if (pwd.length < 4) return alert('비공개 답글은 4자 이상 비밀번호가 필요합니다.');
+    passwordHash = await sha256(pwd);
+  }
+
+  const arr = getProgramComments(key);
+  const parent = arr.find(c => c.id === parentId);
+  if (!parent) return alert('원 댓글을 찾을 수 없습니다.');
+  if (!Array.isArray(parent.replies)) parent.replies = [];
+
+  const id = makeCommentId();
+  parent.replies.push({ id, author, text, date: makeCommentDate(), passwordHash });
+  saveProgramComments(key, arr);
+  markOwned(key, id);
+  if (passwordHash) markCommentRevealed(key, id);
+  if (typeof logActivity === 'function') logActivity(`프로그램 답글 등록: ${key} (${author})`);
+  refreshProgCommentSection(key);
+}
+window.submitProgramReply = submitProgramReply;
+
 async function revealProgramComment(key, id) {
   const arr = getProgramComments(key);
-  const c = arr.find(x => x.id === id);
-  if (!c) return;
+  const found = findCommentById(arr, id);
+  if (!found) return;
+  const c = found.comment;
+  if (isOwnComment(key, id)) { markCommentRevealed(key, id); refreshProgCommentSection(key); return; }
   if (!c.passwordHash) { markCommentRevealed(key, id); refreshProgCommentSection(key); return; }
   const pwd = prompt('🔒 비공개 댓글 — 비밀번호 입력:');
   if (pwd === null) return;
@@ -2450,13 +2565,37 @@ async function revealProgramComment(key, id) {
 }
 window.revealProgramComment = revealProgramComment;
 
+async function editProgramComment(key, id) {
+  const arr = getProgramComments(key);
+  const found = findCommentById(arr, id);
+  if (!found) return;
+  const c = found.comment;
+  const adminMode = (typeof isAdmin === 'function') && isAdmin();
+  if (!(isOwnComment(key, id) || adminMode)) {
+    return alert('🔒 본인이 작성한 댓글 또는 관리자만 수정할 수 있습니다.');
+  }
+  // 비공개 글이고 관리자가 아니면 비번 확인 (작성자라도 비번 분실 시 막혀야 함은 user-side trust 이슈 — 본 기기 표시면 OK)
+  const newText = prompt('댓글 수정:', c.text);
+  if (newText === null) return;
+  const trimmed = newText.trim();
+  if (!trimmed) return alert('빈 댓글로 수정할 수 없습니다.');
+  c.text = trimmed;
+  c.date = makeCommentDate() + ' (수정됨)';
+  saveProgramComments(key, arr);
+  if (typeof logActivity === 'function') logActivity(`프로그램 댓글 수정: ${key} (${c.author})`);
+  refreshProgCommentSection(key);
+}
+window.editProgramComment = editProgramComment;
+
 async function deleteProgramComment(key, id) {
   const arr = getProgramComments(key);
-  const c = arr.find(x => x.id === id);
-  if (!c) return;
+  const found = findCommentById(arr, id);
+  if (!found) return;
+  const c = found.comment;
   const adminMode = (typeof isAdmin === 'function') && isAdmin();
-  if (!adminMode) {
-    // 비관리자: 비공개 댓글이면 본인 비번 확인 / 공개 댓글이면 삭제 불가 안내
+  const own = isOwnComment(key, id);
+  if (!adminMode && !own) {
+    // 비관리자·비소유자: 비공개면 비번 확인, 공개면 차단
     if (!c.passwordHash) {
       return alert('🔒 공개 댓글은 관리자만 삭제할 수 있습니다.');
     }
@@ -2465,10 +2604,16 @@ async function deleteProgramComment(key, id) {
     const h = await sha256(pwd);
     if (h !== c.passwordHash) return alert('비밀번호가 일치하지 않습니다.');
   } else {
-    if (!confirm(`이 댓글을 삭제하시겠습니까?\n작성자: ${c.author}`)) return;
+    if (!confirm(`이 ${found.parent ? '답글' : '댓글'}을 삭제하시겠습니까?\n작성자: ${c.author}`)) return;
   }
-  const next = arr.filter(x => x.id !== id);
-  saveProgramComments(key, next);
+  // 트리에서 제거
+  if (found.parent) {
+    found.parent.replies = found.parent.replies.filter(r => r.id !== id);
+  } else {
+    const idx = arr.findIndex(x => x.id === id);
+    if (idx >= 0) arr.splice(idx, 1);
+  }
+  saveProgramComments(key, arr);
   if (typeof logActivity === 'function') logActivity(`프로그램 댓글 삭제: ${key} (${c.author})`);
   refreshProgCommentSection(key);
 }

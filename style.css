@@ -40,6 +40,20 @@ body {
   line-height:1.6;
   overflow-x:hidden;
   font-size:15px;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+/* 보통체 강제 — 본문·테이블·리스트의 본문 텍스트는 무조건 400 (개별 클래스가 명시 700+ 이면 그것이 우선) */
+body p,
+body td,
+body li,
+body dd,
+body input,
+body textarea,
+body span:not([class]) {
+  font-weight: 400;
 }
 ::-webkit-scrollbar { width:10px; height:10px; }
 ::-webkit-scrollbar-track { background:var(--bg-secondary); }
@@ -923,8 +937,8 @@ nav a.active::after { display:none !important; content:none !important; }
 .board-table-wrap { overflow-x:auto; }
 .board-table { width:100%; border-collapse:collapse; font-size:0.9rem; }
 .board-table thead { border-top:2px solid var(--text-primary); border-bottom:1px solid var(--border-strong); background:var(--bg-secondary); }
-.board-table th { padding:12px 10px; color:var(--text-secondary); font-weight:700; font-size:0.78rem; letter-spacing:0.5px; text-align:left; }
-.board-table td { padding:14px 10px; border-bottom:1px solid var(--border); color:var(--text-primary); }
+.board-table th { padding:12px 10px; color:var(--text-secondary); font-weight:500; font-size:0.78rem; letter-spacing:0.5px; text-align:left; }
+.board-table td { padding:14px 10px; border-bottom:1px solid var(--border); color:var(--text-primary); font-weight:400; }
 .board-table tbody tr { transition:background 0.15s; cursor:pointer; }
 .board-table tbody tr:hover { background:var(--bg-secondary); }
 .col-no { width:60px; text-align:center; }
@@ -1551,7 +1565,7 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
 }
 
 .kfma-table tbody tr { cursor:default; }
-.kfma-table .td-title { font-weight:600; }
+.kfma-table .td-title { font-weight:500; }
 
 /* 카테고리 칩 (단색 통일) */
 .cat-chip {
@@ -2478,7 +2492,25 @@ html { -webkit-text-size-adjust: 100%; }
 .prog-comment-date { color: var(--text-muted); font-size: 0.75rem; margin-left: auto; }
 .prog-comment-del { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 0.9rem; padding: 2px 4px; border-radius: 3px; transition: all 0.15s; }
 .prog-comment-del:hover { background: #ffe0e0; color: #c93030; }
-.prog-comment-text { font-size: 0.92rem; color: var(--text-primary); line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+.prog-comment-text { font-size: 0.92rem; color: var(--text-primary); line-height: 1.5; white-space: pre-wrap; word-break: break-word; font-weight: 400; }
+.prog-comment-own-badge { background: #fff4d4; color: #8a6500; border: 1px solid #e6c878; border-radius: 4px; padding: 1px 6px; font-size: 0.7rem; font-weight: 600; }
+.prog-comment-edit { background: none; border: none; cursor: pointer; color: var(--naver-blue); font-size: 0.88rem; padding: 2px 4px; border-radius: 3px; transition: all 0.15s; margin-left: 2px; }
+.prog-comment-edit:hover { background: #e8f5ff; }
+.prog-comment-actions { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.prog-reply-btn { background: none; border: 1px solid var(--border); cursor: pointer; color: var(--text-secondary); font-size: 0.78rem; padding: 3px 10px; border-radius: 12px; transition: all 0.15s; font-weight: 500; }
+.prog-reply-btn:hover { background: var(--bg-secondary); color: var(--naver-blue); border-color: var(--naver-blue); }
+.prog-reply-count { font-size: 0.75rem; color: var(--text-muted); }
+.prog-reply-form { display: flex; gap: 6px; margin-top: 8px; padding: 8px; background: #fff; border: 1px dashed var(--border); border-radius: 6px; align-items: stretch; }
+.prog-reply-form > input,
+.prog-reply-form > .prog-cmt-toggle,
+.prog-reply-form > button { box-sizing: border-box; }
+.prog-reply-form .prog-cmt-author { flex: 0 0 100px; }
+.prog-reply-form .prog-cmt-input { flex: 1 1 auto; min-width: 0; }
+.prog-reply-form .prog-cmt-toggle { padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: #fff; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.prog-reply-form .prog-cmt-pwd { flex: 0 0 80px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; }
+.prog-replies { margin-top: 8px; padding-left: 18px; border-left: 2px solid #e8f0fc; display: flex; flex-direction: column; gap: 6px; }
+.prog-comment-reply { background: #f7fafd; }
+.prog-comment-reply .prog-comment-author { color: var(--naver-blue); }
 .prog-comment-locked { cursor: pointer; color: var(--text-muted); font-style: italic; padding: 6px 10px; background: #f5f0d8; border: 1px dashed #d4c47a; border-radius: 6px; text-align: center; transition: all 0.15s; }
 .prog-comment-locked:hover { background: #e8df97; color: #6a4f00; }
 .prog-comment-write { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }

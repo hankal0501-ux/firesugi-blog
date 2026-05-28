@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+/* Pretendard Variable — 한글 weight 100~900 모두 완전 지원 (Noto Sans KR 300 한글 미커버 문제 해결) */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+/* Noto Sans KR 도 fallback 으로 함께 로드 (CDN 차단 시) */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 
 :root {
   /* Naver palette */
@@ -34,18 +37,18 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
 body {
-  font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  font-family:'Pretendard Variable','Pretendard','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
   background:var(--bg-primary);
   color:var(--text-primary);
   line-height:1.6;
   overflow-x:hidden;
   font-size:15px;
-  font-weight:400;  /* Noto Sans KR 한글은 weight 300 unicode-range 가 한글 미포함 → 400 으로 복귀 */
+  font-weight:350;  /* Pretendard 가변 폰트 — 한글까지 weight 350 적용 가능 (Noto Sans KR 한계 극복) */
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;
 }
-/* 본문 텍스트 강제 Regular(400) — 한글 안전 weight */
+/* 본문 텍스트 — Pretendard Light (350) 한글 완전 지원 */
 body p,
 body td,
 body li,
@@ -53,7 +56,7 @@ body dd,
 body input,
 body textarea,
 body span:not([class]) {
-  font-weight: 400;
+  font-weight: 350;
 }
 ::-webkit-scrollbar { width:10px; height:10px; }
 ::-webkit-scrollbar-track { background:var(--bg-secondary); }

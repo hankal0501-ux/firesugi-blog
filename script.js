@@ -1754,6 +1754,12 @@ function setBuiltinOverride(key, patch) {
   const all = getBuiltinOverrides();
   all[key] = { ...(all[key] || {}), ...patch, updatedAt: Date.now() };
   localStorage.setItem(BUILTIN_OVERRIDES_KEY, JSON.stringify(all));
+  // Firestore 동기화 — 다른 단말(모바일↔PC) 즉시 반영
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    fbDb.collection('builtinOverrides').doc('global')
+      .set({ overrides: all, updatedAt: Date.now() }, { merge: true })
+      .catch(e => console.warn('빌트인 오버라이드 push 실패:', e.message));
+  }
 }
 function applyBuiltinOverrides() {
   const all = getBuiltinOverrides();
@@ -1765,6 +1771,38 @@ function applyBuiltinOverrides() {
     }
   });
 }
+// 페이지 로드 시 Firestore 에서 BUILTIN_OVERRIDES PULL — max(updatedAt) 기준 머지
+async function pullBuiltinOverridesFromFirestore() {
+  if (typeof fbDb === 'undefined' || localStorage.getItem('fbQuotaExceededAt')) return;
+  try {
+    const doc = await fbDb.collection('builtinOverrides').doc('global').get();
+    if (!doc.exists) return;
+    const remote = doc.data()?.overrides;
+    if (!remote || typeof remote !== 'object') return;
+    const local = getBuiltinOverrides();
+    let updated = false;
+    Object.entries(remote).forEach(([key, rPatch]) => {
+      const lPatch = local[key];
+      const rUpdated = rPatch.updatedAt || 0;
+      const lUpdated = lPatch?.updatedAt || 0;
+      if (rUpdated > lUpdated) {
+        local[key] = rPatch;
+        updated = true;
+      }
+    });
+    if (updated) {
+      localStorage.setItem(BUILTIN_OVERRIDES_KEY, JSON.stringify(local));
+      applyBuiltinOverrides();
+      if (typeof renderPrograms === 'function') renderPrograms();
+      console.log('🔄 빌트인 오버라이드 동기화됨 — 프로그램 카드 갱신');
+    }
+  } catch (e) {
+    console.warn('빌트인 오버라이드 pull 실패:', e.message);
+  }
+}
+window.pullBuiltinOverridesFromFirestore = pullBuiltinOverridesFromFirestore;
+// 페이지 로드 후 자동 PULL (Firebase 초기화 대기)
+setTimeout(() => { pullBuiltinOverridesFromFirestore(); }, 1200);
 
 // 일회성 정리: 모든 개발중(미완료) 사용자 프로그램 영구 삭제
 const DEV_CLEANUP_KEY = 'fireSugiDevCleanupV2';

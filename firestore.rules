@@ -78,6 +78,14 @@ service cloud.firestore {
       allow delete: if true;
     }
 
+    // ========== 빌트인 프로그램 오버라이드 (builtinOverrides) ==========
+    // 단일 문서('global') 에 모든 빌트인 프로그램 편집 내역(name·desc·link·completed 등) 누적
+    match /builtinOverrides/{docId} {
+      allow read: if true;
+      allow create, update: if request.resource.size() < 500000;
+      allow delete: if true;
+    }
+
     // ========== 활동 로그 (accessLogs) ==========
     match /accessLogs/{logId} {
       allow read: if true;

@@ -2619,7 +2619,7 @@ async function deleteProgramComment(key, id) {
 }
 window.deleteProgramComment = deleteProgramComment;
 
-// 프로그램 클릭 횟수 카운터 (localStorage)
+// 프로그램 클릭 횟수 카운터 (localStorage + Firestore 양방향 sync)
 const PROG_CLICKS_KEY = 'fireSugiProgramClicks';
 function getProgramClicks() {
   return JSON.parse(localStorage.getItem(PROG_CLICKS_KEY) || '{}');
@@ -2634,7 +2634,45 @@ function incrementProgramClicks(key) {
   clicks[key].count++;
   clicks[key].lastClick = Date.now();
   localStorage.setItem(PROG_CLICKS_KEY, JSON.stringify(clicks));
+  // Firestore 백업 (quota 살아있을 때만) — 다른 단말 / 브라우저 캐시 클리어 후에도 복원 가능
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    fbDb.collection('programClicks').doc('global')
+      .set({ clicks, updatedAt: Date.now() }, { merge: true })
+      .catch(e => console.warn('클릭 카운터 push 실패:', e.message));
+  }
 }
+
+// 페이지 로드 시 Firestore 에서 클릭 카운터 PULL — 로컬 비어있을 때만 복원
+async function pullProgramClicksFromFirestore() {
+  if (typeof fbDb === 'undefined' || localStorage.getItem('fbQuotaExceededAt')) return;
+  try {
+    const doc = await fbDb.collection('programClicks').doc('global').get();
+    if (!doc.exists) return;
+    const data = doc.data();
+    if (!data || !data.clicks) return;
+    const local = getProgramClicks();
+    // 로컬이 비어있거나 카운트가 더 적으면 Firestore 값으로 보강
+    const localTotal = Object.values(local).reduce((s, p) => s + (p.count || 0), 0);
+    const remoteTotal = Object.values(data.clicks).reduce((s, p) => s + (p.count || 0), 0);
+    if (remoteTotal > localTotal) {
+      // 각 키별로 max(local, remote) 머지
+      const merged = { ...local };
+      Object.entries(data.clicks).forEach(([k, v]) => {
+        const lCnt = merged[k]?.count || 0;
+        const rCnt = v.count || 0;
+        if (rCnt > lCnt) merged[k] = { count: rCnt, lastClick: v.lastClick || Date.now() };
+      });
+      localStorage.setItem(PROG_CLICKS_KEY, JSON.stringify(merged));
+      console.log(`📊 클릭 카운터 ${remoteTotal}건 복원 (로컬 ${localTotal}건 → ${remoteTotal}건)`);
+      if (typeof renderPrograms === 'function') renderPrograms();
+    }
+  } catch (e) {
+    console.warn('클릭 카운터 pull 실패:', e.message);
+  }
+}
+window.pullProgramClicksFromFirestore = pullProgramClicksFromFirestore;
+// 페이지 로드 후 1초 후 자동 PULL (Firebase 초기화 대기)
+setTimeout(() => { pullProgramClicksFromFirestore(); }, 1000);
 
 // 공개 모드 — 누구나 프로그램 접속 가능 (권한 체크 제거)
 function openSecureLink(key) {

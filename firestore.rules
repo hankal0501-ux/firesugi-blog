@@ -70,6 +70,14 @@ service cloud.firestore {
       allow delete: if true;
     }
 
+    // ========== 프로그램 클릭 카운터 (programClicks) ==========
+    // 단일 문서('global') 에 모든 프로그램의 클릭 통계 누적
+    match /programClicks/{docId} {
+      allow read: if true;
+      allow create, update: if request.resource.size() < 100000;
+      allow delete: if true;
+    }
+
     // ========== 활동 로그 (accessLogs) ==========
     match /accessLogs/{logId} {
       allow read: if true;

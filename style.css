@@ -1447,7 +1447,7 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
   border-bottom:2px solid var(--text-primary);
   flex-wrap:wrap; gap:8px;
 }
-.kfma-block-header h3 { font-size:1.1rem; font-weight:800; color:var(--text-primary); }
+.kfma-block-header h3 { font-size:1.1rem; font-weight:600; color:var(--text-primary); }
 .kfma-sub { font-size:0.82rem; color:var(--text-muted); }
 
 /* 법령 카드 그리드 (4개 메인 법) */
@@ -1516,7 +1516,7 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
 }
 .old-law-name {
   display: inline-flex; align-items: center; gap: 6px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-primary);
   text-decoration: none;
   font-size: 0.95rem;

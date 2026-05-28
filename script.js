@@ -2195,7 +2195,11 @@ function renderPrograms() {
   }
 }
 
-function showProgramDetail(key) {
+async function showProgramDetail(key) {
+  // 상세 페이지 열 때마다 Firestore 에서 빌트인 오버라이드 PULL — PC 에서 수정한 URL 즉시 반영
+  if (typeof pullBuiltinOverridesFromFirestore === 'function') {
+    try { await pullBuiltinOverridesFromFirestore(); } catch (e) {}
+  }
   const data = programData[key];
   if (!data) return;
   document.getElementById('programList').style.display = 'none';

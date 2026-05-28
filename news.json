@@ -1,5 +1,39 @@
 [
   {
+    "id": 1779935765457,
+    "topic": "최신기술",
+    "source": "FPN-소방방재신문",
+    "emoji": "🚀",
+    "image": "🚀",
+    "color": "#0068c3",
+    "title": "[2026 FireEXPO] 케이엠에스, AIㆍIoT 기반 스마트 소방안전 신제품 2종 동시 공개 - FPN-소방방재신문",
+    "summary": "[2026 FireEXPO] 케이엠에스, AIㆍIoT 기반 스마트 소방안전 신제품 2종 동시 공개 FPN-소방방재신문",
+    "fullDesc": "[2026 FireEXPO] 케이엠에스, AIㆍIoT 기반 스마트 소방안전 신제품 2종 동시 공개 FPN-소방방재신문",
+    "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1MdHpGUnM0X1lCNFBmTVpvUTdwSVRWanVjd2xoZF9xd0N3S1B3MW1hY01IU3FtaTFCYXhlSnBsLTloZ2ZkVHc?oc=5",
+    "date": "2026.05.25",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-28T02:35:55.565Z",
+    "pubDate": "2026-05-25T09:22:00.000Z"
+  },
+  {
+    "id": 1779935764507,
+    "topic": "논문연구",
+    "source": "베리타스알파",
+    "emoji": "📚",
+    "image": "📚",
+    "color": "#6020a8",
+    "title": "경상국립대 김명훈 박사 한국화재소방학회 우수논문 발표상 수상",
+    "summary": "경상국립대 김명훈 박사 한국화재소방학회 우수논문 발표상 수상 베리타스알파",
+    "fullDesc": "경상국립대 김명훈 박사 한국화재소방학회 우수논문 발표상 수상 베리타스알파",
+    "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE40UlUzTGdxQWhJVF9vbDZSLTJ3T0xtdWQxOFpVdEhqRmNvczVZdTdVaF9sWU1pYVpsejYzUVB0UVlMaU1LQXIxX2hONHVlZnhUWFVfeDIxaE91MWxrSFFCUzQ3dGh2QnVHTEtkRQ?oc=5",
+    "date": "2026.04.29",
+    "autoAdded": true,
+    "isNew": true,
+    "collectedAt": "2026-05-28T02:35:58.067Z",
+    "pubDate": "2026-04-29T07:00:00.000Z"
+  },
+  {
     "id": 1779850117725,
     "topic": "최신기술",
     "source": "티스토리",
@@ -12,7 +46,7 @@
     "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE0wYTRtekRCLVF3bU1SVWJCOE5jNEllMjJVUDZnb3hsUHpjVGpxcWNIMVpUdkJPTVVJWDJVcXR4RWRENjA2Y3otSy12cw?oc=5",
     "date": "2026.05.26",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-27T02:48:34.577Z",
     "pubDate": "2026-05-26T02:54:00.000Z"
   },
@@ -29,7 +63,7 @@
     "url": "https://news.google.com/rss/articles/CBMiREFVX3lxTE80NjRzMW13bjliUjRHRUNuQXh4RVVzQUFsUDdVcHppcjJsZnI2MUtwWkFEaE95Smxsa2U3Q3NfLXVVYUZr?oc=5",
     "date": "2026.05.25",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-05-27T02:48:36.479Z",
     "pubDate": "2026-05-25T07:08:00.000Z"
   },

@@ -449,7 +449,7 @@ nav a.active::after { display:none !important; content:none !important; }
   margin-bottom:6px;
 }
 .section-header h2 {
-  font-size:1.5rem; font-weight:900;
+  font-size:1.5rem; font-weight:600;
   margin-bottom:6px; color:var(--text-primary);
   letter-spacing:-0.5px;
 }
@@ -576,7 +576,7 @@ nav a.active::after { display:none !important; content:none !important; }
   padding: 4px 12px;
   border-radius: 14px;
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 600;
   border: 1.5px solid;
   letter-spacing: 0.3px;
 }
@@ -607,7 +607,7 @@ nav a.active::after { display:none !important; content:none !important; }
 }
 .prog-status {
   display:inline-block; padding:3px 10px;
-  border-radius:4px; font-size:0.72rem; font-weight:800;
+  border-radius:4px; font-size:0.72rem; font-weight:600;
   letter-spacing:0.3px; white-space:nowrap;
   border:1px solid var(--border);
 }
@@ -841,7 +841,7 @@ nav a.active::after { display:none !important; content:none !important; }
   font-weight:700;
   text-decoration:underline;
 }
-.program-card h3 { font-size:1.05rem; margin-bottom:6px; font-weight:700; color:var(--text-primary); }
+.program-card h3 { font-size:1.05rem; margin-bottom:6px; font-weight:500; color:var(--text-primary); }
 .program-card p { color:var(--text-secondary); font-size:0.88rem; margin-bottom:14px; line-height:1.6; }
 .card-tag {
   display:inline-block;
@@ -1461,7 +1461,7 @@ footer { padding:32px 24px; border-top:1px solid var(--border); background:#fff;
 }
 .law-card-header { margin-bottom:14px; }
 .law-card-header h4 {
-  font-size:1.05rem; font-weight:600; color:var(--text-primary);
+  font-size:1.05rem; font-weight:500; color:var(--text-primary);
   margin-bottom:4px;
 }
 .law-card-header span {
@@ -2114,7 +2114,7 @@ html { -webkit-text-size-adjust: 100%; }
   letter-spacing:0.3px;
 }
 .news-card-title {
-  font-size:1.02rem; font-weight:600; line-height:1.35;
+  font-size:1.02rem; font-weight:500; line-height:1.35;
   color:var(--text-primary);
   display:-webkit-box; -webkit-line-clamp:2; line-clamp:2;
   -webkit-box-orient:vertical; overflow:hidden;

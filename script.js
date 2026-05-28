@@ -2191,13 +2191,11 @@ function showProgramDetail(key) {
        </div>`;
   }
 
-  // 메타 정보 (버전, 플랫폼, 기술스택, 워크플로우)
+  // 메타 정보 (버전·흐름·접속만 노출 — 플랫폼/기술 은 내부 기술정보라 사용자 화면에서 제거)
   const accessLabel = hasUrl ? '✅ 공개됨' : '⏳ 준비 중';
-  const metaHtml = (data.version || data.platform || data.techStack || data.workflow) ? `
+  const metaHtml = (data.version || data.workflow) ? `
     <div class="detail-meta-row">
       ${data.version ? `<span class="detail-meta"><b>버전</b> ${esc(data.version)}</span>` : ''}
-      ${data.platform ? `<span class="detail-meta"><b>플랫폼</b> ${esc(data.platform)}</span>` : ''}
-      ${data.techStack ? `<span class="detail-meta"><b>기술</b> ${esc(data.techStack)}</span>` : ''}
       ${data.workflow ? `<span class="detail-meta"><b>흐름</b> ${esc(data.workflow)}</span>` : ''}
       <span class="detail-meta"><b>접속</b> <em style="color:var(--text-muted);">${accessLabel}</em></span>
     </div>` : '';

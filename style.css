@@ -1911,6 +1911,20 @@ html { -webkit-text-size-adjust: 100%; }
   .board-table-wrap { -webkit-overflow-scrolling: touch; overflow-x: auto; }
   .board-table { min-width: 540px; font-size: 0.84rem; }
   .board-table th, .board-table td { padding: 10px 8px; }
+  /* 모바일에서 제목은 1줄로 — 넘치면 말줄임표 */
+  .board-table .td-title,
+  .board-table .col-title {
+    max-width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* td-title 안의 NEW 뱃지·이모지 등도 같은 줄 유지 */
+  .board-table .td-title > *,
+  .board-table .col-title > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
   /* 폼 입력 — iOS 자동 줌 방지 (16px 최소) */
   .form-group input, .form-group textarea,

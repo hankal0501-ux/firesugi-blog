@@ -2103,15 +2103,24 @@ html { -webkit-text-size-adjust: 100%; }
   -webkit-box-orient:vertical; overflow:hidden;
 }
 .news-card-summary {
-  font-size:0.82rem; color:var(--text-secondary);
-  line-height:1.55; flex:1; font-weight:400;
+  font-size:0.82rem !important;
+  color:#7c7c7c !important;
+  line-height:1.55 !important;
+  flex:1; font-weight:400 !important;
   display:-webkit-box; -webkit-line-clamp:3; line-clamp:3;
   -webkit-box-orient:vertical; overflow:hidden;
+  letter-spacing:0;
 }
-/* 본문에 우연히 들어간 강조 태그(b/strong)는 굵기만 일반화 — 색은 표준 본문색 유지 */
+/* 본문 안의 모든 인라인 태그(b/strong/span/em/mark)도 굵기·색·배경 강제 일반화 */
 .news-card-summary b,
-.news-card-summary strong {
+.news-card-summary strong,
+.news-card-summary span,
+.news-card-summary em,
+.news-card-summary mark {
   font-weight:400 !important;
+  color:inherit !important;
+  background:transparent !important;
+  font-style:normal !important;
 }
 .news-card-footer {
   display:flex; align-items:center; justify-content:space-between;

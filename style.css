@@ -1839,9 +1839,10 @@ html { -webkit-text-size-adjust: 100%; }
     font-weight: 600;
   }
   nav a.active {
-    background: var(--naver-green) !important;
-    color: #fff !important;
+    background: var(--naver-green-light) !important;
+    color: var(--naver-green-dark) !important;
     border-color: var(--naver-green) !important;
+    font-weight: 600;
   }
 
   /* 헤더가 2~3행이라 콘텐츠 padding-top 동적 확보 */

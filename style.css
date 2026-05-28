@@ -40,12 +40,12 @@ body {
   line-height:1.6;
   overflow-x:hidden;
   font-size:15px;
-  font-weight:400;
+  font-weight:400;  /* Noto Sans KR 한글은 weight 300 unicode-range 가 한글 미포함 → 400 으로 복귀 */
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;
 }
-/* 보통체 강제 — 본문·테이블·리스트의 본문 텍스트는 무조건 400 (개별 클래스가 명시 700+ 이면 그것이 우선) */
+/* 본문 텍스트 강제 Regular(400) — 한글 안전 weight */
 body p,
 body td,
 body li,

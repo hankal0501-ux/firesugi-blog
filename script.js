@@ -851,13 +851,17 @@ window.changeAdminPassword = changeAdminPassword;
 // ============================================================
 // 📊 접속 통계 그래프 — 관리자 전용
 // ============================================================
-function showVisitStats() {
+async function showVisitStats() {
   if (typeof isAdmin !== 'function' || !isAdmin()) {
     alert('🔒 관리자만 사용할 수 있습니다.');
     return;
   }
   const modal = document.getElementById('statsModal');
   if (!modal) return;
+  // 모달 열 때마다 Firestore 에서 최신 클릭 카운터 PULL — 다른 단말 클릭이 즉시 반영
+  if (typeof pullProgramClicksFromFirestore === 'function') {
+    try { await pullProgramClicksFromFirestore(); } catch (e) {}
+  }
   renderVisitStats();
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';

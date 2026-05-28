@@ -83,6 +83,15 @@ header.scrolled { box-shadow:0 2px 8px rgba(0,0,0,0.04); }
   letter-spacing:-0.5px;
   white-space:nowrap; flex-shrink:0;
 }
+/* 버전 라벨 — 로고 옆에 작고 옅게 (Fire-Sugi 텍스트는 굵게 유지) */
+.logo-ver {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0;
+  margin-left: 2px;
+  opacity: 0.75;
+}
 .logo-icon {
   width:32px; height:32px; flex-shrink:0;
   background:var(--naver-green);

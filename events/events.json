@@ -83,6 +83,15 @@
   ],
   "giveaways": [
     {
+      "source_site": "나눔경제뉴스",
+      "title": "호반그룹, ‘2026 호반혁신기술공모전’ 모집…AI·스마트건설 스타트업 발굴",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5tbnhtYTNVNnU4VzJSQ3l1U0pVcHhvY1B1TldUZEUxZEZ2UXI2VGM3LXlVZ3VzRHVKbDFwaDU1VmxuWG43Rk1lS1RsQkJDX1l5bDBFaXl2b0FuRGQ0RmZIdS03eHVSVzJUTVhScw?oc=5",
+      "created_at": "2026-05-29 01:03:22"
+    },
+    {
       "source_site": "마일드경제",
       "title": "하나증권, 국내주식 경품 추첨 이벤트 재개 “최대 300만원 혜택”",
       "category": "공모전",
@@ -245,5 +254,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-05-28 04:49:31"
+  "last_updated": "2026-05-29 04:52:35"
 }

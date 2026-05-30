@@ -3623,6 +3623,27 @@ function renderLaws() {
 // 사용자 추가 기술자료/서식자료 (admin only) — localStorage 저장
 const USER_TECH_KEY = 'fireSugiUserTech';
 const USER_FORM_KEY = 'fireSugiUserForm';
+// 빌트인 자료 오버라이드 — 제목·분류·첨부파일 편집 가능
+const BUILTIN_TECH_OVR_KEY = 'fireSugiBuiltinTechOvr';
+const BUILTIN_FORM_OVR_KEY = 'fireSugiBuiltinFormOvr';
+function getBuiltinTechOvr() { try { return JSON.parse(localStorage.getItem(BUILTIN_TECH_OVR_KEY) || '{}'); } catch { return {}; } }
+function getBuiltinFormOvr() { try { return JSON.parse(localStorage.getItem(BUILTIN_FORM_OVR_KEY) || '{}'); } catch { return {}; } }
+function saveBuiltinTechOvr(obj) {
+  localStorage.setItem(BUILTIN_TECH_OVR_KEY, JSON.stringify(obj));
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    fbDb.collection('builtinTechOvr').doc('global').set({ overrides: obj, updatedAt: Date.now() }, { merge: true }).catch(() => {});
+  }
+}
+function saveBuiltinFormOvr(obj) {
+  localStorage.setItem(BUILTIN_FORM_OVR_KEY, JSON.stringify(obj));
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    fbDb.collection('builtinFormOvr').doc('global').set({ overrides: obj, updatedAt: Date.now() }, { merge: true }).catch(() => {});
+  }
+}
+function mergeBuiltin(entry, ovr) {
+  if (!ovr) return entry;
+  return { ...entry, ...ovr };
+}
 function getUserTech() { try { return JSON.parse(localStorage.getItem(USER_TECH_KEY) || '[]'); } catch { return []; } }
 function getUserForms() { try { return JSON.parse(localStorage.getItem(USER_FORM_KEY) || '[]'); } catch { return []; } }
 function saveUserTech(arr) {
@@ -3638,8 +3659,10 @@ function saveUserForms(arr) {
   }
 }
 
-// 글쓰기 모달 — 기술자료/서식자료 공용
+// 글쓰기/편집 모달 — 기술자료/서식자료 공용
 let _tfAddTarget = 'tech'; // 'tech' or 'form'
+let _tfAddMode = 'add';    // 'add' (사용자 추가) or 'editBuiltin' (빌트인 편집)
+let _tfAddBuiltinId = null;
 const TECH_CATS = ['점검', '설계', '시공', '감리', '해설'];
 const FORM_CATS = ['점검표', '신고서', '계약서', '대장', '기타'];
 
@@ -3655,21 +3678,36 @@ async function addFormEntry() {
 }
 window.addFormEntry = addFormEntry;
 
-function _openTechFormAddModal(kind) {
+function _openTechFormAddModal(kind, existingEntry) {
   _tfAddTarget = kind;
+  _tfAddMode = existingEntry ? 'editBuiltin' : 'add';
+  _tfAddBuiltinId = existingEntry ? existingEntry.id : null;
   const modal = document.getElementById('techFormAddModal');
   if (!modal) return;
-  document.getElementById('tfAddTitle').textContent = kind === 'tech' ? '✏️ 기술자료 등록' : '✏️ 서식자료 등록';
+  const verb = existingEntry ? '편집' : '등록';
+  document.getElementById('tfAddTitle').textContent = `✏️ ${kind === 'tech' ? '기술자료' : '서식자료'} ${verb}`;
   // 분류 select 채우기
   const cats = kind === 'tech' ? TECH_CATS : FORM_CATS;
   const sel = document.getElementById('tfAddCat');
   sel.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
-  // 기본 파일 형식
-  document.getElementById('tfAddFile').value = kind === 'tech' ? 'PDF' : 'HWP';
-  // 입력값 초기화
-  document.getElementById('tfAddTitleInput').value = '';
+  // 기존 값 / 기본값
+  if (existingEntry) {
+    sel.value = existingEntry.cat || cats[0];
+    document.getElementById('tfAddFile').value = existingEntry.file || (kind === 'tech' ? 'PDF' : 'HWP');
+    document.getElementById('tfAddTitleInput').value = existingEntry.title || '';
+  } else {
+    document.getElementById('tfAddFile').value = kind === 'tech' ? 'PDF' : 'HWP';
+    document.getElementById('tfAddTitleInput').value = '';
+  }
   document.getElementById('tfAddFileUpload').value = '';
   document.getElementById('tfAddError').style.display = 'none';
+  // 첨부 정보 표시 (편집 모드에서 기존 첨부가 있을 때)
+  const infoEl = document.getElementById('tfAddFileInfo');
+  if (existingEntry && existingEntry.attachment) {
+    infoEl.innerHTML = `📎 기존 첨부: <b>${esc(existingEntry.attachment.name)}</b> (${(existingEntry.attachment.size/1024).toFixed(1)}KB) — 다시 첨부하면 교체됩니다.`;
+  } else {
+    infoEl.innerHTML = '※ 첨부 시 다운로드 가능. 미첨부 시 데모 안내만 표시됩니다.';
+  }
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('tfAddTitleInput').focus(), 50);
@@ -3709,6 +3747,23 @@ async function submitTechFormAdd() {
       return _showTfError('파일 읽기 실패: ' + e.message);
     }
   }
+  if (_tfAddMode === 'editBuiltin' && _tfAddBuiltinId) {
+    // 빌트인 자료 오버라이드 — title/cat/file/attachment 저장
+    const ovrAll = _tfAddTarget === 'tech' ? getBuiltinTechOvr() : getBuiltinFormOvr();
+    const prev = ovrAll[_tfAddBuiltinId] || {};
+    const patch = { title, cat, file };
+    if (attachment) patch.attachment = attachment;
+    else if (prev.attachment) patch.attachment = prev.attachment; // 기존 첨부 유지
+    ovrAll[_tfAddBuiltinId] = { ...prev, ...patch, updatedAt: Date.now() };
+    if (_tfAddTarget === 'tech') { saveBuiltinTechOvr(ovrAll); renderTech(); }
+    else { saveBuiltinFormOvr(ovrAll); renderForms(); }
+    closeTechFormAddModal();
+    alert('✅ 편집 완료' + (attachment ? ` (📎 ${attachment.name})` : ''));
+    if (typeof logActivity === 'function') logActivity(`${_tfAddTarget === 'tech' ? '기술자료' : '서식자료'} 편집: ${title.slice(0, 30)}`);
+    return;
+  }
+
+  // 사용자 추가(신규)
   const entry = {
     id: Date.now(),
     cat, title, file,
@@ -3735,6 +3790,25 @@ async function submitTechFormAdd() {
   if (typeof logActivity === 'function') logActivity(`${_tfAddTarget === 'tech' ? '기술자료' : '서식자료'} 등록: ${title.slice(0, 30)}`);
 }
 window.submitTechFormAdd = submitTechFormAdd;
+
+// 빌트인 자료 편집 진입 (관리자만)
+async function editBuiltinTech(id) {
+  if (!(await checkDeletePassword('기술자료 편집'))) return;
+  const ovr = getBuiltinTechOvr()[id];
+  const base = techData.find(t => t.id === id);
+  if (!base) return;
+  _openTechFormAddModal('tech', mergeBuiltin(base, ovr));
+}
+window.editBuiltinTech = editBuiltinTech;
+
+async function editBuiltinForm(id) {
+  if (!(await checkDeletePassword('서식자료 편집'))) return;
+  const ovr = getBuiltinFormOvr()[id];
+  const base = formData.find(f => f.id === id);
+  if (!base) return;
+  _openTechFormAddModal('form', mergeBuiltin(base, ovr));
+}
+window.editBuiltinForm = editBuiltinForm;
 
 async function deleteTechEntry(id) {
   if (!(await checkDeletePassword('기술자료 삭제'))) return;
@@ -3772,8 +3846,10 @@ let techFilter = 'all';
 function renderTech() {
   const admin = (typeof isAdmin === 'function') && isAdmin();
   const q = (document.getElementById('techSearchInput')?.value || '').trim().toLowerCase();
-  // 사용자 추가분 + 빌트인 머지 (사용자 추가가 위)
-  const all = [...getUserTech(), ...techData];
+  const ovrAll = getBuiltinTechOvr();
+  // 빌트인 자료에 오버라이드 적용
+  const builtinMerged = techData.map(t => mergeBuiltin(t, ovrAll[t.id]));
+  const all = [...getUserTech(), ...builtinMerged];
   const filtered = all.filter(t =>
     (techFilter === 'all' || t.cat === techFilter) &&
     (!q || t.title.toLowerCase().includes(q))
@@ -3784,22 +3860,26 @@ function renderTech() {
     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-muted);">📭 자료가 없습니다.</td></tr>';
     return;
   }
-  tbody.innerHTML = filtered.map((t, i) => `
-    <tr ${t.custom ? '' : `onclick="alert('📥 ${esc(t.title)} (${t.file}) — 회원 전용 자료입니다.')"`}>
+  tbody.innerHTML = filtered.map((t, i) => {
+    const editCall = t.custom ? '' : `onclick="event.stopPropagation(); editBuiltinTech(${t.id})"`;
+    return `
+    <tr style="cursor:${admin && !t.custom ? 'pointer' : 'default'};" ${admin && !t.custom ? editCall : ''}>
       <td class="col-no" style="text-align:center; color:var(--text-muted);">${filtered.length - i}</td>
       <td><span class="cat-chip cat-${cssCat(t.cat)}">${t.cat}</span></td>
       <td class="td-title">
         ${esc(t.title)}
         ${t.isNew ? '<span class="badge-new">NEW</span>' : ''}
-        ${t.attachment ? '<span class="badge-attach" title="첨부파일 있음">📎</span>' : ''}
+        ${t.attachment ? '<span class="badge-attach" title="첨부파일 있음" style="margin-left:4px;">📎</span>' : ''}
       </td>
       <td style="text-align:center;"><span class="file-badge file-${(t.file||'').toLowerCase()}">${t.file}</span></td>
       <td style="color:var(--text-secondary); font-size:0.85rem;">${t.date}</td>
-      <td style="text-align:center;">
-        ${t.custom ? `<button class="btn-mini btn-dl" onclick="event.stopPropagation(); downloadTech(${t.id})">⬇ 받기</button>` : (t.views || 0).toLocaleString()}
-        ${t.custom && admin ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteTechEntry(${t.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
+      <td style="text-align:center; white-space:nowrap;">
+        <button class="btn-mini btn-dl" onclick="event.stopPropagation(); downloadTech(${t.id})">⬇ 받기</button>
+        ${admin && !t.custom ? `<button class="btn-mini" onclick="event.stopPropagation(); editBuiltinTech(${t.id})" title="편집" style="margin-left:4px;">✏️</button>` : ''}
+        ${admin && t.custom ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteTechEntry(${t.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
       </td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 
 // --- 서식자료 ---
@@ -3821,7 +3901,9 @@ let formFilter = 'all';
 function renderForms() {
   const admin = (typeof isAdmin === 'function') && isAdmin();
   const q = (document.getElementById('formSearchInput')?.value || '').trim().toLowerCase();
-  const all = [...getUserForms(), ...formData];
+  const ovrAll = getBuiltinFormOvr();
+  const builtinMerged = formData.map(f => mergeBuiltin(f, ovrAll[f.id]));
+  const all = [...getUserForms(), ...builtinMerged];
   const filtered = all.filter(f =>
     (formFilter === 'all' || f.cat === formFilter) &&
     (!q || f.title.toLowerCase().includes(q))
@@ -3832,28 +3914,39 @@ function renderForms() {
     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-muted);">📭 양식이 없습니다.</td></tr>';
     return;
   }
-  tbody.innerHTML = filtered.map((f, i) => `
-    <tr>
+  tbody.innerHTML = filtered.map((f, i) => {
+    const editCall = f.custom ? '' : `onclick="event.stopPropagation(); editBuiltinForm(${f.id})"`;
+    return `
+    <tr style="cursor:${admin && !f.custom ? 'pointer' : 'default'};" ${admin && !f.custom ? editCall : ''}>
       <td class="col-no" style="text-align:center; color:var(--text-muted);">${filtered.length - i}</td>
       <td><span class="cat-chip cat-${cssCat(f.cat)}">${f.cat}</span></td>
       <td class="td-title">
         ${esc(f.title)}
         ${f.isNew ? '<span class="badge-new">NEW</span>' : ''}
+        ${f.attachment ? '<span class="badge-attach" title="첨부파일 있음" style="margin-left:4px;">📎</span>' : ''}
       </td>
       <td style="text-align:center;"><span class="file-badge file-${(f.file||'').toLowerCase()}">${f.file}</span></td>
       <td style="color:var(--text-secondary); font-size:0.85rem;">${f.date}</td>
-      <td style="text-align:center;">
-        <button class="btn-mini btn-dl" onclick="downloadForm(${f.id})">⬇ 받기</button>
-        ${f.custom && admin ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteFormEntry(${f.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
+      <td style="text-align:center; white-space:nowrap;">
+        <button class="btn-mini btn-dl" onclick="event.stopPropagation(); downloadForm(${f.id})">⬇ 받기</button>
+        ${admin && !f.custom ? `<button class="btn-mini" onclick="event.stopPropagation(); editBuiltinForm(${f.id})" title="편집" style="margin-left:4px;">✏️</button>` : ''}
+        ${admin && f.custom ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteFormEntry(${f.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
       </td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 }
 function downloadForm(id) {
   // 사용자 추가분 먼저 찾기 (실제 첨부 파일이 있을 수 있음)
   const userArr = getUserForms();
   let f = userArr.find(x => x.id === id);
   let isUser = !!f;
-  if (!f) f = formData.find(x => x.id === id);
+  if (!f) {
+    // 빌트인 + 오버라이드 머지
+    const base = formData.find(x => x.id === id);
+    if (!base) return;
+    const ovr = getBuiltinFormOvr()[id];
+    f = mergeBuiltin(base, ovr);
+  }
   if (!f) return;
 
   // 실제 첨부가 있으면 직접 다운로드
@@ -3882,7 +3975,12 @@ function downloadTech(id) {
   const userArr = getUserTech();
   let t = userArr.find(x => x.id === id);
   let isUser = !!t;
-  if (!t) t = techData.find(x => x.id === id);
+  if (!t) {
+    const base = techData.find(x => x.id === id);
+    if (!base) return;
+    const ovr = getBuiltinTechOvr()[id];
+    t = mergeBuiltin(base, ovr);
+  }
   if (!t) return;
   if (t.attachment && t.attachment.data) {
     const a = document.createElement('a');

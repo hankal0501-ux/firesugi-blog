@@ -345,13 +345,10 @@ async function submitPost() {
     try { viewPwHash = await sha256(pwRaw); } catch (e) { console.warn('hash err:', e); }
   }
 
-  // 닉네임
+  // 닉네임 — 입력 없으면 Fire-Sugi 기본 작성자
   const nickEl = document.getElementById('postAuthor');
   let author = (nickEl && nickEl.value.trim()) || '';
-  if (!author) {
-    const tail = Math.floor(Math.random() * 9000 + 1000);
-    author = `익명_${tail}`;
-  }
+  if (!author) author = 'Fire-Sugi';
 
   const posts = getPosts();
   const now = new Date();
@@ -3623,6 +3620,90 @@ function renderLaws() {
 }
 
 // --- 기술자료 ---
+// 사용자 추가 기술자료/서식자료 (admin only) — localStorage 저장
+const USER_TECH_KEY = 'fireSugiUserTech';
+const USER_FORM_KEY = 'fireSugiUserForm';
+function getUserTech() { try { return JSON.parse(localStorage.getItem(USER_TECH_KEY) || '[]'); } catch { return []; } }
+function getUserForms() { try { return JSON.parse(localStorage.getItem(USER_FORM_KEY) || '[]'); } catch { return []; } }
+function saveUserTech(arr) {
+  localStorage.setItem(USER_TECH_KEY, JSON.stringify(arr));
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    fbDb.collection('userTechData').doc('global').set({ entries: arr, updatedAt: Date.now() }, { merge: true }).catch(() => {});
+  }
+}
+function saveUserForms(arr) {
+  localStorage.setItem(USER_FORM_KEY, JSON.stringify(arr));
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    fbDb.collection('userFormData').doc('global').set({ entries: arr, updatedAt: Date.now() }, { merge: true }).catch(() => {});
+  }
+}
+
+async function addTechEntry() {
+  if (!(await checkDeletePassword('기술자료 등록'))) return;
+  const cat = prompt('📂 분류 — 점검 / 설계 / 시공 / 감리 / 해설 중 하나:');
+  if (!cat || !cat.trim()) return;
+  const title = prompt('📝 제목:');
+  if (!title || !title.trim()) return;
+  const file = (prompt('📎 파일 형식 (PDF / XLSX / DOCX / ZIP / HWP):', 'PDF') || 'PDF').trim().toUpperCase();
+  const arr = getUserTech();
+  arr.unshift({
+    id: Date.now(),
+    cat: cat.trim(),
+    title: title.trim(),
+    file,
+    date: new Date().toISOString().slice(0,10).replace(/-/g,'.'),
+    views: 0,
+    isNew: true,
+    custom: true
+  });
+  saveUserTech(arr);
+  renderTech();
+  alert('✅ 기술자료 등록 완료');
+  if (typeof logActivity === 'function') logActivity('기술자료 등록: ' + title.trim().slice(0, 30));
+}
+window.addTechEntry = addTechEntry;
+
+async function deleteTechEntry(id) {
+  if (!(await checkDeletePassword('기술자료 삭제'))) return;
+  if (!confirm('이 기술자료를 삭제하시겠습니까?')) return;
+  saveUserTech(getUserTech().filter(t => t.id !== id));
+  renderTech();
+}
+window.deleteTechEntry = deleteTechEntry;
+
+async function addFormEntry() {
+  if (!(await checkDeletePassword('서식자료 등록'))) return;
+  const cat = prompt('📂 분류 — 점검표 / 신고서 / 계약서 / 대장 / 기타 중 하나:');
+  if (!cat || !cat.trim()) return;
+  const title = prompt('📝 양식명:');
+  if (!title || !title.trim()) return;
+  const file = (prompt('📎 파일 형식 (HWP / XLSX / DOCX / PDF / ZIP):', 'HWP') || 'HWP').trim().toUpperCase();
+  const arr = getUserForms();
+  arr.unshift({
+    id: Date.now(),
+    cat: cat.trim(),
+    title: title.trim(),
+    file,
+    date: new Date().toISOString().slice(0,10).replace(/-/g,'.'),
+    dl: 0,
+    isNew: true,
+    custom: true
+  });
+  saveUserForms(arr);
+  renderForms();
+  alert('✅ 서식자료 등록 완료');
+  if (typeof logActivity === 'function') logActivity('서식자료 등록: ' + title.trim().slice(0, 30));
+}
+window.addFormEntry = addFormEntry;
+
+async function deleteFormEntry(id) {
+  if (!(await checkDeletePassword('서식자료 삭제'))) return;
+  if (!confirm('이 서식을 삭제하시겠습니까?')) return;
+  saveUserForms(getUserForms().filter(f => f.id !== id));
+  renderForms();
+}
+window.deleteFormEntry = deleteFormEntry;
+
 const techData = [
   { id: 32, cat: '점검', title: 'NFTC 103 스프링클러설비 자체점검 체크리스트', file: 'PDF', date: '2026.05.08', views: 412, isNew: true },
   { id: 31, cat: '해설', title: '2026년 화재안전기준 통합본 해설(개정사항 요약)', file: 'PDF', date: '2026.05.05', views: 891, isNew: true },
@@ -3639,8 +3720,11 @@ const techData = [
 ];
 let techFilter = 'all';
 function renderTech() {
+  const admin = (typeof isAdmin === 'function') && isAdmin();
   const q = (document.getElementById('techSearchInput')?.value || '').trim().toLowerCase();
-  const filtered = techData.filter(t =>
+  // 사용자 추가분 + 빌트인 머지 (사용자 추가가 위)
+  const all = [...getUserTech(), ...techData];
+  const filtered = all.filter(t =>
     (techFilter === 'all' || t.cat === techFilter) &&
     (!q || t.title.toLowerCase().includes(q))
   );
@@ -3651,7 +3735,7 @@ function renderTech() {
     return;
   }
   tbody.innerHTML = filtered.map((t, i) => `
-    <tr onclick="alert('📥 ${esc(t.title)} (${t.file}) — 회원 전용 자료입니다.')">
+    <tr ${t.custom ? '' : `onclick="alert('📥 ${esc(t.title)} (${t.file}) — 회원 전용 자료입니다.')"`}>
       <td class="col-no" style="text-align:center; color:var(--text-muted);">${filtered.length - i}</td>
       <td><span class="cat-chip cat-${cssCat(t.cat)}">${t.cat}</span></td>
       <td class="td-title">
@@ -3660,7 +3744,9 @@ function renderTech() {
       </td>
       <td style="text-align:center;"><span class="file-badge file-${(t.file||'').toLowerCase()}">${t.file}</span></td>
       <td style="color:var(--text-secondary); font-size:0.85rem;">${t.date}</td>
-      <td style="text-align:center;">${t.views.toLocaleString()}</td>
+      <td style="text-align:center;">${t.custom && admin
+        ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteTechEntry(${t.id})" title="삭제">🗑</button>`
+        : (t.views || 0).toLocaleString()}</td>
     </tr>`).join('');
 }
 
@@ -3681,8 +3767,10 @@ const formData = [
 ];
 let formFilter = 'all';
 function renderForms() {
+  const admin = (typeof isAdmin === 'function') && isAdmin();
   const q = (document.getElementById('formSearchInput')?.value || '').trim().toLowerCase();
-  const filtered = formData.filter(f =>
+  const all = [...getUserForms(), ...formData];
+  const filtered = all.filter(f =>
     (formFilter === 'all' || f.cat === formFilter) &&
     (!q || f.title.toLowerCase().includes(q))
   );
@@ -3704,6 +3792,7 @@ function renderForms() {
       <td style="color:var(--text-secondary); font-size:0.85rem;">${f.date}</td>
       <td style="text-align:center;">
         <button class="btn-mini btn-dl" onclick="downloadForm(${f.id})">⬇ 받기</button>
+        ${f.custom && admin ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteFormEntry(${f.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
       </td>
     </tr>`).join('');
 }

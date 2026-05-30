@@ -193,7 +193,8 @@ function animateNum(el) {
 // ===== BOARD SYSTEM =====
 let currentPostId = null;
 let boardSearchQuery = '';
-let boardDisplayCount = 5; // Initial number of posts to show
+let boardDisplayCount = 10; // 페이지당 10건
+let boardPage = 1;
 
 function getPosts() { return JSON.parse(localStorage.getItem('fireSugiBoardPosts') || '[]'); }
 function savePosts(posts) {
@@ -232,27 +233,60 @@ function renderBoard() {
   table.style.display = 'table';
   empty.style.display = 'none';
 
-  const displayPosts = filteredPosts.slice(0, boardDisplayCount);
-  pagination.style.display = filteredPosts.length > boardDisplayCount ? 'block' : 'none';
+  // 페이지네이션 — 10건씩
+  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / boardDisplayCount));
+  if (boardPage > totalPages) boardPage = totalPages;
+  const startIdx = (boardPage - 1) * boardDisplayCount;
+  const displayPosts = filteredPosts.slice(startIdx, startIdx + boardDisplayCount);
 
+  // 번호: 누적순 (전체에서 최신=가장 큰 번호) — newest first 정렬이므로 length - 위치
+  // FireSugi-Bot → Fire-Sugi 즉석 마이그레이션 (표시용)
   tbody.innerHTML = displayPosts.map((post) => {
     const isPrivate = post.visibility === 'private' || post.secret;
     const hasPw = !!post.viewPwHash;
-    const isBot = post.author === BOT_AUTHOR || post.autoWritten;
+    const displayAuthor = (post.author === 'FireSugi-Bot' || post.author === BOT_AUTHOR) ? 'Fire-Sugi' : post.author;
+    const isBot = post.autoWritten || displayAuthor === 'Fire-Sugi';
     let icon = '';
     if (isPrivate) icon = '<span class="secret-icon">🔒</span>';
     else if (hasPw) icon = '<span class="secret-icon" title="비번 보호">🔑</span>';
     const titleHtml = icon + esc(post.title);
-    const authorHtml = `${esc(post.author)}${isBot ? ' <span class="bot-tag">🤖</span>' : ''}`;
+    // 로봇 아이콘 제거 — 작성자 이름만 표시
+    const authorHtml = esc(displayAuthor);
+    const cumulativeNo = allPosts.length - allPosts.indexOf(post);
     return `<tr onclick="viewPost(${post.id})">
-      <td class="col-no" style="text-align:center;">${allPosts.indexOf(post) + 1}</td>
+      <td class="col-no" style="text-align:center;">${cumulativeNo}</td>
       <td class="col-title td-title">${titleHtml}</td>
       <td class="col-author">${authorHtml}</td>
       <td class="col-date" style="color:var(--text-secondary);font-size:0.85rem;">${post.date}</td>
       <td class="col-views" style="text-align:center;">${post.views || 0}</td>
     </tr>`;
   }).join('');
+
+  // 페이지네이션 UI — 페이지 번호 버튼
+  if (totalPages > 1) {
+    pagination.style.display = 'flex';
+    pagination.style.justifyContent = 'center';
+    pagination.style.gap = '4px';
+    let html = '';
+    if (boardPage > 1) html += `<button class="btn-mini" onclick="setBoardPage(${boardPage - 1})">‹</button>`;
+    const maxBtn = 10;
+    let s = Math.max(1, boardPage - 4), e = Math.min(totalPages, s + maxBtn - 1);
+    s = Math.max(1, e - maxBtn + 1);
+    for (let i = s; i <= e; i++) {
+      html += `<button class="btn-mini ${i === boardPage ? 'btn-mini-active' : ''}" onclick="setBoardPage(${i})" style="${i === boardPage ? 'background:var(--naver-green); color:#fff; border-color:var(--naver-green);' : ''}">${i}</button>`;
+    }
+    if (boardPage < totalPages) html += `<button class="btn-mini" onclick="setBoardPage(${boardPage + 1})">›</button>`;
+    pagination.innerHTML = html;
+  } else {
+    pagination.style.display = 'none';
+  }
 }
+function setBoardPage(p) {
+  boardPage = p;
+  renderBoard();
+  document.getElementById('boardTable')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+window.setBoardPage = setBoardPage;
 
 // 홈 화면 — 최근 게시판 글 5건 위젯
 function renderHomeBoard() {
@@ -276,13 +310,13 @@ function renderHomeBoard() {
     const isPrivate = (p.visibility === 'private' || p.secret);
     const lockIcon = isPrivate ? '<span class="hb-lock">🔒</span> ' : '';
     const title = lockIcon + esc(p.title);
-    const isBot = p.author === 'FireSugi-Bot' || p.autoWritten;
+    const displayAuthor = (p.author === 'FireSugi-Bot') ? 'Fire-Sugi' : p.author;
     const onclickAction = `showTab('board'); setTimeout(()=>viewPost(${p.id}), 80);`;
     return `
       <div class="hb-item" onclick="${onclickAction}">
-        <div class="hb-title">${title}${isBot ? ' <span class="hb-tag-bot">🤖 AUTO</span>' : ''}</div>
+        <div class="hb-title">${title}</div>
         <div class="hb-meta">
-          <span class="hb-author">${esc(p.author)}</span>
+          <span class="hb-author">${esc(displayAuthor)}</span>
           <span class="hb-date">${p.date}</span>
           <span class="hb-views">👁 ${p.views || 0}</span>
           ${(p.comments || []).length ? `<span class="hb-comments">💬 ${p.comments.length}</span>` : ''}
@@ -293,12 +327,13 @@ function renderHomeBoard() {
 
 function searchBoard() {
   boardSearchQuery = document.getElementById('boardSearchInput').value.trim();
-  boardDisplayCount = 5; // Reset count on search
+  boardPage = 1; // 검색 시 1페이지로
   renderBoard();
 }
 
 function loadMorePosts() {
-  boardDisplayCount += 5;
+  // 페이지네이션으로 대체됨 — 호환성 유지
+  boardPage += 1;
   renderBoard();
 }
 
@@ -2834,7 +2869,22 @@ function initBackToTop() {
 // AUTO-POST SYSTEM (봇 자동 글쓰기 — 게시판에 매일 1건 자동 등록)
 // ===================================================================
 const AUTOPOST_KEY = 'fireSugiAutoPostLast';
-const BOT_AUTHOR = 'FireSugi-Bot';
+const BOT_AUTHOR = 'Fire-Sugi';
+
+// 일회성 마이그레이션 — 기존 'FireSugi-Bot' 글을 'Fire-Sugi' 로 일괄 변경
+(function migrateBotAuthor() {
+  if (localStorage.getItem('fireSugiBotAuthorMigratedV2')) return;
+  try {
+    const posts = JSON.parse(localStorage.getItem('fireSugiPosts') || '[]');
+    let changed = 0;
+    posts.forEach(p => { if (p.author === 'FireSugi-Bot') { p.author = 'Fire-Sugi'; changed++; } });
+    if (changed > 0) {
+      localStorage.setItem('fireSugiPosts', JSON.stringify(posts));
+      console.log(`🔄 작성자 ${changed}건 'FireSugi-Bot' → 'Fire-Sugi' 마이그레이션`);
+    }
+  } catch (e) { console.warn('작성자 마이그레이션 실패:', e.message); }
+  localStorage.setItem('fireSugiBotAuthorMigratedV2', String(Date.now()));
+})();
 
 const AUTO_POST_POOL = [
   { title: '오늘의 학습 — NFTC 103 스프링클러설비',

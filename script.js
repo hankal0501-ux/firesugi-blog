@@ -3964,20 +3964,8 @@ async function deleteFormEntry(id) {
 }
 window.deleteFormEntry = deleteFormEntry;
 
-const techData = [
-  { id: 32, cat: '점검', title: 'NFTC 103 스프링클러설비 자체점검 체크리스트', file: 'PDF', date: '2026.05.08', views: 412, isNew: true },
-  { id: 31, cat: '해설', title: '2026년 화재안전기준 통합본 해설(개정사항 요약)', file: 'PDF', date: '2026.05.05', views: 891, isNew: true },
-  { id: 30, cat: '설계', title: '옥내소화전 토출량·양정 산정 예제', file: 'XLSX', date: '2026.04.28', views: 256, isNew: true },
-  { id: 29, cat: '시공', title: '내진설계 적용 배관 시공 표준 도면집', file: 'ZIP', date: '2026.04.20', views: 533 },
-  { id: 28, cat: '감리', title: '소방감리 일일점검표 양식(엑셀)', file: 'XLSX', date: '2026.04.15', views: 322 },
-  { id: 27, cat: '점검', title: '간이스프링클러설비 점검 매뉴얼 v3.2', file: 'PDF', date: '2026.04.10', views: 478 },
-  { id: 26, cat: '해설', title: 'NFPC 203 자동화재탐지설비 개정 해설', file: 'PDF', date: '2026.04.02', views: 612 },
-  { id: 25, cat: '설계', title: '제연설비 풍량·풍압 계산 가이드', file: 'PDF', date: '2026.03.28', views: 198 },
-  { id: 24, cat: '시공', title: '연결송수관설비 배관 시공기준 정리', file: 'PDF', date: '2026.03.22', views: 267 },
-  { id: 23, cat: '점검', title: '비상조명등·유도등 점검 사례집', file: 'PDF', date: '2026.03.15', views: 389 },
-  { id: 22, cat: '해설', title: '특정소방대상물 분류 기준 해설(별표2)', file: 'PDF', date: '2026.03.08', views: 745 },
-  { id: 21, cat: '감리', title: '준공검사 시 자주 지적되는 사항 TOP 20', file: 'PDF', date: '2026.02.28', views: 1024 }
-];
+// 빌트인 기술자료 — 사용자 요청으로 비움 (내용 없는 placeholder 였음). 관리자가 [✏️ 글쓰기]로 직접 추가.
+const techData = [];
 let techFilter = 'all';
 function renderTech() {
   const admin = (typeof isAdmin === 'function') && isAdmin();
@@ -4022,20 +4010,8 @@ function renderTech() {
 }
 
 // --- 서식자료 ---
-const formData = [
-  { id: 24, cat: '점검표', title: '소방시설 자체점검 결과보고서 (2026 개정)', file: 'HWP', date: '2026.05.07', dl: 1240, isNew: true },
-  { id: 23, cat: '점검표', title: '소방안전관리자 업무수행 일지 양식', file: 'XLSX', date: '2026.05.01', dl: 856, isNew: true },
-  { id: 22, cat: '신고서', title: '소방시설공사업 등록사항 변경 신고서', file: 'HWP', date: '2026.04.25', dl: 432 },
-  { id: 21, cat: '신고서', title: '특정소방대상물 사용승인 동의 요청서', file: 'HWP', date: '2026.04.18', dl: 678 },
-  { id: 20, cat: '계약서', title: '소방시설 점검 표준계약서 (감리 포함)', file: 'DOCX', date: '2026.04.10', dl: 1532 },
-  { id: 19, cat: '계약서', title: '소방시설 유지관리 위탁계약서 표준안', file: 'DOCX', date: '2026.04.05', dl: 945 },
-  { id: 18, cat: '대장', title: '소방시설 점검대장 (월간/분기/반기/연간)', file: 'XLSX', date: '2026.03.28', dl: 2103 },
-  { id: 17, cat: '대장', title: '소방안전관리자 선임자 명부', file: 'XLSX', date: '2026.03.22', dl: 765 },
-  { id: 16, cat: '점검표', title: '간이스프링클러설비 자체점검표', file: 'HWP', date: '2026.03.15', dl: 1187 },
-  { id: 15, cat: '기타', title: '화재발생 통보·접수 표준 양식', file: 'HWP', date: '2026.03.08', dl: 423 },
-  { id: 14, cat: '신고서', title: '소방기술자 경력 신고서', file: 'HWP', date: '2026.02.28', dl: 612 },
-  { id: 13, cat: '기타', title: '피난·방화시설 정비계획 작성 양식', file: 'XLSX', date: '2026.02.20', dl: 388 }
-];
+// 빌트인 서식자료 — 사용자 요청으로 비움 (내용 없는 placeholder 였음). 관리자가 [✏️ 글쓰기]로 직접 추가.
+const formData = [];
 let formFilter = 'all';
 function renderForms() {
   const admin = (typeof isAdmin === 'function') && isAdmin();

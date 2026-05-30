@@ -3626,6 +3626,48 @@ const USER_FORM_KEY = 'fireSugiUserForm';
 // 빌트인 자료 오버라이드 — 제목·분류·첨부파일 편집 가능
 const BUILTIN_TECH_OVR_KEY = 'fireSugiBuiltinTechOvr';
 const BUILTIN_FORM_OVR_KEY = 'fireSugiBuiltinFormOvr';
+// 빌트인 자료 삭제 표시 (hide) — id 배열
+const BUILTIN_TECH_HIDDEN_KEY = 'fireSugiBuiltinTechHidden';
+const BUILTIN_FORM_HIDDEN_KEY = 'fireSugiBuiltinFormHidden';
+function getBuiltinTechHidden() { try { return JSON.parse(localStorage.getItem(BUILTIN_TECH_HIDDEN_KEY) || '[]'); } catch { return []; } }
+function getBuiltinFormHidden() { try { return JSON.parse(localStorage.getItem(BUILTIN_FORM_HIDDEN_KEY) || '[]'); } catch { return []; } }
+function saveBuiltinTechHidden(arr) {
+  localStorage.setItem(BUILTIN_TECH_HIDDEN_KEY, JSON.stringify(arr));
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    fbDb.collection('builtinTechHidden').doc('global').set({ ids: arr, updatedAt: Date.now() }, { merge: true }).catch(() => {});
+  }
+}
+function saveBuiltinFormHidden(arr) {
+  localStorage.setItem(BUILTIN_FORM_HIDDEN_KEY, JSON.stringify(arr));
+  if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
+    fbDb.collection('builtinFormHidden').doc('global').set({ ids: arr, updatedAt: Date.now() }, { merge: true }).catch(() => {});
+  }
+}
+async function deleteBuiltinTech(id) {
+  if (!(await checkDeletePassword('기술자료 삭제'))) return;
+  const base = techData.find(t => t.id === id);
+  if (!base) return;
+  if (!confirm(`기술자료 "${base.title}"\n\n이 항목을 목록에서 숨기시겠습니까?\n(빌트인은 영구삭제 대신 hidden 처리되며 언제든 복원 가능)`)) return;
+  const arr = getBuiltinTechHidden();
+  if (!arr.includes(id)) arr.push(id);
+  saveBuiltinTechHidden(arr);
+  renderTech();
+  if (typeof logActivity === 'function') logActivity('기술자료 숨김: ' + base.title.slice(0, 30));
+}
+window.deleteBuiltinTech = deleteBuiltinTech;
+
+async function deleteBuiltinForm(id) {
+  if (!(await checkDeletePassword('서식자료 삭제'))) return;
+  const base = formData.find(f => f.id === id);
+  if (!base) return;
+  if (!confirm(`서식자료 "${base.title}"\n\n이 항목을 목록에서 숨기시겠습니까?\n(빌트인은 영구삭제 대신 hidden 처리되며 언제든 복원 가능)`)) return;
+  const arr = getBuiltinFormHidden();
+  if (!arr.includes(id)) arr.push(id);
+  saveBuiltinFormHidden(arr);
+  renderForms();
+  if (typeof logActivity === 'function') logActivity('서식자료 숨김: ' + base.title.slice(0, 30));
+}
+window.deleteBuiltinForm = deleteBuiltinForm;
 function getBuiltinTechOvr() { try { return JSON.parse(localStorage.getItem(BUILTIN_TECH_OVR_KEY) || '{}'); } catch { return {}; } }
 function getBuiltinFormOvr() { try { return JSON.parse(localStorage.getItem(BUILTIN_FORM_OVR_KEY) || '{}'); } catch { return {}; } }
 function saveBuiltinTechOvr(obj) {
@@ -3888,8 +3930,11 @@ function renderTech() {
   const admin = (typeof isAdmin === 'function') && isAdmin();
   const q = (document.getElementById('techSearchInput')?.value || '').trim().toLowerCase();
   const ovrAll = getBuiltinTechOvr();
-  // 빌트인 자료에 오버라이드 적용
-  const builtinMerged = techData.map(t => mergeBuiltin(t, ovrAll[t.id]));
+  const hidden = getBuiltinTechHidden();
+  // 빌트인 자료에 오버라이드 적용 + 숨김 필터
+  const builtinMerged = techData
+    .filter(t => !hidden.includes(t.id))
+    .map(t => mergeBuiltin(t, ovrAll[t.id]));
   const all = [...getUserTech(), ...builtinMerged];
   const filtered = all.filter(t =>
     (techFilter === 'all' || t.cat === techFilter) &&
@@ -3917,7 +3962,7 @@ function renderTech() {
       <td style="text-align:center; white-space:nowrap;">
         <button class="btn-mini btn-dl" onclick="event.stopPropagation(); downloadTech(${t.id})">⬇ 받기</button>
         ${admin ? `<button class="btn-mini" onclick="event.stopPropagation(); ${editFn}" title="편집" style="margin-left:4px;">✏️</button>` : ''}
-        ${admin && t.custom ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteTechEntry(${t.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
+        ${admin ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); ${t.custom ? `deleteTechEntry(${t.id})` : `deleteBuiltinTech(${t.id})`}" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
       </td>
     </tr>`;
   }).join('');
@@ -3943,7 +3988,10 @@ function renderForms() {
   const admin = (typeof isAdmin === 'function') && isAdmin();
   const q = (document.getElementById('formSearchInput')?.value || '').trim().toLowerCase();
   const ovrAll = getBuiltinFormOvr();
-  const builtinMerged = formData.map(f => mergeBuiltin(f, ovrAll[f.id]));
+  const hidden = getBuiltinFormHidden();
+  const builtinMerged = formData
+    .filter(f => !hidden.includes(f.id))
+    .map(f => mergeBuiltin(f, ovrAll[f.id]));
   const all = [...getUserForms(), ...builtinMerged];
   const filtered = all.filter(f =>
     (formFilter === 'all' || f.cat === formFilter) &&
@@ -3971,7 +4019,7 @@ function renderForms() {
       <td style="text-align:center; white-space:nowrap;">
         <button class="btn-mini btn-dl" onclick="event.stopPropagation(); downloadForm(${f.id})">⬇ 받기</button>
         ${admin ? `<button class="btn-mini" onclick="event.stopPropagation(); ${editFn}" title="편집" style="margin-left:4px;">✏️</button>` : ''}
-        ${admin && f.custom ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteFormEntry(${f.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
+        ${admin ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); ${f.custom ? `deleteFormEntry(${f.id})` : `deleteBuiltinForm(${f.id})`}" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
       </td>
     </tr>`;
   }).join('');

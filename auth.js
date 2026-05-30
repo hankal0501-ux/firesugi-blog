@@ -510,6 +510,8 @@ function updateAuthUI() {
       if (outBtn) outBtn.remove();
     }
   }
+  // body에 is-admin 클래스 토글 — CSS .admin-only !important 우회용
+  document.body.classList.toggle('is-admin', admin);
   adminLinks.forEach(el => {
     el.style.display = admin ? '' : 'none';
   });

@@ -2650,6 +2650,13 @@ nav a[data-tab="dashboard"],
 .tier-pill {
   display: none !important;
 }
+/* 관리자 모드(body.is-admin) — admin-only 요소 재노출 */
+body.is-admin .admin-only { display: revert !important; }
+body.is-admin .news-actions.admin-only { display: flex !important; }
+body.is-admin .write-form.admin-only:not([hidden]) { display: block !important; }
+body.is-admin button.admin-only,
+body.is-admin a.admin-only,
+body.is-admin span.admin-only { display: inline-flex !important; }
 /* auth-area는 보이게 유지 — 관리자 버튼 노출 위해 (회원정보·등급뱃지는 위에서 개별 숨김) */
 .auth-area { display: flex !important; align-items: center; gap: 8px; }
 #authLoginBtn { display: inline-flex !important; }

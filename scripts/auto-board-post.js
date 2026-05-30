@@ -22,7 +22,7 @@ const POOL = [
 
 const FILE = 'board-auto.json';
 const MAX_POSTS = 200;
-const BOT = 'FireSugi-Bot';
+const BOT = 'Fire-Sugi';
 
 async function main() {
   let existing = [];

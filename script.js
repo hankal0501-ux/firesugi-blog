@@ -3763,6 +3763,24 @@ async function submitTechFormAdd() {
     return;
   }
 
+  if (_tfAddMode === 'editUser' && _tfAddBuiltinId) {
+    // 사용자 추가분 편집 — USER_TECH/FORM 배열의 기존 entry 갱신
+    const arr = _tfAddTarget === 'tech' ? getUserTech() : getUserForms();
+    const idx = arr.findIndex(e => e.id === _tfAddBuiltinId);
+    if (idx < 0) { _showTfError('편집할 항목을 찾을 수 없습니다.'); return; }
+    arr[idx] = {
+      ...arr[idx],
+      title, cat, file,
+      attachment: attachment || arr[idx].attachment || null
+    };
+    if (_tfAddTarget === 'tech') { saveUserTech(arr); renderTech(); }
+    else { saveUserForms(arr); renderForms(); }
+    closeTechFormAddModal();
+    alert('✅ 편집 완료' + (attachment ? ` (📎 ${attachment.name})` : ''));
+    if (typeof logActivity === 'function') logActivity(`${_tfAddTarget === 'tech' ? '기술자료' : '서식자료'} 사용자글 편집: ${title.slice(0, 30)}`);
+    return;
+  }
+
   // 사용자 추가(신규)
   const entry = {
     id: Date.now(),
@@ -3809,6 +3827,29 @@ async function editBuiltinForm(id) {
   _openTechFormAddModal('form', mergeBuiltin(base, ovr));
 }
 window.editBuiltinForm = editBuiltinForm;
+
+// 사용자 추가분 편집 — 모달 재사용 (editUser 모드)
+async function editUserTechEntry(id) {
+  if (!(await checkDeletePassword('기술자료 편집'))) return;
+  const arr = getUserTech();
+  const e = arr.find(t => t.id === id);
+  if (!e) return;
+  _openTechFormAddModal('tech', e);
+  _tfAddMode = 'editUser';
+  _tfAddBuiltinId = id;
+}
+window.editUserTechEntry = editUserTechEntry;
+
+async function editUserFormEntry(id) {
+  if (!(await checkDeletePassword('서식자료 편집'))) return;
+  const arr = getUserForms();
+  const e = arr.find(f => f.id === id);
+  if (!e) return;
+  _openTechFormAddModal('form', e);
+  _tfAddMode = 'editUser';
+  _tfAddBuiltinId = id;
+}
+window.editUserFormEntry = editUserFormEntry;
 
 async function deleteTechEntry(id) {
   if (!(await checkDeletePassword('기술자료 삭제'))) return;
@@ -3861,9 +3902,9 @@ function renderTech() {
     return;
   }
   tbody.innerHTML = filtered.map((t, i) => {
-    const editCall = t.custom ? '' : `onclick="event.stopPropagation(); editBuiltinTech(${t.id})"`;
+    const editFn = t.custom ? `editUserTechEntry(${t.id})` : `editBuiltinTech(${t.id})`;
     return `
-    <tr style="cursor:${admin && !t.custom ? 'pointer' : 'default'};" ${admin && !t.custom ? editCall : ''}>
+    <tr style="cursor:${admin ? 'pointer' : 'default'};" ${admin ? `onclick="event.stopPropagation(); ${editFn}"` : ''}>
       <td class="col-no" style="text-align:center; color:var(--text-muted);">${filtered.length - i}</td>
       <td><span class="cat-chip cat-${cssCat(t.cat)}">${t.cat}</span></td>
       <td class="td-title">
@@ -3875,7 +3916,7 @@ function renderTech() {
       <td style="color:var(--text-secondary); font-size:0.85rem;">${t.date}</td>
       <td style="text-align:center; white-space:nowrap;">
         <button class="btn-mini btn-dl" onclick="event.stopPropagation(); downloadTech(${t.id})">⬇ 받기</button>
-        ${admin && !t.custom ? `<button class="btn-mini" onclick="event.stopPropagation(); editBuiltinTech(${t.id})" title="편집" style="margin-left:4px;">✏️</button>` : ''}
+        ${admin ? `<button class="btn-mini" onclick="event.stopPropagation(); ${editFn}" title="편집" style="margin-left:4px;">✏️</button>` : ''}
         ${admin && t.custom ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteTechEntry(${t.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
       </td>
     </tr>`;
@@ -3915,9 +3956,9 @@ function renderForms() {
     return;
   }
   tbody.innerHTML = filtered.map((f, i) => {
-    const editCall = f.custom ? '' : `onclick="event.stopPropagation(); editBuiltinForm(${f.id})"`;
+    const editFn = f.custom ? `editUserFormEntry(${f.id})` : `editBuiltinForm(${f.id})`;
     return `
-    <tr style="cursor:${admin && !f.custom ? 'pointer' : 'default'};" ${admin && !f.custom ? editCall : ''}>
+    <tr style="cursor:${admin ? 'pointer' : 'default'};" ${admin ? `onclick="event.stopPropagation(); ${editFn}"` : ''}>
       <td class="col-no" style="text-align:center; color:var(--text-muted);">${filtered.length - i}</td>
       <td><span class="cat-chip cat-${cssCat(f.cat)}">${f.cat}</span></td>
       <td class="td-title">
@@ -3929,7 +3970,7 @@ function renderForms() {
       <td style="color:var(--text-secondary); font-size:0.85rem;">${f.date}</td>
       <td style="text-align:center; white-space:nowrap;">
         <button class="btn-mini btn-dl" onclick="event.stopPropagation(); downloadForm(${f.id})">⬇ 받기</button>
-        ${admin && !f.custom ? `<button class="btn-mini" onclick="event.stopPropagation(); editBuiltinForm(${f.id})" title="편집" style="margin-left:4px;">✏️</button>` : ''}
+        ${admin ? `<button class="btn-mini" onclick="event.stopPropagation(); ${editFn}" title="편집" style="margin-left:4px;">✏️</button>` : ''}
         ${admin && f.custom ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteFormEntry(${f.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
       </td>
     </tr>`;

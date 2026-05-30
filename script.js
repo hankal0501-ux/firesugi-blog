@@ -4002,10 +4002,17 @@ function downloadForm(id) {
     renderForms();
     return;
   }
-  // 첨부 없음 — 데모 안내
+  // 첨부 없음 — 관리자는 바로 편집 모달로, 일반 방문자는 간단 안내
+  const adminMode = (typeof isAdmin === 'function') && isAdmin();
+  if (adminMode) {
+    if (confirm(`📎 "${f.title}" 에 첨부 파일이 없습니다.\n\n지금 파일을 첨부할까요?`)) {
+      if (isUser) editUserFormEntry(id); else editBuiltinForm(id);
+    }
+    return;
+  }
   f.dl = (f.dl || 0) + 1;
   if (isUser) saveUserForms(userArr);
-  alert(`📥 ${f.title}\n파일형식: ${f.file}\n\n⚠ 실제 파일이 첨부되지 않은 항목입니다.\n관리자가 [✏️ 글쓰기]로 파일 첨부 후 등록한 자료만 실제 다운로드됩니다.`);
+  alert(`📥 ${f.title}\n\n⏳ 파일 준비 중입니다. 관리자에게 문의해주세요.`);
   if (typeof logActivity === 'function') logActivity('서식다운(빈파일): ' + f.title.slice(0, 30));
   renderForms();
 }
@@ -4034,7 +4041,14 @@ function downloadTech(id) {
     renderTech();
     return;
   }
-  alert(`📥 ${t.title}\n파일형식: ${t.file}\n\n⚠ 실제 파일이 첨부되지 않은 항목입니다.\n관리자가 [✏️ 글쓰기]로 파일 첨부 후 등록한 자료만 실제 다운로드됩니다.`);
+  const adminMode = (typeof isAdmin === 'function') && isAdmin();
+  if (adminMode) {
+    if (confirm(`📎 "${t.title}" 에 첨부 파일이 없습니다.\n\n지금 파일을 첨부할까요?`)) {
+      if (isUser) editUserTechEntry(id); else editBuiltinTech(id);
+    }
+    return;
+  }
+  alert(`📥 ${t.title}\n\n⏳ 파일 준비 중입니다. 관리자에게 문의해주세요.`);
 }
 window.downloadTech = downloadTech;
 

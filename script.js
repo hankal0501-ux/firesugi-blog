@@ -3638,30 +3638,103 @@ function saveUserForms(arr) {
   }
 }
 
+// 글쓰기 모달 — 기술자료/서식자료 공용
+let _tfAddTarget = 'tech'; // 'tech' or 'form'
+const TECH_CATS = ['점검', '설계', '시공', '감리', '해설'];
+const FORM_CATS = ['점검표', '신고서', '계약서', '대장', '기타'];
+
 async function addTechEntry() {
   if (!(await checkDeletePassword('기술자료 등록'))) return;
-  const cat = prompt('📂 분류 — 점검 / 설계 / 시공 / 감리 / 해설 중 하나:');
-  if (!cat || !cat.trim()) return;
-  const title = prompt('📝 제목:');
-  if (!title || !title.trim()) return;
-  const file = (prompt('📎 파일 형식 (PDF / XLSX / DOCX / ZIP / HWP):', 'PDF') || 'PDF').trim().toUpperCase();
-  const arr = getUserTech();
-  arr.unshift({
-    id: Date.now(),
-    cat: cat.trim(),
-    title: title.trim(),
-    file,
-    date: new Date().toISOString().slice(0,10).replace(/-/g,'.'),
-    views: 0,
-    isNew: true,
-    custom: true
-  });
-  saveUserTech(arr);
-  renderTech();
-  alert('✅ 기술자료 등록 완료');
-  if (typeof logActivity === 'function') logActivity('기술자료 등록: ' + title.trim().slice(0, 30));
+  _openTechFormAddModal('tech');
 }
 window.addTechEntry = addTechEntry;
+
+async function addFormEntry() {
+  if (!(await checkDeletePassword('서식자료 등록'))) return;
+  _openTechFormAddModal('form');
+}
+window.addFormEntry = addFormEntry;
+
+function _openTechFormAddModal(kind) {
+  _tfAddTarget = kind;
+  const modal = document.getElementById('techFormAddModal');
+  if (!modal) return;
+  document.getElementById('tfAddTitle').textContent = kind === 'tech' ? '✏️ 기술자료 등록' : '✏️ 서식자료 등록';
+  // 분류 select 채우기
+  const cats = kind === 'tech' ? TECH_CATS : FORM_CATS;
+  const sel = document.getElementById('tfAddCat');
+  sel.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
+  // 기본 파일 형식
+  document.getElementById('tfAddFile').value = kind === 'tech' ? 'PDF' : 'HWP';
+  // 입력값 초기화
+  document.getElementById('tfAddTitleInput').value = '';
+  document.getElementById('tfAddFileUpload').value = '';
+  document.getElementById('tfAddError').style.display = 'none';
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('tfAddTitleInput').focus(), 50);
+}
+function closeTechFormAddModal() {
+  const modal = document.getElementById('techFormAddModal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+window.closeTechFormAddModal = closeTechFormAddModal;
+
+function _showTfError(msg) {
+  const el = document.getElementById('tfAddError');
+  el.textContent = '⚠ ' + msg;
+  el.style.display = 'block';
+}
+
+async function submitTechFormAdd() {
+  const title = document.getElementById('tfAddTitleInput').value.trim();
+  if (!title) return _showTfError('제목을 입력하세요.');
+  const cat = document.getElementById('tfAddCat').value;
+  const file = document.getElementById('tfAddFile').value;
+  const fileInput = document.getElementById('tfAddFileUpload');
+  const f = fileInput.files && fileInput.files[0];
+  let attachment = null;
+  if (f) {
+    if (f.size > 5 * 1024 * 1024) return _showTfError(`파일이 ${(f.size/1024/1024).toFixed(1)}MB 입니다. 5MB 이하만 가능.`);
+    try {
+      const dataUrl = await new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = e => res(e.target.result);
+        r.onerror = rej;
+        r.readAsDataURL(f);
+      });
+      attachment = { name: f.name, type: f.type, size: f.size, data: dataUrl };
+    } catch (e) {
+      return _showTfError('파일 읽기 실패: ' + e.message);
+    }
+  }
+  const entry = {
+    id: Date.now(),
+    cat, title, file,
+    date: new Date().toISOString().slice(0,10).replace(/-/g,'.'),
+    isNew: true,
+    custom: true,
+    attachment
+  };
+  if (_tfAddTarget === 'tech') {
+    entry.views = 0;
+    const arr = getUserTech();
+    arr.unshift(entry);
+    saveUserTech(arr);
+    renderTech();
+  } else {
+    entry.dl = 0;
+    const arr = getUserForms();
+    arr.unshift(entry);
+    saveUserForms(arr);
+    renderForms();
+  }
+  closeTechFormAddModal();
+  alert('✅ 등록 완료' + (attachment ? ` (📎 ${attachment.name}, ${(attachment.size/1024).toFixed(1)}KB)` : ''));
+  if (typeof logActivity === 'function') logActivity(`${_tfAddTarget === 'tech' ? '기술자료' : '서식자료'} 등록: ${title.slice(0, 30)}`);
+}
+window.submitTechFormAdd = submitTechFormAdd;
 
 async function deleteTechEntry(id) {
   if (!(await checkDeletePassword('기술자료 삭제'))) return;
@@ -3671,30 +3744,7 @@ async function deleteTechEntry(id) {
 }
 window.deleteTechEntry = deleteTechEntry;
 
-async function addFormEntry() {
-  if (!(await checkDeletePassword('서식자료 등록'))) return;
-  const cat = prompt('📂 분류 — 점검표 / 신고서 / 계약서 / 대장 / 기타 중 하나:');
-  if (!cat || !cat.trim()) return;
-  const title = prompt('📝 양식명:');
-  if (!title || !title.trim()) return;
-  const file = (prompt('📎 파일 형식 (HWP / XLSX / DOCX / PDF / ZIP):', 'HWP') || 'HWP').trim().toUpperCase();
-  const arr = getUserForms();
-  arr.unshift({
-    id: Date.now(),
-    cat: cat.trim(),
-    title: title.trim(),
-    file,
-    date: new Date().toISOString().slice(0,10).replace(/-/g,'.'),
-    dl: 0,
-    isNew: true,
-    custom: true
-  });
-  saveUserForms(arr);
-  renderForms();
-  alert('✅ 서식자료 등록 완료');
-  if (typeof logActivity === 'function') logActivity('서식자료 등록: ' + title.trim().slice(0, 30));
-}
-window.addFormEntry = addFormEntry;
+// (addFormEntry 모달 버전은 위쪽에 정의됨)
 
 async function deleteFormEntry(id) {
   if (!(await checkDeletePassword('서식자료 삭제'))) return;
@@ -3741,12 +3791,14 @@ function renderTech() {
       <td class="td-title">
         ${esc(t.title)}
         ${t.isNew ? '<span class="badge-new">NEW</span>' : ''}
+        ${t.attachment ? '<span class="badge-attach" title="첨부파일 있음">📎</span>' : ''}
       </td>
       <td style="text-align:center;"><span class="file-badge file-${(t.file||'').toLowerCase()}">${t.file}</span></td>
       <td style="color:var(--text-secondary); font-size:0.85rem;">${t.date}</td>
-      <td style="text-align:center;">${t.custom && admin
-        ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteTechEntry(${t.id})" title="삭제">🗑</button>`
-        : (t.views || 0).toLocaleString()}</td>
+      <td style="text-align:center;">
+        ${t.custom ? `<button class="btn-mini btn-dl" onclick="event.stopPropagation(); downloadTech(${t.id})">⬇ 받기</button>` : (t.views || 0).toLocaleString()}
+        ${t.custom && admin ? `<button class="btn-mini btn-mini-danger" onclick="event.stopPropagation(); deleteTechEntry(${t.id})" title="삭제" style="margin-left:4px;">🗑</button>` : ''}
+      </td>
     </tr>`).join('');
 }
 
@@ -3797,13 +3849,55 @@ function renderForms() {
     </tr>`).join('');
 }
 function downloadForm(id) {
-  const f = formData.find(x => x.id === id);
+  // 사용자 추가분 먼저 찾기 (실제 첨부 파일이 있을 수 있음)
+  const userArr = getUserForms();
+  let f = userArr.find(x => x.id === id);
+  let isUser = !!f;
+  if (!f) f = formData.find(x => x.id === id);
   if (!f) return;
-  f.dl++;
-  alert(`📥 다운로드: ${f.title}\n파일형식: ${f.file}\n총 다운로드: ${f.dl.toLocaleString()}회\n\n※ 데모이며 실제 파일은 제공되지 않습니다.`);
-  if (typeof logActivity === 'function') logActivity('서식다운: ' + f.title.slice(0, 30));
+
+  // 실제 첨부가 있으면 직접 다운로드
+  if (f.attachment && f.attachment.data) {
+    const a = document.createElement('a');
+    a.href = f.attachment.data;
+    a.download = f.attachment.name || (f.title + '.' + (f.file || 'bin').toLowerCase());
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    f.dl = (f.dl || 0) + 1;
+    if (isUser) saveUserForms(userArr);
+    if (typeof logActivity === 'function') logActivity('서식다운: ' + f.title.slice(0, 30));
+    renderForms();
+    return;
+  }
+  // 첨부 없음 — 데모 안내
+  f.dl = (f.dl || 0) + 1;
+  if (isUser) saveUserForms(userArr);
+  alert(`📥 ${f.title}\n파일형식: ${f.file}\n\n⚠ 실제 파일이 첨부되지 않은 항목입니다.\n관리자가 [✏️ 글쓰기]로 파일 첨부 후 등록한 자료만 실제 다운로드됩니다.`);
+  if (typeof logActivity === 'function') logActivity('서식다운(빈파일): ' + f.title.slice(0, 30));
   renderForms();
 }
+window.downloadForm = downloadForm;
+
+// 기술자료도 동일하게 — 첨부 있으면 다운로드, 없으면 안내
+function downloadTech(id) {
+  const userArr = getUserTech();
+  let t = userArr.find(x => x.id === id);
+  let isUser = !!t;
+  if (!t) t = techData.find(x => x.id === id);
+  if (!t) return;
+  if (t.attachment && t.attachment.data) {
+    const a = document.createElement('a');
+    a.href = t.attachment.data;
+    a.download = t.attachment.name || (t.title + '.' + (t.file || 'bin').toLowerCase());
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    t.views = (t.views || 0) + 1;
+    if (isUser) saveUserTech(userArr);
+    if (typeof logActivity === 'function') logActivity('기술다운: ' + t.title.slice(0, 30));
+    renderTech();
+    return;
+  }
+  alert(`📥 ${t.title}\n파일형식: ${t.file}\n\n⚠ 실제 파일이 첨부되지 않은 항목입니다.\n관리자가 [✏️ 글쓰기]로 파일 첨부 후 등록한 자료만 실제 다운로드됩니다.`);
+}
+window.downloadTech = downloadTech;
 
 function renderMyArea() {
   const area = document.getElementById('miMyArea');

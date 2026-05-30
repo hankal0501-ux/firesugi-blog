@@ -3737,9 +3737,11 @@ function _openTechFormAddModal(kind, existingEntry) {
     sel.value = existingEntry.cat || cats[0];
     document.getElementById('tfAddFile').value = existingEntry.file || (kind === 'tech' ? 'PDF' : 'HWP');
     document.getElementById('tfAddTitleInput').value = existingEntry.title || '';
+    document.getElementById('tfAddContent').value = existingEntry.content || '';
   } else {
     document.getElementById('tfAddFile').value = kind === 'tech' ? 'PDF' : 'HWP';
     document.getElementById('tfAddTitleInput').value = '';
+    document.getElementById('tfAddContent').value = '';
   }
   document.getElementById('tfAddFileUpload').value = '';
   document.getElementById('tfAddError').style.display = 'none';
@@ -3772,6 +3774,7 @@ async function submitTechFormAdd() {
   if (!title) return _showTfError('제목을 입력하세요.');
   const cat = document.getElementById('tfAddCat').value;
   const file = document.getElementById('tfAddFile').value;
+  const content = (document.getElementById('tfAddContent')?.value || '').trim();
   const fileInput = document.getElementById('tfAddFileUpload');
   const f = fileInput.files && fileInput.files[0];
   let attachment = null;
@@ -3790,10 +3793,10 @@ async function submitTechFormAdd() {
     }
   }
   if (_tfAddMode === 'editBuiltin' && _tfAddBuiltinId) {
-    // 빌트인 자료 오버라이드 — title/cat/file/attachment 저장
+    // 빌트인 자료 오버라이드 — title/cat/file/content/attachment 저장
     const ovrAll = _tfAddTarget === 'tech' ? getBuiltinTechOvr() : getBuiltinFormOvr();
     const prev = ovrAll[_tfAddBuiltinId] || {};
-    const patch = { title, cat, file };
+    const patch = { title, cat, file, content };
     if (attachment) patch.attachment = attachment;
     else if (prev.attachment) patch.attachment = prev.attachment; // 기존 첨부 유지
     ovrAll[_tfAddBuiltinId] = { ...prev, ...patch, updatedAt: Date.now() };
@@ -3812,7 +3815,7 @@ async function submitTechFormAdd() {
     if (idx < 0) { _showTfError('편집할 항목을 찾을 수 없습니다.'); return; }
     arr[idx] = {
       ...arr[idx],
-      title, cat, file,
+      title, cat, file, content,
       attachment: attachment || arr[idx].attachment || null
     };
     if (_tfAddTarget === 'tech') { saveUserTech(arr); renderTech(); }
@@ -3826,7 +3829,7 @@ async function submitTechFormAdd() {
   // 사용자 추가(신규)
   const entry = {
     id: Date.now(),
-    cat, title, file,
+    cat, title, file, content,
     date: new Date().toISOString().slice(0,10).replace(/-/g,'.'),
     isNew: true,
     custom: true,
@@ -4051,16 +4054,23 @@ function downloadForm(id) {
     return;
   }
   // 첨부 없음 — 관리자는 바로 편집 모달로, 일반 방문자는 간단 안내
+  // 본문 있으면 본문 표시 (관리자에겐 첨부 옵션 안내 같이)
+  if (f.content) {
+    const adminMode = (typeof isAdmin === 'function') && isAdmin();
+    const adminHint = adminMode ? '\n\n💡 관리자: 행 클릭 또는 ✏️ 로 파일 첨부 가능' : '';
+    alert(`📄 ${f.title}\n${'─'.repeat(20)}\n${f.content}${adminHint}`);
+    return;
+  }
   const adminMode = (typeof isAdmin === 'function') && isAdmin();
   if (adminMode) {
-    if (confirm(`📎 "${f.title}" 에 첨부 파일이 없습니다.\n\n지금 파일을 첨부할까요?`)) {
+    if (confirm(`📎 "${f.title}" 에 첨부 파일·본문이 없습니다.\n\n지금 파일을 첨부할까요?`)) {
       if (isUser) editUserFormEntry(id); else editBuiltinForm(id);
     }
     return;
   }
   f.dl = (f.dl || 0) + 1;
   if (isUser) saveUserForms(userArr);
-  alert(`📥 ${f.title}\n\n⏳ 파일 준비 중입니다. 관리자에게 문의해주세요.`);
+  alert(`📥 ${f.title}\n\n⏳ 자료 준비 중입니다. 관리자에게 문의해주세요.`);
   if (typeof logActivity === 'function') logActivity('서식다운(빈파일): ' + f.title.slice(0, 30));
   renderForms();
 }
@@ -4089,14 +4099,20 @@ function downloadTech(id) {
     renderTech();
     return;
   }
+  if (t.content) {
+    const adminMode = (typeof isAdmin === 'function') && isAdmin();
+    const adminHint = adminMode ? '\n\n💡 관리자: 행 클릭 또는 ✏️ 로 파일 첨부 가능' : '';
+    alert(`📄 ${t.title}\n${'─'.repeat(20)}\n${t.content}${adminHint}`);
+    return;
+  }
   const adminMode = (typeof isAdmin === 'function') && isAdmin();
   if (adminMode) {
-    if (confirm(`📎 "${t.title}" 에 첨부 파일이 없습니다.\n\n지금 파일을 첨부할까요?`)) {
+    if (confirm(`📎 "${t.title}" 에 첨부 파일·본문이 없습니다.\n\n지금 파일을 첨부할까요?`)) {
       if (isUser) editUserTechEntry(id); else editBuiltinTech(id);
     }
     return;
   }
-  alert(`📥 ${t.title}\n\n⏳ 파일 준비 중입니다. 관리자에게 문의해주세요.`);
+  alert(`📥 ${t.title}\n\n⏳ 자료 준비 중입니다. 관리자에게 문의해주세요.`);
 }
 window.downloadTech = downloadTech;
 

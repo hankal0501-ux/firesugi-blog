@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "6월 유류할증료 내리자 해외여행 특가 경쟁…놀유니버스, 아시아나 43개 노선 할인",
+      "detail": "뉴스탭",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5DYzVyTTRfZXk2T2l4UDhXMnBoWHFEaTJydVdCR096czNHWkpsS0EwTU01OWsxYVpFSHdRSW1Odi1aZUxFRk9hNUozOEdUWGpsWVowZEpmWmItN09TV1FxTkRJNm9MdHZlWFUyWQ?oc=5",
+      "site": "gnews_뉴스탭",
+      "created_at": "2026-06-01 04:09:24"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "호텔 할인·무료 차량까지…가든그로브 화학사고에 주민 지원 본격화",
       "detail": "미주중앙일보",
       "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9GYklLQ3lzeVpZUE50VFlxWk9jRlQwYTUxYW9MN1FDTi1HdEQ5WUxELVdDMWR4V0Jzc1JVSGR1MVllV1pNTjhkUWNJa1NweVVLUEg4T0E2YURhcEp2d2dmNHpB?oc=5",
@@ -254,5 +262,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-05-31 04:59:28"
+  "last_updated": "2026-06-01 05:24:51"
 }

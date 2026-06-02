@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "놀유니버스, 아시아나항공과 항공권 특가 프로모션 진행",
+      "detail": "파이낸셜투데이",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1wME03dG5Ya282T0t2VjUzbGlIOHBvTHFHdUNCX2lkSE5jZ19BbGw2Mnhub19aWFZmU2pMb0dSZDZaMm5WUTlLR1VweUFJTXM0eTk1TTNTUFZ0UVp3ekJhT2gtWllOclpxdkHSAW5BVV95cUxQT0hxaHI0UWJKV3JadzFHeWNrQnJ3Sk52QVV6MkdTRVNhN2FJLXd6dzc5TE1RYzk0N0dIdVVNTUphR0NXN3lxeDN3SHhqdXRWMDFhVVIwWEw1eFlBdVVqMUE5QlZmOVJwSGo0dUNiQQ?oc=5",
+      "site": "gnews_파이낸셜투데이",
+      "created_at": "2026-06-01 07:45:01"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "6월 유류할증료 내리자 해외여행 특가 경쟁…놀유니버스, 아시아나 43개 노선 할인",
       "detail": "뉴스탭",
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5DYzVyTTRfZXk2T2l4UDhXMnBoWHFEaTJydVdCR096czNHWkpsS0EwTU01OWsxYVpFSHdRSW1Odi1aZUxFRk9hNUozOEdUWGpsWVowZEpmWmItN09TV1FxTkRJNm9MdHZlWFUyWQ?oc=5",
@@ -90,6 +98,15 @@
     }
   ],
   "giveaways": [
+    {
+      "source_site": "데일리안",
+      "title": "인천시, 청년 정책 직접 설계한다…‘청년정책 공모전’ 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9HNndsWTVILUZITnZORWVmZncyeEhyOWhhR0xlTm1LRVpjUkJXUXR0UkxYRlZwYnZ3cWplRkM1eWFWMVRuY3NoOGJ6clpBVElWWGlMVTdhWdIBpgJBVV95cUxNQ2R5WE1vQU41MGtodktCOGFGWFVPU25WZmlqR3NqTUdKSnFXVDhrYl8zNF8yb0N1U21GQjRQTXZSZXBQOGNoa0l6OEQxcVh5MHRicVlCT29VbmJEWWVFSnFXUUtqUng0Q25iN3FoX3dsN0FseUQ1TWloOFVYZ0hWWGxJbXR0NkNocWNOcFUydzNRdEFOT3dJREhVWEZ1RlNhWTlGNzM5UHFHZUJoOHVtQ1VOOE8wQ1NBeHdvMEw1THdEakNpTU0zeHhBdENmZXRhMkhZcFl1NVZvQktVRDVPaXdEejdELXcwT1dyaU96akRPQWxLMHB4X0lqVnVCay1QTldZdmRmVkFzek9yX0owbFJ4aFZhdGtiR0Z4cnllcFg0T1NrUFE?oc=5",
+      "created_at": "2026-06-01 23:30:00"
+    },
     {
       "source_site": "나눔경제뉴스",
       "title": "호반그룹, ‘2026 호반혁신기술공모전’ 모집…AI·스마트건설 스타트업 발굴",
@@ -262,5 +279,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-06-01 05:24:51"
+  "last_updated": "2026-06-02 05:10:25"
 }

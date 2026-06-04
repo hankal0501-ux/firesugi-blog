@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "비엣젯항공, 항공권 특가 프로모션 진행",
+      "detail": "비건뉴스",
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5zYmtDWkIzVVh1cFY2YXRjMEJIT3k1ZTFidWRYYmJuS0N0cTVpU05lQzBNT1d6cF9TTHhTZ1E1RkhUMm5mRURvVTNvaldJSmRoWEJvTkNXem5JT3VWMkg2X2toUzJxUQ?oc=5",
+      "site": "gnews_비건뉴스",
+      "created_at": "2026-06-04 04:45:57"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "놀유니버스, 아시아나항공과 항공권 특가 프로모션 진행",
       "detail": "파이낸셜투데이",
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1wME03dG5Ya282T0t2VjUzbGlIOHBvTHFHdUNCX2lkSE5jZ19BbGw2Mnhub19aWFZmU2pMb0dSZDZaMm5WUTlLR1VweUFJTXM0eTk1TTNTUFZ0UVp3ekJhT2gtWllOclpxdkHSAW5BVV95cUxQT0hxaHI0UWJKV3JadzFHeWNrQnJ3Sk52QVV6MkdTRVNhN2FJLXd6dzc5TE1RYzk0N0dIdVVNTUphR0NXN3lxeDN3SHhqdXRWMDFhVVIwWEw1eFlBdVVqMUE5QlZmOVJwSGo0dUNiQQ?oc=5",
@@ -126,24 +134,6 @@
       "created_at": "2026-05-05 07:00:00"
     },
     {
-      "source_site": "스마트투데이",
-      "title": "하나증권, 국내주식 경품 추첨 이벤트..\"최대 300만원 혜택\"",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE50UktnUzJOZEI5NVVQRmFXRVRNbTNOTGU1Vmx1TmhoZkJKakp2MXRoR3Q3UWoyWUl6RTZvVzBKc0xzWmFXLUFXMmNMRkttZjJTTmlVaXY3Y1ZlTzlEekJJ?oc=5",
-      "created_at": "2026-05-04 07:00:00"
-    },
-    {
-      "source_site": "뉴스핌",
-      "title": "하나증권, 7월까지 최대 300만원 경품 추첨 이벤트",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1WUDNoSXo4Ri1INEl6ZU5NbTNsRkVrbmR0QVlZZDQzT2VlZ0ZlMTlGME5aUkx2TW9hUVhSYV9uVmE5XzBGYVE3eHFOZTcyTDQwaUk0UzVvWHJjTHda?oc=5",
-      "created_at": "2026-05-04 07:00:00"
-    },
-    {
       "source_site": "현대불교",
       "title": "\"송광사 옛날사진 콘테스트 응모하세요\"",
       "category": "공모전",
@@ -151,33 +141,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBKbmttNFVPV1plX0NzdDVOeVpZZmwxQWpiMTViTEVlUERvZERkWFBoWWsweWJ4b0s3RmRpNGlHZlhTbG94eXRGcHYzSWljRzdod0gyUXNXVnF1blF3eFJYTE1BY2dBbGloamRZcU5BYw?oc=5",
       "created_at": "2026-05-11 04:30:33"
-    },
-    {
-      "source_site": "뉴스락",
-      "title": "하나증권, 국내주식 경품 추첨 이벤트...최대 300만원 혜택",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE53a01WTGtobXByUHdIYkZTSk1seVNncnh4V0YxUmpQSTlwZ0FsRlJTTTB4N0ZVY2VzcG5zY2lBcElmQ3pQVnZYMXNOeTM4aU5IZl92bFZabmk2ck5FVnVhYk1pbEo0THB2TXNudw?oc=5",
-      "created_at": "2026-05-04 07:00:00"
-    },
-    {
-      "source_site": "지디넷코리아",
-      "title": "하나증권, 국장 경품 추첨 이벤트 재개…\"최대 300만원 혜택\"",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5FdlNvTzB1SzBxeDlTSmVmR1UwTS1Ga3RIZ2lTdlBfNlR4VTdpb3J1U1JQaG5uaEl1MG5DT1lzZnVWeGZqZTl1cjFCMnBleXdSTjZLb2hn?oc=5",
-      "created_at": "2026-05-04 07:00:00"
-    },
-    {
-      "source_site": "중소기업신문",
-      "title": "하나증권, 국내주식 경품 추첨 이벤트…\"최대 300만원 혜택\"",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5QcWljSDlPdGRXMnhDYlotVDV1R1NvZ21pQzlsMnlCQU55Mk1JTEJUQmlwU25CQ3ZjOVVBdmpkelNSLXQ3MkdMVFBWUHdXZEJXam9QenlZLURHaDFqVUdkX09ZeFpVNjU3SXd0RG5n?oc=5",
-      "created_at": "2026-05-04 07:00:00"
     },
     {
       "source_site": "웹이코노미",
@@ -279,5 +242,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-06-03 05:25:20"
+  "last_updated": "2026-06-04 05:20:37"
 }

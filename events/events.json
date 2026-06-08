@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "클룩·이스타항공, 일본 항공·호텔 할인 프로모션 실시",
+      "detail": "뉴스트래블",
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1YNmFDTmVVZG9vQTMwRVFhMjlZSTBTQVlieV9EY0xPVnFKcE5sSDliemZyd25WOFJGQnh5MnJSZncwa1JFOFVGVFAwOFQ2YV8wOG1IY0VkUGxSeDluLUVId2VDQVhJdw?oc=5",
+      "site": "gnews_뉴스트래블",
+      "created_at": "2026-06-08 01:14:39"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "비엣젯항공, 프라하·알마티 신규 취항 기념 1,200만 장 항공권 특가",
       "detail": "시사의창",
       "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFB6b0Z6eUlNaUZOcmRnaTgzVGMtQW1MbzhKRld5MFlpMXZGWGZMeVRzbFd1WGFSWGtyM1RmdlgxVkpxTEZyX0xjQjY3anZvSzEtVnUwSQ?oc=5",
@@ -115,6 +123,15 @@
   ],
   "giveaways": [
     {
+      "source_site": "네이트",
+      "title": "인천시, 청년 정책 직접 설계한다…'청년정책 공모전' 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5IYzg3VnZwalQ0cjlPYlBRdUhnek80WWo4d2dEU0ZZYjdsOUlfZUhaaG9oc1JGamdPckdJaWJFVXpQR1Z5YTdGb0k4eFM1X2VQWVd3?oc=5",
+      "created_at": "2026-06-01 23:30:00"
+    },
+    {
       "source_site": "데일리안",
       "title": "인천시, 청년 정책 직접 설계한다…‘청년정책 공모전’ 모집",
       "category": "공모전",
@@ -140,15 +157,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBKbmttNFVPV1plX0NzdDVOeVpZZmwxQWpiMTViTEVlUERvZERkWFBoWWsweWJ4b0s3RmRpNGlHZlhTbG94eXRGcHYzSWljRzdod0gyUXNXVnF1blF3eFJYTE1BY2dBbGloamRZcU5BYw?oc=5",
       "created_at": "2026-05-11 04:30:33"
-    },
-    {
-      "source_site": "웹이코노미",
-      "title": "하나증권, 국내주식 경품 추첨 이벤트 재개…최대 300만원 혜택",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1NazZENkNuVGVEeGVUNDlLNWphOVExcWlEMndnaF9WdUtwVVgtelBGaEJCUnpfRjhjNlc2bjdTOVpPWE05VHV3WHphRXk5RVZkZW41SmNOWjJKbElON2I3MDItN21EclZJVU1vY24xOHAxZw?oc=5",
-      "created_at": "2026-05-08 07:00:00"
     },
     {
       "source_site": "스타트업레시피",
@@ -241,5 +249,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-06-07 05:06:02"
+  "last_updated": "2026-06-08 05:11:55"
 }

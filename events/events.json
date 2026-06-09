@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "에어프레미아, 항공권 특가 행사…LA발 왕복 이코노미석 731불",
+      "detail": "미주중앙일보",
+      "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5aYnR0ZE5RRVJqZ2o2N2NKMElVNGI3THNvX0FkbWs4cFhKSkF3VVFpZGg0Z0JPRVQxUERCalI5SDA0cXFTSGlGbnZWTVhfelhTRGRaLURmUC1CUzZxRFhOV0d3?oc=5",
+      "site": "gnews_미주중앙일보",
+      "created_at": "2026-06-09 03:05:00"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "클룩·이스타항공, 일본 항공·호텔 할인 프로모션 실시",
       "detail": "뉴스트래블",
       "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1YNmFDTmVVZG9vQTMwRVFhMjlZSTBTQVlieV9EY0xPVnFKcE5sSDliemZyd25WOFJGQnh5MnJSZncwa1JFOFVGVFAwOFQ2YV8wOG1IY0VkUGxSeDluLUVId2VDQVhJdw?oc=5",
@@ -249,5 +257,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-06-08 05:11:55"
+  "last_updated": "2026-06-09 04:44:50"
 }

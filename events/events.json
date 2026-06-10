@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "Traveloka에서 대한항공 항공권 특가 상품을 찾는 방법 안내",
+      "detail": "Vietnam.vn",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQWkQ5SWh5d1BKZ1VrTG5wTTA4eUZaMWNkRFVGSjcwLVBJMWhoWHRUUUpxSVFkRmRhZUJlNUhlSVR4WXNYOHpqdEFEQ1JHdUZkSnVfQ2RjYnNWN0prcGxPdzZCOFh1a2gxQlFlTllyU21IWmpYbWJ0aVN6ZEg5ald3a0w1TDgtZw?oc=5",
+      "site": "gnews_Vietnam.vn",
+      "created_at": "2026-06-09 09:27:31"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "에어프레미아, 항공권 특가 행사…LA발 왕복 이코노미석 731불",
       "detail": "미주중앙일보",
       "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5aYnR0ZE5RRVJqZ2o2N2NKMElVNGI3THNvX0FkbWs4cFhKSkF3VVFpZGg0Z0JPRVQxUERCalI5SDA0cXFTSGlGbnZWTVhfelhTRGRaLURmUC1CUzZxRFhOV0d3?oc=5",
@@ -131,6 +139,15 @@
   ],
   "giveaways": [
     {
+      "source_site": "게임메카",
+      "title": "편당 120만 원, 게임문화재단 '게임비평공모전' 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1MaFNiVF91RmFMRTd1dHVmQ0w0cDZiWEo0cVVpelpNR2R1WkRLM29ldFZXd2tMNTY0UENlMThFdDFlaTdkbHlfMHpSbGU3NFBvT21UazJVQjPSAVtBVV95cUxPd3llYnFKM1BfMWE4RkVRNzRtYkJGc1k0eWFxcmdYVHp2andGa25OM0laSUJZZ0pnUUhabEhOM1JiRUZXNkN6N2hRU1g0eVdtWDV2cnJicm94aFNV?oc=5",
+      "created_at": "2026-06-10 00:58:19"
+    },
+    {
       "source_site": "네이트",
       "title": "인천시, 청년 정책 직접 설계한다…'청년정책 공모전' 모집",
       "category": "공모전",
@@ -156,15 +173,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5tbnhtYTNVNnU4VzJSQ3l1U0pVcHhvY1B1TldUZEUxZEZ2UXI2VGM3LXlVZ3VzRHVKbDFwaDU1VmxuWG43Rk1lS1RsQkJDX1l5bDBFaXl2b0FuRGQ0RmZIdS03eHVSVzJUTVhScw?oc=5",
       "created_at": "2026-05-29 01:03:22"
-    },
-    {
-      "source_site": "현대불교",
-      "title": "\"송광사 옛날사진 콘테스트 응모하세요\"",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBKbmttNFVPV1plX0NzdDVOeVpZZmwxQWpiMTViTEVlUERvZERkWFBoWWsweWJ4b0s3RmRpNGlHZlhTbG94eXRGcHYzSWljRzdod0gyUXNXVnF1blF3eFJYTE1BY2dBbGloamRZcU5BYw?oc=5",
-      "created_at": "2026-05-11 04:30:33"
     },
     {
       "source_site": "스타트업레시피",
@@ -257,5 +265,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-06-09 04:44:50"
+  "last_updated": "2026-06-10 04:56:33"
 }

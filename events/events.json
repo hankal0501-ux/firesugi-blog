@@ -139,6 +139,15 @@
   ],
   "giveaways": [
     {
+      "source_site": "이넷뉴스",
+      "title": "\" 예산 들인 공공기관 공모전, 모집 성패는 '홍보' 아닌 '기획 설계'에 달려\"",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9KQUNWcV9GWVJJeW1Xb1VITTlLSWl2bzFCR1I0Vk1vdHM4YnZnRmlfV0tuaUp2OFlKbHYxYWQ1OHBWTFVaRGxvaXRWd00zaU9UQ1ZQYUJ1RkljVV9VeEVrZGJibFZfdkV5TU44NdIBcEFVX3lxTE9Zb0t3M25mM2dWNnlzYi1QZnZtYzQ5dEhiaXNDWjlCU29QZ05WcDJWT1M3VjUwbm82R1JxX05kcmstRUlmbk5QR0tUa2h0WkE1LWQzcWxHV0Mxem1HeVdhdW9NSTNiaWNUSlV6dmtxRHo?oc=5",
+      "created_at": "2026-06-11 01:39:50"
+    },
+    {
       "source_site": "게임메카",
       "title": "편당 120만 원, 게임문화재단 '게임비평공모전' 모집",
       "category": "공모전",
@@ -173,15 +182,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5tbnhtYTNVNnU4VzJSQ3l1U0pVcHhvY1B1TldUZEUxZEZ2UXI2VGM3LXlVZ3VzRHVKbDFwaDU1VmxuWG43Rk1lS1RsQkJDX1l5bDBFaXl2b0FuRGQ0RmZIdS03eHVSVzJUTVhScw?oc=5",
       "created_at": "2026-05-29 01:03:22"
-    },
-    {
-      "source_site": "스타트업레시피",
-      "title": "SK이노베이션, 「AI 임팩트 솔루션」 공모전 모집",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBwYzdNUURKcWVpVld6MUVwNzNmcXN0c0FvNmliVW9EbWdMRWhjeFNrdDNta21iWlZLT2ZQRHhoU2ZnR3lRX0FYTWVra2Y2SVdYR1U1d3RR?oc=5",
-      "created_at": "2026-05-12 05:06:08"
     },
     {
       "source_site": "씽굿",
@@ -265,5 +265,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-06-10 04:56:33"
+  "last_updated": "2026-06-11 05:08:36"
 }

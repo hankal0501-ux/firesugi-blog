@@ -214,5 +214,17 @@
     "secret": false,
     "comments": [],
     "autoWritten": true
+  },
+  {
+    "id": 1781240491811,
+    "author": "Fire-Sugi",
+    "title": "🤖 경험담 — 첫 점검에서 놓치기 쉬운 5가지",
+    "content": "신입 점검자가 자주 놓치는 항목: ① 비상조명등 작동 ② 피난구 잠김 ③ 방화문 폐쇄력 ④ 가스누설경보기 ⑤ 완강기 설치.\n\n———\n🤖 Fire-Sugi 자동 글쓰기 (GitHub Actions)",
+    "date": "2026.06.12",
+    "views": 0,
+    "visibility": "public",
+    "secret": false,
+    "comments": [],
+    "autoWritten": true
   }
 ]

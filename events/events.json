@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "'여름 휴가철 항공권 특가'...지방공항 할인 놓치지 말자",
+      "detail": "gukjenews.com",
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5hT2VOMVNyMkZHMGFlZEJSbFp1Uk1NMHFPbGdaNXRXZXFUTnJwdlE4WXhHYnRTelF5ODc0Sk5FdXI1Z1QzYXhONXZRWm9UNDJ2LS1RZE5HR1JXV2MybkI2SEZ6YkZrektoa2RMSkp3?oc=5",
+      "site": "gnews_gukjenews.com",
+      "created_at": "2026-06-13 03:54:06"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "Traveloka에서 대한항공 항공권 특가 상품을 찾는 방법 안내",
       "detail": "Vietnam.vn",
       "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQWkQ5SWh5d1BKZ1VrTG5wTTA4eUZaMWNkRFVGSjcwLVBJMWhoWHRUUUpxSVFkRmRhZUJlNUhlSVR4WXNYOHpqdEFEQ1JHdUZkSnVfQ2RjYnNWN0prcGxPdzZCOFh1a2gxQlFlTllyU21IWmpYbWJ0aVN6ZEg5ald3a0w1TDgtZw?oc=5",
@@ -87,14 +95,6 @@
       "url": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1FWXJiOEtDdEdxbUZFY2hBZ3Z5Q2l1SkExcHhvUS1PVlVXWDhUOV83RTVDM1dkSE9MXzhtak84dWEtRGdNeHpn?oc=5",
       "site": "gnews_브런치",
       "created_at": "2026-05-14 07:00:00"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "평창 라마다 호텔 할인 예약 정보",
-      "detail": "브런치",
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5yTW56dXBrdjh1LU5hUFBHc2RBc1RIQzdDOW1uakpoZFczNXE4bzBGa2lBNjVQUnZ5NWZscFV0a0hpejlJN29USVFiZVhGcFllOTBj?oc=5",
-      "site": "gnews_브런치",
-      "created_at": "2026-05-13 07:00:00"
     },
     {
       "kind": "🎁 여행 특가",
@@ -265,5 +265,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-06-12 05:13:41"
+  "last_updated": "2026-06-13 05:00:05"
 }

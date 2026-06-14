@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "루프트한자 항공권 특가 이벤트",
+      "detail": "여행신문",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE92ZXprbU9kTGx3anVWdVh1ajN6OFpuTEg0bkhRSFVrd0xXNGplSXh6Y3ltMHRYYlFpUUVCazFUbFUzR0V6TkZyX0Zxcnhsdm45ZGd1LWZ5Q05xTGtaNDhNcVBFRUFRZkxzZVpiWkRBVjnSAXRBVV95cUxQN2ZzcWlZVFhEMnZRUkZVdS1Uck5lVEFhU1ZtSHoybWRWZHVScFRnd2p6RkxhV0tTQmw4Wkk5RFdTNWZaVXh3R3U3S29sR09HbTNpY3B5LThBV2s4djU3V21iVVVralJ3U283NjBldlRsYWlZZA?oc=5",
+      "site": "gnews_여행신문",
+      "created_at": "2026-06-13 22:07:07"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "'여름 휴가철 항공권 특가'...지방공항 할인 놓치지 말자",
       "detail": "gukjenews.com",
       "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5hT2VOMVNyMkZHMGFlZEJSbFp1Uk1NMHFPbGdaNXRXZXFUTnJwdlE4WXhHYnRTelF5ODc0Sk5FdXI1Z1QzYXhONXZRWm9UNDJ2LS1RZE5HR1JXV2MybkI2SEZ6YkZrektoa2RMSkp3?oc=5",
@@ -90,14 +98,6 @@
     },
     {
       "kind": "🎁 여행 특가",
-      "title": "울진 덕구온천호텔 할인 예약 특가 확인 방법 총정리",
-      "detail": "브런치",
-      "url": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1FWXJiOEtDdEdxbUZFY2hBZ3Z5Q2l1SkExcHhvUS1PVlVXWDhUOV83RTVDM1dkSE9MXzhtak84dWEtRGdNeHpn?oc=5",
-      "site": "gnews_브런치",
-      "created_at": "2026-05-14 07:00:00"
-    },
-    {
-      "kind": "🎁 여행 특가",
       "title": "노랑풍선, 마이리얼트립 패키지 입점 연계 해외여행 프로모션 진행",
       "detail": "디스커버리뉴스(DISCOVERYNEWS)",
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBnWksyMXpUNkpzanM0a0tnLWtXakM4X0dGeUkyaGtGTllCNkpoTXp6dWo0MnQwdXdIOC1nNm43N2ZnYzlqeVZ0a0N3TS12dExhUnFTTW5QalBBcnNzVHhTa3JPaWQxbGhHdzJ0UEdkazJqdw?oc=5",
@@ -127,14 +127,6 @@
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQRzJsbkZEWDRQUHVVeGFCczBEZXJSY2xJZ0NpUGVNSndnYmw0cWp2UWdLNkJoXzRlV3ZsRmNlSkEzU0RmWm1aTldOYThiY0NWZjRuR0dBOC15dFY5QmRzRFNVUW5EdVlfZDZEa1lvQk5GZ3NGdlV6N1RGUGl4M01fbUdR?oc=5",
       "site": "gnews_네이버 프리미엄콘텐츠",
       "created_at": "2026-05-22 13:33:20"
-    },
-    {
-      "kind": "🎁 여행사",
-      "title": "🌴베트남, 상반기최대혜택+쿠폰할인",
-      "detail": "모두투어-기획전 · 70% 할인",
-      "url": "https://www.modetour.com/special-exhibition",
-      "site": "agency_모두투어-기획전",
-      "created_at": "2026-05-14 17:11:20"
     }
   ],
   "giveaways": [
@@ -265,5 +257,5 @@
       "created_at": "2026-05-17 16:19:40"
     }
   ],
-  "last_updated": "2026-06-13 05:00:05"
+  "last_updated": "2026-06-14 05:15:32"
 }

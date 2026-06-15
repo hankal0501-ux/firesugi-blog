@@ -301,6 +301,60 @@ document.addEventListener('keydown', (ev) => {
   }
 });
 
+// === 동적 로더 — events.json 직접 로드 후 정적 HTML 교체 ===
+// (GitHub Actions가 매일 events.json만 갱신해도 화면에 즉시 반영됨)
+(async function loadDynamicEvents() {
+  try {
+    const res = await fetch('events.json?t=' + Date.now(), {cache: 'no-store'});
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data || (!data.travel && !data.giveaways)) return;
+    // 1) 최신 갱신 시각
+    if (data.last_updated) {
+      document.querySelectorAll('.meta strong').forEach(el => {
+        if (el.textContent.match(/^20\d{2}-\d{2}-\d{2}/)) el.textContent = data.last_updated;
+      });
+    }
+    // 2) 리스트 재구성
+    const list = document.getElementById('event-list');
+    if (!list) return;
+    const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const html = [];
+    for (const t of (data.travel || [])) {
+      const url = t.url || '';
+      const title = t.title || '';
+      const detail = t.detail || '';
+      const ts = t.created_at || '';
+      const link = url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>` : `<span>${esc(title)}</span>`;
+      html.push(`<li data-cat="여행"><span class="kind">${esc(t.kind || '🎁')}</span><span class="section">여행 특가</span>${link}<small>${esc(detail)}${ts ? ' · ' + esc(ts) : ''}</small></li>`);
+    }
+    for (const g of (data.giveaways || [])) {
+      const url = g.url || '';
+      const title = g.title || '';
+      const cat = g.category || '기타';
+      const src = g.source_site || '-';
+      let meta = esc(src);
+      if (g.prize) meta += ' · 경품: ' + esc(g.prize);
+      if (g.period) meta += ' · ' + esc(g.period);
+      if (g.created_at) meta += ' · ' + esc(g.created_at);
+      const link = url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>` : `<span>${esc(title)}</span>`;
+      html.push(`<li data-cat="${esc(cat)}"><span class="kind">🎁</span><span class="section">[${esc(cat)}]</span>${link}<small>${meta}</small></li>`);
+    }
+    list.innerHTML = html.join('');
+    // 3) 카운트 갱신
+    const countEl = document.getElementById('count');
+    if (countEl) {
+      const total = (data.travel?.length || 0) + (data.giveaways?.length || 0);
+      const m = countEl.textContent.match(/최근\s*(\d+)/);
+      const hours = m ? m[1] : '168';
+      countEl.textContent = total + '건 · 최근 ' + hours + '시간';
+    }
+    console.log('✅ events.json 동적 로드: ' + html.length + '건');
+  } catch (e) {
+    console.warn('events.json 로드 실패 — 정적 HTML 유지:', e.message);
+  }
+})();
+
 // === 리스트 최신순 자동 정렬 (created_at 또는 마지막 날짜 추출) ===
 (function sortLatest(){
   const list = document.getElementById('event-list');

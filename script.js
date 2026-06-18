@@ -697,6 +697,29 @@ const programData = {
     techStack: 'Capacitor 6 + IndexedDB + 네이티브 STT · GitHub Actions 자동 빌드',
     workflow: '사진 촬영 + 음성 받아쓰기 → 워터마크 자동 합성 → 즉시 공유 → 자동 업데이트로 신규 버전 배포'
   },
+  mycar: {
+    icon: '🚗', name: 'MyCar', tag: '차량 관리',
+    desc: '차량 정보·정비 이력·주행 기록 등을 한곳에서 관리하는 도구입니다. Cloudflare Workers 기반으로 별도 서버 없이 작동하며, 어디서나 브라우저로 즉시 접속할 수 있습니다.',
+    features: [
+      { title: '🚗 차량 정보 통합 관리', desc: '내 차의 기본 정보·계기판·정비 기록을 한 화면에서 관리.' },
+      { title: '⚡ Cloudflare Workers 엣지 배포', desc: '서버 없이 글로벌 엣지에서 동작 — 접속 지연 거의 없음, 무중단.' },
+      { title: '📱 모바일 최적화', desc: 'PC·스마트폰 어디서나 브라우저로 즉시 접속, 별도 앱 설치 불필요.' }
+    ],
+    howto: [
+      '1. https://mycar.hankal0501.workers.dev 접속.',
+      '2. 차량 정보 입력 후 필요한 기록(정비·주유 등)을 추가.',
+      '3. 모바일에서 "홈 화면에 추가"로 앱처럼 사용 가능.'
+    ],
+    link: 'https://mycar.hankal0501.workers.dev',
+    completed: true,
+    version: 'v1.0',
+    platform: '브라우저 (PC · 모바일)',
+    techStack: 'Cloudflare Workers (엣지 배포 · 서버리스)',
+    workflow: '브라우저 접속 → 차량 정보 입력 → 기록 누적 관리',
+    screenshots: [
+      // 📷 사용자가 직접 추가 예정 (URL 또는 상대경로)
+    ]
+  },
   inspection_board: {
     icon: '📋', name: '점검상황 게시판', tag: '진행관리 · 일정관리',
     desc: '점검 사업장별 마감일과 진행 단계를 한 화면에서 추적하는 내부 운영 게시판입니다. 초기파일 → 점검내역서 → 팀장확인 → 보고서·점검표 → confirm → 소방서제출까지 8단계 워크플로를 행 단위로 시각화하여 누락 없이 흐름을 관리합니다. (외부 공개 URL 없음 — 내부 보안)',

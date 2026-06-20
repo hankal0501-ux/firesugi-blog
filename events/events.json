@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "티웨이항공, 해외 항공권 특가로 여름 수요 공략",
+      "detail": "포인트데일리",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1HalJ3UXdrX2RSeXRTcjhkUVRWQU96NnI1cjlTeHk1YXN6Z29PN1dHb0t4Z1lOTUIzSDhlOTVubmNycTI2ckF3bTBiOEZzenNlTnlKWG9kZ2p4ZjJDS2U0dXpzSXpGRUVNLXdKbWM4d0PSAXRBVV95cUxQUGN2ckxxMHdnYVVWaUN3WlpLTlJab19pMVVZdUtWcVkzRnJQZjdaU1RVek1QQ1RJOVhiR29xQTg1WXR0aWduOFZsbWMzSkkyclFhQlYxSTRZN0tGTXBIVnhQR29Fb043SkFCX1hDZU9MQ2JPSA?oc=5",
+      "site": "gnews_포인트데일리",
+      "created_at": "2026-06-19 00:03:24"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "토스 행운퀴즈 '샵백 아고다 여행 특가' 정답…6월 16일",
       "detail": "게임톡",
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBzcDV1cjRxQmwzTm1kZ3JhU3FFaUtzUEY5Sk8wakZpb2FfaHBoR0xQNzVOei0yM1hUcnNyWjcwckpUYjhoY3ZOeG85YUtsWVo1QnFzNGY5SkdQSmZTMU5LZE9KVG5ubkp4dG1uNQ?oc=5",
@@ -169,5 +177,5 @@
       "created_at": "2026-05-29 01:03:22"
     }
   ],
-  "last_updated": "2026-06-19 05:33:15"
+  "last_updated": "2026-06-20 04:50:38"
 }

@@ -1,7 +1,7 @@
 {
-  "latest": "1.8.5",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.5.apk",
-  "notes": "1.8.5 📷 내장 라이브 카메라 - 촬영 화면에서 주소가 실시간으로 보입니다(기본 카메라 대신 앱 내장 카메라). 날짜(위)·주소(아래) 순으로 표시. 셔터 누르면 그 화면 그대로 워터마크 합성 저장.",
+  "latest": "1.8.6",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.6.apk",
+  "notes": "1.8.6 ⬇️ 업데이트 다운로드 수정 - '새 버전 받기'가 외부 브라우저(다운로드 매니저)로 열리도록 변경하여 APK 다운로드가 멈추던 문제 해결. + 1.8.5 내장 라이브 카메라(촬영 중 주소 실시간 표시) 포함.",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-06-25T00:00:00Z"

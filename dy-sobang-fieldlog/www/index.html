@@ -418,6 +418,77 @@
 
   #cameraInput { display: none; }
 
+  /* ===== 내장 라이브 카메라 (촬영 중 주소 실시간 표시) ===== */
+  .cam-modal {
+    position: fixed; inset: 0; z-index: 300;
+    background: #000;
+    display: flex; flex-direction: column;
+  }
+  .cam-modal[hidden] { display: none; }
+  .cam-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    background: #000;
+  }
+  /* 촬영 화면 위 실시간 오버레이 (사진에 새겨지는 것과 동일 정보) */
+  .cam-overlay {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 16px 16px calc(120px + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+    text-align: right;
+  }
+  .cam-ov-site {
+    font-size: 22px; font-weight: 900; color: #ffd60a;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9); letter-spacing: -0.3px;
+    word-break: break-word; max-width: 100%;
+  }
+  .cam-ov-addr {
+    font-size: 15px; font-weight: 600; color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9); line-height: 1.35;
+    word-break: break-word; max-width: 100%;
+  }
+  .cam-ov-date {
+    font-size: 13px; font-weight: 700; color: #cdd5e6;
+    font-family: 'JetBrains Mono', monospace;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  }
+  .cam-controls {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 0 24px calc(28px + env(safe-area-inset-bottom));
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 2;
+  }
+  .cam-shutter {
+    width: 74px; height: 74px; border-radius: 50%;
+    background: #fff; border: 5px solid rgba(255,255,255,0.45);
+    cursor: pointer; flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+  }
+  .cam-shutter:active { transform: scale(0.93); }
+  .cam-btn {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.3);
+    color: #fff; font-size: 22px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cam-topbar {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 2; pointer-events: none;
+  }
+  .cam-topbar .cam-btn { pointer-events: auto; }
+  .cam-loc-chip {
+    background: rgba(0,0,0,0.5); color: #ffd60a;
+    font-size: 12px; font-weight: 700; padding: 6px 12px;
+    border-radius: 20px; max-width: 70%;
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
   .interim-hint {
     font-size: 11px;
     color: var(--muted);
@@ -803,6 +874,27 @@
     </button>
     <input type="file" accept="image/*" capture="environment" id="cameraInput">
 
+    <!-- 내장 라이브 카메라 (촬영 중 주소 실시간 표시) -->
+    <div class="cam-modal" id="camModal" hidden>
+      <video class="cam-video" id="camVideo" autoplay playsinline muted></video>
+      <div class="cam-topbar">
+        <button class="cam-btn" id="camClose" title="닫기">✕</button>
+        <div class="cam-loc-chip" id="camLocChip">📡 위치 확인 중…</div>
+        <button class="cam-btn" id="camFlip" title="카메라 전환">⟳</button>
+      </div>
+      <!-- 날짜(위) → 주소(아래) 순 -->
+      <div class="cam-overlay">
+        <div class="cam-ov-site" id="camOvSite"></div>
+        <div class="cam-ov-date" id="camOvDate"></div>
+        <div class="cam-ov-addr" id="camOvAddr"></div>
+      </div>
+      <div class="cam-controls">
+        <div style="width:50px"></div>
+        <button class="cam-shutter" id="camShutter" title="촬영"></button>
+        <div style="width:50px"></div>
+      </div>
+    </div>
+
     <div class="preview-photo" id="previewBox">
       <span>아직 사진 없음</span>
     </div>
@@ -888,7 +980,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.8.4';
+  const APP_VERSION = '1.8.5';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -989,9 +1081,95 @@
   }
 
   // ===== Camera + Location =====
+  // 내장 라이브 카메라: 촬영 화면 위에 주소·날짜를 실시간 오버레이로 표시
+  const cam = {
+    stream: null,
+    facing: 'environment',   // 후면 카메라 기본
+    overlayTimer: null,
+  };
+
   document.getElementById('btnCamera').addEventListener('click', () => {
-    document.getElementById('cameraInput').click();
-    prefetchLocation();  // GPS/address fetch in parallel while user takes photo
+    openInAppCamera();
+    prefetchLocation();  // 카메라 켜는 즉시 GPS/주소 병렬 조회
+  });
+
+  async function openInAppCamera() {
+    const modal = document.getElementById('camModal');
+    const video = document.getElementById('camVideo');
+    // getUserMedia 미지원/실패 시 → 폰 기본 카메라로 폴백
+    if (!navigator.mediaDevices?.getUserMedia) {
+      document.getElementById('cameraInput').click();
+      return;
+    }
+    try {
+      cam.stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: cam.facing }, width: { ideal: 4096 }, height: { ideal: 2160 } },
+        audio: false
+      });
+      video.srcObject = cam.stream;
+      modal.hidden = false;
+      // 오버레이 실시간 갱신 (주소가 늦게 도착해도 자동 반영)
+      updateCamOverlay();
+      cam.overlayTimer = setInterval(updateCamOverlay, 500);
+    } catch (e) {
+      console.warn('getUserMedia 실패, 기본 카메라로 폴백:', e);
+      toast('내장 카메라를 열 수 없어 기본 카메라로 전환');
+      document.getElementById('cameraInput').click();
+    }
+  }
+
+  function updateCamOverlay() {
+    const site = document.getElementById('inputSite').value.trim();
+    const floor = document.getElementById('inputFloor').value.trim();
+    const now = new Date();
+    const dt = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    document.getElementById('camOvSite').textContent = [site, floor].filter(Boolean).join(' · ');
+    document.getElementById('camOvDate').textContent = dt;                                  // 날짜 (위)
+    document.getElementById('camOvAddr').textContent = currentAddress ? '📍 ' + currentAddress : '📍 주소 확인 중…';  // 주소 (아래)
+    document.getElementById('camLocChip').textContent = currentAddress ? '📍 ' + currentAddress : '📡 위치 확인 중…';
+  }
+
+  function closeInAppCamera() {
+    const modal = document.getElementById('camModal');
+    if (cam.overlayTimer) { clearInterval(cam.overlayTimer); cam.overlayTimer = null; }
+    if (cam.stream) { cam.stream.getTracks().forEach(t => t.stop()); cam.stream = null; }
+    document.getElementById('camVideo').srcObject = null;
+    modal.hidden = true;
+  }
+
+  document.getElementById('camClose').addEventListener('click', closeInAppCamera);
+
+  document.getElementById('camFlip').addEventListener('click', async () => {
+    cam.facing = (cam.facing === 'environment') ? 'user' : 'environment';
+    if (cam.stream) cam.stream.getTracks().forEach(t => t.stop());
+    try {
+      cam.stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: cam.facing } }, audio: false
+      });
+      document.getElementById('camVideo').srcObject = cam.stream;
+    } catch (e) { toast('카메라 전환 실패'); }
+  });
+
+  // 셔터: 현재 영상 프레임을 캡처 → currentPhoto 로 (저장 시 워터마크 합성)
+  document.getElementById('camShutter').addEventListener('click', () => {
+    const video = document.getElementById('camVideo');
+    if (!video.videoWidth) { toast('카메라 준비 중…'); return; }
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    if (cam.facing === 'user') {   // 전면은 좌우 반전 보정
+      ctx.translate(canvas.width, 0); ctx.scale(-1, 1);
+    }
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    currentPhoto = canvas.toDataURL('image/jpeg', 0.98);
+
+    const now = new Date();
+    const ts = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    document.getElementById('previewBox').innerHTML =
+      `<img src="${currentPhoto}" alt="현장 사진"><span class="badge">${ts}</span>`;
+    closeInAppCamera();
+    toast('사진 캡처 완료');
   });
 
   document.getElementById('cameraInput').addEventListener('change', async (e) => {
@@ -1289,17 +1467,20 @@
           }
         }
 
-        // Line 3 (top of bottom block): 📍 주소 · 날짜 — 우측 정렬로 표시
+        // Line 3: 날짜(위) → 주소(아래) — 우측 정렬. (그리기는 아래→위 순서라 주소 먼저, 날짜 나중)
         ctx.textAlign = 'right';
+        // 주소 (아래쪽) — 최대 2줄 wrap
         ctx.font = `500 ${Math.round(baseFont * 1.0)}px "Noto Sans KR", sans-serif`;
         const addrText = info.address ? '📍 ' + info.address : '📍 주소 미수집';
-        const combined = `${addrText}  ·  ${info.datetimeStr}`;
-        // 한 줄로 안 들어가면 자동 줄바꿈 (2줄까지)
-        const combinedLines = wrapText(ctx, combined, W - pad * 2, 2);
-        for (let i = combinedLines.length - 1; i >= 0; i--) {
-          drawTextStroke(combinedLines[i], W - pad, y, info.address ? '#ffffff' : '#fbbf24');
+        const addrLines = wrapText(ctx, addrText, W - pad * 2, 2);
+        for (let i = addrLines.length - 1; i >= 0; i--) {
+          drawTextStroke(addrLines[i], W - pad, y, info.address ? '#ffffff' : '#fbbf24');
           y -= Math.round(baseFont * 1.25);
         }
+        // 날짜 (위쪽)
+        ctx.font = `700 ${Math.round(baseFont * 0.85)}px "JetBrains Mono", monospace`;
+        drawTextStroke(info.datetimeStr, W - pad, y, '#cdd5e6');
+        y -= Math.round(baseFont * 1.15);
         ctx.textAlign = 'center';   // 이후 라인 정렬 복원
         // GPS 좌표는 사진에 시각 표시 안 함 — IndexedDB rec.gps 에만 저장됨
         // (EXIF 메타데이터 주입은 piexifjs 라이브러리 필요 — 다음 단계)

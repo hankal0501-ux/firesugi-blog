@@ -883,13 +883,8 @@
         <input class="field-input stack-item" id="inputSite" list="siteList" placeholder="사업장 (예: 호반써밋)" autocomplete="off" autocapitalize="none">
         <datalist id="siteList"></datalist>
         <input class="field-input stack-item" id="inputFloor" placeholder="층수" autocomplete="off">
-        <textarea class="memo stack-item" id="memo" placeholder="자유 입력&#10;예) 자동화재탐지설비 감지기 미설치, 발신기 표시등 단선"></textarea>
+        <textarea class="memo stack-item" id="memo" placeholder="자유 입력 — 키보드의 🎤 마이크로 음성입력 하세요&#10;예) 자동화재탐지설비 감지기 미설치, 발신기 표시등 단선"></textarea>
       </div>
-      <button class="btn-mic" id="btnMic" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-        <span id="micLabel">음성 입력</span>
-      </button>
-      <div class="mic-hint" id="micHint">▸ 음성 켠 뒤, 입력하려는 칸(사업장·층수·내용)을 탭하면 그 칸으로 들어갑니다. 칸을 바꿔도 계속 유지됩니다.</div>
     </div>
 
     <button class="btn-primary" id="btnCamera">
@@ -1000,7 +995,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.8.8';
+  const APP_VERSION = '1.8.9';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1706,83 +1701,11 @@
     get isAvailable() { return this.mode !== null; }
   };
 
-  // 음성 결과는 '현재 대상 칸'으로 들어감 (포커스 따라 바뀜)
-  speech.onPartial = (text) => {
-    const el = speech.target || document.getElementById('memo');
-    el.value = text;
-  };
-  speech.onError = (msg) => {
-    toast(msg);
-    updateMicUI(false);
-  };
-
-  // ----- 음성 입력: 3개 칸(사업장·층수·내용)을 따라다니며 끊기지 않게 -----
-  const voiceFields = ['inputSite', 'inputFloor', 'memo'].map(id => document.getElementById(id));
-  let lastFocusedField = document.getElementById('memo');
-
-  function highlightVoiceTarget(el) {
-    voiceFields.forEach(f => f.classList.remove('voice-target'));
-    if (el && speech.isListening) el.classList.add('voice-target');
-  }
-
-  voiceFields.forEach(el => {
-    // 칸을 탭/포커스하면 음성 대상이 그 칸으로 전환 (세션 유지)
-    el.addEventListener('focus', () => {
-      lastFocusedField = el;
-      if (speech.isListening) { speech.setTarget(el); highlightVoiceTarget(el); }
-    });
-    // 사용자가 직접 타이핑하면, 음성 이어쓰기 기준점을 갱신(덮어쓰기 방지)
-    el.addEventListener('input', () => {
-      if (speech.isListening && speech.target === el && document.activeElement === el) {
-        speech.initialText = el.value;
-        speech.nativeBuffer = '';
-        speech._lastPartial = '';
-      }
-    });
-  });
-
-  function updateMicUI(listening) {
-    const btn = document.getElementById('btnMic');
-    const lbl = document.getElementById('micLabel');
-    const hint = document.getElementById('micHint');
-    if (!btn) return;
-    if (listening) {
-      btn.classList.add('recording');
-      lbl.textContent = '● 녹음 중 · 탭하여 정지';
-      hint.classList.add('active');
-      hint.textContent = '▸ 듣는 중 — 입력할 칸(사업장·층수·내용)을 탭하면 그 칸으로 들어갑니다. 칸을 바꿔도 유지됩니다.';
-      highlightVoiceTarget(speech.target || lastFocusedField);
-    } else {
-      btn.classList.remove('recording');
-      lbl.textContent = '음성 입력';
-      hint.classList.remove('active');
-      hint.textContent = '▸ 음성 켠 뒤, 입력하려는 칸(사업장·층수·내용)을 탭하면 그 칸으로 들어갑니다. 칸을 바꿔도 계속 유지됩니다.';
-      highlightVoiceTarget(null);
-    }
-  }
-
-  // 마이크 버튼 토글
-  document.getElementById('btnMic')?.addEventListener('click', async () => {
-    if (!speech.isAvailable) { toast('이 기기는 음성 인식을 지원하지 않습니다'); return; }
-    if (speech.isListening) {
-      await speech.stop();
-      updateMicUI(false);
-    } else {
-      const tgt = (document.activeElement && voiceFields.includes(document.activeElement))
-        ? document.activeElement : (lastFocusedField || document.getElementById('memo'));
-      speech.start(tgt);
-      updateMicUI(true);
-      toast('음성 입력 시작 — 입력할 칸을 탭하세요');
-    }
-  });
-
-  function startMic() { /* deprecated — 버튼 핸들러 사용 */ }
-  function stopMic() {
-    if (speech && speech.isListening) {
-      try { speech.stop(); } catch(e) {}
-      updateMicUI(false);
-    }
-  }
+  // ⚠️ 앱 자체 음성인식 제거됨 — 휴대폰 키보드의 음성입력(Gboard 마이크)과 마이크 충돌 방지.
+  //    음성입력은 키보드의 🎤 버튼을 사용. 앱은 마이크를 점유하지 않음.
+  function updateMicUI() { /* no-op (앱 음성 UI 없음) */ }
+  function startMic() { /* no-op */ }
+  function stopMic() { /* no-op (앱이 마이크를 잡지 않음) */ }
 
   // ===== Filename + JPEG save helpers =====
   function sanitize(s, maxLen) {
@@ -2450,18 +2373,7 @@
 
     console.log('[FieldLog] v' + APP_VERSION + ' · Capacitor:', !!window.Capacitor?.isNativePlatform?.());
 
-    // 🎤 음성 인식 초기화 + 마이크 버튼 상태
-    try {
-      const speechOk = await speech.init();
-      if (!speechOk) {
-        const mb = document.getElementById('btnMic');
-        if (mb) { mb.disabled = true; document.getElementById('micLabel').textContent = '음성 인식 미지원'; }
-        const mh = document.getElementById('micHint');
-        if (mh) mh.textContent = '▸ 이 기기/브라우저는 음성 인식을 지원하지 않습니다. 직접 타이핑하세요.';
-      } else {
-        updateMicUI(false);
-      }
-    } catch(e) { console.warn('speech init failed:', e); }
+    // 🎤 앱 자체 음성인식 비활성화 — 휴대폰 키보드 음성입력과 마이크 충돌 방지 (speech.init 호출 안 함)
 
     // 앱 시작 시 자동 업데이트 확인 — 새 버전이면 모달 자동 표시
     setTimeout(() => checkForUpdates(true), 1500);

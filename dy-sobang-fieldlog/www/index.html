@@ -251,6 +251,16 @@
     0%, 100% { box-shadow: 0 0 0 0 rgba(255,59,48,0.4); }
     50% { box-shadow: 0 0 0 12px rgba(255,59,48,0); }
   }
+  .mic-hint {
+    font-size: 11px; color: var(--muted);
+    margin: 6px 2px 8px; line-height: 1.4;
+  }
+  .mic-hint.active { color: var(--accent); font-weight: 700; }
+  /* 음성 입력 대상 칸 강조 */
+  .voice-target {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 0 2px rgba(255,59,48,0.25);
+  }
 
   textarea.memo {
     width: 100%;
@@ -900,6 +910,11 @@
     </div>
 
     <div class="memo-area">
+      <button class="btn-mic" id="btnMic" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+        <span id="micLabel">음성 입력</span>
+      </button>
+      <div class="mic-hint" id="micHint">▸ 음성 켠 뒤, 입력하려는 칸(사업장·층수·내용)을 탭하면 그 칸으로 들어갑니다. 칸을 바꿔도 계속 유지됩니다.</div>
       <textarea class="memo" id="memo" placeholder="자유 입력&#10;예) 자동화재탐지설비 감지기 미설치, 발신기 표시등 단선"></textarea>
     </div>
 
@@ -980,7 +995,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.8.6';
+  const APP_VERSION = '1.8.7';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1609,10 +1624,21 @@
       return false;
     },
 
+    target: null,           // 음성이 입력될 현재 칸 (포커스 따라 바뀜)
+
     _combine(currentSegment) {
       const parts = [this.initialText, this.nativeBuffer, currentSegment]
         .map(p => (p || '').trim()).filter(Boolean);
       return parts.join(' ');
+    },
+
+    // 입력 대상 칸 전환 — 세션은 끊지 않고, 새 칸 내용 기준으로 이어쓰기
+    setTarget(el) {
+      if (!el || el === this.target) return;
+      this.target = el;
+      this.initialText = el.value || '';   // 새 칸의 기존 내용 보존하고 뒤에 이어붙임
+      this.nativeBuffer = '';
+      this._lastPartial = '';
     },
 
     async _startNativeSession() {
@@ -1640,9 +1666,10 @@
       }
     },
 
-    start(initialText) {
+    start(targetEl) {
       this.isListening = true;
-      this.initialText = initialText || '';
+      this.target = targetEl || document.getElementById('memo');
+      this.initialText = this.target.value || '';
       this.nativeBuffer = '';
       this._lastPartial = '';
       if (this.mode === 'native') {
@@ -1664,21 +1691,81 @@
     get isAvailable() { return this.mode !== null; }
   };
 
-  // Wire up speech callbacks
+  // 음성 결과는 '현재 대상 칸'으로 들어감 (포커스 따라 바뀜)
   speech.onPartial = (text) => {
-    document.getElementById('memo').value = text;
+    const el = speech.target || document.getElementById('memo');
+    el.value = text;
   };
   speech.onError = (msg) => {
     toast(msg);
     updateMicUI(false);
   };
 
-  // 음성 입력 UI 제거됨 — 직접 타이핑만 사용
-  function updateMicUI(_listening) { /* noop */ }
-  function startMic() { /* removed */ }
+  // ----- 음성 입력: 3개 칸(사업장·층수·내용)을 따라다니며 끊기지 않게 -----
+  const voiceFields = ['inputSite', 'inputFloor', 'memo'].map(id => document.getElementById(id));
+  let lastFocusedField = document.getElementById('memo');
+
+  function highlightVoiceTarget(el) {
+    voiceFields.forEach(f => f.classList.remove('voice-target'));
+    if (el && speech.isListening) el.classList.add('voice-target');
+  }
+
+  voiceFields.forEach(el => {
+    // 칸을 탭/포커스하면 음성 대상이 그 칸으로 전환 (세션 유지)
+    el.addEventListener('focus', () => {
+      lastFocusedField = el;
+      if (speech.isListening) { speech.setTarget(el); highlightVoiceTarget(el); }
+    });
+    // 사용자가 직접 타이핑하면, 음성 이어쓰기 기준점을 갱신(덮어쓰기 방지)
+    el.addEventListener('input', () => {
+      if (speech.isListening && speech.target === el && document.activeElement === el) {
+        speech.initialText = el.value;
+        speech.nativeBuffer = '';
+        speech._lastPartial = '';
+      }
+    });
+  });
+
+  function updateMicUI(listening) {
+    const btn = document.getElementById('btnMic');
+    const lbl = document.getElementById('micLabel');
+    const hint = document.getElementById('micHint');
+    if (!btn) return;
+    if (listening) {
+      btn.classList.add('recording');
+      lbl.textContent = '● 녹음 중 · 탭하여 정지';
+      hint.classList.add('active');
+      hint.textContent = '▸ 듣는 중 — 입력할 칸(사업장·층수·내용)을 탭하면 그 칸으로 들어갑니다. 칸을 바꿔도 유지됩니다.';
+      highlightVoiceTarget(speech.target || lastFocusedField);
+    } else {
+      btn.classList.remove('recording');
+      lbl.textContent = '음성 입력';
+      hint.classList.remove('active');
+      hint.textContent = '▸ 음성 켠 뒤, 입력하려는 칸(사업장·층수·내용)을 탭하면 그 칸으로 들어갑니다. 칸을 바꿔도 계속 유지됩니다.';
+      highlightVoiceTarget(null);
+    }
+  }
+
+  // 마이크 버튼 토글
+  document.getElementById('btnMic')?.addEventListener('click', async () => {
+    if (!speech.isAvailable) { toast('이 기기는 음성 인식을 지원하지 않습니다'); return; }
+    if (speech.isListening) {
+      await speech.stop();
+      updateMicUI(false);
+    } else {
+      const tgt = (document.activeElement && voiceFields.includes(document.activeElement))
+        ? document.activeElement : (lastFocusedField || document.getElementById('memo'));
+      speech.start(tgt);
+      updateMicUI(true);
+      toast('음성 입력 시작 — 입력할 칸을 탭하세요');
+    }
+  });
+
+  function startMic() { /* deprecated — 버튼 핸들러 사용 */ }
   function stopMic() {
     if (speech && speech.isListening) {
       try { speech.stop(); } catch(e) {}
+      updateMicUI(false);
     }
   }
 
@@ -2346,6 +2433,19 @@
     }
 
     console.log('[FieldLog] v' + APP_VERSION + ' · Capacitor:', !!window.Capacitor?.isNativePlatform?.());
+
+    // 🎤 음성 인식 초기화 + 마이크 버튼 상태
+    try {
+      const speechOk = await speech.init();
+      if (!speechOk) {
+        const mb = document.getElementById('btnMic');
+        if (mb) { mb.disabled = true; document.getElementById('micLabel').textContent = '음성 인식 미지원'; }
+        const mh = document.getElementById('micHint');
+        if (mh) mh.textContent = '▸ 이 기기/브라우저는 음성 인식을 지원하지 않습니다. 직접 타이핑하세요.';
+      } else {
+        updateMicUI(false);
+      }
+    } catch(e) { console.warn('speech init failed:', e); }
 
     // 앱 시작 시 자동 업데이트 확인 — 새 버전이면 모달 자동 표시
     setTimeout(() => checkForUpdates(true), 1500);

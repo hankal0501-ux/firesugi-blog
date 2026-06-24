@@ -1,7 +1,7 @@
 {
-  "latest": "1.8.6",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.6.apk",
-  "notes": "1.8.6 ⬇️ 업데이트 다운로드 수정 - '새 버전 받기'가 외부 브라우저(다운로드 매니저)로 열리도록 변경하여 APK 다운로드가 멈추던 문제 해결. + 1.8.5 내장 라이브 카메라(촬영 중 주소 실시간 표시) 포함.",
+  "latest": "1.8.7",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.7.apk",
+  "notes": "1.8.7 🎤 음성 입력 복원·개선 - 음성 버튼을 켜면 사업장·층수·내용 어느 칸을 탭해도 그 칸으로 받아쓰고, 칸을 바꿔도 음성 인식이 끊기지 않고 계속 유지됩니다. 직접 타이핑과도 섞어 쓸 수 있습니다.",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-06-25T00:00:00Z"

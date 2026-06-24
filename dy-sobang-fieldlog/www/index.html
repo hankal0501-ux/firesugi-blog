@@ -888,7 +888,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.8.2';
+  const APP_VERSION = '1.8.3';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1157,10 +1157,10 @@
       const k = await nativeGetJson(kUrl, 8000, { 'Authorization': 'KakaoAK ' + KAKAO_REST_KEY });
       const doc = k?.documents?.[0];
       if (doc) {
-        // 도로명주소 우선, 없으면 지번주소
+        // 번지(지번)가 보이도록 지번주소를 앞세우고, 도로명은 괄호로 병기
         const road = doc.road_address?.address_name;
         const jibun = doc.address?.address_name;
-        const addr = road || jibun;
+        const addr = jibun ? (road ? jibun + ' (' + road + ')' : jibun) : road;
         if (addr) {
           diagPush('✅', '[Kakao] ' + addr);
           return addr;

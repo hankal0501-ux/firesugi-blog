@@ -1,7 +1,7 @@
 {
-  "latest": "1.8.7",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.7.apk",
-  "notes": "1.8.7 🎤 음성 입력 복원·개선 - 음성 버튼을 켜면 사업장·층수·내용 어느 칸을 탭해도 그 칸으로 받아쓰고, 칸을 바꿔도 음성 인식이 끊기지 않고 계속 유지됩니다. 직접 타이핑과도 섞어 쓸 수 있습니다.",
+  "latest": "1.8.8",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.8.apk",
+  "notes": "1.8.8 🧩 입력 화면 정리 - 사업장·층수·자유입력을 위아래로 붙여 한 묶음으로. 사진을 찍으면 [사진 촬영] 버튼이 [입력완료/취소]로 바뀌고, 입력완료 또는 취소하면 다시 [사진 촬영] 버튼이 활성화됩니다.",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-06-25T00:00:00Z"

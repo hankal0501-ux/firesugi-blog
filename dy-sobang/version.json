@@ -1,7 +1,7 @@
 {
-  "latest": "1.8.3",
-  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.3.apk",
-  "notes": "1.8.3 📍 주소 표시 개선 - 카카오맵 서비스 활성화 + 지번(번지)까지 표시. 예) '부산 강서구 명지동 3266 (명지국제3로 12)' 처럼 번지가 항상 보이도록 지번주소 우선 표기.",
+  "latest": "1.8.4",
+  "url": "https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/dy-sobang-fieldlog-1.8.4.apk",
+  "notes": "1.8.4 🖼️ 사진 워터마크 배치 개선 - 주소·날짜 줄을 우측 정렬로 이동(사업장명은 가운데 유지). 번지(지번) 표시는 1.8.3과 동일하게 유지.",
   "force": false,
   "minSupportedVersion": "1.0.0",
   "releasedAt": "2026-06-25T00:00:00Z"

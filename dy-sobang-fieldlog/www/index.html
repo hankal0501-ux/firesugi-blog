@@ -888,7 +888,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.8.3';
+  const APP_VERSION = '1.8.4';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -1289,16 +1289,18 @@
           }
         }
 
-        // Line 3 (top of bottom block): 📍 주소 · 날짜 한 줄로 표시
+        // Line 3 (top of bottom block): 📍 주소 · 날짜 — 우측 정렬로 표시
+        ctx.textAlign = 'right';
         ctx.font = `500 ${Math.round(baseFont * 1.0)}px "Noto Sans KR", sans-serif`;
         const addrText = info.address ? '📍 ' + info.address : '📍 주소 미수집';
         const combined = `${addrText}  ·  ${info.datetimeStr}`;
         // 한 줄로 안 들어가면 자동 줄바꿈 (2줄까지)
         const combinedLines = wrapText(ctx, combined, W - pad * 2, 2);
         for (let i = combinedLines.length - 1; i >= 0; i--) {
-          drawTextStroke(combinedLines[i], cx, y, info.address ? '#ffffff' : '#fbbf24');
+          drawTextStroke(combinedLines[i], W - pad, y, info.address ? '#ffffff' : '#fbbf24');
           y -= Math.round(baseFont * 1.25);
         }
+        ctx.textAlign = 'center';   // 이후 라인 정렬 복원
         // GPS 좌표는 사진에 시각 표시 안 함 — IndexedDB rec.gps 에만 저장됨
         // (EXIF 메타데이터 주입은 piexifjs 라이브러리 필요 — 다음 단계)
 

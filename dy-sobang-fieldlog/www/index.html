@@ -980,7 +980,7 @@
 
 <script>
   // ============ CONFIG (edit before each release) ============
-  const APP_VERSION = '1.8.5';
+  const APP_VERSION = '1.8.6';
   const UPDATE_CHECK_URL = 'https://hankal0501-ux.github.io/firesugi-blog/dy-sobang/version.json';
   // ============================================================
 
@@ -2293,21 +2293,30 @@
 
     // 기존 앱 제거는 안내 텍스트로 대체 — 자동 호출 제거 (WebView intent 핸들 불안정)
     document.getElementById('btnUpdateNow').onclick = async () => {
-      // Open APK URL in system browser → Android download manager → user taps to install
+      // APK는 '외부 기본 브라우저'로 열어야 안드로이드 다운로드 매니저가 처리함.
+      // (인앱 Custom Tab/Browser.open 은 APK 다운로드를 자주 막음 → 진행 안 됨)
+      const apkUrl = info.url;
       try {
-        if (window.Capacitor?.isNativePlatform?.() && Capacitor.Plugins?.Browser) {
-          await Capacitor.Plugins.Browser.open({
-            url: info.url,
-            presentationStyle: 'fullscreen'
-          });
+        const P = window.Capacitor?.Plugins;
+        if (window.Capacitor?.isNativePlatform?.()) {
+          if (P?.AppLauncher?.openUrl) {
+            // 1순위: 외부 기본 브라우저 → 다운로드 매니저 (가장 확실)
+            await P.AppLauncher.openUrl({ url: apkUrl });
+          } else if (P?.Browser) {
+            // 2순위: 인앱 브라우저 (구버전 폴백)
+            await P.Browser.open({ url: apkUrl, presentationStyle: 'fullscreen' });
+          } else {
+            window.open(apkUrl, '_system');
+          }
         } else {
-          window.open(info.url, '_blank');
+          window.open(apkUrl, '_blank');
         }
-        toast('다운로드 시작됨. 다운로드 폴더에서 APK 탭하여 설치');
+        toast('브라우저에서 다운로드 시작 — 알림창의 APK를 탭해 설치하세요');
         if (!info.force) document.getElementById('updateModal').hidden = true;
       } catch(e) {
         console.error('open URL failed:', e);
-        toast('다운로드 페이지 열기 실패');
+        try { window.open(apkUrl, '_blank'); } catch(_) {}
+        toast('자동 열기 실패 — 폰 브라우저에서 직접 주소를 여세요');
       }
     };
 

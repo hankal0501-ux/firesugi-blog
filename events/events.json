@@ -115,6 +115,15 @@
   ],
   "giveaways": [
     {
+      "source_site": "G1방송",
+      "title": "원주문화재단, 만두축제 AI 영상 공모전 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5uRXVkMVNOTjFVdVhVMVRZTXNaZHRKZEVfczFXaTRKZWdfY0F0MXNsYnZqU09Qa3d5SEpZT2EzR251U2ROSVdZOURWSkVEdm5CQ25kNzZ4X3BjN0RYakxHTGp5dEg?oc=5",
+      "created_at": "2026-06-24 08:23:29"
+    },
+    {
       "source_site": "코리아플러스",
       "title": "민주평통 대덕구협의회, 평화통일 숏폼 공모전 모집",
       "category": "공모전",
@@ -169,5 +178,5 @@
       "created_at": "2026-05-29 01:03:22"
     }
   ],
-  "last_updated": "2026-06-24 04:46:17"
+  "last_updated": "2026-06-25 04:44:21"
 }

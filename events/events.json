@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "11번가, 하나투어와 세부·보홀 등 필리핀 패키지여행 특가",
+      "detail": "MSN",
+      "url": "https://news.google.com/rss/articles/CBMilARBVV95cUxQcWEyNHAzVkZrZXprY2F4dzN0TVB6VDNWcmlrak5vcmVDS1piYVYwclljVjlyb2lQY1YzdFFobm8yT0pMWUJnSm9tYTJBcGg5NjJ2MVZxRDMzQ1lmRWdRdm1oRmR6bG5jNGUxdHh1c0tJMVNzbEFET2w4dWZ3YXZpYXpDdnFOZFVkaGNLRWVhQWJlOWxCVWRHVWE0Y09TR2hnclNBbExsc2E0Ty1PdXpacFFoWTBrRkNUZmc5Q290U1E3ai1faWN1M0l2ZW9HX294T2FtTWNBRHNpWE1QYUU4NWVEbl8xRUtmdU9NeFVoYmZaelBzU2RORUd3T3NVTjBBZk1DYTI2SDJZcHRKT25VMXJXeVk5ZjFyREo4aElMWmRmdnBDUWZWTkxmbHpEMGE0UzJhaVIzYi13R1FDVWNGWTQwMXVOQVdkZmRiLWN5VHJYNnBlNmxoN3A1RnJ4UGhlLWhSRFBwWk01azVycTNDX1NZUXU2NmtjUlllbEJMMlRfaVlJOUl4QzRVdlhXOWJfZnBtT29CR3NFZTUxcmRjMmRCNm5Yc0o5NXhNQk9TMjhnbGtsTXBDNFhwRUJEOFd2ZjZnYnJ2akQxakxySjNOOTNoRWh3UjRLZUdtR0tERVg2d1k5NGl4WFFHV1JQZ0k3RG5FdG5OYjZDRnlfWnhYbG90MmdWSG9LVjVFVHRmMnIxa2RW?oc=5",
+      "site": "gnews_MSN",
+      "created_at": "2026-06-24 07:00:00"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "티웨이항공, 해외 항공권 특가로 여름 수요 공략",
       "detail": "포인트데일리",
       "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1HalJ3UXdrX2RSeXRTcjhkUVRWQU96NnI1cjlTeHk1YXN6Z29PN1dHb0t4Z1lOTUIzSDhlOTVubmNycTI2ckF3bTBiOEZzenNlTnlKWG9kZ2p4ZjJDS2U0dXpzSXpGRUVNLXdKbWM4d0PSAXRBVV95cUxQUGN2ckxxMHdnYVVWaUN3WlpLTlJab19pMVVZdUtWcVkzRnJQZjdaU1RVek1QQ1RJOVhiR29xQTg1WXR0aWduOFZsbWMzSkkyclFhQlYxSTRZN0tGTXBIVnhQR29Fb043SkFCX1hDZU9MQ2JPSA?oc=5",
@@ -143,16 +151,7 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9HNndsWTVILUZITnZORWVmZncyeEhyOWhhR0xlTm1LRVpjUkJXUXR0UkxYRlZwYnZ3cWplRkM1eWFWMVRuY3NoOGJ6clpBVElWWGlMVTdhWdIBpgJBVV95cUxNQ2R5WE1vQU41MGtodktCOGFGWFVPU25WZmlqR3NqTUdKSnFXVDhrYl8zNF8yb0N1U21GQjRQTXZSZXBQOGNoa0l6OEQxcVh5MHRicVlCT29VbmJEWWVFSnFXUUtqUng0Q25iN3FoX3dsN0FseUQ1TWloOFVYZ0hWWGxJbXR0NkNocWNOcFUydzNRdEFOT3dJREhVWEZ1RlNhWTlGNzM5UHFHZUJoOHVtQ1VOOE8wQ1NBeHdvMEw1THdEakNpTU0zeHhBdENmZXRhMkhZcFl1NVZvQktVRDVPaXdEejdELXcwT1dyaU96akRPQWxLMHB4X0lqVnVCay1QTldZdmRmVkFzek9yX0owbFJ4aFZhdGtiR0Z4cnllcFg0T1NrUFE?oc=5",
       "created_at": "2026-06-01 23:30:00"
-    },
-    {
-      "source_site": "나눔경제뉴스",
-      "title": "호반그룹, ‘2026 호반혁신기술공모전’ 모집…AI·스마트건설 스타트업 발굴",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5tbnhtYTNVNnU4VzJSQ3l1U0pVcHhvY1B1TldUZEUxZEZ2UXI2VGM3LXlVZ3VzRHVKbDFwaDU1VmxuWG43Rk1lS1RsQkJDX1l5bDBFaXl2b0FuRGQ0RmZIdS03eHVSVzJUTVhScw?oc=5",
-      "created_at": "2026-05-29 01:03:22"
     }
   ],
-  "last_updated": "2026-06-27 04:33:26"
+  "last_updated": "2026-06-28 04:59:15"
 }

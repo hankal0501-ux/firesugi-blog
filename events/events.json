@@ -2,6 +2,30 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "에어부산, 유류할증료 인하 기념 항공권 특가 판매",
+      "detail": "국제신문",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQemZXbnp5NXZfeVNpNFE5STktRnB2YVNBWEd5VTI1RjNwbVF3Z2czdHRZWGliVFlYSVR3T1NSZHBaTmRUSGUwYTB4cTdibEdoWTlEVWFUdXJiRG45VlY0T01RZ0lDT0lQMFc3VDN4STlpXy03cXY0MmVDUFBnUXBtN0NfOHQxbl9RVHlweGx3?oc=5",
+      "site": "gnews_국제신문",
+      "created_at": "2026-06-30 05:29:00"
+    },
+    {
+      "kind": "🎁 여행 특가",
+      "title": "유류할증료 인하에 에어부산 항공권 특가 판매",
+      "detail": "부산일보",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1XMUdKWWI0MllETmdCai1ENER5R3FkbnY1eThvRzhiMlVjeTN0ZWstdXhWYm9Bc0NIYkI0MnFKemNCS0VKVDF1YmYtdkRLc2huTTF3UnNBZ2xxaVM1WjVnakNfOGRMdGdWYm1ZSzItNUpZWGdm?oc=5",
+      "site": "gnews_부산일보",
+      "created_at": "2026-06-30 05:54:16"
+    },
+    {
+      "kind": "🎁 여행 특가",
+      "title": "일본 6만 원·동남아 14만 원 대...'휴가철' 항공권 특가 판매",
+      "detail": "gukjenews.com",
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE94Q0p6cWloM3VaYkRQMXNPQTFrbnlrZUlnSG9ZY0o0MGZMRnY2WkRzOTd6d193cDAwT3NOaWx4cDNXTVk5YjhQSUtlbDFpblZwTF9zUmRUTlcwU0ZuaW9Zc3Z1MF81WnB4QVZ6c1hn?oc=5",
+      "site": "gnews_gukjenews.com",
+      "created_at": "2026-06-30 06:26:53"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "에어부산, 유류할증료 인하 맞춰 국내외 항공권 특가 띄운다",
       "detail": "네이트",
       "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5la2NrR0RITEI1NnEtNzdZeUxGRlVJMGlQZFFYWUozWGlId2F4SExJX1Q0TXk3QjFxY3J6S3lwRHNXN1I3bnpETmlDazlSNFZpMl8w?oc=5",
@@ -103,14 +127,6 @@
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1wME03dG5Ya282T0t2VjUzbGlIOHBvTHFHdUNCX2lkSE5jZ19BbGw2Mnhub19aWFZmU2pMb0dSZDZaMm5WUTlLR1VweUFJTXM0eTk1TTNTUFZ0UVp3ekJhT2gtWllOclpxdkHSAW5BVV95cUxQT0hxaHI0UWJKV3JadzFHeWNrQnJ3Sk52QVV6MkdTRVNhN2FJLXd6dzc5TE1RYzk0N0dIdVVNTUphR0NXN3lxeDN3SHhqdXRWMDFhVVIwWEw1eFlBdVVqMUE5QlZmOVJwSGo0dUNiQQ?oc=5",
       "site": "gnews_파이낸셜투데이",
       "created_at": "2026-06-01 07:45:01"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "6월 유류할증료 내리자 해외여행 특가 경쟁…놀유니버스, 아시아나 43개 노선 할인",
-      "detail": "뉴스탭",
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5DYzVyTTRfZXk2T2l4UDhXMnBoWHFEaTJydVdCR096czNHWkpsS0EwTU01OWsxYVpFSHdRSW1Odi1aZUxFRk9hNUozOEdUWGpsWVowZEpmWmItN09TV1FxTkRJNm9MdHZlWFUyWQ?oc=5",
-      "site": "gnews_뉴스탭",
-      "created_at": "2026-06-01 04:09:24"
     }
   ],
   "giveaways": [
@@ -169,5 +185,5 @@
       "created_at": "2026-06-01 23:30:00"
     }
   ],
-  "last_updated": "2026-06-30 04:43:31"
+  "last_updated": "2026-07-01 05:05:13"
 }

@@ -46,9 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Particles & Stats
   createParticles();
-  initStats();
-  // 사용자 추가 프로그램 로드 (programData에 머지)
+  // 사용자 추가 프로그램 로드 (programData에 머지) — 통계 집계 전에 먼저 병합해야 개수가 맞음
   loadUserPrograms();
+  // Stats — 병합된 실제 프로그램 수 기준으로 애니메이션
+  initStats();
   // Board
   renderBoard();
   renderHomeBoard();
@@ -187,7 +188,21 @@ function animateNum(el) {
     const p = Math.min((now - start) / 2000, 1);
     el.textContent = Math.floor(end * (1 - Math.pow(1 - p, 3))) + suffix;
     if (p < 1) requestAnimationFrame(update);
+    else el.dataset.animated = '1';
   })(start);
+}
+
+// 프로그램·게시판 수가 바뀔 때(사용자 추가·삭제·Firebase 동기화 후) 홈 통계 숫자를 실제 값으로 자동 갱신.
+// - 아직 카운트업 애니메이션 전이면 target 만 갱신 → 애니메이션이 올바른 값까지 올라감 (깜빡임 없음)
+// - 애니메이션이 이미 끝났으면 최종값으로 즉시 교체
+function refreshStatNumbers() {
+  document.querySelectorAll('.stat-number[data-key]').forEach(el => {
+    const val = getStatValue(el.dataset.key);
+    el.dataset.target = String(val);
+    if (el.dataset.animated === '1') {
+      el.textContent = val + (el.dataset.suffix || '');
+    }
+  });
 }
 
 // ===== BOARD SYSTEM =====
@@ -222,6 +237,9 @@ function renderBoard() {
   const pagination = document.getElementById('boardPagination');
 
   document.getElementById('boardCount').textContent = filteredPosts.length;
+
+  // 게시판 글 수가 바뀔 때마다 홈 '게시판 글' 개수도 실제 값으로 자동 동기화
+  if (typeof refreshStatNumbers === 'function') refreshStatNumbers();
 
   if (!filteredPosts.length) {
     table.style.display = 'none';
@@ -1891,31 +1909,17 @@ setTimeout(() => { pullBuiltinOverridesFromFirestore(); }, 1200);
 // 일회성 정리: 모든 개발중(미완료) 사용자 프로그램 영구 삭제
 const DEV_CLEANUP_KEY = 'fireSugiDevCleanupV2';
 function cleanupDevUserPrograms() {
-  if (localStorage.getItem(DEV_CLEANUP_KEY)) return; // 이미 실행됨
-  const userProgs = getUserPrograms();
-  const keys = Object.keys(userProgs);
-  if (keys.length === 0) {
+  // ⚠️ [비활성화됨] 예전에는 link 가 없거나 '#' 이고 completed=false 인 프로그램을 "개발중"으로
+  //    간주해 로컬 + 공유 Firebase(userPrograms 컬렉션)에서 자동 삭제했다.
+  //    그러나 이 청소가 브라우저마다 한 번씩 실행되면서, 한 방문자의 로컬 청소가
+  //    "모두가 공유하는" Firebase 문서를 지워버렸다. 그 결과 프로그램을 추가한 본인
+  //    기기(이미 청소 완료 플래그가 설정됨)에서는 계속 보이지만, 청소 플래그가 없는
+  //    다른 방문자가 접속하는 순간 공유 DB에서 삭제되어 "나만 보이고 남에게는 사라지는"
+  //    문제가 발생했다. (예: '소원빌기', '중국어 한자 배우기')
+  //    → 자동 삭제를 전면 비활성화한다. 불필요한 프로그램은 관리자가 직접 삭제(휴지통)한다.
+  if (!localStorage.getItem(DEV_CLEANUP_KEY)) {
     localStorage.setItem(DEV_CLEANUP_KEY, String(Date.now()));
-    return;
   }
-  const removed = [];
-  for (const [key, p] of Object.entries(userProgs)) {
-    const isDev = !p.completed && (!p.link || p.link === '#');
-    if (isDev) {
-      removed.push({ key, name: p.name || key });
-      delete userProgs[key];
-      delete programData[key];
-      // Firestore 에서도 삭제 (quota 살아있을 때만, 실패해도 무시)
-      if (typeof fbDb !== 'undefined' && !localStorage.getItem('fbQuotaExceededAt')) {
-        fbDb.collection('userPrograms').doc(key).delete().catch(() => {});
-      }
-    }
-  }
-  if (removed.length > 0) {
-    localStorage.setItem('fireSugiUserPrograms', JSON.stringify(userProgs));
-    console.log(`🧹 개발중 사용자 프로그램 ${removed.length}건 자동 제거:`, removed.map(r => r.name).join(', '));
-  }
-  localStorage.setItem(DEV_CLEANUP_KEY, String(Date.now()));
 }
 
 async function deleteUserProgram(key) {
@@ -2277,6 +2281,9 @@ function renderPrograms() {
       trashHost.innerHTML = '';
     }
   }
+
+  // 프로그램 목록이 바뀔 때마다 홈 'AI 프로그램' 개수도 실제 값으로 자동 동기화
+  if (typeof refreshStatNumbers === 'function') refreshStatNumbers();
 }
 
 async function showProgramDetail(key) {

@@ -123,6 +123,24 @@
   ],
   "giveaways": [
     {
+      "source_site": "뉴데일리 대구경북",
+      "title": "영양 자작나무숲, 국민 사진으로 기록한다… 영양군 온라인 공모전 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE01NDZfQ2R0TVBvYk94NmNXZ25ETm84TjJuMnliT1BqcUFfQTVHdURucFg0WVh2Zi1SYVFfR3BYZWNWOU9UTXVrZHIzTVNVaW5TTEhsZ1h1ZnpWdW5fZnVza1FVQ29reVpmNFpsbDYwUHBiWm5SbW1kX1pMNmFTTjjSAX9BVV95cUxNNTQ2X0NkdE1Qb2JPeDZjV2duRE5vOE4ybjJ5Yk9QanFBX0E1R3VEbnBYNFlYdmYtUmFRX0dwWGVjVjlPVE11a2RyM01TVWluU0xIbGdYdWZ6VnVuX2Z1c2tRVUNva3laZjRabGw2MFBwYlpuUm1tZF9aTDZhU044?oc=5",
+      "created_at": "2026-07-03 11:04:53"
+    },
+    {
+      "source_site": "gukjenews.com",
+      "title": "구로구, '한국디지털어워드 GURO' 초등생 그림 공모전 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE53TlJkRWwzWDBwUFZJcHZNM0V0RVMyNTdJVEJiM1prX3hpM1FtWDdpTWQzSW5YVGhJd2dlUDhNWVEwTnc5MHpBc1pUOE8wUFVNdF9pei1RbWFJdTdnaldVelAxQmdZeDl6Qk5JVHJ3?oc=5",
+      "created_at": "2026-07-06 00:04:34"
+    },
+    {
       "source_site": "수산인신문",
       "title": "수협銀, 임직원 경품추첨 이벤트 추첨",
       "category": "공모전",
@@ -168,5 +186,5 @@
       "created_at": "2026-06-10 00:58:19"
     }
   ],
-  "last_updated": "2026-07-05 04:38:50"
+  "last_updated": "2026-07-06 04:50:28"
 }

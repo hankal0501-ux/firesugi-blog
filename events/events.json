@@ -2,6 +2,14 @@
   "travel": [
     {
       "kind": "🎁 여행 특가",
+      "title": "제주항공, 동계 항공권 특가 판매…국내선 2만9800원부터",
+      "detail": "뉴스핌",
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE0xUXljdDJiU2JrdW8wUHp6YmVoZzNEb2M2RzBrSkVBLUFYOGF3R0NUcnM0QThVQjZ3Z2gxVjA2dGtWNXQ3UmY3bnAxaVNOd0JJZkhQTVJreXpvTGs1?oc=5",
+      "site": "gnews_뉴스핌",
+      "created_at": "2026-07-07 06:16:00"
+    },
+    {
+      "kind": "🎁 여행 특가",
       "title": "에어부산 항공권 특가 프로모션...그랜드 하얏트 서울 SNS 이벤트",
       "detail": "MSN",
       "url": "https://news.google.com/rss/articles/CBMijANBVV95cUxOaHZocW9saFNiQnotejUwX2ZGQ2k5WXdqUkxMcEtGdUY0ZmJWdDlFWnBhZ2pTTkcxY0hZdGdEMmFVajRvOVZpWUFWT2ZQb2VDcW9iVjdzZFNuUDZFUDBMdGFFaGR0LWdfTGJnaVA3QUlTdldnQm9iYnUydWVyejU1YlJCY1EzUkZNcVRSZzdBUHdVOUljeUVhQlFzN0VqeXNhUHJ0M0UyMmp5RU5VYjNfOWZXdUtVUE1zVzVPMWg3S0ZKVEhDSTBtX1Y5X1dyeDhhQVQ2bWpfaVRGbWNTQzlpbUhscEF4c2VJdjNKaFJwVHRBVFlCd0xRUzhIa01JZ29YczN6ZlJDMGJ5UTdwWlNQNDNpTzhsUXBhbG9sQTE1RzB4S1ktWnBVdWhTMEI3eUR4RXJ0cWhyZmF1eHMyQ19VWHNLdlhtZmFITHlGbWtNMHl3UllzWDlQaElzS1dQNExqY0pEWGpJalB6WXNFOE9JVjk4R3RJbHNDaDFObTU1RWhWTUdJMTBMdjQzbUU?oc=5",
@@ -111,14 +119,6 @@
       "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5aYnR0ZE5RRVJqZ2o2N2NKMElVNGI3THNvX0FkbWs4cFhKSkF3VVFpZGg0Z0JPRVQxUERCalI5SDA0cXFTSGlGbnZWTVhfelhTRGRaLURmUC1CUzZxRFhOV0d3?oc=5",
       "site": "gnews_미주중앙일보",
       "created_at": "2026-06-09 03:05:00"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "클룩·이스타항공, 일본 항공·호텔 할인 프로모션 실시",
-      "detail": "뉴스트래블",
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1YNmFDTmVVZG9vQTMwRVFhMjlZSTBTQVlieV9EY0xPVnFKcE5sSDliemZyd25WOFJGQnh5MnJSZncwa1JFOFVGVFAwOFQ2YV8wOG1IY0VkUGxSeDluLUVId2VDQVhJdw?oc=5",
-      "site": "gnews_뉴스트래블",
-      "created_at": "2026-06-08 01:14:39"
     }
   ],
   "giveaways": [
@@ -186,5 +186,5 @@
       "created_at": "2026-06-10 00:58:19"
     }
   ],
-  "last_updated": "2026-07-07 04:32:06"
+  "last_updated": "2026-07-08 03:53:34"
 }

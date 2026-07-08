@@ -62,7 +62,7 @@ async function syncSubscribers(data) {
   const offset = data.last_offset || 0;
   let updates;
   try {
-    updates = await tgApi('getUpdates', { offset: offset + 1, timeout: 0 });
+    updates = await tgApi('getUpdates', { offset: offset + 1, timeout: 0, allowed_updates: ['message', 'my_chat_member'] });
   } catch (e) {
     console.warn('  ⚠️  getUpdates 실패:', e.message);
     return data;
@@ -72,20 +72,54 @@ async function syncSubscribers(data) {
   const existingIds = new Set(data.subscribers.map(s => s.chat_id));
   let maxOffset = data.last_offset || 0;
   let added = 0;
+  let blocked = 0;
+
+  // 등록 개폐 스위치: telegram.json 의 registration_open === false 면 신규 등록 마감
+  //  - 기존 구독자(existingIds)는 항상 유지 → 닫아도 영향 없음
+  //  - 새로 접속하는 사람만 차단
+  const registrationOpen = data.registration_open !== false;
 
   for (const upd of updates.result) {
     if (upd.update_id > maxOffset) maxOffset = upd.update_id;
+
+    // 접속만 해도 등록: /start 뿐 아니라 (1) 아무 메시지, (2) 봇 시작·차단해제(my_chat_member) 이벤트 모두 허용
+    let chat = null;
+    let when = Math.floor(Date.now() / 1000);
     const msg = upd.message;
-    if (!msg || !msg.chat || !msg.text) continue;
-    const isStart = msg.text === '/start' || msg.text.startsWith('/start ');
-    if (!isStart) continue;
-    const chatId = msg.chat.id;
+    const cm = upd.my_chat_member;
+    if (msg && msg.chat) {
+      chat = msg.chat;
+      when = msg.date || when;
+    } else if (cm && cm.chat) {
+      const status = cm.new_chat_member && cm.new_chat_member.status;
+      // 사용자가 봇을 시작/차단해제해서 'member' 상태가 된 경우만 (차단 'kicked' 은 제외)
+      if (status === 'member') { chat = cm.chat; when = cm.date || when; }
+    }
+    if (!chat) continue;
+    if (chat.type && chat.type !== 'private') continue; // 개인 채팅만 자동 등록 (그룹 제외)
+
+    const chatId = chat.id;
     if (existingIds.has(chatId)) continue;
-    const name = [msg.chat.first_name, msg.chat.last_name].filter(Boolean).join(' ') || (msg.chat.username ? '@' + msg.chat.username : '익명');
+    const name = [chat.first_name, chat.last_name].filter(Boolean).join(' ') || (chat.username ? '@' + chat.username : '익명');
+
+    // 등록 마감 상태면 신규 차단 (기존 구독자는 위에서 이미 통과)
+    if (!registrationOpen) {
+      blocked++;
+      existingIds.add(chatId); // 같은 실행 내 중복 안내 방지
+      console.log(`  ⛔ 등록 마감 상태 → 신규 접속 차단: ${name} (${chatId})`);
+      await tgApi('sendMessage', {
+        chat_id: chatId,
+        parse_mode: 'HTML',
+        text: `🚫 <b>현재 신규 구독 등록이 마감되었습니다.</b>\n\n추후 재개 시 다시 안내드릴게요.`
+      });
+      continue;
+    }
+
     data.subscribers.push({
       chat_id: chatId,
       name,
-      joined_at: new Date(msg.date * 1000).toISOString()
+      joined_at: new Date(when * 1000).toISOString(),
+      via: 'open' // 개방 기간에 접속해 자동 등록된 구독자 표식 (기존 관리자와 구분)
     });
     existingIds.add(chatId);
     added++;
@@ -99,6 +133,8 @@ async function syncSubscribers(data) {
   }
 
   data.last_offset = maxOffset;
+  console.log(`  🔓 등록 ${registrationOpen ? '개방' : '마감'} 상태`);
+  if (blocked > 0) console.log(`  ⛔ 마감으로 차단된 신규 접속 ${blocked}명`);
   if (added > 0) console.log(`  📊 신규 구독자 ${added}명 등록`);
   else console.log(`  ⏭  신규 구독자 없음 (총 ${data.subscribers.length}명)`);
   return data;

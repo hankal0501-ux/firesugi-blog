@@ -1,0 +1,32 @@
+name: ☕ Coffee Notification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Send coffee Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN_EVENTS: ${{ secrets.TELEGRAM_BOT_TOKEN_EVENTS }}
+          TELEGRAM_CHAT_ID_EVENTS: ${{ secrets.TELEGRAM_CHAT_ID_EVENTS }}
+          TELEGRAM_BOT_TOKEN_NEWS: ${{ secrets.TELEGRAM_BOT_TOKEN_NEWS }}
+          TELEGRAM_CHAT_ID_NEWS: ${{ secrets.TELEGRAM_CHAT_ID_NEWS }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/notify-telegram.js coffee

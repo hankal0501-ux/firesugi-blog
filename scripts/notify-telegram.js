@@ -1,6 +1,9 @@
 // =============================================================
 // Telegram 알림 발송 — 신규 이벤트/뉴스가 있을 때만 호출
-// 환경변수: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (관리자 본인용, 폴백)
+// 환경변수:
+//   - mode별 기본값: TELEGRAM_BOT_TOKEN_EVENTS, TELEGRAM_CHAT_ID_EVENTS
+//   - mode별 기본값: TELEGRAM_BOT_TOKEN_NEWS, TELEGRAM_CHAT_ID_NEWS
+//   - 공통 폴백: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 // 인자: events | news
 // 동작:
 //  1. /getUpdates 폴링 → /start 보낸 새 사용자 자동 등록
@@ -9,15 +12,16 @@
 // =============================================================
 import fs from 'node:fs/promises';
 
-const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const ADMIN_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const MODE = process.argv[2] || 'events';
+const TOKEN = process.env[`TELEGRAM_BOT_TOKEN_${MODE.toUpperCase()}`] || process.env.TELEGRAM_BOT_TOKEN;
+const ADMIN_CHAT_ID = process.env[`TELEGRAM_CHAT_ID_${MODE.toUpperCase()}`] || process.env.TELEGRAM_CHAT_ID;
 const SUBSCRIBERS_FILE = 'subscribers/telegram.json';
 
 if (!TOKEN) {
-  console.log('ℹ️  TELEGRAM_BOT_TOKEN 미설정 → 발송 스킵');
+  console.log(`ℹ️  TELEGRAM_BOT_TOKEN_${MODE.toUpperCase()} 또는 TELEGRAM_BOT_TOKEN 미설정 → 발송 스킵`);
   process.exit(0);
 }
+console.log(`ℹ️  mode=${MODE} / using bot token ${process.env[`TELEGRAM_BOT_TOKEN_${MODE.toUpperCase()}`] ? `TELEGRAM_BOT_TOKEN_${MODE.toUpperCase()}` : 'TELEGRAM_BOT_TOKEN'} / using chat id ${process.env[`TELEGRAM_CHAT_ID_${MODE.toUpperCase()}`] ? `TELEGRAM_CHAT_ID_${MODE.toUpperCase()}` : 'TELEGRAM_CHAT_ID'}`);
 
 function esc(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -158,7 +162,84 @@ async function buildNewsMessage() {
   return lines.join('\n').trim();
 }
 
+function isCoffeeText(text) {
+  const coffeeRe = /(?:커피|스타벅스|이디야|투썸|빽다방|카페베네|폴바셋|메가커피|커피빈|탐앤탐스)/i;
+  const freeRe = /(?:무료|공짜|기프티콘|쿠폰|증정|할인)/i;
+  return coffeeRe.test(text) && freeRe.test(text);
+}
+
+async function buildCoffeeMessage() {
+  let events;
+  try {
+    events = JSON.parse(await fs.readFile('events/events.json', 'utf8'));
+  } catch {
+    return null;
+  }
+
+  const travelItems = (events.travel || []).filter(it => isCoffeeText(`${it.title} ${it.detail || ''}`)).map(it => ({
+    title: it.title,
+    url: it.url,
+    source: it.detail || it.site || '',
+    extra: ''
+  }));
+
+  const giveawayItems = (events.giveaways || []).filter(it => isCoffeeText(`${it.title} ${it.source_site || ''} ${it.category || ''} ${it.prize || ''} ${it.period || ''}`)).map(it => ({
+    title: it.title,
+    url: it.url,
+    source: it.source_site || it.category || '',
+    extra: [it.prize, it.period].filter(Boolean).join(' · ')
+  }));
+
+  const items = [...travelItems, ...giveawayItems];
+  if (items.length === 0) return null;
+
+  const lines = [`☕️ <b>Fire-Sugi 커피 이벤트 ${items.length}건</b>`, ''];
+  items.slice(0, 10).forEach(it => {
+    const title = esc(it.title).slice(0, 80);
+    const src = esc(it.source || '');
+    const extra = esc(it.extra || '');
+    lines.push(`• <a href="${esc(it.url)}">${title}</a>${src ? ` <i>(${src})</i>` : ''}${extra ? ` <i>${extra}</i>` : ''}`);
+  });
+  return lines.join('\n').trim();
+}
+
+function buildTestMessage() {
+  const userMessage = process.argv[3] || '🧪 <b>텔레그램 테스트 메시지입니다.</b>\n이 메시지가 도착하면 텔레그램 알림이 정상 작동합니다.';
+  const lines = [
+    '🧪 <b>Fire-Sugi Telegram 테스트</b>',
+    '',
+    esc(userMessage),
+    '',
+    `<i>mode=${MODE} · time=${new Date().toISOString()}</i>`
+  ];
+  return lines.join('\n');
+}
+
 async function main() {
+  if (MODE === 'test') {
+    if (!ADMIN_CHAT_ID) {
+      console.log('ℹ️  TELEGRAM_CHAT_ID_TEST 또는 TELEGRAM_CHAT_ID 미설정 → 테스트 발송 불가');
+      process.exit(0);
+    }
+    const text = buildTestMessage();
+    console.log('📨 테스트 메시지 발송 중...');
+    await send(ADMIN_CHAT_ID, text);
+    console.log('✅ 테스트 메시지 발송 완료');
+    process.exit(0);
+  }
+
+  if (MODE === 'coffee') {
+    const text = await buildCoffeeMessage();
+    if (!text) {
+      console.log('ℹ️  커피 이벤트가 없습니다. 발송 스킵');
+      process.exit(0);
+    }
+    console.log('📨 커피 이벤트 메시지 발송 중...');
+    await send(ADMIN_CHAT_ID || (await loadSubscribers()).subscribers[0]?.chat_id, text);
+    console.log('✅ 커피 이벤트 메시지 발송 완료');
+    process.exit(0);
+  }
+
   // 1. 구독자 목록 로드 + 신규 구독자 자동 등록
   let data = await loadSubscribers();
   console.log(`📂 기존 구독자 ${data.subscribers.length}명`);

@@ -123,6 +123,15 @@
   ],
   "giveaways": [
     {
+      "source_site": "테스트",
+      "title": "스타벅스 아메리카노 무료 쿠폰 응모",
+      "category": "커피",
+      "prize": "아메리카노 1잔",
+      "period": "2026-07-10",
+      "url": "https://example.com/coffee-test",
+      "created_at": "2026-07-08 12:00:00"
+    },
+    {
       "source_site": "뉴데일리 대구경북",
       "title": "영양 자작나무숲, 국민 사진으로 기록한다… 영양군 온라인 공모전 모집",
       "category": "공모전",

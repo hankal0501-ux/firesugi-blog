@@ -55,6 +55,10 @@ async function loadSubscribers() {
 }
 
 async function saveSubscribers(data) {
+  if (DRY_RUN) {
+    console.log('  🧪 DRY RUN — 구독자 파일 저장 생략');
+    return;
+  }
   data.updated_at = new Date().toISOString();
   await fs.writeFile(SUBSCRIBERS_FILE, JSON.stringify(data, null, 2), 'utf8');
 }

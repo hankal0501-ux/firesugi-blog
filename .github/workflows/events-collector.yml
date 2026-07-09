@@ -2,8 +2,9 @@ name: 🎁 Daily Events Collection
 
 on:
   schedule:
-    # 매일 00:30 UTC = 09:30 KST 실행 (news-collector 09:00 KST와 30분 차이)
-    - cron: '30 0 * * *'
+    # 매일 23:00 UTC = 다음날 08:00 KST 실행
+    # (news 09:00 · board 09:15 KST 와 겹치지 않음)
+    - cron: '0 23 * * *'
   workflow_dispatch:  # 수동 실행 가능
 
 permissions:

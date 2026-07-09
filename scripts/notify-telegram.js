@@ -157,17 +157,32 @@ async function send(chatId, text) {
 }
 
 async function buildEventsMessage() {
-  let data;
+  let data = { travel: [], giveaways: [] };
   try {
     data = JSON.parse(await fs.readFile('events/_new-this-run.json', 'utf8'));
   } catch {
-    return null;
+    // 신규분 파일이 없어도 커피는 누적 목록에서 뽑아 보낸다
   }
   const travel = data.travel || [];
   const give = data.giveaways || [];
-  if (travel.length === 0 && give.length === 0) return null;
 
-  const lines = [`🎁 <b>Fire-Sugi 신규 이벤트 ${travel.length + give.length}건</b>`, ''];
+  // 커피는 "그날 신규"가 아니라 누적 목록의 최신 3건 — 신규가 없는 날에도 매일 나가야 한다
+  const events = await loadEvents();
+  const coffee = pickLatestCoffee(events, COFFEE_SEND_LIMIT);
+
+  if (travel.length === 0 && give.length === 0 && coffee.length === 0) return null;
+
+  const newCount = travel.length + give.length;
+  const header = newCount > 0
+    ? `🎁 <b>Fire-Sugi 신규 이벤트 ${newCount}건</b>`
+    : `🎁 <b>Fire-Sugi 오늘의 이벤트</b>`;
+  const lines = [header, ''];
+
+  if (coffee.length) {
+    lines.push(`☕️ <b>커피 응모 (${coffee.length}건 · 최신순)</b>`);
+    coffee.forEach(it => lines.push(coffeeLine(it)));
+    lines.push('');
+  }
   if (travel.length) {
     lines.push(`✈️ <b>여행 특가 (${travel.length}건)</b>`);
     travel.slice(0, 10).forEach(it => {
@@ -218,16 +233,19 @@ function toTime(s) {
   return isNaN(t) ? 0 : t;
 }
 
-async function buildCoffeeMessage() {
-  let events;
+async function loadEvents() {
   try {
-    events = JSON.parse(await fs.readFile('events/events.json', 'utf8'));
+    return JSON.parse(await fs.readFile('events/events.json', 'utf8'));
   } catch {
     return null;
   }
+}
 
-  // collect-events.js 가 채우는 전용 coffee 카테고리를 우선 사용하고,
-  // 아직 없으면 예전 방식(travel·giveaways 사후 필터)으로 폴백한다.
+// collect-events.js 가 채우는 전용 coffee 카테고리에서 해외를 뺀 최신 N건.
+// coffee 가 아직 비어 있으면 예전 방식(travel·giveaways 사후 필터)으로 폴백한다.
+function pickLatestCoffee(events, limit) {
+  if (!events) return [];
+
   let items = (events.coffee || []).map(it => ({
     title: it.title,
     url: it.url,
@@ -238,7 +256,7 @@ async function buildCoffeeMessage() {
   }));
 
   if (items.length === 0) {
-    const legacy = [
+    items = [
       ...(events.travel || []).filter(it => isCoffeeText(`${it.title} ${it.detail || ''}`)).map(it => ({
         title: it.title, url: it.url, source: it.detail || it.site || '', extra: '', region: '국내', created_at: it.created_at
       })),
@@ -246,24 +264,27 @@ async function buildCoffeeMessage() {
         title: it.title, url: it.url, source: it.source_site || '', extra: [it.prize, it.period].filter(Boolean).join(' · '), region: '국내', created_at: it.created_at
       }))
     ];
-    items = legacy;
   }
 
-  // 해외 제외 → 최신순 → 상위 3건
-  const picked = items
+  return items
     .filter(it => it.region !== '해외')
     .sort((a, b) => toTime(b.created_at) - toTime(a.created_at))
-    .slice(0, COFFEE_SEND_LIMIT);
+    .slice(0, limit);
+}
 
+function coffeeLine(it) {
+  const title = esc(it.title).slice(0, 80);
+  const src = esc(it.source || '');
+  const extra = esc(it.extra || '');
+  return `• <a href="${esc(it.url)}">${title}</a>${src ? ` <i>(${src})</i>` : ''}${extra ? ` <i>${extra}</i>` : ''}`;
+}
+
+async function buildCoffeeMessage() {
+  const picked = pickLatestCoffee(await loadEvents(), COFFEE_SEND_LIMIT);
   if (picked.length === 0) return null;
 
   const lines = [`☕️ <b>Fire-Sugi 커피 응모 ${picked.length}건</b> <i>(최신순)</i>`, ''];
-  picked.forEach(it => {
-    const title = esc(it.title).slice(0, 80);
-    const src = esc(it.source || '');
-    const extra = esc(it.extra || '');
-    lines.push(`• <a href="${esc(it.url)}">${title}</a>${src ? ` <i>(${src})</i>` : ''}${extra ? ` <i>${extra}</i>` : ''}`);
-  });
+  picked.forEach(it => lines.push(coffeeLine(it)));
   return lines.join('\n').trim();
 }
 

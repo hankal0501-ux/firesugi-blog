@@ -1,110 +1,4 @@
 {
-  "travel": [
-    {
-      "kind": "🎁 여행 특가",
-      "title": "제주항공, 동계 항공권 특가 판매…국내선 2만9800원부터",
-      "detail": "뉴스핌",
-      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE0xUXljdDJiU2JrdW8wUHp6YmVoZzNEb2M2RzBrSkVBLUFYOGF3R0NUcnM0QThVQjZ3Z2gxVjA2dGtWNXQ3UmY3bnAxaVNOd0JJZkhQTVJreXpvTGs1?oc=5",
-      "site": "gnews_뉴스핌",
-      "created_at": "2026-07-07 06:16:00"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "에어부산 항공권 특가 프로모션...그랜드 하얏트 서울 SNS 이벤트",
-      "detail": "MSN",
-      "url": "https://news.google.com/rss/articles/CBMijANBVV95cUxOaHZocW9saFNiQnotejUwX2ZGQ2k5WXdqUkxMcEtGdUY0ZmJWdDlFWnBhZ2pTTkcxY0hZdGdEMmFVajRvOVZpWUFWT2ZQb2VDcW9iVjdzZFNuUDZFUDBMdGFFaGR0LWdfTGJnaVA3QUlTdldnQm9iYnUydWVyejU1YlJCY1EzUkZNcVRSZzdBUHdVOUljeUVhQlFzN0VqeXNhUHJ0M0UyMmp5RU5VYjNfOWZXdUtVUE1zVzVPMWg3S0ZKVEhDSTBtX1Y5X1dyeDhhQVQ2bWpfaVRGbWNTQzlpbUhscEF4c2VJdjNKaFJwVHRBVFlCd0xRUzhIa01JZ29YczN6ZlJDMGJ5UTdwWlNQNDNpTzhsUXBhbG9sQTE1RzB4S1ktWnBVdWhTMEI3eUR4RXJ0cWhyZmF1eHMyQ19VWHNLdlhtZmFITHlGbWtNMHl3UllzWDlQaElzS1dQNExqY0pEWGpJalB6WXNFOE9JVjk4R3RJbHNDaDFObTU1RWhWTUdJMTBMdjQzbUU?oc=5",
-      "site": "gnews_MSN",
-      "created_at": "2026-06-30 13:13:26"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "토스 행운퀴즈 'NOLDAY 여행 특가' 정답…7월 1일",
-      "detail": "게임톡",
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9OUmpUUWl0VjIyQVpEMDMxY3BnNFlGUjFGTGZQTjhpMGpPUkVkTWxpOHkwRXFaX0VTOS1zVGl6RTZPSnlPcVA0YkY0ZTh2dXRHcXUwSDIxbzZENjlyRlhaMmlTVDFtX0NGY3BYRw?oc=5",
-      "site": "gnews_게임톡",
-      "created_at": "2026-07-01 08:47:15"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "에어부산, 유류할증료 인하 기념 항공권 특가 판매",
-      "detail": "국제신문",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQemZXbnp5NXZfeVNpNFE5STktRnB2YVNBWEd5VTI1RjNwbVF3Z2czdHRZWGliVFlYSVR3T1NSZHBaTmRUSGUwYTB4cTdibEdoWTlEVWFUdXJiRG45VlY0T01RZ0lDT0lQMFc3VDN4STlpXy03cXY0MmVDUFBnUXBtN0NfOHQxbl9RVHlweGx3?oc=5",
-      "site": "gnews_국제신문",
-      "created_at": "2026-06-30 05:29:00"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "유류할증료 인하에 에어부산 항공권 특가 판매",
-      "detail": "부산일보",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1XMUdKWWI0MllETmdCai1ENER5R3FkbnY1eThvRzhiMlVjeTN0ZWstdXhWYm9Bc0NIYkI0MnFKemNCS0VKVDF1YmYtdkRLc2huTTF3UnNBZ2xxaVM1WjVnakNfOGRMdGdWYm1ZSzItNUpZWGdm?oc=5",
-      "site": "gnews_부산일보",
-      "created_at": "2026-06-30 05:54:16"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "일본 6만 원·동남아 14만 원 대...'휴가철' 항공권 특가 판매",
-      "detail": "gukjenews.com",
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE94Q0p6cWloM3VaYkRQMXNPQTFrbnlrZUlnSG9ZY0o0MGZMRnY2WkRzOTd6d193cDAwT3NOaWx4cDNXTVk5YjhQSUtlbDFpblZwTF9zUmRUTlcwU0ZuaW9Zc3Z1MF81WnB4QVZ6c1hn?oc=5",
-      "site": "gnews_gukjenews.com",
-      "created_at": "2026-06-30 06:26:53"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "에어부산, 유류할증료 인하 맞춰 국내외 항공권 특가 띄운다",
-      "detail": "네이트",
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5la2NrR0RITEI1NnEtNzdZeUxGRlVJMGlQZFFYWUozWGlId2F4SExJX1Q0TXk3QjFxY3J6S3lwRHNXN1I3bnpETmlDazlSNFZpMl8w?oc=5",
-      "site": "gnews_네이트",
-      "created_at": "2026-06-29 23:06:00"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "에어부산, 유류할증료 인하 맞춰 항공권 특가 프로모션",
-      "detail": "데일리안",
-      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1PUGZvb2gzczBuZmthUUY2QnItRV8tdjNqYk5KQ2Y1QmVsNlIwd2szeW5YYUNHeWJ3bmdjVmF6UXRSMUFVbndnQUVTNjVMYlAzVldkS3JTQdIBpgJBVV95cUxQaU41bm0tNGdGTUhwa29raEhhMG9xV2U3UEJzOXRIU08weXVYek51X3dFZUVELWpxOXRoNUpONFU4QkkyenE4LTY1VWpiTENpSGtEbUdORnRmQUlFeWZRZlRXQi1QMVVob0VIbGVxaHNpYXNidlVxRzhLdDBFb0lyWG1vYkY3cnNzN1VkbTlCd2IyZFNxeE9Fb2w4Q1ItMngtd2ZnZWl4Z1pGd0hXVnh1TVVhREFjZTBhdGJobUluNXltMzRlTkQxa2wyYTIwM2stVUFmODVKYzZScnB3al9NNnFMel9QQ0t2SmR2QUozRFZVdXd4NTE5N2gwdllOVnBwZW9RRVRIbmNyWjRJTE9jbzFMeVA1UkdCZE5hbDFRMWR5UUpxZmc?oc=5",
-      "site": "gnews_데일리안",
-      "created_at": "2026-06-30 02:10:00"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "11번가, 하나투어와 세부·보홀 등 필리핀 패키지여행 특가",
-      "detail": "MSN",
-      "url": "https://news.google.com/rss/articles/CBMilARBVV95cUxQcWEyNHAzVkZrZXprY2F4dzN0TVB6VDNWcmlrak5vcmVDS1piYVYwclljVjlyb2lQY1YzdFFobm8yT0pMWUJnSm9tYTJBcGg5NjJ2MVZxRDMzQ1lmRWdRdm1oRmR6bG5jNGUxdHh1c0tJMVNzbEFET2w4dWZ3YXZpYXpDdnFOZFVkaGNLRWVhQWJlOWxCVWRHVWE0Y09TR2hnclNBbExsc2E0Ty1PdXpacFFoWTBrRkNUZmc5Q290U1E3ai1faWN1M0l2ZW9HX294T2FtTWNBRHNpWE1QYUU4NWVEbl8xRUtmdU9NeFVoYmZaelBzU2RORUd3T3NVTjBBZk1DYTI2SDJZcHRKT25VMXJXeVk5ZjFyREo4aElMWmRmdnBDUWZWTkxmbHpEMGE0UzJhaVIzYi13R1FDVWNGWTQwMXVOQVdkZmRiLWN5VHJYNnBlNmxoN3A1RnJ4UGhlLWhSRFBwWk01azVycTNDX1NZUXU2NmtjUlllbEJMMlRfaVlJOUl4QzRVdlhXOWJfZnBtT29CR3NFZTUxcmRjMmRCNm5Yc0o5NXhNQk9TMjhnbGtsTXBDNFhwRUJEOFd2ZjZnYnJ2akQxakxySjNOOTNoRWh3UjRLZUdtR0tERVg2d1k5NGl4WFFHV1JQZ0k3RG5FdG5OYjZDRnlfWnhYbG90MmdWSG9LVjVFVHRmMnIxa2RW?oc=5",
-      "site": "gnews_MSN",
-      "created_at": "2026-06-24 07:00:00"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "티웨이항공, 해외 항공권 특가로 여름 수요 공략",
-      "detail": "포인트데일리",
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1HalJ3UXdrX2RSeXRTcjhkUVRWQU96NnI1cjlTeHk1YXN6Z29PN1dHb0t4Z1lOTUIzSDhlOTVubmNycTI2ckF3bTBiOEZzenNlTnlKWG9kZ2p4ZjJDS2U0dXpzSXpGRUVNLXdKbWM4d0PSAXRBVV95cUxQUGN2ckxxMHdnYVVWaUN3WlpLTlJab19pMVVZdUtWcVkzRnJQZjdaU1RVek1QQ1RJOVhiR29xQTg1WXR0aWduOFZsbWMzSkkyclFhQlYxSTRZN0tGTXBIVnhQR29Fb043SkFCX1hDZU9MQ2JPSA?oc=5",
-      "site": "gnews_포인트데일리",
-      "created_at": "2026-06-19 00:03:24"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "토스 행운퀴즈 '샵백 아고다 여행 특가' 정답…6월 16일",
-      "detail": "게임톡",
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBzcDV1cjRxQmwzTm1kZ3JhU3FFaUtzUEY5Sk8wakZpb2FfaHBoR0xQNzVOei0yM1hUcnNyWjcwckpUYjhoY3ZOeG85YUtsWVo1QnFzNGY5SkdQSmZTMU5LZE9KVG5ubkp4dG1uNQ?oc=5",
-      "site": "gnews_게임톡",
-      "created_at": "2026-06-15 17:18:07"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "루프트한자 항공권 특가 이벤트",
-      "detail": "여행신문",
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE92ZXprbU9kTGx3anVWdVh1ajN6OFpuTEg0bkhRSFVrd0xXNGplSXh6Y3ltMHRYYlFpUUVCazFUbFUzR0V6TkZyX0Zxcnhsdm45ZGd1LWZ5Q05xTGtaNDhNcVBFRUFRZkxzZVpiWkRBVjnSAXRBVV95cUxQN2ZzcWlZVFhEMnZRUkZVdS1Uck5lVEFhU1ZtSHoybWRWZHVScFRnd2p6RkxhV0tTQmw4Wkk5RFdTNWZaVXh3R3U3S29sR09HbTNpY3B5LThBV2s4djU3V21iVVVralJ3U283NjBldlRsYWlZZA?oc=5",
-      "site": "gnews_여행신문",
-      "created_at": "2026-06-13 22:07:07"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "'여름 휴가철 항공권 특가'...지방공항 할인 놓치지 말자",
-      "detail": "gukjenews.com",
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5hT2VOMVNyMkZHMGFlZEJSbFp1Uk1NMHFPbGdaNXRXZXFUTnJwdlE4WXhHYnRTelF5ODc0Sk5FdXI1Z1QzYXhONXZRWm9UNDJ2LS1RZE5HR1JXV2MybkI2SEZ6YkZrektoa2RMSkp3?oc=5",
-      "site": "gnews_gukjenews.com",
-      "created_at": "2026-06-13 03:54:06"
-    }
-  ],
   "giveaways": [
     {
       "source_site": "법률신문",
@@ -197,7 +91,7 @@
       "created_at": "2026-06-10 00:58:19"
     }
   ],
-  "last_updated": "2026-07-09 12:26:44",
+  "last_updated": "2026-07-09 21:35:41",
   "coffee": [
     {
       "source_site": "아시아경제",
@@ -270,6 +164,89 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1OZzV0U18yazd6TVZ1ajhrNXRfR1RWVmFKSzV3YXFFQXYySWh3SE1QQVVEUndsckx6R0ZCbE5DZ01Ddm4xNzVCakRhY0FscXN2TUJod0tRcnlaZ1gwT3IxeXRmbENza3ZtcGc?oc=5",
       "created_at": "2026-07-08 22:40:36"
+    }
+  ],
+  "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "울주를 움직이는 힘, 서범수 국회의원 '소방기본법 일부개정법률안' 대표 발의",
+      "detail": "전국구직노조신문",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBIb0VpRnRPNEd5UmdUVk1LME9ZTkJkWURKYkJKVzl0WnpOZkNSY2hPX0t5WHZHTGtnSzZQWjZhcWZTcnFxODlhR3loUW5aUzlrRnNzTDZHcWNiTHJLUGJVS2ktUS1pWG8?oc=5",
+      "site": "gnews_전국구직노조신문",
+      "created_at": "2026-07-07 16:25:41"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "청주동부소방서, 소방시설법 개정에 따른 변경사항 안내:FPN Daily",
+      "detail": "소방방재신문",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPam9lcGdEdUR6emxfNll2MV9JSFF6a0k0elo1b0NyMGJIRG1FUEdqTHU4czdZR1hqNFNOM0FWSHl3eE1CbFVhZzVwYVZ1Qm5YUE5nbnZaTTdDYzRLSFVoNDZrMVJnWmp1MU13b1F4Q3ktT0tOdkp3RUIzN1RfQTJqR2pUOE9QMjBVLTFlRU9QWVd2bVVQSDdueV9wS2ZuMHVSaVQ2QnZuLW9MZEVpS2cydU5fY1VSb0lpWld4SDh6UTktbF9XOF9ZRWZSVU8?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-07-07 16:18:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방관 배상책임보험 의무화·리튬이온전지 정보 사전 확보… 소방기본법 하위법령 입법예고",
+      "detail": "에너지데일리",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1qbTJXNTJoeU80cWRRR09rSlE3N2tPemhYMG40VUF0VUw5S1QxaEd4eHBEaTNXUTFhRXNnd1U5YXhLSWhGRnJIQkpBWUVhVDl4ZWItS2Z5TkZoUDJnMGhxRkFMTFd0b2FqVFFReGlpLXU5QQ?oc=5",
+      "site": "gnews_에너지데일리",
+      "created_at": "2026-06-15 16:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방청, 개정 소방시설법 시행령 입법예고 취소",
+      "detail": "아파트관리신문",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE02amlVSW5KX3hVTkpkLUZHMUJqeXF4d1A3enR4N2NVc3BWVVM5aFA4UjVpdFJtbjZvNllnX2RBMzIwVmxqV0dnRS1aQVFOVVVnRlE0RUhFSG9kMnVNd2VNMlQ1czIzMkXSAWtBVV95cUxNSTA2ODF1MUlNQ0paOXZud202UmhIem1PZFpyd25ZakNWYnBybnVUcWNVdmVNb0ZER2kySjhYNmNja29DeVBiYzB2cnJfbE5tUW04dzJlamNPdVAyV0NQLVlSSXdSUjF6QV9CWQ?oc=5",
+      "site": "gnews_아파트관리신문",
+      "created_at": "2026-06-09 16:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방기본법 시행령 개정 시행… 소방차 출동지장 과태료 기준 변경",
+      "detail": "글로벌뉴스통신GNA",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE8zUmNvenl3X2poZS1oOUtYT0xRQXBoTkF5MTNERl9KaDIxWERZb2VsVWZGSTJ2RFlMR3dIMTJqY1JXVVJGWXZhVXpsaFlyYW5tM0NtY1k0RFJ1U190ZXl4dDhjdC1IdFhjWGFrU0xRTS1MWmc3?oc=5",
+      "site": "gnews_글로벌뉴스통신GNA",
+      "created_at": "2026-04-24 16:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "‘그림으로 이해하는 화재안전기준’ 개정판 출간",
+      "detail": "소방방재신문",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9XRXgzX190QUNqUFR4RXJUSWFyZ09iVlZjLTNBZHpscnRJekpZOGg4ZWJvRWZPOHhWX1hYcThyWEpyREtlZVE?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-05-15 16:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "[집중조명] 올해 소방시설 법령 개정 방향 윤곽 나왔다… 내용은?",
+      "detail": "소방방재신문",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE96YTdGeXRNZVpmaXlTTVV4OGNHWnZUVGdZZWdiRGN3b2JoT1ZJek91bHFKVFMtN3dCRmNPY0ZjMFN0dnBTa2c?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-03-25 16:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방시설 기준 손질한다… ‘소방시설법 시행령’ 입법 예고",
+      "detail": "소방방재신문",
+      "action": "시행",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9OaEg2b29sMlV0dzV3S2NiYndSZkplVkdCbERGbVFvRWZXeXpCQWhJc2M4Z1JoMFNsTXJIZFpYcEJnaS02SGc?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-06-05 16:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "법 통과 2년째 멈춰선 ‘119법 시행령’… 구급대원 업무범위 설정 ‘진통’",
+      "detail": "소방방재신문",
+      "action": "시행",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1Zb2dnUl9pOUd0VnVPNkxSUi1RUy1PUUpPLTBHY19ZNG1LRmZObVU5Z0dKNTFlekU4MTVkdEl3c3R3b0V1N1E?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-04-22 16:00:00"
     }
   ]
 }

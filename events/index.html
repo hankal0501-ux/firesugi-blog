@@ -308,7 +308,7 @@ document.addEventListener('keydown', (ev) => {
     const res = await fetch('events.json?t=' + Date.now(), {cache: 'no-store'});
     if (!res.ok) return;
     const data = await res.json();
-    if (!data || (!data.travel && !data.giveaways)) return;
+    if (!data || (!data.firelaw && !data.giveaways)) return;
     // 1) 최신 갱신 시각
     if (data.last_updated) {
       document.querySelectorAll('.meta strong').forEach(el => {
@@ -320,13 +320,14 @@ document.addEventListener('keydown', (ev) => {
     if (!list) return;
     const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
     const html = [];
-    for (const t of (data.travel || [])) {
+    for (const t of (data.firelaw || [])) {
       const url = t.url || '';
       const title = t.title || '';
       const detail = t.detail || '';
       const ts = t.created_at || '';
+      const act = t.action ? '[' + esc(t.action) + '] ' : '';
       const link = url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>` : `<span>${esc(title)}</span>`;
-      html.push(`<li data-cat="여행"><span class="kind">${esc(t.kind || '🎁')}</span><span class="section">여행 특가</span>${link}<small>${esc(detail)}${ts ? ' · ' + esc(ts) : ''}</small></li>`);
+      html.push(`<li data-cat="소방법령"><span class="kind">${esc(t.kind || '🚒')}</span><span class="section">소방 법령</span>${act}${link}<small>${esc(detail)}${ts ? ' · ' + esc(ts) : ''}</small></li>`);
     }
     for (const g of (data.giveaways || [])) {
       const url = g.url || '';
@@ -344,7 +345,7 @@ document.addEventListener('keydown', (ev) => {
     // 3) 카운트 갱신
     const countEl = document.getElementById('count');
     if (countEl) {
-      const total = (data.travel?.length || 0) + (data.giveaways?.length || 0);
+      const total = (data.firelaw?.length || 0) + (data.giveaways?.length || 0);
       const m = countEl.textContent.match(/최근\s*(\d+)/);
       const hours = m ? m[1] : '168';
       countEl.textContent = total + '건 · 최근 ' + hours + '시간';

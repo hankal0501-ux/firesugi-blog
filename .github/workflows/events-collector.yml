@@ -44,8 +44,9 @@ jobs:
           else
             TRAVEL=$(node -e "console.log(JSON.parse(require('fs').readFileSync('events/events.json')).travel.length)")
             GIVE=$(node -e "console.log(JSON.parse(require('fs').readFileSync('events/events.json')).giveaways.length)")
+            COFFEE=$(node -e "console.log((JSON.parse(require('fs').readFileSync('events/events.json')).coffee||[]).length)")
             SUBS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('subscribers/telegram.json')).subscribers.length)")
-            git commit -m "🎁 daily events ($(date -u +%Y-%m-%d) · travel ${TRAVEL} · give ${GIVE} · subs ${SUBS})"
+            git commit -m "🎁 daily events ($(date -u +%Y-%m-%d) · travel ${TRAVEL} · give ${GIVE} · coffee ${COFFEE} · subs ${SUBS})"
             git push
             echo "✅ 푸시 완료"
           fi

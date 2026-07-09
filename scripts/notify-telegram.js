@@ -16,8 +16,10 @@ const MODE = process.argv[2] || 'events';
 const TOKEN = process.env[`TELEGRAM_BOT_TOKEN_${MODE.toUpperCase()}`] || process.env.TELEGRAM_BOT_TOKEN;
 const ADMIN_CHAT_ID = process.env[`TELEGRAM_CHAT_ID_${MODE.toUpperCase()}`] || process.env.TELEGRAM_CHAT_ID;
 const SUBSCRIBERS_FILE = 'subscribers/telegram.json';
+// DRY_RUN=1 이면 실제 발송 없이 만들어질 메시지를 그대로 출력한다 (로컬 검증용)
+const DRY_RUN = process.env.DRY_RUN === '1';
 
-if (!TOKEN) {
+if (!TOKEN && !DRY_RUN) {
   console.log(`ℹ️  TELEGRAM_BOT_TOKEN_${MODE.toUpperCase()} 또는 TELEGRAM_BOT_TOKEN 미설정 → 발송 스킵`);
   process.exit(0);
 }
@@ -141,6 +143,10 @@ async function syncSubscribers(data) {
 }
 
 async function send(chatId, text) {
+  if (DRY_RUN) {
+    console.log(`\n──── DRY RUN → chat_id=${chatId} ────\n${text}\n────────────────────────────────\n`);
+    return;
+  }
   const res = await tgApi('sendMessage', {
     chat_id: chatId,
     text,
@@ -198,10 +204,18 @@ async function buildNewsMessage() {
   return lines.join('\n').trim();
 }
 
+const COFFEE_SEND_LIMIT = 3; // 텔레그램에는 최신 커피 응모 3건만
+
 function isCoffeeText(text) {
   const coffeeRe = /(?:커피|스타벅스|이디야|투썸|빽다방|카페베네|폴바셋|메가커피|커피빈|탐앤탐스)/i;
   const freeRe = /(?:무료|공짜|기프티콘|쿠폰|증정|할인)/i;
   return coffeeRe.test(text) && freeRe.test(text);
+}
+
+// "2026-07-09 14:03:00" → 정렬 가능한 타임스탬프
+function toTime(s) {
+  const t = Date.parse(String(s || '').replace(' ', 'T'));
+  return isNaN(t) ? 0 : t;
 }
 
 async function buildCoffeeMessage() {
@@ -212,25 +226,39 @@ async function buildCoffeeMessage() {
     return null;
   }
 
-  const travelItems = (events.travel || []).filter(it => isCoffeeText(`${it.title} ${it.detail || ''}`)).map(it => ({
+  // collect-events.js 가 채우는 전용 coffee 카테고리를 우선 사용하고,
+  // 아직 없으면 예전 방식(travel·giveaways 사후 필터)으로 폴백한다.
+  let items = (events.coffee || []).map(it => ({
     title: it.title,
     url: it.url,
-    source: it.detail || it.site || '',
-    extra: ''
+    source: it.brand || it.source_site || '',
+    extra: [it.prize, it.period].filter(Boolean).join(' · '),
+    region: it.region || '국내',
+    created_at: it.created_at
   }));
 
-  const giveawayItems = (events.giveaways || []).filter(it => isCoffeeText(`${it.title} ${it.source_site || ''} ${it.category || ''} ${it.prize || ''} ${it.period || ''}`)).map(it => ({
-    title: it.title,
-    url: it.url,
-    source: it.source_site || it.category || '',
-    extra: [it.prize, it.period].filter(Boolean).join(' · ')
-  }));
+  if (items.length === 0) {
+    const legacy = [
+      ...(events.travel || []).filter(it => isCoffeeText(`${it.title} ${it.detail || ''}`)).map(it => ({
+        title: it.title, url: it.url, source: it.detail || it.site || '', extra: '', region: '국내', created_at: it.created_at
+      })),
+      ...(events.giveaways || []).filter(it => isCoffeeText(`${it.title} ${it.source_site || ''} ${it.prize || ''}`)).map(it => ({
+        title: it.title, url: it.url, source: it.source_site || '', extra: [it.prize, it.period].filter(Boolean).join(' · '), region: '국내', created_at: it.created_at
+      }))
+    ];
+    items = legacy;
+  }
 
-  const items = [...travelItems, ...giveawayItems];
-  if (items.length === 0) return null;
+  // 해외 제외 → 최신순 → 상위 3건
+  const picked = items
+    .filter(it => it.region !== '해외')
+    .sort((a, b) => toTime(b.created_at) - toTime(a.created_at))
+    .slice(0, COFFEE_SEND_LIMIT);
 
-  const lines = [`☕️ <b>Fire-Sugi 커피 이벤트 ${items.length}건</b>`, ''];
-  items.slice(0, 10).forEach(it => {
+  if (picked.length === 0) return null;
+
+  const lines = [`☕️ <b>Fire-Sugi 커피 응모 ${picked.length}건</b> <i>(최신순)</i>`, ''];
+  picked.forEach(it => {
     const title = esc(it.title).slice(0, 80);
     const src = esc(it.source || '');
     const extra = esc(it.extra || '');
@@ -271,7 +299,7 @@ async function main() {
       process.exit(0);
     }
     console.log('📨 커피 이벤트 메시지 발송 중...');
-    await send(ADMIN_CHAT_ID || (await loadSubscribers()).subscribers[0]?.chat_id, text);
+    await send(ADMIN_CHAT_ID || (DRY_RUN ? 'dry' : (await loadSubscribers()).subscribers[0]?.chat_id), text);
     console.log('✅ 커피 이벤트 메시지 발송 완료');
     process.exit(0);
   }

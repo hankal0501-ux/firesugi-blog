@@ -91,7 +91,7 @@
       "created_at": "2026-06-10 00:58:19"
     }
   ],
-  "last_updated": "2026-07-09 21:35:41",
+  "last_updated": "2026-07-09 22:32:34",
   "coffee": [
     {
       "source_site": "아시아경제",
@@ -214,15 +214,6 @@
     },
     {
       "kind": "🚒 소방 법령",
-      "title": "‘그림으로 이해하는 화재안전기준’ 개정판 출간",
-      "detail": "소방방재신문",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9XRXgzX190QUNqUFR4RXJUSWFyZ09iVlZjLTNBZHpscnRJekpZOGg4ZWJvRWZPOHhWX1hYcThyWEpyREtlZVE?oc=5",
-      "site": "gnews_소방방재신문",
-      "created_at": "2026-05-15 16:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
       "title": "[집중조명] 올해 소방시설 법령 개정 방향 윤곽 나왔다… 내용은?",
       "detail": "소방방재신문",
       "action": "개정",
@@ -234,7 +225,7 @@
       "kind": "🚒 소방 법령",
       "title": "소방시설 기준 손질한다… ‘소방시설법 시행령’ 입법 예고",
       "detail": "소방방재신문",
-      "action": "시행",
+      "action": "입법예고",
       "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9OaEg2b29sMlV0dzV3S2NiYndSZkplVkdCbERGbVFvRWZXeXpCQWhJc2M4Z1JoMFNsTXJIZFpYcEJnaS02SGc?oc=5",
       "site": "gnews_소방방재신문",
       "created_at": "2026-06-05 16:00:00"
@@ -243,7 +234,7 @@
       "kind": "🚒 소방 법령",
       "title": "법 통과 2년째 멈춰선 ‘119법 시행령’… 구급대원 업무범위 설정 ‘진통’",
       "detail": "소방방재신문",
-      "action": "시행",
+      "action": null,
       "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1Zb2dnUl9pOUd0VnVPNkxSUi1RUy1PUUpPLTBHY19ZNG1LRmZObVU5Z0dKNTFlekU4MTVkdEl3c3R3b0V1N1E?oc=5",
       "site": "gnews_소방방재신문",
       "created_at": "2026-04-22 16:00:00"

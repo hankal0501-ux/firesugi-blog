@@ -350,11 +350,11 @@ document.addEventListener('keydown', (ev) => {
     for (const t of (data.firelaw || [])) {
       const url = t.url || '';
       const title = t.title || '';
-      const detail = t.detail || '';
-      const ts = t.created_at || '';
       const act = t.action ? '[' + esc(t.action) + '] ' : '';
+      const badge = t.official ? '<span class="section" style="background:#dcfce7;color:#166534">소방청</span>' : '';
+      const meta = [t.period, t.detail, t.created_at].filter(Boolean).map(esc).join(' · ');
       const link = url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(title)}</a>` : `<span>${esc(title)}</span>`;
-      html.push(`<li data-cat="소방법령"><span class="kind">${esc(t.kind || '🚒')}</span><span class="section">소방 최신법</span>${act}${link}<small>${esc(detail)}${ts ? ' · ' + esc(ts) : ''}</small></li>`);
+      html.push(`<li data-cat="소방법령"><span class="kind">${esc(t.kind || '🚒')}</span><span class="section">소방 최신법</span>${badge}${act}${link}<small>${meta}</small></li>`);
     }
     list.innerHTML = html.join('');
     // 4) 카운트 갱신

@@ -29,7 +29,12 @@ const TOPICS = [
       { ...KO, q: '소방 ("입법예고" OR "행정예고")' },
       { ...KO, q: '소방청 (고시 OR 훈령 OR 예규 OR 시행령 OR 시행규칙)' }
     ],
+    // 소방청 법령정보 게시판이 1순위 — 관보 원문 기준이라 공고번호·의견제출 마감일이 정확하다.
+    // 구글 뉴스는 보조. 같은 건이면 공식 소스가 먼저 들어가 뉴스 쪽이 중복으로 걸러진다.
+    officialFirst: true,
     gate: isFireLawNotice,
+    // 소방청 입법예고 10 + 행정예고 10 이 한 번에 들어오므로 여유를 둔다
+    newLimit: 24,
     // 법령 개정·고시는 뉴스보다 오래 유효하다. 30일이면 몇 건 안 남는다.
     keepDays: 120
   },
@@ -163,6 +168,37 @@ async function fetchXml(url) {
   }
 }
 
+// RSS 가 아닌 일반 HTML 페이지용 (fetchXml 과 헤더만 다르다)
+async function fetchHtml(url) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 20000);
+  try {
+    const res = await fetch(url, {
+      signal: ctrl.signal,
+      redirect: 'follow',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml'
+      }
+    });
+    if (!res.ok) {
+      console.warn(`  ⚠️  HTTP ${res.status} — ${url}`);
+      return null;
+    }
+    return await res.text();
+  } catch (e) {
+    console.warn(`  ⚠️  요청 실패 (${e.name}) — ${url}`);
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function nowStamp() {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+
 function parseItems(xml) {
   if (!xml) return [];
   let items;
@@ -187,6 +223,93 @@ async function fetchFeed(feed) {
   return items.slice(0, 20).map(it => ({ raw: it, region: feed.region, forcedSource: feed.name }));
 }
 
+// ---------- 소방청 법령정보 (공식 소스) ----------
+// RSS 는 없지만 목록이 서버 렌더링이라 HTML 을 직접 파싱한다.
+//
+// 상세 링크 주의: 페이지 인라인 JS 에 lawmaking.go.kr 주소가 두 벌 들어 있는데
+// 앞의 것은 2021-08-27 에 주석 처리된 죽은 코드다(그 URL 은 404 를 뱉는다).
+// 살아 있는 주소는 opinion.lawmaking.go.kr 쪽이며, 행정예고는 seq 외에
+// announceType·mappingAdmRulSeq 두 파라미터가 더 필요하다 (onclick 에 들어 있음).
+const NFA_BASE = 'https://www.nfa.go.kr/nfa/publicrelations/legalinformation/';
+const NFA_PAGES = [
+  {
+    path: 'legislation', action: '입법예고', seqClass: 'listOgLmPpSeq', tbl: 'tbl_law3',
+    buildUrl: row => `https://opinion.lawmaking.go.kr/gcom/ogLmPp/${row.seq}`
+  },
+  {
+    path: 'administration', action: '행정예고', seqClass: 'listOgAdmPpSeq', tbl: 'tbl_law4',
+    buildUrl: row => {
+      const m = row.html.match(/fn_Detail\(\s*'(\d+)'\s*,\s*'([^']+)'\s*,\s*'(\d+)'/);
+      if (!m) return null;
+      return `https://opinion.lawmaking.go.kr/gcom/admpp/${m[1]}?announceType=${m[2]}&mappingAdmRulSeq=${m[3]}`;
+    }
+  }
+];
+
+// "2026. 7. 3." → "2026-07-03"
+function parseKoDate(s) {
+  const m = String(s || '').match(/(\d{4})\s*\.\s*(\d{1,2})\s*\.\s*(\d{1,2})/);
+  return m ? `${m[1]}-${pad(m[2])}-${pad(m[3])}` : null;
+}
+
+async function fetchNfaPage(page) {
+  const html = await fetchHtml(NFA_BASE + page.path);
+  if (!html) return [];
+
+  const rows = [...html.matchAll(/<tr>([\s\S]*?)<\/tr>/g)]
+    .map(m => m[1])
+    .filter(r => r.includes(page.seqClass));
+
+  const items = [];
+  for (const row of rows) {
+    const seq = (row.match(/value="(\d+)"/) || [])[1];
+    // 입법예고는 <a class="law3View">, 행정예고는 <a onclick="fn_Detail(...)"> 로
+    // 마크업이 달라서 첫 번째 앵커의 텍스트를 그대로 쓴다
+    const rawTitle = stripTags((row.match(/<a\s[^>]*>([\s\S]*?)<\/a>/) || [])[1] || '');
+    if (!seq || !rawTitle) continue;
+
+    const url = page.buildUrl({ seq, html: row });
+    if (!url) continue;
+
+    const cells = [...row.matchAll(new RegExp(`<td class="${page.tbl}_\\d"[^>]*>([\\s\\S]*?)</td>`, 'g'))]
+      .map(m => stripTags(m[1]));
+    // cells = [구분, 공고번호, 공고일, 의견제출 마감일]
+    const [kind, noticeNo, postedAt, deadline] = cells;
+
+    // "[진행]소방기본법 시행령 일부개정령안 입법예고" → 상태와 제목 분리
+    const statusMatch = rawTitle.match(/^\[([^\]]+)\]\s*(.+)$/);
+    const status = statusMatch ? statusMatch[1] : null;
+    const title = statusMatch ? statusMatch[2].trim() : rawTitle;
+
+    const posted = parseKoDate(postedAt);
+    items.push({
+      kind: '🚒 소방 법령',
+      title,
+      detail: [kind, noticeNo ? `공고 ${noticeNo}` : null].filter(Boolean).join(' · ') || '소방청',
+      action: page.action,
+      status,
+      period: parseKoDate(deadline) ? `의견제출 ~${parseKoDate(deadline)}` : null,
+      url,
+      site: 'nfa',
+      source_site: '소방청',
+      official: true,
+      created_at: posted ? `${posted} 09:00:00` : nowStamp()
+    });
+  }
+  return items.map(item => ({ item }));
+}
+
+async function fetchNfaNotices() {
+  const all = [];
+  for (const page of NFA_PAGES) {
+    const got = await fetchNfaPage(page);
+    console.log(`  🏛  소방청 ${page.action} ${got.length}건`);
+    all.push(...got);
+    await sleep(1200);
+  }
+  return all;
+}
+
 // ---------- 정규화 ----------
 
 function textOf(v) {
@@ -199,7 +322,11 @@ function stripTags(s) {
   return String(s || '').replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 }
 
-function normalize({ raw, region, forcedSource }, topic) {
+function normalize(bucket, topic) {
+  // 공식 소스(소방청)는 이미 최종 형태로 넘어온다
+  if (bucket.item) return bucket.item;
+
+  const { raw, region, forcedSource } = bucket;
   const rawTitle = stripTags(textOf(raw.title));
   // 구글 뉴스 제목은 "제목 - 매체명" 형태
   const m = rawTitle.match(/^(.+?)\s+-\s+([^-]+)$/);
@@ -342,6 +469,8 @@ async function collectTopic(topic, existing) {
   console.log(`\n📡 [${topic.key}] 수집 중... (쿼리 ${queries.length}개, 피드 ${topic.feeds?.length || 0}개)`);
 
   const buckets = [];
+  // 공식 소스를 먼저 담아야 같은 건일 때 뉴스가 아니라 관보가 살아남는다
+  if (topic.officialFirst) buckets.push(...await fetchNfaNotices());
   for (const query of queries) {
     buckets.push(...await fetchGNews(query));
     await sleep(1200);
@@ -361,21 +490,31 @@ async function collectTopic(topic, existing) {
   const regionCount = {};
   let dropGate = 0, dropDup = 0, dropQuota = 0;
 
+  const newLimit = topic.newLimit || PER_TOPIC_NEW_LIMIT;
   for (const bucket of buckets) {
-    if (fresh.length >= PER_TOPIC_NEW_LIMIT) break;
+    if (fresh.length >= newLimit) break;
     const item = normalize(bucket, topic);
     if (!item.title || !item.url) continue;
 
-    // 카테고리 게이트 (커피: 브랜드∧혜택∧¬잡음)
-    const haystack = `${item.title} ${item.source_site || item.detail || ''} ${item.prize || ''}`;
-    if (topic.gate && !topic.gate(haystack)) { dropGate++; continue; }
-    if (!topic.gate && NOISE_RE.test(item.title)) { dropGate++; continue; }
+    // 관보에서 온 항목은 게이트를 거치지 않는다.
+    // 소방청 법령정보 게시판에 실린 것 자체가 소방 법령이라는 뜻이고,
+    // 키워드 게이트를 태우면 '인명구조사 교육 규정' 같은 실제 훈령이 탈락한다.
+    if (!item.official) {
+      const haystack = `${item.title} ${item.source_site || item.detail || ''} ${item.prize || ''}`;
+      if (topic.gate && !topic.gate(haystack)) { dropGate++; continue; }
+      if (!topic.gate && NOISE_RE.test(item.title)) { dropGate++; continue; }
+    }
 
     const key = dedupeKey(item);
-    if (seenUrls.has(item.url) || seenKeys.has(key)) { dropDup++; continue; }
+    if (seenUrls.has(item.url)) { dropDup++; continue; }
+    if (!item.official && seenKeys.has(key)) { dropDup++; continue; }
 
+    // 관보 항목끼리는 제목 유사도로 합치면 안 된다.
+    // "소방기본법 시행령"과 "소방기본법 시행규칙"은 2-gram 유사도 0.75 로
+    // 서로 다른 법령인데도 합쳐진다. 공식 소스는 URL(seq)이 이미 고유하다.
+    // 단, 토큰은 등록해 둬서 같은 건을 다룬 뉴스 기사는 뒤에서 걸러지게 한다.
     const tokens = tokenize(item.title);
-    if (isNearDuplicate(tokens, seenTokenSets)) { dropDup++; continue; }
+    if (!item.official && isNearDuplicate(tokens, seenTokenSets)) { dropDup++; continue; }
 
     // 커피: 같은 브랜드+경품이 21일 안에 또 나오면 같은 이벤트로 간주
     const sig = topic.key === 'coffee' ? coffeeSig(item) : null;

@@ -186,9 +186,10 @@ async function buildEventsMessage() {
     lines.push(`🚒 <b>소방 법령 (${firelaw.length}건)</b>`);
     firelaw.slice(0, 10).forEach(it => {
       const t = esc(it.title).slice(0, 80);
-      const src = esc(it.detail || '');
       const act = it.action ? `[${esc(it.action)}] ` : '';
-      lines.push(`• ${act}<a href="${esc(it.url)}">${t}</a>${src ? ` <i>(${src})</i>` : ''}`);
+      // 관보 항목은 의견제출 마감일이 가장 중요한 정보다
+      const tail = [it.period, it.detail].filter(Boolean).map(esc).join(' · ');
+      lines.push(`• ${act}<a href="${esc(it.url)}">${t}</a>${tail ? `\n  <i>${tail}</i>` : ''}`);
     });
     lines.push('');
   }

@@ -103,17 +103,27 @@
       "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5hT2VOMVNyMkZHMGFlZEJSbFp1Uk1NMHFPbGdaNXRXZXFUTnJwdlE4WXhHYnRTelF5ODc0Sk5FdXI1Z1QzYXhONXZRWm9UNDJ2LS1RZE5HR1JXV2MybkI2SEZ6YkZrektoa2RMSkp3?oc=5",
       "site": "gnews_gukjenews.com",
       "created_at": "2026-06-13 03:54:06"
-    },
-    {
-      "kind": "🎁 여행 특가",
-      "title": "Traveloka에서 대한항공 항공권 특가 상품을 찾는 방법 안내",
-      "detail": "Vietnam.vn",
-      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQWkQ5SWh5d1BKZ1VrTG5wTTA4eUZaMWNkRFVGSjcwLVBJMWhoWHRUUUpxSVFkRmRhZUJlNUhlSVR4WXNYOHpqdEFEQ1JHdUZkSnVfQ2RjYnNWN0prcGxPdzZCOFh1a2gxQlFlTllyU21IWmpYbWJ0aVN6ZEg5ald3a0w1TDgtZw?oc=5",
-      "site": "gnews_Vietnam.vn",
-      "created_at": "2026-06-09 09:27:31"
     }
   ],
   "giveaways": [
+    {
+      "source_site": "법률신문",
+      "title": "제8회 법무부 통일법제 논문 공모전",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBQSTItdmNkc1hYNURyNW1oUHV0RzNyNUxOdEZmYlVpZkptdXVsaHJPdVRlUGlyM2dwTXJZcFd3SXdFMFJJV0dHdUNGM1hCZ1M1aGs2RmVFSVRGYWN5MlRuVXlNb0hhZUdBZnA5a19n0gFyQVVfeXFMUFpDYmVWRkJudmh3NjYwcFpXeFMwQnJtVVQ3dTVOa1RzUjJJQ0xpY2FJLXlQMHhsMk5uNmttbUJVX3Nvemd6ZDgzVEFFaDhTSDdmRHBUOWE0dFJhZlBNNm5Zb1lNeUFQZTN5SW9IWTVlMURB?oc=5",
+      "created_at": "2026-06-19 16:00:00"
+    },
+    {
+      "source_site": "전남매거진",
+      "title": "40초에 담는 여수의 섬 이야기… 전국민 숏폼 공모전 개최",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBXSkNXbGVzbmhVcjBqLTBQYzEwVjI0WVRZOHRBRU8zcGxCZENOWGgtdUhnMGJIbVFXMGE3VWZLaWR2LVBZbk9YRHlYY29SSHNVMUhmd05qbm55QTVzV05oRnFsTdIBZkFVX3lxTE1CQnBpN3Nad1pJODlBYkkwd3BfUmJRLWtqUFVWT05Qajl0TV9CYjctdUZsaThQLWdqdXJRQjhyNDRDYXpHQnE0NlZsVS12ZHkydGxjdUdnWnBwTnZjSmtHMm1mS3dZUQ?oc=5",
+      "created_at": "2026-06-18 16:00:00"
+    },
     {
       "source_site": "테스트",
       "title": "스타벅스 아메리카노 무료 쿠폰 응모",
@@ -187,5 +197,79 @@
       "created_at": "2026-06-10 00:58:19"
     }
   ],
-  "last_updated": "2026-07-09 04:29:14"
+  "last_updated": "2026-07-09 21:19:00",
+  "coffee": [
+    {
+      "source_site": "아시아경제",
+      "title": "\"공짜 커피 쿠폰 쏜다\"…스타벅스, 기존·신규 회원에 음료 쿠폰 지급",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBkQWZvRDJXT2o0VUFmVDZDMWtnNnVfalZFTmVxR0c2UGtpVGEtZVNHSVRNLWY1bmhzcndrTHhXcnpNYU9tUWxpU3hnelBnblh1dWxDd3ZJb1BTb3p4ZXNSTg?oc=5",
+      "created_at": "2026-07-09 08:33:48"
+    },
+    {
+      "source_site": "나눔경제뉴스",
+      "title": "하나은행, SK텔레콤과 통신비 자동납부 이벤트…치킨·커피 쿠폰 제공",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1NWThsaGZweG9vcEJSZU1BNFR3b00xbTRxUTJZYjh2VWZid2F5RmRSdTVxVTVtYmsxZC1yelZYenBsMzAtXzB4VnFIOXBCeHhRRkZSZEROeXQ3TWN3NlFVaGVQcmYtZkFXeUJRLQ?oc=5",
+      "created_at": "2026-07-02 16:05:38"
+    },
+    {
+      "source_site": "동아일보",
+      "title": "이지샵, 부가세 신고 완료·신규 회원 전원에 ‘아메리카노 기프티콘’ 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBJWVhkM0RialFOTlpvTTRxMlkxdVFtenJQLUo1SDBjTDM2VnRIdzJWbU5Yci1DV1hfZGpVTjNzSFdWbUlNNzI4QkhrVWV6b1ZJRC10OFVTZDh3c3p1RUk2cGRDWHNRaXN2UDdfc0p4ZXY5MTBvcnfSAWZBVV95cUxNOFZ2dWxyOGhBMjg1YmI4cW5pbkp4akR3MW05MG1od3FGa3dMN05uX0xGNkNNWktfdlRSWlN4Y3BqOHc3LTViNGVGN280TjU2NkFfU0pOMnlSbHN5ZjVNWnF3OFBHeVE?oc=5",
+      "created_at": "2026-07-06 10:17:00"
+    },
+    {
+      "source_site": "아주경제",
+      "title": "메가커피 아메리카노 증정 캐시워크 돈 버는 퀴즈, 정답은?",
+      "category": "커피",
+      "region": "국내",
+      "brand": "메가커피",
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBjMXRTWGdzdERXQ1Nzdm5zM19pRm1UdGV4VmFNcnQtcmhRM0NRZFAya3BXX2VGTGI4aEplNkNINWVHSXdWVXBzOG9SclhWVFFkTTNoUzFfbGFhQdIBWEFVX3lxTE1BdmxucjlwOVNuOHAxMjZfaFdwVHFtNGVneWVIS2ZPLUFtalhuNnN3b2tZMEItdEZ6OVVHUExTWHJoaFAwdnIxRFFyMWQ0V21lbjBvQTVRZUc?oc=5",
+      "created_at": "2026-07-01 09:01:22"
+    },
+    {
+      "source_site": "ppss.kr",
+      "title": "백억커피, ‘PNC 2026’ 그랜드 파이널서 아메리카노 무료 쿠폰 쏜다",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE9URFdrdXpuQ0tYOHNMZFV6Ullmd1g3anRyaFFSQkhUck10NUFPWXpaZG01b2t3SDBpY2tvR04zUzhvT1JIdkpjNGtvMExJYzNZS1pJTGZMbzExX0hYcEVGSE5KUFk?oc=5",
+      "created_at": "2026-06-26 13:26:20"
+    },
+    {
+      "source_site": "뉴스에이",
+      "title": "컴포즈커피, 방탄소년단 뷔 손글씨 디자인으로 완성한 ‘아티스트 V(뷔) 테이블웨어 세트’ 앱 프리퀀시 이벤트 진행",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": null,
+      "prize_class": "goods",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1OZzV0U18yazd6TVZ1ajhrNXRfR1RWVmFKSzV3YXFFQXYySWh3SE1QQVVEUndsckx6R0ZCbE5DZ01Ddm4xNzVCakRhY0FscXN2TUJod0tRcnlaZ1gwT3IxeXRmbENza3ZtcGc?oc=5",
+      "created_at": "2026-07-08 22:40:36"
+    }
+  ]
 }

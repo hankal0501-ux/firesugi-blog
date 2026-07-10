@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "MSN",
+      "title": "경기관광공사, 관광사진 공모전…총 상금 1350만 원 규모",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMi3AJBVV95cUxQcXUtN3Y0Y2JXRE45TkZqVGFxQ2lNbUkxX1VPRzNUVFkyMWNteUZOVER3Z2NPVnJkV0xRdklXU1N0R1J1Q096VkpDS0pRcS1xX1N4SEpkZXJBZmNTQXVKQWlKZ0NkM3lfODQ0QzBIRDM5dkltRm9LTm9oUnJlVGFCaEQ3RXdSZ0tST3FRMFJRWE5NM0ZlWnJNamdEMkUta3dzMVd0V0V2bHVhUXg5VVZpYjVDTXBIcFJLR0gtUlVjVnlubWhXRzJFdnRORWtadU1yeHdWWDVxa0c1ZklKT3J6QW9KTjZGVGlRN3NTemhEcU83TkR5ZWFsdkFoZXJ3LWdud1d3bTRmcHh6TUYyNmVPTWtTdEVHeTlfWWFSdmtrUkwzTk9QX1prclEzTUJxNTlrMF9TdEdOY1BvcUUxNi0tMUVHbzQ1dVNoZW9RV1FPb1RTeGxVUVZmVmJnWFo?oc=5",
+      "created_at": "2026-07-10 09:32:55"
+    },
+    {
       "source_site": "법률신문",
       "title": "제8회 법무부 통일법제 논문 공모전",
       "category": "공모전",
@@ -82,7 +91,7 @@
       "created_at": "2026-06-11 01:39:50"
     }
   ],
-  "last_updated": "2026-07-10 00:03:46",
+  "last_updated": "2026-07-10 23:56:18",
   "coffee": [
     {
       "source_site": "아시아경제",

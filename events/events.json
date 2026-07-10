@@ -82,7 +82,7 @@
       "created_at": "2026-06-11 01:39:50"
     }
   ],
-  "last_updated": "2026-07-10 06:02:49",
+  "last_updated": "2026-07-10 00:03:46",
   "coffee": [
     {
       "source_site": "아시아경제",
@@ -158,6 +158,42 @@
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방기본법 시행령 개정 시행… 소방차 출동지장 과태료 기준 변경",
+      "detail": "글로벌뉴스통신GNA",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE8zUmNvenl3X2poZS1oOUtYT0xRQXBoTkF5MTNERl9KaDIxWERZb2VsVWZGSTJ2RFlMR3dIMTJqY1JXVVJGWXZhVXpsaFlyYW5tM0NtY1k0RFJ1U190ZXl4dDhjdC1IdFhjWGFrU0xRTS1MWmc3?oc=5",
+      "site": "gnews_글로벌뉴스통신GNA",
+      "created_at": "2026-04-24 07:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "[집중조명] 올해 소방시설 법령 개정 방향 윤곽 나왔다… 내용은?",
+      "detail": "소방방재신문",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE96YTdGeXRNZVpmaXlTTVV4OGNHWnZUVGdZZWdiRGN3b2JoT1ZJek91bHFKVFMtN3dCRmNPY0ZjMFN0dnBTa2c?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-03-25 07:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방시설 기준 손질한다… ‘소방시설법 시행령’ 입법 예고",
+      "detail": "소방방재신문",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9OaEg2b29sMlV0dzV3S2NiYndSZkplVkdCbERGbVFvRWZXeXpCQWhJc2M4Z1JoMFNsTXJIZFpYcEJnaS02SGc?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-06-05 07:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "법 통과 2년째 멈춰선 ‘119법 시행령’… 구급대원 업무범위 설정 ‘진통’",
+      "detail": "소방방재신문",
+      "action": null,
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1Zb2dnUl9pOUd0VnVPNkxSUi1RUy1PUUpPLTBHY19ZNG1LRmZObVU5Z0dKNTFlekU4MTVkdEl3c3R3b0V1N1E?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-04-22 07:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "공공기관의 소방안전관리에 관한 규정 전부개정령안 재입법예고",

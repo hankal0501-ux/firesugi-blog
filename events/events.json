@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "싱글리스트",
+      "title": "풀무원샘물 '하루파로' 출시...웅진식품 '생차-로그' 공모전 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBzMEtNLTV6bVFlNFh0LXNsM0Jmd29ONGNyQkNNNkR2cU5EUVlqbGJIWnUyVzN4Wmhtc0dJWG82TFdDOUF1SExTZHZabFdyMUVQRUhOZ3JpOUJKaVBVTl94ajNzdUZxZw?oc=5",
+      "created_at": "2026-07-12 23:07:29"
+    },
+    {
       "source_site": "MSN",
       "title": "경기관광공사, 관광사진 공모전…총 상금 1350만 원 규모",
       "category": "공모전",
@@ -82,8 +91,32 @@
       "created_at": "2026-06-17 12:16:55"
     }
   ],
-  "last_updated": "2026-07-11 23:54:00",
+  "last_updated": "2026-07-12 23:52:56",
   "coffee": [
+    {
+      "source_site": "v.daum.net",
+      "title": "[인사이드 스토리]여전한 '탱크데이' 여파…스벅 '공짜 커피'의 의미",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5PdlEyWnZoUVJWcjViTk5KODFpb1ExNTdDeW9MUnJ2M0xZSnVlb3hGdmZlRmRIcnZVdUZMbkFsbUhKZEJBMGpHb2JrV2JsWXc?oc=5",
+      "created_at": "2026-07-12 22:21:28"
+    },
+    {
+      "source_site": "뽐뿌 쿠폰·이벤트",
+      "title": "[네이버페이] 카페2000이상 결제시 500포인트 적립 (feat. 7월 현장결제 이벤트)",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=116178",
+      "created_at": "2026-07-12 15:29:31"
+    },
     {
       "source_site": "아시아경제",
       "title": "\"공짜 커피 쿠폰 쏜다\"…스타벅스, 기존·신규 회원에 음료 쿠폰 지급",

@@ -91,8 +91,20 @@
       "created_at": "2026-06-17 12:16:55"
     }
   ],
-  "last_updated": "2026-07-12 23:52:56",
+  "last_updated": "2026-07-13 23:53:15",
   "coffee": [
+    {
+      "source_site": "컨슈머뉴스",
+      "title": "카카오페이, 컴포즈커피와 ‘100원 커피’ 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9Md2pJUF9iUzNoY3lhNkdlN1JrMjZOS2ZTcm0xSDctLW9OSzMzOWo0aHB4aWJMdEpDaDVZY1M0Q25xaTVIUi1PV1ZXUW1xa3dtdnpHT3VpT1lOSHRnNVFFUGhNMmpmY3FjV2loc1ZVRQ?oc=5",
+      "created_at": "2026-07-10 07:00:00"
+    },
     {
       "source_site": "v.daum.net",
       "title": "[인사이드 스토리]여전한 '탱크데이' 여파…스벅 '공짜 커피'의 의미",

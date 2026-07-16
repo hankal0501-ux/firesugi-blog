@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "펜앤마이크",
+      "title": "부산경제진흥원,‘2026 부산청년공간 숏폼 영상 공모전’ 청년 참여자 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1LbHN3TV81anlIQ090Tjk0M1ZFbHNLUlM0eF8taWM1cVdSLWtHNUQ2eXBORXFWMmpBb2RWQ0RHNHNkVlI1UE44dGVETW0zN2U5aENSSGQ2WGN6VUFoU2tZanJCeXEzdlVOX1l2UjFWRdIBb0FVX3lxTE1LbHN3TV81anlIQ090Tjk0M1ZFbHNLUlM0eF8taWM1cVdSLWtHNUQ2eXBORXFWMmpBb2RWQ0RHNHNkVlI1UE44dGVETW0zN2U5aENSSGQ2WGN6VUFoU2tZanJCeXEzdlVOX1l2UjFWRQ?oc=5",
+      "created_at": "2026-07-16 00:41:50"
+    },
+    {
       "source_site": "더리포트",
       "title": "마스턴투자운용, 미래 투자 인재 발굴···총상금 2400만원",
       "category": "공모전",
@@ -100,8 +109,44 @@
       "created_at": "2026-06-17 12:16:55"
     }
   ],
-  "last_updated": "2026-07-15 23:57:35",
+  "last_updated": "2026-07-16 23:58:19",
   "coffee": [
+    {
+      "source_site": "OhmyNews",
+      "title": "광주은행 '지방세 납부하고 커피 쿠폰 받으세요'",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE91VnRfc0VpTXhuWnRkNHc5UEJ5MjMxX3o2Um01ZDZYUFZ1UWRDaDdIem8tT1JsVHlTQm5xMGlQd1FJYmtLYUdYZmRGWkY2T3VYbDBtX2pZRXYzT3B2WmtwdnhMaEhzX0t0TDYwSGhHZ2JTZU5GRlcw?oc=5",
+      "created_at": "2026-07-16 02:22:00"
+    },
+    {
+      "source_site": "글로벌경제신문",
+      "title": "광주은행, 통합특별시 지방세 납부 고객 이벤트…컴포즈커피 쿠폰 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9XX2xBbzdHWFpJZXZJZGdUUVNVVmRYUnNjQ3dGNFBKeWlidTcxV2UyMUQ0YWN0N1JnUFRFa3g1M3lucmtDWG1wZVJsUzlYNkdrNnlHQlZMc3NHQTVqdzNvNXpoblAtSE9aeW1WONIBcEFVX3lxTE5vOS1fNVlSX3ZXM3JtR2s1NlkzVHIxVkpob3RsSWVHclRYYXBUVk0yMHlPd1pxaHA1QzczZEh2M01RcmZDbmpDXzZTWW9VZ2Q3V3JVRGN3cTB3c1B0djBQd3M0bVpvRzVOZWpsX1k1UzQ?oc=5",
+      "created_at": "2026-07-16 01:34:54"
+    },
+    {
+      "source_site": "한겨레",
+      "title": "스타벅스코리아 첫 노조 탄생…“무리한 이벤트로 노동강도 높아”",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBEWjhGcnBtQ2NjUW00eGJTNURjcVFjWUNjaHdJSk42UEFodzFrU2xhbF9LdW9sb2Fpc3FqdFBIblZvTW1uNDV3X0Jjcl9MOHRxV3l1bzEzd1RYT283Q1lNeXZvSG8?oc=5",
+      "created_at": "2026-07-16 10:10:00"
+    },
     {
       "source_site": "네이트",
       "title": "26층서 치킨 시켰는데 엘베 고장…14층서 만나 커피 쿠폰까지 '훈훈 결말' [포크뉴스]",

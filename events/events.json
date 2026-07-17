@@ -98,19 +98,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5uRXVkMVNOTjFVdVhVMVRZTXNaZHRKZEVfczFXaTRKZWdfY0F0MXNsYnZqU09Qa3d5SEpZT2EzR251U2ROSVdZOURWSkVEdm5CQ25kNzZ4X3BjN0RYakxHTGp5dEg?oc=5",
       "created_at": "2026-06-24 08:23:29"
-    },
-    {
-      "source_site": "코리아플러스",
-      "title": "민주평통 대덕구협의회, 평화통일 숏폼 공모전 모집",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBUY3dVRksxSmhDVm1uV0V1amVmd1o3ZF9ISlY4cFZrOFhfV0lvVXI5YkxNajhUSUdoVVVSR21NT3hGbXlEeGR2UlNfTEVWbmZ6N2NKd29pa0FaZlQybUlRb3Z5OG8tdw?oc=5",
-      "created_at": "2026-06-17 12:16:55"
     }
   ],
-  "last_updated": "2026-07-16 23:58:19",
+  "last_updated": "2026-07-17 23:52:02",
   "coffee": [
+    {
+      "source_site": "fetv.co.kr",
+      "title": "광주은행, 지방세 납부 고객 대상 커피쿠폰 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9tNWl5WU5TR05OQUVtbkp0S3ppZmJwUFgwUFNUb2dOLThsNFozTFFmQWg3aGhzU0YxU21aVmoxcWgwR3EzbzV1THRubUNMeGRhWnVuVzZ3ckdzb2RCMWFQU1hERWRvNUpI?oc=5",
+      "created_at": "2026-07-17 23:00:00"
+    },
     {
       "source_site": "OhmyNews",
       "title": "광주은행 '지방세 납부하고 커피 쿠폰 받으세요'",

@@ -658,5 +658,17 @@
     "secret": false,
     "comments": [],
     "autoWritten": true
+  },
+  {
+    "id": 1784345320770,
+    "author": "Fire-Sugi",
+    "title": "🤖 안전 점검 — 겨울철 난방기구 화재 예방",
+    "content": "겨울철 화재 사고의 70%가 난방기구 부주의입니다. 전기장판·전기히터·콘센트 과부하 점검 체크리스트 5가지로 미연에 방지합시다.\n\n———\n🤖 Fire-Sugi 자동 글쓰기 (GitHub Actions)",
+    "date": "2026.07.18",
+    "views": 0,
+    "visibility": "public",
+    "secret": false,
+    "comments": [],
+    "autoWritten": true
   }
 ]

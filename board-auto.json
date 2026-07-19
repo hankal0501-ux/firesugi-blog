@@ -670,5 +670,17 @@
     "secret": false,
     "comments": [],
     "autoWritten": true
+  },
+  {
+    "id": 1784433066081,
+    "author": "Fire-Sugi",
+    "title": "🤖 안내 — 다음 달 화재안전조사 일정",
+    "content": "관할 소방서에서 다음 달 둘째 주 화재안전조사 예정. 다중이용업소 대상 사전 점검 권장.\n\n———\n🤖 Fire-Sugi 자동 글쓰기 (GitHub Actions)",
+    "date": "2026.07.19",
+    "views": 0,
+    "visibility": "public",
+    "secret": false,
+    "comments": [],
+    "autoWritten": true
   }
 ]

@@ -37,15 +37,6 @@
       "created_at": "2026-07-10 09:32:55"
     },
     {
-      "source_site": "법률신문",
-      "title": "제8회 법무부 통일법제 논문 공모전",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBQSTItdmNkc1hYNURyNW1oUHV0RzNyNUxOdEZmYlVpZkptdXVsaHJPdVRlUGlyM2dwTXJZcFd3SXdFMFJJV0dHdUNGM1hCZ1M1aGs2RmVFSVRGYWN5MlRuVXlNb0hhZUdBZnA5a19n0gFyQVVfeXFMUFpDYmVWRkJudmh3NjYwcFpXeFMwQnJtVVQ3dTVOa1RzUjJJQ0xpY2FJLXlQMHhsMk5uNmttbUJVX3Nvemd6ZDgzVEFFaDhTSDdmRHBUOWE0dFJhZlBNNm5Zb1lNeUFQZTN5SW9IWTVlMURB?oc=5",
-      "created_at": "2026-06-19 16:00:00"
-    },
-    {
       "source_site": "테스트",
       "title": "스타벅스 아메리카노 무료 쿠폰 응모",
       "category": "커피",
@@ -91,8 +82,56 @@
       "created_at": "2026-06-24 08:23:29"
     }
   ],
-  "last_updated": "2026-07-18 23:52:48",
+  "last_updated": "2026-07-19 23:55:41",
   "coffee": [
+    {
+      "source_site": "MBC 뉴스",
+      "title": "[와글와글 플러스] 스타벅스에 첫 노조‥\"무리한 이벤트 일방 추진\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9DWVd0bS1rNXJpdEMyY0FfbGJXblZTXzJkZV9BNjNqTkVaLUxRa3k4YUwzRXRISGdpYlBLeDNfYkE2WFc5V0RuejhvY3laOWJLUTJULWVYazVFUUtTcnZhdU52ZjJEaWRUdWVzOG1vMmxLOFVXanlDSVpn?oc=5",
+      "created_at": "2026-07-19 22:24:55"
+    },
+    {
+      "source_site": "연합뉴스TV",
+      "title": "\"무리한 이벤트\"…스타벅스코리아 첫 노조 출범",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9EQlhLWW5DaV9zNW9fNS1kdHc1eFY4MWRUVW55Z0RSNTZjS0ZaRmZITEhHbjJ3VVpIaWtqRG1reERRYTItZlc1czdObTg1QlcwU1djVVQ5QU5EcG9BMTcyaWFRSWtrWVk?oc=5",
+      "created_at": "2026-07-19 11:18:00"
+    },
+    {
+      "source_site": "대구MBC",
+      "title": "스타벅스 코리아 노조설립, 카페업계 최초…\"파트너 요구 묵살, 무리한 이벤트\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE0zdFpyejd0Y3hIMU5Cc1BNYUxyMzktQ1BnY1kxenZXTUNzb1VxQ0NLeG5tcVVUb05XYmFBNnpYQXM5aEVDWE5FbkxyUWc?oc=5",
+      "created_at": "2026-07-19 07:42:49"
+    },
+    {
+      "source_site": "미디어오늘",
+      "title": "“무리한 이벤트 못 참는다” 스타벅스에 노동조합 생겼다",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5ZT0RONEVYVHpVeXBqeWphN2szMnJ0ZDFURTJ0V3FjN3ZGbUpXZENSMHVNWkRaZklZb3ZtbTV0TGpiTVFoNEpVUjFUaDc5OVBTVGdKYXZ4cXBYVUlFVGlzSHdVOV9wRTdoZmhEalhHcEo?oc=5",
+      "created_at": "2026-07-19 07:38:34"
+    },
     {
       "source_site": "fetv.co.kr",
       "title": "광주은행, 지방세 납부 고객 대상 커피쿠폰 이벤트",

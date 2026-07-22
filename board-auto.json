@@ -706,5 +706,17 @@
     "secret": false,
     "comments": [],
     "autoWritten": true
+  },
+  {
+    "id": 1784691789481,
+    "author": "Fire-Sugi",
+    "title": "🤖 교육 자료 — 의용소방대 기본 교육 정리",
+    "content": "소화기 사용법(P-A-S-S), 옥내소화전 사용 절차, 소방통로 확보 의무 등 핵심 5장 요약. 신규 대원 교육 자료로 활용.\n\n———\n🤖 Fire-Sugi 자동 글쓰기 (GitHub Actions)",
+    "date": "2026.07.22",
+    "views": 0,
+    "visibility": "public",
+    "secret": false,
+    "comments": [],
+    "autoWritten": true
   }
 ]

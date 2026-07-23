@@ -1,6 +1,24 @@
 {
   "giveaways": [
     {
+      "source_site": "수산인신문",
+      "title": "‘Alive어촌 영상 공모전’",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1XcDlHSUJvZkFpX043bFdabWNYT0tuRE9tdWhMR2IxbndqMDdtUHVjVUJ2QTYxekUyOVlwSXZoVHNwTGhzY1lqQkRNY2hYaHoySDZTVzU4azJ5MWJDTU9V?oc=5",
+      "created_at": "2026-07-19 11:32:00"
+    },
+    {
+      "source_site": "MSN",
+      "title": "마스턴투자운용, 실전형 아이디어 공모전 개최",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMi3gNBVV95cUxQTWFOZDcyelllbTZiYU1pWmpmV2hTZ3Vic0pUT3lhRVZ0bnVFMUFnMjc4dXFDeDVVVGJyTWpxRVNCakVUaTRaQ2lsV09tSUoySzhCdDlUQjdNRHNiLThfWjhVUlFFR3ZWU3hBajNyNkdGTlpVcnczUnpHQmxzdFA4S2hjZmU2WWFLbkYwQktqWkI4NFJ2RlVqVWVUTnlCMFFqYTEyRjlORTc2MHhpWl85S01JckpXUGFkMHkwSDljTG1LQjVjdEpGM2d1S01Yb1Z3bl82MVVzMklhajZ4RjEwbDB1VlRTd2RNNFZZUzdOcGUwVkxLUjZfQ3F6RzFnYTEtbHBMZjhhQXlwcjVQWFI2Y002U2ZHM0poNXc0QUFUcmZ6LVFjamZEU2RTR2dhZ0dsQVUxa2ZZM3BZSHBEeG1SaFJwU09BMUZJUzBsRzh4U1AyZ244aFg1NV95SXdHNHhfcWVJLVFFRVNreC1nRHVfWm5tVThOVTNwWmhIdEhBLVIwMkgwdW1qRXBxSUcwcW1fLUdteW5TYkhfbmtrOFJLVlNIUmcxRFdwbFNZMjR6b1p6U3Z6T0tOaGtGVjhIcV9wZEtlQTBDOXowYVY1WE9ZZU92b1M4NERVZ2hLejRB?oc=5",
+      "created_at": "2026-07-18 03:57:33"
+    },
+    {
       "source_site": "펜앤마이크",
       "title": "부산경제진흥원,‘2026 부산청년공간 숏폼 영상 공모전’ 청년 참여자 모집",
       "category": "공모전",
@@ -82,8 +100,32 @@
       "created_at": "2026-06-24 08:23:29"
     }
   ],
-  "last_updated": "2026-07-21 23:56:37",
+  "last_updated": "2026-07-23 00:00:06",
   "coffee": [
+    {
+      "source_site": "중앙일보",
+      "title": "“1000원 할인 커피 쿠폰, 500원에 팔아요”…고물가시대의 짠테크",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE15WGhZVy03ZzBlblRnWWxGU2haMVYzanYwSFIzWnVaT2psaWRYZUE4alV6cldOb0tTZm5WMF9mZ1h4VnhrRE83SlMzeVBRREt4TDkzZTRB?oc=5",
+      "created_at": "2026-07-22 15:02:00"
+    },
+    {
+      "source_site": "gukjenews.com",
+      "title": "스타벅스, 커피업계 첫 노조 설립...\"무리한 이벤트 운영\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFAyMVRJazBhcGV5dkRfRlBNenhDVFN5UHdLS0hQcG4wNWxoM0Q5a0s1R0NjeTc2TFBWek5kelY0Rk9RaV9RV3l6aTFmVDMtMzNfQzA3WjNzRkFGYWZjWFRicEVVeFY2bV9MZkpHSHRR?oc=5",
+      "created_at": "2026-07-19 07:14:10"
+    },
     {
       "source_site": "비건뉴스",
       "title": "스타벅스코리아 첫 노조 출범…인력 부족·잦은 이벤트 개선 요구",
@@ -374,6 +416,15 @@
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방시설공사 대금지급보증 관리 강화… 착공신고 때 증빙서류 제출 의무화",
+      "detail": "에너지데일리",
+      "action": null,
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5VNnVCNGc2UGlIZ2dsS2hGcloxU29venBKSmRzeWhHNWdHNTVrVy1rNzljRTV2UkRrV1BCMk9FdkxxZnlFNXFRYVBZVGl0LW9LdHBOR3BMLU9NeFo2WC1aUU9nckZKQ055VWtId3RqMUdTZw?oc=5",
+      "site": "gnews_에너지데일리",
+      "created_at": "2026-06-17 07:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방기본법 시행령 개정 시행… 소방차 출동지장 과태료 기준 변경",

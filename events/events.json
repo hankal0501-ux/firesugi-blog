@@ -89,19 +89,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE8tbmtYckg3UWF4NHljaHhTWGZDSjhTbDc2dHo1eWJsYURiTXpfMHlCd1pvMU5PUWxRdXVjRkNkMmJGUkRVT1JMV0NGSDh2NFRNeUtmRUdhaWVqX1VzQTdOTGtxc1haLXdS?oc=5",
       "created_at": "2026-06-29 07:00:00"
-    },
-    {
-      "source_site": "G1방송",
-      "title": "원주문화재단, 만두축제 AI 영상 공모전 모집",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5uRXVkMVNOTjFVdVhVMVRZTXNaZHRKZEVfczFXaTRKZWdfY0F0MXNsYnZqU09Qa3d5SEpZT2EzR251U2ROSVdZOURWSkVEdm5CQ25kNzZ4X3BjN0RYakxHTGp5dEg?oc=5",
-      "created_at": "2026-06-24 08:23:29"
     }
   ],
-  "last_updated": "2026-07-23 23:58:53",
+  "last_updated": "2026-07-25 00:02:16",
   "coffee": [
+    {
+      "source_site": "v.daum.net",
+      "title": "스타벅스코리아 첫 노조 떴다...\"인력은 주는데 이벤트만 늘어\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9LeXhSOTdOYTQwdFV0Nlh2TFJ5b01UcmpzcktMeGM3eWxWaTlWbVphbTBaQks1MUtIS3NKa2JSSm1TZTdGRDBtM1NVY3FsWGs?oc=5",
+      "created_at": "2026-07-19 06:57:08"
+    },
     {
       "source_site": "MTN 머니투데이방송",
       "title": "담양군, 고향사랑기부 이벤트…커피쿠폰·체험권 제공",
@@ -428,6 +431,32 @@
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방 공사감리원 업무대행자 지정 등에 관한 기준 고시 제정안행정예고",
+      "detail": "고시 · 공고 2026-138",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-08-12",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47054?announceType=TYPE6&mappingAdmRulSeq=2000000329212",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-07-23 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "예방소방업무처리규정 훈령 일부개정안행정예고",
+      "detail": "훈령 · 공고 2026-139",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-08-12",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47052?announceType=TYPE6&mappingAdmRulSeq=2000000329210",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-07-23 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방시설공사 대금지급보증 관리 강화… 착공신고 때 증빙서류 제출 의무화",

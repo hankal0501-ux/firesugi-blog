@@ -91,8 +91,20 @@
       "created_at": "2026-06-29 07:00:00"
     }
   ],
-  "last_updated": "2026-07-25 23:59:18",
+  "last_updated": "2026-07-26 23:58:14",
   "coffee": [
+    {
+      "source_site": "네이트",
+      "title": "\"무리한 이벤트 못 참아\" 스타벅스코리아, 노조 설립…업계 최초",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5jRWNtR3puN3A1Q0UtUUdoZW5wUHJvR1VaUU00cENLdndjM3g5aGktdXdzUVNadHppM2VWaTVzUm9ud1FYeElwdTgwZjlwS0J1V1F3?oc=5",
+      "created_at": "2026-07-19 07:51:00"
+    },
     {
       "source_site": "v.daum.net",
       "title": "스타벅스코리아 첫 노조 떴다...\"인력은 주는데 이벤트만 늘어\"",
@@ -404,18 +416,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBjMXRTWGdzdERXQ1Nzdm5zM19pRm1UdGV4VmFNcnQtcmhRM0NRZFAya3BXX2VGTGI4aEplNkNINWVHSXdWVXBzOG9SclhWVFFkTTNoUzFfbGFhQdIBWEFVX3lxTE1BdmxucjlwOVNuOHAxMjZfaFdwVHFtNGVneWVIS2ZPLUFtalhuNnN3b2tZMEItdEZ6OVVHUExTWHJoaFAwdnIxRFFyMWQ0V21lbjBvQTVRZUc?oc=5",
       "created_at": "2026-07-01 09:01:22"
-    },
-    {
-      "source_site": "ppss.kr",
-      "title": "백억커피, ‘PNC 2026’ 그랜드 파이널서 아메리카노 무료 쿠폰 쏜다",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE9URFdrdXpuQ0tYOHNMZFV6Ullmd1g3anRyaFFSQkhUck10NUFPWXpaZG01b2t3SDBpY2tvR04zUzhvT1JIdkpjNGtvMExJYzNZS1pJTGZMbzExX0hYcEVGSE5KUFk?oc=5",
-      "created_at": "2026-06-26 13:26:20"
     },
     {
       "source_site": "뉴스에이",

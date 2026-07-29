@@ -89,18 +89,9 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE53TlJkRWwzWDBwUFZJcHZNM0V0RVMyNTdJVEJiM1prX3hpM1FtWDdpTWQzSW5YVGhJd2dlUDhNWVEwTnc5MHpBc1pUOE8wUFVNdF9pei1RbWFJdTdnaldVelAxQmdZeDl6Qk5JVHJ3?oc=5",
       "created_at": "2026-07-06 00:04:34"
-    },
-    {
-      "source_site": "수산인신문",
-      "title": "수협銀, 임직원 경품추첨 이벤트 추첨",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE8tbmtYckg3UWF4NHljaHhTWGZDSjhTbDc2dHo1eWJsYURiTXpfMHlCd1pvMU5PUWxRdXVjRkNkMmJGUkRVT1JMV0NGSDh2NFRNeUtmRUdhaWVqX1VzQTdOTGtxc1haLXdS?oc=5",
-      "created_at": "2026-06-29 07:00:00"
     }
   ],
-  "last_updated": "2026-07-28 23:57:10",
+  "last_updated": "2026-07-29 23:58:46",
   "coffee": [
     {
       "source_site": "오픈애즈",
@@ -466,6 +457,19 @@
   "firelaw": [
     {
       "kind": "🚒 소방 법령",
+      "title": "소방 신기술·신제품 심의 운영규정 일부개정안 재행정예고",
+      "detail": "고시 · 공고 2026-143",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-08-19",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47164?announceType=TYPE6&mappingAdmRulSeq=2000000329382",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-07-30 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
       "title": "소방 공사감리원 업무대행자 지정 등에 관한 기준 고시 제정안행정예고",
       "detail": "고시 · 공고 2026-138",
       "action": "행정예고",
@@ -812,15 +816,6 @@
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1qbTJXNTJoeU80cWRRR09rSlE3N2tPemhYMG40VUF0VUw5S1QxaEd4eHBEaTNXUTFhRXNnd1U5YXhLSWhGRnJIQkpBWUVhVDl4ZWItS2Z5TkZoUDJnMGhxRkFMTFd0b2FqVFFReGlpLXU5QQ?oc=5",
       "site": "gnews_에너지데일리",
       "created_at": "2026-06-15 16:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방청, 개정 소방시설법 시행령 입법예고 취소",
-      "detail": "아파트관리신문",
-      "action": "입법예고",
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE02amlVSW5KX3hVTkpkLUZHMUJqeXF4d1A3enR4N2NVc3BWVVM5aFA4UjVpdFJtbjZvNllnX2RBMzIwVmxqV0dnRS1aQVFOVVVnRlE0RUhFSG9kMnVNd2VNMlQ1czIzMkXSAWtBVV95cUxNSTA2ODF1MUlNQ0paOXZud202UmhIem1PZFpyd25ZakNWYnBybnVUcWNVdmVNb0ZER2kySjhYNmNja29DeVBiYzB2cnJfbE5tUW04dzJlamNPdVAyV0NQLVlSSXdSUjF6QV9CWQ?oc=5",
-      "site": "gnews_아파트관리신문",
-      "created_at": "2026-06-09 16:00:00"
     }
   ]
 }

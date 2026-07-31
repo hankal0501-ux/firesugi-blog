@@ -91,8 +91,20 @@
       "created_at": "2026-07-06 00:04:34"
     }
   ],
-  "last_updated": "2026-07-29 23:58:46",
+  "last_updated": "2026-07-31 00:00:11",
   "coffee": [
+    {
+      "source_site": "abcn.kr",
+      "title": "스타벅스, 4천 원대 ‘핑크 피치 리프레셔’와 서머 쿠폰으로 여름 가성비 시장 공략",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9hRWhuSUVJZnBUMm9qQ0ZpX1pfOTZ2aldka05ZM1pDZGQ0bzRId1B5X1hOalhtTDZPVXpuSmhGN2FRUFM5TjZsMUNyTENnb3Rycm9MbmVzQUNhUm5YcFFpelNRa3d2ZHPSAWdBVV95cUxPYUVobklFSWZwVDJvakNGaV9aXzk2dmpXZGtOWTNaQ2RkNG80SHdQeV9YTmpYbUw2T1V6bkpoRjdhUVBTOU42bDFDckxDZ290cnJvTG5lc0FDYVJuWHBRaXpTUWt3dmRz?oc=5",
+      "created_at": "2026-07-30 17:58:03"
+    },
     {
       "source_site": "오픈애즈",
       "title": "[라이브 광고 셀프로 신청한다면? 시원한 커피 쿠폰 받아가세요!] – 마케팅 할인혜택 정보",
@@ -440,18 +452,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBjMXRTWGdzdERXQ1Nzdm5zM19pRm1UdGV4VmFNcnQtcmhRM0NRZFAya3BXX2VGTGI4aEplNkNINWVHSXdWVXBzOG9SclhWVFFkTTNoUzFfbGFhQdIBWEFVX3lxTE1BdmxucjlwOVNuOHAxMjZfaFdwVHFtNGVneWVIS2ZPLUFtalhuNnN3b2tZMEItdEZ6OVVHUExTWHJoaFAwdnIxRFFyMWQ0V21lbjBvQTVRZUc?oc=5",
       "created_at": "2026-07-01 09:01:22"
-    },
-    {
-      "source_site": "뉴스에이",
-      "title": "컴포즈커피, 방탄소년단 뷔 손글씨 디자인으로 완성한 ‘아티스트 V(뷔) 테이블웨어 세트’ 앱 프리퀀시 이벤트 진행",
-      "category": "커피",
-      "region": "국내",
-      "brand": "컴포즈커피",
-      "prize": null,
-      "prize_class": "goods",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1OZzV0U18yazd6TVZ1ajhrNXRfR1RWVmFKSzV3YXFFQXYySWh3SE1QQVVEUndsckx6R0ZCbE5DZ01Ddm4xNzVCakRhY0FscXN2TUJod0tRcnlaZ1gwT3IxeXRmbENza3ZtcGc?oc=5",
-      "created_at": "2026-07-08 22:40:36"
     }
   ],
   "firelaw": [

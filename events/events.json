@@ -91,8 +91,32 @@
       "created_at": "2026-07-06 00:04:34"
     }
   ],
-  "last_updated": "2026-07-31 00:00:11",
+  "last_updated": "2026-08-01 00:00:33",
   "coffee": [
+    {
+      "source_site": "포인트데일리",
+      "title": "컴포즈커피, 쿠팡이츠와 배달파트너 지원 프로그램 진행…\"커피 무료 제공\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE54dV9sZV9aYkYxc1RPbG1wdXJWNHJoQ1FDNGNubFFtQ3kyMUR1dDdVSTJoZllwdUpKSWJMdlQ1QkFHYzZ1bnJjNzFIUm5VaGRGY0ZDMVBTbGFxNmFjcGVKTllmcmFZSVMzZ01LNXJCM0s?oc=5",
+      "created_at": "2026-07-31 06:14:27"
+    },
+    {
+      "source_site": "벤처타임즈",
+      "title": "컴포즈커피, BTS 뷔 손글씨 담은 한정 테이블웨어 증정 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": null,
+      "prize_class": "goods",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1xUHpaUkxncGVUV2ZuMUZfajRvTTJTeDZ3NkYyTzBBYWtGRXpUSkpvamRGLV9La09Dc3UtNWhPTzVOR05uTDhFOHQ3dUt4U2pYTEpOZXgtLWE2cl8wVVdEdDdZNW5hdw?oc=5",
+      "created_at": "2026-07-03 07:00:00"
+    },
     {
       "source_site": "abcn.kr",
       "title": "스타벅스, 4천 원대 ‘핑크 피치 리프레셔’와 서머 쿠폰으로 여름 가성비 시장 공략",
@@ -428,33 +452,18 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1NWThsaGZweG9vcEJSZU1BNFR3b00xbTRxUTJZYjh2VWZid2F5RmRSdTVxVTVtYmsxZC1yelZYenBsMzAtXzB4VnFIOXBCeHhRRkZSZEROeXQ3TWN3NlFVaGVQcmYtZkFXeUJRLQ?oc=5",
       "created_at": "2026-07-02 16:05:38"
-    },
-    {
-      "source_site": "동아일보",
-      "title": "이지샵, 부가세 신고 완료·신규 회원 전원에 ‘아메리카노 기프티콘’ 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBJWVhkM0RialFOTlpvTTRxMlkxdVFtenJQLUo1SDBjTDM2VnRIdzJWbU5Yci1DV1hfZGpVTjNzSFdWbUlNNzI4QkhrVWV6b1ZJRC10OFVTZDh3c3p1RUk2cGRDWHNRaXN2UDdfc0p4ZXY5MTBvcnfSAWZBVV95cUxNOFZ2dWxyOGhBMjg1YmI4cW5pbkp4akR3MW05MG1od3FGa3dMN05uX0xGNkNNWktfdlRSWlN4Y3BqOHc3LTViNGVGN280TjU2NkFfU0pOMnlSbHN5ZjVNWnF3OFBHeVE?oc=5",
-      "created_at": "2026-07-06 10:17:00"
-    },
-    {
-      "source_site": "아주경제",
-      "title": "메가커피 아메리카노 증정 캐시워크 돈 버는 퀴즈, 정답은?",
-      "category": "커피",
-      "region": "국내",
-      "brand": "메가커피",
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBjMXRTWGdzdERXQ1Nzdm5zM19pRm1UdGV4VmFNcnQtcmhRM0NRZFAya3BXX2VGTGI4aEplNkNINWVHSXdWVXBzOG9SclhWVFFkTTNoUzFfbGFhQdIBWEFVX3lxTE1BdmxucjlwOVNuOHAxMjZfaFdwVHFtNGVneWVIS2ZPLUFtalhuNnN3b2tZMEItdEZ6OVVHUExTWHJoaFAwdnIxRFFyMWQ0V21lbjBvQTVRZUc?oc=5",
-      "created_at": "2026-07-01 09:01:22"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방청, 개정 소방시설법 시행령 입법예고 취소",
+      "detail": "아파트관리신문",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE02amlVSW5KX3hVTkpkLUZHMUJqeXF4d1A3enR4N2NVc3BWVVM5aFA4UjVpdFJtbjZvNllnX2RBMzIwVmxqV0dnRS1aQVFOVVVnRlE0RUhFSG9kMnVNd2VNMlQ1czIzMkXSAWtBVV95cUxNSTA2ODF1MUlNQ0paOXZud202UmhIem1PZFpyd25ZakNWYnBybnVUcWNVdmVNb0ZER2kySjhYNmNja29DeVBiYzB2cnJfbE5tUW04dzJlamNPdVAyV0NQLVlSSXdSUjF6QV9CWQ?oc=5",
+      "site": "gnews_아파트관리신문",
+      "created_at": "2026-06-09 07:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방 신기술·신제품 심의 운영규정 일부개정안 재행정예고",
@@ -807,15 +816,6 @@
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPam9lcGdEdUR6emxfNll2MV9JSFF6a0k0elo1b0NyMGJIRG1FUEdqTHU4czdZR1hqNFNOM0FWSHl3eE1CbFVhZzVwYVZ1Qm5YUE5nbnZaTTdDYzRLSFVoNDZrMVJnWmp1MU13b1F4Q3ktT0tOdkp3RUIzN1RfQTJqR2pUOE9QMjBVLTFlRU9QWVd2bVVQSDdueV9wS2ZuMHVSaVQ2QnZuLW9MZEVpS2cydU5fY1VSb0lpWld4SDh6UTktbF9XOF9ZRWZSVU8?oc=5",
       "site": "gnews_소방방재신문",
       "created_at": "2026-07-07 16:18:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방관 배상책임보험 의무화·리튬이온전지 정보 사전 확보… 소방기본법 하위법령 입법예고",
-      "detail": "에너지데일리",
-      "action": "입법예고",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1qbTJXNTJoeU80cWRRR09rSlE3N2tPemhYMG40VUF0VUw5S1QxaEd4eHBEaTNXUTFhRXNnd1U5YXhLSWhGRnJIQkpBWUVhVDl4ZWItS2Z5TkZoUDJnMGhxRkFMTFd0b2FqVFFReGlpLXU5QQ?oc=5",
-      "site": "gnews_에너지데일리",
-      "created_at": "2026-06-15 16:00:00"
     }
   ]
 }

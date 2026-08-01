@@ -91,7 +91,7 @@
       "created_at": "2026-07-06 00:04:34"
     }
   ],
-  "last_updated": "2026-08-01 00:00:33",
+  "last_updated": "2026-08-01 23:56:11",
   "coffee": [
     {
       "source_site": "포인트데일리",
@@ -440,21 +440,27 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBkQWZvRDJXT2o0VUFmVDZDMWtnNnVfalZFTmVxR0c2UGtpVGEtZVNHSVRNLWY1bmhzcndrTHhXcnpNYU9tUWxpU3hnelBnblh1dWxDd3ZJb1BTb3p4ZXNSTg?oc=5",
       "created_at": "2026-07-09 08:33:48"
-    },
-    {
-      "source_site": "나눔경제뉴스",
-      "title": "하나은행, SK텔레콤과 통신비 자동납부 이벤트…치킨·커피 쿠폰 제공",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1NWThsaGZweG9vcEJSZU1BNFR3b00xbTRxUTJZYjh2VWZid2F5RmRSdTVxVTVtYmsxZC1yelZYenBsMzAtXzB4VnFIOXBCeHhRRkZSZEROeXQ3TWN3NlFVaGVQcmYtZkFXeUJRLQ?oc=5",
-      "created_at": "2026-07-02 16:05:38"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "용혜인 의원 ‘소방시설 최초점검 내실화’ 소방시설법 개정안 발의",
+      "detail": "세이프투데이",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFB0VUZLTU9GVDUya0JDWmpXMHZLZ2h1YXRKaWlnUVVNcFJnSlRuUXB0QlUzSHFiQnJ1MVRRV2pTblU1QlRnWURBemtDX3RNUlFoSWk5TkpIcy05ZFRvbmIzdTE4X2o5WXkwaHfSAW5BVV95cUxQQWc1dEtKeElRQXdYd2N0UGFFRTJpVnI2a2Y0NTlLczFiSkVrY1l2NWxIOHdLRUJOVVJ1QkFLZVoyM3ZRVjZaYm5RUU9pb1A2UGtwYmg2MmhyZWdfeUpvcDFVTl9paE9uZ0lpZ0wzQQ?oc=5",
+      "site": "gnews_세이프투데이",
+      "created_at": "2026-07-02 07:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방관 배상책임보험 의무화·리튬이온전지 정보 사전 확보… 소방기본법 하위법령 입법예고",
+      "detail": "에너지데일리",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1qbTJXNTJoeU80cWRRR09rSlE3N2tPemhYMG40VUF0VUw5S1QxaEd4eHBEaTNXUTFhRXNnd1U5YXhLSWhGRnJIQkpBWUVhVDl4ZWItS2Z5TkZoUDJnMGhxRkFMTFd0b2FqVFFReGlpLXU5QQ?oc=5",
+      "site": "gnews_에너지데일리",
+      "created_at": "2026-06-15 07:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방청, 개정 소방시설법 시행령 입법예고 취소",
@@ -798,24 +804,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-05-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "울주를 움직이는 힘, 서범수 국회의원 '소방기본법 일부개정법률안' 대표 발의",
-      "detail": "전국구직노조신문",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBIb0VpRnRPNEd5UmdUVk1LME9ZTkJkWURKYkJKVzl0WnpOZkNSY2hPX0t5WHZHTGtnSzZQWjZhcWZTcnFxODlhR3loUW5aUzlrRnNzTDZHcWNiTHJLUGJVS2ktUS1pWG8?oc=5",
-      "site": "gnews_전국구직노조신문",
-      "created_at": "2026-07-07 16:25:41"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "청주동부소방서, 소방시설법 개정에 따른 변경사항 안내:FPN Daily",
-      "detail": "소방방재신문",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPam9lcGdEdUR6emxfNll2MV9JSFF6a0k0elo1b0NyMGJIRG1FUEdqTHU4czdZR1hqNFNOM0FWSHl3eE1CbFVhZzVwYVZ1Qm5YUE5nbnZaTTdDYzRLSFVoNDZrMVJnWmp1MU13b1F4Q3ktT0tOdkp3RUIzN1RfQTJqR2pUOE9QMjBVLTFlRU9QWVd2bVVQSDdueV9wS2ZuMHVSaVQ2QnZuLW9MZEVpS2cydU5fY1VSb0lpWld4SDh6UTktbF9XOF9ZRWZSVU8?oc=5",
-      "site": "gnews_소방방재신문",
-      "created_at": "2026-07-07 16:18:00"
     }
   ]
 }

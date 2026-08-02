@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "kipa.org",
+      "title": "공지사항 전체 읽기(제 44회 전국 초중학생 발명글짓기 만화 공모전 모집(~11.2))",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQa0FFMTVmUHVNd1BzMzc5SVlzOGpaMHRUbS1mME9fQ1YwYUxEcDRfSms1cFhyX2Z2M3dCNXNZSHdGSllTQkQwVVFWNEI5MFFSeUFQMzFzV0pLRnZSa21hV2NKM3FPYXdpNHE0Y1l1ZG54ZlR2Uno1dnE4SlUzbWk1eEZZcE56NWpPM3BBRnN1NXVVVjhOVnFPd1VWUEMzZWxnUkp3NzNReGctcmY4eVpjVWFleDdFVFFWS3hCT0JMS1ZycV9NYUU0VG8zYWRvQWtFVjRyS2Qwa0NfTTF5OXVkT1hn?oc=5",
+      "created_at": "2026-08-02 08:28:54"
+    },
+    {
       "source_site": "디일렉",
       "title": "크래프톤, 배그 모바일 한·일 이용자 맵 공모전 개최",
       "category": "공모전",
@@ -73,15 +82,6 @@
       "created_at": "2026-07-08 12:00:00"
     },
     {
-      "source_site": "뉴데일리 대구경북",
-      "title": "영양 자작나무숲, 국민 사진으로 기록한다… 영양군 온라인 공모전 모집",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE01NDZfQ2R0TVBvYk94NmNXZ25ETm84TjJuMnliT1BqcUFfQTVHdURucFg0WVh2Zi1SYVFfR3BYZWNWOU9UTXVrZHIzTVNVaW5TTEhsZ1h1ZnpWdW5fZnVza1FVQ29reVpmNFpsbDYwUHBiWm5SbW1kX1pMNmFTTjjSAX9BVV95cUxNNTQ2X0NkdE1Qb2JPeDZjV2duRE5vOE4ybjJ5Yk9QanFBX0E1R3VEbnBYNFlYdmYtUmFRX0dwWGVjVjlPVE11a2RyM01TVWluU0xIbGdYdWZ6VnVuX2Z1c2tRVUNva3laZjRabGw2MFBwYlpuUm1tZF9aTDZhU044?oc=5",
-      "created_at": "2026-07-03 11:04:53"
-    },
-    {
       "source_site": "gukjenews.com",
       "title": "구로구, '한국디지털어워드 GURO' 초등생 그림 공모전 모집",
       "category": "공모전",
@@ -91,7 +91,7 @@
       "created_at": "2026-07-06 00:04:34"
     }
   ],
-  "last_updated": "2026-08-01 23:56:11",
+  "last_updated": "2026-08-02 23:57:23",
   "coffee": [
     {
       "source_site": "포인트데일리",
@@ -104,18 +104,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE54dV9sZV9aYkYxc1RPbG1wdXJWNHJoQ1FDNGNubFFtQ3kyMUR1dDdVSTJoZllwdUpKSWJMdlQ1QkFHYzZ1bnJjNzFIUm5VaGRGY0ZDMVBTbGFxNmFjcGVKTllmcmFZSVMzZ01LNXJCM0s?oc=5",
       "created_at": "2026-07-31 06:14:27"
-    },
-    {
-      "source_site": "벤처타임즈",
-      "title": "컴포즈커피, BTS 뷔 손글씨 담은 한정 테이블웨어 증정 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": "컴포즈커피",
-      "prize": null,
-      "prize_class": "goods",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1xUHpaUkxncGVUV2ZuMUZfajRvTTJTeDZ3NkYyTzBBYWtGRXpUSkpvamRGLV9La09Dc3UtNWhPTzVOR05uTDhFOHQ3dUt4U2pYTEpOZXgtLWE2cl8wVVdEdDdZNW5hdw?oc=5",
-      "created_at": "2026-07-03 07:00:00"
     },
     {
       "source_site": "abcn.kr",
@@ -443,6 +431,15 @@
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "서범수 국회의원, 소방기본법 일부개정법률안 대표발의",
+      "detail": "v.daum.net",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE85eGVxX2xZNFdBbTlNTDRadk9aTy1nVDQ5M2lOekhIYmxqUkJMZEVHX0J0VmJiUGZHcUVtdjdLdldmcEhLd2VMWnVOc1I1U1k?oc=5",
+      "site": "gnews_v.daum.net",
+      "created_at": "2026-07-07 07:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "용혜인 의원 ‘소방시설 최초점검 내실화’ 소방시설법 개정안 발의",
@@ -787,19 +784,6 @@
       "status": null,
       "period": "의견제출 ~2026-05-28",
       "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46676?announceType=TYPE6&mappingAdmRulSeq=2000000326898",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-05-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "지하구의 화재안전기술기준(NFTC 605) 일부개정안 행정예고",
-      "detail": "고시 · 공고 2026-24",
-      "action": "행정예고",
-      "status": null,
-      "period": "의견제출 ~2026-05-28",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46674?announceType=TYPE6&mappingAdmRulSeq=2000000326896",
       "site": "nfa",
       "source_site": "소방청",
       "official": true,

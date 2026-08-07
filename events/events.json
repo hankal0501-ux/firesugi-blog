@@ -98,19 +98,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMi3AJBVV95cUxQcXUtN3Y0Y2JXRE45TkZqVGFxQ2lNbUkxX1VPRzNUVFkyMWNteUZOVER3Z2NPVnJkV0xRdklXU1N0R1J1Q096VkpDS0pRcS1xX1N4SEpkZXJBZmNTQXVKQWlKZ0NkM3lfODQ0QzBIRDM5dkltRm9LTm9oUnJlVGFCaEQ3RXdSZ0tST3FRMFJRWE5NM0ZlWnJNamdEMkUta3dzMVd0V0V2bHVhUXg5VVZpYjVDTXBIcFJLR0gtUlVjVnlubWhXRzJFdnRORWtadU1yeHdWWDVxa0c1ZklKT3J6QW9KTjZGVGlRN3NTemhEcU83TkR5ZWFsdkFoZXJ3LWdud1d3bTRmcHh6TUYyNmVPTWtTdEVHeTlfWWFSdmtrUkwzTk9QX1prclEzTUJxNTlrMF9TdEdOY1BvcUUxNi0tMUVHbzQ1dVNoZW9RV1FPb1RTeGxVUVZmVmJnWFo?oc=5",
       "created_at": "2026-07-10 09:32:55"
-    },
-    {
-      "source_site": "테스트",
-      "title": "스타벅스 아메리카노 무료 쿠폰 응모",
-      "category": "커피",
-      "prize": "아메리카노 1잔",
-      "period": "2026-07-10",
-      "url": "https://example.com/coffee-test",
-      "created_at": "2026-07-08 12:00:00"
     }
   ],
-  "last_updated": "2026-08-07 01:41:27",
+  "last_updated": "2026-08-07 23:31:42",
   "coffee": [
+    {
+      "source_site": "catchnews.kr",
+      "title": "‘방한객 정조준’ 이디야커피 “알리페이플러스 고객에 ‘20%할인쿠폰’ 드려요”",
+      "category": "커피",
+      "region": "국내",
+      "brand": "이디야",
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9ZUjVEYXJ3YWZRLXREQjdMUEVuUlBWNWMtWHY1QUotLTlrQU5iQWhUVmh5dEZ1bncyeVBoTlh5WDJwQmdDMndPWDlqU0NRTWtLMEZmZGYwNV9TbHJMV19fRE14WC14YUpnb1hN0gFvQVVfeXFMTXoyRlhPS00xcmJhLUVueHJUaENmN19SRkY1R1RHOWZGUTBhTFRaeVRpUDdQcWNnZGZBbEtUanRnRktldHh2VGNlWW5PTmNwV3BMRGZGTHpXYzZNcVhUMkhLbWhmS0JoY0tLUHA4R3dN?oc=5",
+      "created_at": "2026-08-07 00:52:26"
+    },
     {
       "source_site": "브런치",
       "title": "회의가 끝난 뒤 받은 감사 인사 커피 쿠폰은 괜찮을까?",
@@ -458,18 +461,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMi5gNBVV95cUxNMmdYcVVucDd0UFg0ZmdRaTBCdXZSQnY4dlNuQ3V4UkxwQjgwVlptRHY5YS02REFac0lFOXhTeEZWdVVMSE1NUmJqN2Z3bkZidnByWUl5eG1HbjR1dURkc0FDNl9nUHhaLU9BbVhNVkRUTGItUUtlUFZUUWdTMGlmU0lQM3NiU2JiREt5dTlkaUpDODZKSi03WnVyaFNFQi0wT3ZHRWNrRjBLR3k5MFViS0lQRkRCUWNRX1g1N3JjLTdoTmdCdk1SNkhTWjVZak9uZF9ETW1iWllQT2tQRWxfU1BNeGFlblhCWDE0V2haVHpBTlFiRG1HSzZNVVBkSEFjcl9STWhEdHJSemlDMXQyaG11NERVWkNWc3htWFZRZlNfUkF2VHgwRHlLbTRPQ0EyY1U5MEZJanNTS09XQ2dJbVdZTTcwS2tCTHpXWTFGTUtHSGUwNWo2SERGeGgtTmRsTVRjd1dwUkE3VzdmTjd6eVg4dTc5cVdtUWxqX0ExYXRBOVMyaWtzNFpiSTVvQlBtdV9zOG1KOGo0aTJTRDZtNk56T0tJYTRwUE5GeDZGUjFQR01ERFA3N0tqbXJydDYxRWdleElERkc2MmhyeDFTcVpxNmYweV8yQ0twSVdBdGZNY29BSnc?oc=5",
       "created_at": "2026-07-14 11:49:50"
-    },
-    {
-      "source_site": "직썰",
-      "title": "스타벅스, 대표 이벤트 ‘서머 e-프리퀀시’ 전면 취소···신뢰 회복 최우선",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBWalMzN0dUYzBYX3hvWjhOSjYzd1ltMzhtQWpfb3haRm40NzVhLTNZdHk0bzJmWE90cmdacFh6UnlLMEhGVFp3WVJkRWFDcE9vNlp3LVk1a0hmU29zZVYtcDZ0aDJGRHhf0gFsQVVfeXFMTmxybWM3bHAza0NLaUNTM2tsbWhwSGQ4V2xROWgzeG9rd2JQbXUxVHlHTWdUYjZXUzktTmZxcFdCcEJOUURrOWc2em9zaEJvblpwaGRXeU51ZDhDcEh1QzlWdnI0MGN2TDNQYjRO?oc=5",
-      "created_at": "2026-07-14 07:47:32"
     }
   ],
   "firelaw": [

@@ -109,8 +109,20 @@
       "created_at": "2026-07-08 12:00:00"
     }
   ],
-  "last_updated": "2026-08-05 23:58:52",
+  "last_updated": "2026-08-07 01:41:27",
   "coffee": [
+    {
+      "source_site": "브런치",
+      "title": "회의가 끝난 뒤 받은 감사 인사 커피 쿠폰은 괜찮을까?",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBPMnFZVnFPNXJPOUxXTmQwaW9adUtfNHFOZFZidExqcG45LXpnV0E3WUNYZFZqMHdYemJwNmI4TUhtRndIdHY0aV9adFpOR1A0YUww?oc=5",
+      "created_at": "2026-08-04 19:21:00"
+    },
     {
       "source_site": "퍼블릭타임스",
       "title": "하나은행, SK텔레콤과 통신비 자동납부 이벤트…치킨·커피 쿠폰 제공",
@@ -458,21 +470,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBWalMzN0dUYzBYX3hvWjhOSjYzd1ltMzhtQWpfb3haRm40NzVhLTNZdHk0bzJmWE90cmdacFh6UnlLMEhGVFp3WVJkRWFDcE9vNlp3LVk1a0hmU29zZVYtcDZ0aDJGRHhf0gFsQVVfeXFMTmxybWM3bHAza0NLaUNTM2tsbWhwSGQ4V2xROWgzeG9rd2JQbXUxVHlHTWdUYjZXUzktTmZxcFdCcEJOUURrOWc2em9zaEJvblpwaGRXeU51ZDhDcEh1QzlWdnI0MGN2TDNQYjRO?oc=5",
       "created_at": "2026-07-14 07:47:32"
-    },
-    {
-      "source_site": "컨슈머뉴스",
-      "title": "카카오페이, 컴포즈커피와 ‘100원 커피’ 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": "컴포즈커피",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9Md2pJUF9iUzNoY3lhNkdlN1JrMjZOS2ZTcm0xSDctLW9OSzMzOWo0aHB4aWJMdEpDaDVZY1M0Q25xaTVIUi1PV1ZXUW1xa3dtdnpHT3VpT1lOSHRnNVFFUGhNMmpmY3FjV2loc1ZVRQ?oc=5",
-      "created_at": "2026-07-10 07:00:00"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소화약제의 형식승인 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-149",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-08-27",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47128?announceType=TYPE6&mappingAdmRulSeq=2000000329630",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-08-07 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "서범수 국회의원, 소방기본법 일부개정법률안 대표발의",
@@ -813,19 +826,6 @@
       "status": null,
       "period": "의견제출 ~2026-05-28",
       "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46678?announceType=TYPE6&mappingAdmRulSeq=2000000326900",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-05-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "도로터널의 화재안전기술기준(NFTC 603) 일부개정안 행정예고",
-      "detail": "고시 · 공고 2026-23",
-      "action": "행정예고",
-      "status": null,
-      "period": "의견제출 ~2026-05-28",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46676?announceType=TYPE6&mappingAdmRulSeq=2000000326898",
       "site": "nfa",
       "source_site": "소방청",
       "official": true,

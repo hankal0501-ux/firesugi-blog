@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "디자인정글",
+      "title": "[ABEXPO2026] 함께 만드는 경남 건강지도 프로젝트 「경남 건강명소 공모전」 모집중",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBZdkZvcmlEZnMxcE9LSExDUWtKQ091S29lbTU0cE1sUlFxWVJmblJuc0FNQ1hSSXRDYklVdlQtT01zX3hEMmQtX0Iwek5nMkNF?oc=5",
+      "created_at": "2026-08-03 07:00:00"
+    },
+    {
       "source_site": "AI포스트",
       "title": "전남정보문화산업진흥원, ‘2026년 전남광주통합특별시 이모티콘 공모전’ 모집 연장",
       "category": "공모전",
@@ -100,7 +109,7 @@
       "created_at": "2026-07-14 01:45:00"
     }
   ],
-  "last_updated": "2026-08-11 23:38:04",
+  "last_updated": "2026-08-12 23:38:16",
   "coffee": [
     {
       "source_site": "catchnews.kr",
@@ -454,6 +463,19 @@
   "firelaw": [
     {
       "kind": "🚒 소방 법령",
+      "title": "소방청과 그 소속기관 직제 시행규칙 일부개정령안 입법예고",
+      "detail": "부령 · 공고 2026-153",
+      "action": "입법예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-08-18",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/88064",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-08-11 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
       "title": "소화약제의 형식승인 및 제품검사의 기술기준 개정안 행정예고",
       "detail": "고시 · 공고 2026-149",
       "action": "행정예고",
@@ -792,19 +814,6 @@
       "status": null,
       "period": "의견제출 ~2026-05-28",
       "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46680?announceType=TYPE6&mappingAdmRulSeq=2000000326902",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-05-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "연결송수관설비의 화재안전기술기준(NFTC 502) 일부개정안 행정예고",
-      "detail": "고시 · 공고 2026-22",
-      "action": "행정예고",
-      "status": null,
-      "period": "의견제출 ~2026-05-28",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46678?announceType=TYPE6&mappingAdmRulSeq=2000000326900",
       "site": "nfa",
       "source_site": "소방청",
       "official": true,

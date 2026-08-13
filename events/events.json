@@ -98,18 +98,9 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1LbHN3TV81anlIQ090Tjk0M1ZFbHNLUlM0eF8taWM1cVdSLWtHNUQ2eXBORXFWMmpBb2RWQ0RHNHNkVlI1UE44dGVETW0zN2U5aENSSGQ2WGN6VUFoU2tZanJCeXEzdlVOX1l2UjFWRdIBb0FVX3lxTE1LbHN3TV81anlIQ090Tjk0M1ZFbHNLUlM0eF8taWM1cVdSLWtHNUQ2eXBORXFWMmpBb2RWQ0RHNHNkVlI1UE44dGVETW0zN2U5aENSSGQ2WGN6VUFoU2tZanJCeXEzdlVOX1l2UjFWRQ?oc=5",
       "created_at": "2026-07-16 00:41:50"
-    },
-    {
-      "source_site": "더리포트",
-      "title": "마스턴투자운용, 미래 투자 인재 발굴···총상금 2400만원",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5vdnk3SFBrZGE5RkVtNnQ3QThJb0ZjY0cwc0xZdUVRS0d4UTVFSTh6eldDOVE0WHlhdWN3SVFqUFh0WFZ6Y1U0bU1KcEcxRTA4WGxKQUt5MVpkTW9KcTRFSVItYkFyZlpPWWJCX1JR?oc=5",
-      "created_at": "2026-07-14 01:45:00"
     }
   ],
-  "last_updated": "2026-08-12 23:38:16",
+  "last_updated": "2026-08-13 23:38:56",
   "coffee": [
     {
       "source_site": "catchnews.kr",
@@ -422,42 +413,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5KYVNHQTE1bkRCVzFoZDctSDFWcUFucDYwVV9CeG5Rcm9PSEQySW44dFR4UHdkaUtETG9zZG5velhkWFRMck9XSHB4ZXpsZFJ2VDQ4?oc=5",
       "created_at": "2026-07-15 08:12:00"
-    },
-    {
-      "source_site": "뉴시스",
-      "title": "'26층 엘베 고장'에 계단 오른 배달원…14층 내려와 '커피 쿠폰' 건넨 주민",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9vcXJxWU1Jd1dLcVV1d3pvRTRvODc0bFNaSlcwSGdVRWlSU3VRMXo0T0sxQ044bHY2Wk9BcVM0ZXdJWlFHSHlUWXBhU0xGOUZHWGZrWXlpQ3BXdFg4bVN6Nmt1V1NkOG1mYzFlUWsyZ1ZXUFNMYnJBdtIBeEFVX3lxTE9vcXJxWU1Jd1dLcVV1d3pvRTRvODc0bFNaSlcwSGdVRWlSU3VRMXo0T0sxQ044bHY2Wk9BcVM0ZXdJWlFHSHlUWXBhU0xGOUZHWGZrWXlpQ3BXdFg4bVN6Nmt1V1NkOG1mYzFlUWsyZ1ZXUFNMYnJBdg?oc=5",
-      "created_at": "2026-07-14 08:08:00"
-    },
-    {
-      "source_site": "일간경기",
-      "title": "광명시, 기후의병 2만명 달성 눈앞..가입자 포인트·커피쿠폰 제공",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE8tWnE3XzhzejJSUFRaU2RwT0dnem5XemY3c2FYWTBwQW9OQV9UZnVNQjEzbnpZSUYyUUpBUkRDZE5HbVlzdFlQR1VlUU1vVDJpRE1jUHZoSTZFbUNxam5KZGNpbTNZdm40?oc=5",
-      "created_at": "2026-07-14 04:13:21"
-    },
-    {
-      "source_site": "MSN",
-      "title": "'품절 대란' 이벤트 어디로... 스타벅스 \"올 여름은 쉽니다\" [뉴스더보기] / 연합뉴스TV (YonhapnewsTV)",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMi5gNBVV95cUxNMmdYcVVucDd0UFg0ZmdRaTBCdXZSQnY4dlNuQ3V4UkxwQjgwVlptRHY5YS02REFac0lFOXhTeEZWdVVMSE1NUmJqN2Z3bkZidnByWUl5eG1HbjR1dURkc0FDNl9nUHhaLU9BbVhNVkRUTGItUUtlUFZUUWdTMGlmU0lQM3NiU2JiREt5dTlkaUpDODZKSi03WnVyaFNFQi0wT3ZHRWNrRjBLR3k5MFViS0lQRkRCUWNRX1g1N3JjLTdoTmdCdk1SNkhTWjVZak9uZF9ETW1iWllQT2tQRWxfU1BNeGFlblhCWDE0V2haVHpBTlFiRG1HSzZNVVBkSEFjcl9STWhEdHJSemlDMXQyaG11NERVWkNWc3htWFZRZlNfUkF2VHgwRHlLbTRPQ0EyY1U5MEZJanNTS09XQ2dJbVdZTTcwS2tCTHpXWTFGTUtHSGUwNWo2SERGeGgtTmRsTVRjd1dwUkE3VzdmTjd6eVg4dTc5cVdtUWxqX0ExYXRBOVMyaWtzNFpiSTVvQlBtdV9zOG1KOGo0aTJTRDZtNk56T0tJYTRwUE5GeDZGUjFQR01ERFA3N0tqbXJydDYxRWdleElERkc2MmhyeDFTcVpxNmYweV8yQ0twSVdBdGZNY29BSnc?oc=5",
-      "created_at": "2026-07-14 11:49:50"
     }
   ],
   "firelaw": [

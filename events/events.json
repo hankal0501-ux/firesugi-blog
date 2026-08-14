@@ -100,7 +100,7 @@
       "created_at": "2026-07-16 00:41:50"
     }
   ],
-  "last_updated": "2026-08-13 23:38:56",
+  "last_updated": "2026-08-14 23:19:48",
   "coffee": [
     {
       "source_site": "catchnews.kr",
@@ -401,21 +401,18 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBEWjhGcnBtQ2NjUW00eGJTNURjcVFjWUNjaHdJSk42UEFodzFrU2xhbF9LdW9sb2Fpc3FqdFBIblZvTW1uNDV3X0Jjcl9MOHRxV3l1bzEzd1RYT283Q1lNeXZvSG8?oc=5",
       "created_at": "2026-07-16 10:10:00"
-    },
-    {
-      "source_site": "네이트",
-      "title": "26층서 치킨 시켰는데 엘베 고장…14층서 만나 커피 쿠폰까지 '훈훈 결말' [포크뉴스]",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5KYVNHQTE1bkRCVzFoZDctSDFWcUFucDYwVV9CeG5Rcm9PSEQySW44dFR4UHdkaUtETG9zZG5velhkWFRMck9XSHB4ZXpsZFJ2VDQ4?oc=5",
-      "created_at": "2026-07-15 08:12:00"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "[칼럼] 물류창고 화재안전기준, 법률 개정과 별개로 지속 강화돼야",
+      "detail": "정필",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1IWHNIT1lRSlFYVm9LU0hCbVhhSmVWSGRzNmV2SWhCUkY5Q0ZaR1h1QWZfUUZjQWJmNmE5VFUtZFNqMXQzcWZF?oc=5",
+      "site": "gnews_정필",
+      "created_at": "2026-08-14 13:49:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방청과 그 소속기관 직제 시행규칙 일부개정령안 입법예고",
@@ -756,19 +753,6 @@
       "status": null,
       "period": "의견제출 ~2026-05-28",
       "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46652?announceType=TYPE6&mappingAdmRulSeq=2000000326852",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-05-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "특별피난계단의 계단실 및 부속실 제연설비의 화재안전기술기준(NFTC 501A) 일부개정안 행정예고",
-      "detail": "고시 · 공고 2026-21",
-      "action": "행정예고",
-      "status": null,
-      "period": "의견제출 ~2026-05-28",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46680?announceType=TYPE6&mappingAdmRulSeq=2000000326902",
       "site": "nfa",
       "source_site": "소방청",
       "official": true,

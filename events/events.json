@@ -80,19 +80,34 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1XcDlHSUJvZkFpX043bFdabWNYT0tuRE9tdWhMR2IxbndqMDdtUHVjVUJ2QTYxekUyOVlwSXZoVHNwTGhzY1lqQkRNY2hYaHoySDZTVzU4azJ5MWJDTU9V?oc=5",
       "created_at": "2026-07-19 11:32:00"
-    },
-    {
-      "source_site": "MSN",
-      "title": "마스턴투자운용, 실전형 아이디어 공모전 개최",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMi3gNBVV95cUxQTWFOZDcyelllbTZiYU1pWmpmV2hTZ3Vic0pUT3lhRVZ0bnVFMUFnMjc4dXFDeDVVVGJyTWpxRVNCakVUaTRaQ2lsV09tSUoySzhCdDlUQjdNRHNiLThfWjhVUlFFR3ZWU3hBajNyNkdGTlpVcnczUnpHQmxzdFA4S2hjZmU2WWFLbkYwQktqWkI4NFJ2RlVqVWVUTnlCMFFqYTEyRjlORTc2MHhpWl85S01JckpXUGFkMHkwSDljTG1LQjVjdEpGM2d1S01Yb1Z3bl82MVVzMklhajZ4RjEwbDB1VlRTd2RNNFZZUzdOcGUwVkxLUjZfQ3F6RzFnYTEtbHBMZjhhQXlwcjVQWFI2Y002U2ZHM0poNXc0QUFUcmZ6LVFjamZEU2RTR2dhZ0dsQVUxa2ZZM3BZSHBEeG1SaFJwU09BMUZJUzBsRzh4U1AyZ244aFg1NV95SXdHNHhfcWVJLVFFRVNreC1nRHVfWm5tVThOVTNwWmhIdEhBLVIwMkgwdW1qRXBxSUcwcW1fLUdteW5TYkhfbmtrOFJLVlNIUmcxRFdwbFNZMjR6b1p6U3Z6T0tOaGtGVjhIcV9wZEtlQTBDOXowYVY1WE9ZZU92b1M4NERVZ2hLejRB?oc=5",
-      "created_at": "2026-07-18 03:57:33"
     }
   ],
-  "last_updated": "2026-08-16 23:17:37",
+  "last_updated": "2026-08-17 23:20:16",
   "coffee": [
+    {
+      "source_site": "컨슈머뉴스",
+      "title": "카카오페이, 컴포즈커피와 ‘100원 커피’ 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9Md2pJUF9iUzNoY3lhNkdlN1JrMjZOS2ZTcm0xSDctLW9OSzMzOWo0aHB4aWJMdEpDaDVZY1M0Q25xaTVIUi1PV1ZXUW1xa3dtdnpHT3VpT1lOSHRnNVFFUGhNMmpmY3FjV2loc1ZVRQ?oc=5",
+      "created_at": "2026-08-14 07:00:00"
+    },
+    {
+      "source_site": "뽐뿌 쿠폰·이벤트",
+      "title": "[네이버페이] 카페 2000이상 결제시 500포인트 적립",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=117484",
+      "created_at": "2026-08-17 19:38:25"
+    },
     {
       "source_site": "catchnews.kr",
       "title": "‘방한객 정조준’ 이디야커피 “알리페이플러스 고객에 ‘20%할인쿠폰’ 드려요”",

@@ -73,8 +73,20 @@
       "created_at": "2026-07-27 06:20:04"
     }
   ],
-  "last_updated": "2026-08-18 23:19:50",
+  "last_updated": "2026-08-19 23:20:41",
   "coffee": [
+    {
+      "source_site": "cwn.kr",
+      "title": "백억커피 X 유플투쁠, 아메리카노·팝콘 무료 혜택 제공",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9pUGNuWWJYSERiLV9aTDgzTVRMSVZSN0I5cGZidnFVcDkzZmszT1lEZjJITmRwSXZKZGRQYmo1eE9kenZPZkEyWXUxODFhVVA2R1ZPSjB6NjV2TjlMalZ3cGRB?oc=5",
+      "created_at": "2026-08-19 04:38:13"
+    },
     {
       "source_site": "핀포인트뉴스",
       "title": "KB캐피탈, KB스타픽 상담만 해도 커피쿠폰 준다",
@@ -278,21 +290,18 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE15WGhZVy03ZzBlblRnWWxGU2haMVYzanYwSFIzWnVaT2psaWRYZUE4alV6cldOb0tTZm5WMF9mZ1h4VnhrRE83SlMzeVBRREt4TDkzZTRB?oc=5",
       "created_at": "2026-07-22 15:02:00"
-    },
-    {
-      "source_site": "비건뉴스",
-      "title": "스타벅스코리아 첫 노조 출범…인력 부족·잦은 이벤트 개선 요구",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE4ya3lwMGhscDZPMHNDbWc1aHQ3aUFhMUtCN1IzcEJSNjBPU2lMc1IxMDFrN3JkSVJ1cjZzWkswVnJTTVpfT1ZoREJRc2JHdmdsd1ZjQ2MyU3lGY3ppRGNSRXMtSU1kQQ?oc=5",
-      "created_at": "2026-07-20 03:11:41"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "(설명자료) 물류창고 화재안전기준은 법률 개정과 별개로 지속 강화해 왔습니다",
+      "detail": "대한민국 정책브리핑",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQXzdkWEE3emdtT05pcmU4a1BGVWtLeHo4a3ptWmZ0ZVBjd1VIMVJ1bWZoU3BXY3Z4RHh2UkwwLUVVWW1XMVo2S1I5b0czOXgxaHVWYVhwVWJUdW9zV24tUGd4eFd1MzhSenBpZExhZUdOUE03YnQwY2oxZVRXdnNmZ3E2ZnRUSVdCR1dj?oc=5",
+      "site": "gnews_대한민국 정책브리핑",
+      "created_at": "2026-08-10 07:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "[칼럼] 물류창고 화재안전기준, 법률 개정과 별개로 지속 강화돼야",
@@ -629,19 +638,6 @@
       "status": null,
       "period": "의견제출 ~2026-05-28",
       "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46654?announceType=TYPE6&mappingAdmRulSeq=2000000326854",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-05-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "스프링클러설비의 화재안전기술기준(NFTC 103) 일부개정안 행정예고",
-      "detail": "고시 · 공고 2026-20",
-      "action": "행정예고",
-      "status": null,
-      "period": "의견제출 ~2026-05-28",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46652?announceType=TYPE6&mappingAdmRulSeq=2000000326852",
       "site": "nfa",
       "source_site": "소방청",
       "official": true,

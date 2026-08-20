@@ -73,7 +73,7 @@
       "created_at": "2026-07-27 06:20:04"
     }
   ],
-  "last_updated": "2026-08-19 23:20:41",
+  "last_updated": "2026-08-20 23:23:43",
   "coffee": [
     {
       "source_site": "cwn.kr",
@@ -295,6 +295,19 @@
   "firelaw": [
     {
       "kind": "🚒 소방 법령",
+      "title": "위험물안전관리에 관한 세부기준 일부개정고시안 행정예고",
+      "detail": "고시 · 공고 2026-158",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-09-09",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47222?announceType=TYPE6&mappingAdmRulSeq=2000000329930",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-08-20 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
       "title": "(설명자료) 물류창고 화재안전기준은 법률 개정과 별개로 지속 강화해 왔습니다",
       "detail": "대한민국 정책브리핑",
       "action": "개정",
@@ -438,15 +451,6 @@
       "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9OaEg2b29sMlV0dzV3S2NiYndSZkplVkdCbERGbVFvRWZXeXpCQWhJc2M4Z1JoMFNsTXJIZFpYcEJnaS02SGc?oc=5",
       "site": "gnews_소방방재신문",
       "created_at": "2026-06-05 07:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "법 통과 2년째 멈춰선 ‘119법 시행령’… 구급대원 업무범위 설정 ‘진통’",
-      "detail": "소방방재신문",
-      "action": null,
-      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1Zb2dnUl9pOUd0VnVPNkxSUi1RUy1PUUpPLTBHY19ZNG1LRmZObVU5Z0dKNTFlekU4MTVkdEl3c3R3b0V1N1E?oc=5",
-      "site": "gnews_소방방재신문",
-      "created_at": "2026-04-22 07:00:00"
     },
     {
       "kind": "🚒 소방 법령",

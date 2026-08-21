@@ -73,7 +73,7 @@
       "created_at": "2026-07-27 06:20:04"
     }
   ],
-  "last_updated": "2026-08-20 23:23:43",
+  "last_updated": "2026-08-21 23:21:33",
   "coffee": [
     {
       "source_site": "cwn.kr",
@@ -278,18 +278,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE14WGxnaVdGMVpEWUJCaTB0UVI5QXZ4eWc4SW44R1l0ODZ1OXc0SmQ1ZjM3X0k3endwVGpnX3J6dFlOSEhHQTViYUZwcHB3LUtTYm44Znc2akVUb2NNSmN1SE5idW8?oc=5",
       "created_at": "2026-07-23 06:25:01"
-    },
-    {
-      "source_site": "중앙일보",
-      "title": "“1000원 할인 커피 쿠폰, 500원에 팔아요”…고물가시대의 짠테크",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE15WGhZVy03ZzBlblRnWWxGU2haMVYzanYwSFIzWnVaT2psaWRYZUE4alV6cldOb0tTZm5WMF9mZ1h4VnhrRE83SlMzeVBRREt4TDkzZTRB?oc=5",
-      "created_at": "2026-07-22 15:02:00"
     }
   ],
   "firelaw": [

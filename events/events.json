@@ -73,7 +73,7 @@
       "created_at": "2026-07-27 06:20:04"
     }
   ],
-  "last_updated": "2026-08-21 23:21:33",
+  "last_updated": "2026-08-22 23:18:39",
   "coffee": [
     {
       "source_site": "cwn.kr",
@@ -266,18 +266,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9YYjZMTHhUYVZscnlUZEUxNjJ3VXdlT2ZGTkhYcUFvY0RBTXlqdTJoVkdEVm5NX0ExWHA2TThZLWdxQVpRYlVBMnBUbEdTZjB3SHU0?oc=5",
       "created_at": "2026-07-27 02:31:00"
-    },
-    {
-      "source_site": "MTN 머니투데이방송",
-      "title": "담양군, 고향사랑기부 이벤트…커피쿠폰·체험권 제공",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE14WGxnaVdGMVpEWUJCaTB0UVI5QXZ4eWc4SW44R1l0ODZ1OXc0SmQ1ZjM3X0k3endwVGpnX3J6dFlOSEhHQTViYUZwcHB3LUtTYm44Znc2akVUb2NNSmN1SE5idW8?oc=5",
-      "created_at": "2026-07-23 06:25:01"
     }
   ],
   "firelaw": [
@@ -424,15 +412,6 @@
     },
     {
       "kind": "🚒 소방 법령",
-      "title": "소방기본법 시행령 개정 시행… 소방차 출동지장 과태료 기준 변경",
-      "detail": "글로벌뉴스통신GNA",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE8zUmNvenl3X2poZS1oOUtYT0xRQXBoTkF5MTNERl9KaDIxWERZb2VsVWZGSTJ2RFlMR3dIMTJqY1JXVVJGWXZhVXpsaFlyYW5tM0NtY1k0RFJ1U190ZXl4dDhjdC1IdFhjWGFrU0xRTS1MWmc3?oc=5",
-      "site": "gnews_글로벌뉴스통신GNA",
-      "created_at": "2026-04-24 07:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
       "title": "소방시설 기준 손질한다… ‘소방시설법 시행령’ 입법 예고",
       "detail": "소방방재신문",
       "action": "입법예고",
@@ -556,19 +535,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-05-15 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방공무원 승진임용 규정 시행규칙 일부개정령안 입법예고",
-      "detail": "부령 · 공고 2026-73",
-      "action": "입법예고",
-      "status": null,
-      "period": "의견제출 ~2026-06-04",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/86472",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-04-24 09:00:00"
     },
     {
       "kind": "🚒 소방 법령",

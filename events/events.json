@@ -73,8 +73,20 @@
       "created_at": "2026-07-27 06:20:04"
     }
   ],
-  "last_updated": "2026-08-23 23:18:51",
+  "last_updated": "2026-08-24 23:20:13",
   "coffee": [
+    {
+      "source_site": "포인트데일리",
+      "title": "컴포즈커피, 두 달 동안 앱 신규 가입자 '아메리카노 쿠폰' 지급",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9wdXlmY2s0NWtlS3dBWE1qaUl0X3FlY0VZOWhYa2dKdXNGYS1xa2VZSXU4bTFDY3NWemR1X28xWS03dVNXY2M4X2h0R2ViRXpBdXZwT0JRSEw3ODQ4YkZ3bGlmRER0eVVhdEdCX21KUVPSAXRBVV95cUxOUkVMOEFGcE5Tbk1ONDF1bFQ0ZDVkYW1uTFlNVHppQjJGVXpzckRjNmxpWU1nNE84VjVXX0NsQWl4ZTBrd2N0V3hYV0xXRVlaSjVzLXV1dnVveC1HWExEc2ZSY2otOEJPQXFtR3Judnd1X3RZNw?oc=5",
+      "created_at": "2026-08-24 08:57:25"
+    },
     {
       "source_site": "cwn.kr",
       "title": "백억커피 X 유플투쁠, 아메리카노·팝콘 무료 혜택 제공",

@@ -73,8 +73,32 @@
       "created_at": "2026-07-27 06:20:04"
     }
   ],
-  "last_updated": "2026-08-24 23:20:13",
+  "last_updated": "2026-08-25 23:23:19",
   "coffee": [
+    {
+      "source_site": "우먼타임스",
+      "title": "하나은행, 최고 연 5% 적금에 올리브영·커피쿠폰까지",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9iUmowLUROWklPRngtSTk4LUJfSk14MFdfOTRacWVjTW5iZ1ItNXl0YWo5SzVUSFhwelNmQlplNEt0cFd3dEZnU2d1b0pPekhZYmdIOTd0eGVwV2R0RUp3OTJnZHUwVUFVbDZ1d0RZY2vSAXRBVV95cUxOUEtIRWh6SW5ZQ0JnTGwyUU1COEE4ZWtjRFZpVjhVQ2RYSTNRVF9DZGgtYWI2MXNKN2twOXZVS2ttdXc3MklaSWVwZHpzTThaUGVmb1ItVE9oUTl2TFk1b0MwNmJlUVV6SFBWT3NMQllOSV9CdQ?oc=5",
+      "created_at": "2026-08-25 08:10:05"
+    },
+    {
+      "source_site": "피앤피뉴스",
+      "title": "기장지역자활센터 카페차성, 을지연습 비상근무자에게 아메리카노 400잔 무료 제공",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9TVjJLR0x0UHFRb0ZfRV9fR1ZhRHA3eWtNYlJueF9rQUQwQ2V3ZDJmanBLVE5LR3ZGTW55akN6MkdBNWU1SzgxQnNmNXhvakwxUjcwSzR30gFWQVVfeXFMT1NWMktHTHRQcVFvRl9FX19HVmFEcDd5a01iUm54X2tBRDBDZXdkMmZqcEtUTktHdkZNbnlqQ3oyR0E1ZTVLODFCc2Y1eG9qTDFSNzBLNHc?oc=5",
+      "created_at": "2026-08-25 04:16:08"
+    },
     {
       "source_site": "포인트데일리",
       "title": "컴포즈커피, 두 달 동안 앱 신규 가입자 '아메리카노 쿠폰' 지급",
@@ -254,18 +278,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9hRWhuSUVJZnBUMm9qQ0ZpX1pfOTZ2aldka05ZM1pDZGQ0bzRId1B5X1hOalhtTDZPVXpuSmhGN2FRUFM5TjZsMUNyTENnb3Rycm9MbmVzQUNhUm5YcFFpelNRa3d2ZHPSAWdBVV95cUxPYUVobklFSWZwVDJvakNGaV9aXzk2dmpXZGtOWTNaQ2RkNG80SHdQeV9YTmpYbUw2T1V6bkpoRjdhUVBTOU42bDFDckxDZ290cnJvTG5lc0FDYVJuWHBRaXpTUWt3dmRz?oc=5",
       "created_at": "2026-07-30 17:58:03"
-    },
-    {
-      "source_site": "오픈애즈",
-      "title": "[라이브 광고 셀프로 신청한다면? 시원한 커피 쿠폰 받아가세요!] – 마케팅 할인혜택 정보",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBDbVVIOWRqX0RKZVlWUE1HMVBwWnZtZERmbnV5Z3ptTFF1WS1YdUFkaEpELWNJbGNvUjI5d3VlRWsyU0o3a2Y3bE52RUgwanlxWmZOaUtRajBCV3BNWGJSMnBoRmZSRVZR?oc=5",
-      "created_at": "2026-07-26 17:55:00"
     },
     {
       "source_site": "네이트",

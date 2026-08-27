@@ -62,19 +62,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQa0FFMTVmUHVNd1BzMzc5SVlzOGpaMHRUbS1mME9fQ1YwYUxEcDRfSms1cFhyX2Z2M3dCNXNZSHdGSllTQkQwVVFWNEI5MFFSeUFQMzFzV0pLRnZSa21hV2NKM3FPYXdpNHE0Y1l1ZG54ZlR2Uno1dnE4SlUzbWk1eEZZcE56NWpPM3BBRnN1NXVVVjhOVnFPd1VWUEMzZWxnUkp3NzNReGctcmY4eVpjVWFleDdFVFFWS3hCT0JMS1ZycV9NYUU0VG8zYWRvQWtFVjRyS2Qwa0NfTTF5OXVkT1hn?oc=5",
       "created_at": "2026-08-02 08:28:54"
-    },
-    {
-      "source_site": "디일렉",
-      "title": "크래프톤, 배그 모바일 한·일 이용자 맵 공모전 개최",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE54NUg1Q0pheFp6ZGFTQ1podjhBWGJxX0V1alRUMlQ4UDNvNEVFb0ZRSDlOTko2LUkycDdyV0E2OGVhWXQtUHVlSkM3V1o2OVFTY044VHhReHhqbUpUaGxwMHl2S1B5dw?oc=5",
-      "created_at": "2026-07-27 06:20:04"
     }
   ],
-  "last_updated": "2026-08-25 23:23:19",
+  "last_updated": "2026-08-27 04:13:37",
   "coffee": [
+    {
+      "source_site": "IT타임스",
+      "title": "KB국민은행, 스타벅스 제휴 'KB 별별통장2' 출시…별·커피쿠폰 혜택",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5DRDVxMERkRUY4aGpMdVBLTGFNeUlFcUJSRWsxLVJ3M3BvVEVScVcyb0h3eXVwSE02NWhNQ3hudG1UM053Ulk0c05nUHMzdmV5bUd2UEN1VGIwTlNnVlhGemhpcTNMY3FL?oc=5",
+      "created_at": "2026-08-26 02:29:19"
+    },
     {
       "source_site": "우먼타임스",
       "title": "하나은행, 최고 연 5% 적금에 올리브영·커피쿠폰까지",
@@ -278,18 +281,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9hRWhuSUVJZnBUMm9qQ0ZpX1pfOTZ2aldka05ZM1pDZGQ0bzRId1B5X1hOalhtTDZPVXpuSmhGN2FRUFM5TjZsMUNyTENnb3Rycm9MbmVzQUNhUm5YcFFpelNRa3d2ZHPSAWdBVV95cUxPYUVobklFSWZwVDJvakNGaV9aXzk2dmpXZGtOWTNaQ2RkNG80SHdQeV9YTmpYbUw2T1V6bkpoRjdhUVBTOU42bDFDckxDZ290cnJvTG5lc0FDYVJuWHBRaXpTUWt3dmRz?oc=5",
       "created_at": "2026-07-30 17:58:03"
-    },
-    {
-      "source_site": "네이트",
-      "title": "삼성운용, 'FUNETF' 신규 서비스 이벤트…커피쿠폰 100% 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9YYjZMTHhUYVZscnlUZEUxNjJ3VXdlT2ZGTkhYcUFvY0RBTXlqdTJoVkdEVm5NX0ExWHA2TThZLWdxQVpRYlVBMnBUbEdTZjB3SHU0?oc=5",
-      "created_at": "2026-07-27 02:31:00"
     }
   ],
   "firelaw": [

@@ -64,7 +64,7 @@
       "created_at": "2026-08-02 08:28:54"
     }
   ],
-  "last_updated": "2026-08-30 01:02:55",
+  "last_updated": "2026-08-31 01:05:19",
   "coffee": [
     {
       "source_site": "더퍼블릭",
@@ -247,18 +247,6 @@
       "created_at": "2026-08-04 19:21:00"
     },
     {
-      "source_site": "퍼블릭타임스",
-      "title": "하나은행, SK텔레콤과 통신비 자동납부 이벤트…치킨·커피 쿠폰 제공",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE00dmxKbVdEMkJLWnZ6dE56SHF6eHN0b0dMTlBZTktONnNoLTVVWnJBb0xNRmZ1Sm1pLUdzTkZhdEFVb2xzTjlwQktOb2NzckNNeDMzeFhnWFRpXzhSOTFYTWplekZiQmpCMnfSAW5BVV95cUxQR1cyV21Id3FPeXNQam9oTnR5cm1ObWRRMWZLMUlycGhCakZ2Y2RMQTNxNlYtQmNkREZpV3NGZ0xwRXpOX2hwUFo2ZlBRNkVzLXhVX2tiOG9ZR21SYWtBZktKOUxxOC1MaTVGQktZZw?oc=5",
-      "created_at": "2026-07-31 07:00:00"
-    },
-    {
       "source_site": "서울타임즈뉴스",
       "title": "CJ ONE, 메가MGC커피와 8월 회원 행사…아메리카노 1000원 쿠폰",
       "category": "커피",
@@ -293,21 +281,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE5FTVc4Q1NneWljMTNoTXMzWm5Fc0diXzdxQU1ublI4bGFjdTlpRjJxWXZSbUxCSFdNMUNSVWs5SC1FUVBsQ2p3bFBn?oc=5",
       "created_at": "2026-08-03 20:48:10"
-    },
-    {
-      "source_site": "포인트데일리",
-      "title": "컴포즈커피, 쿠팡이츠와 배달파트너 지원 프로그램 진행…\"커피 무료 제공\"",
-      "category": "커피",
-      "region": "국내",
-      "brand": "컴포즈커피",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE54dV9sZV9aYkYxc1RPbG1wdXJWNHJoQ1FDNGNubFFtQ3kyMUR1dDdVSTJoZllwdUpKSWJMdlQ1QkFHYzZ1bnJjNzFIUm5VaGRGY0ZDMVBTbGFxNmFjcGVKTllmcmFZSVMzZ01LNXJCM0s?oc=5",
-      "created_at": "2026-07-31 06:14:27"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "국가 소방용품 인증 심의위원회 운영 규정 제정안 행정예고",
+      "detail": "고시 · 공고 2026-160",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-09-21",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47288?announceType=TYPE6&mappingAdmRulSeq=2000000330234",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-08-31 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "위험물안전관리에 관한 세부기준 일부개정고시안 행정예고",

@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "한스경제",
+      "title": "중기부·중진공, AI 우수사례 공모전 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9UWVlYSDRNdVdETTJzT29seUVyRXZLX1RJc3lKSDF4bVhFN0xTc1dtWjRNUGgtS2VfUmt3bHI1QnZYYlJCNG9jTUoycDhQZEUwRWhPaEJiWGNnYzA0WlJDa3o3aTRhSXhicVpZ0gFvQVVfeXFMUHl4VHFFeXppYW00RTBnMTZMWElfbl82ekM5SlYyWkN3QmdjemtkNTcyaEc2TFhNaXBlNGN0X3RoVDZJSU14djJJTmpIVHR4dTV6ZzJEMjhPd1JidWNrR1RWSWJGQTdZTEx2ZFJQRVcw?oc=5",
+      "created_at": "2026-08-31 23:20:51"
+    },
+    {
       "source_site": "디자인정글",
       "title": "[ABEXPO2026] 함께 만드는 경남 건강지도 프로젝트 「경남 건강명소 공모전」 모집중",
       "category": "공모전",
@@ -64,8 +73,68 @@
       "created_at": "2026-08-02 08:28:54"
     }
   ],
-  "last_updated": "2026-08-31 01:05:19",
+  "last_updated": "2026-09-01 01:38:22",
   "coffee": [
+    {
+      "source_site": "거제신문",
+      "title": "거제시, QR코드 건물번호판 인증하면 커피 쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5jRFhkcldTWFdjYUx0TXR0NFZjY3RPeW5qaXVYTHlseE1ockNkdjlyNW9yQ0ZEMmhxemV6TkthRDFHaUwtNEFPNTZ0Y09uU0daRS1YRHZBUFFDU1BDRG9SZmtMM0pOaDZseTNsZlRn?oc=5",
+      "created_at": "2026-09-01 01:01:43"
+    },
+    {
+      "source_site": "news.sbs.co.kr",
+      "title": "암표 꼼수 등장했다…\"커피 쿠폰 66만 원\" 분노 부른 글",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQbHpWUUtHcThfNURCZkdJaHNVMndUS2ZaM2ZGNDBuWV9sUkpwM0lray1aUWpoVlN4elNvN3pKbUhSUW45eGtaMFdVX2VLVUhnV2MtNEhxekIyZ1g0ZVRPSmtpemoyM3pfUmZDbTRjYWZZOWI5OUl0cTlVVTRrTFNSNmNORlo1Y2MtT2NCM3lZTdIBZkFVX3lxTE9yUTJSTzhlcVNVS0RMZHlhVmtNQXVMMXd0eFBlcDJNU0JRbTBSUlhvYXNWM1JZdVpuLThNX0R5am1kd1lieVBZVkVGWHpMeXRSWWRUeWdFcEJmYWlNNWVvQUJtYnlsdw?oc=5",
+      "created_at": "2026-08-31 22:33:00"
+    },
+    {
+      "source_site": "조선일보",
+      "title": "\"커피 쿠폰 70만원에 팔아요\" 클릭하면 \"야구 티켓 2장 있어요\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNR25OSVJwc3c5Y0hXQXByUHlqOVFwZmRrQkk2NXFwRTNXVVIwYldKU1FieWRBbnNBbWxXaW5POXRhaUNUVEdkc2tyNEJOZnVKb3l3dVhObjFwVm5KZFhxaGwwQXVXQW04RThGR1ltOXY5ei1NVXB2LWdxQ25Yek1ITUUtU3FydXI2U00tTm9PY0g?oc=5",
+      "created_at": "2026-08-31 15:46:00"
+    },
+    {
+      "source_site": "gukjenews.com",
+      "title": "포항시, 홈페이지 만족도 설문조사 실시…참여자 100명에 커피 쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9fNDh0LS1FMElVTEcyVHQ2blJfWW84NXNjdS1uSTVSU1dRc1dGRGhzNGxBcDBEX3c0N3pKV3BFVzc4X2tIUlEyZVNQZElBbDFBOThyYmpuUXZlZWtXdGFaUHhwR0dSbjkxTTJEeGNn?oc=5",
+      "created_at": "2026-08-31 07:33:53"
+    },
+    {
+      "source_site": "스마트경제",
+      "title": "“칭찬쿠폰으로 아이스 아메리카노 사요”… DB손해보험, 장애학생 위한 ‘칭찬카페’ 쏜다",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFB4cm9mMVBmeWFuQ2NVal8xcEhYVkRYbklGbWxHd01rcElndGpKTG5Rb3NGOGFZeF9qTkJ0VURJVGtjSDRkdFdBa0FKaVJCMDZGdk5OSGFnekRZd1FYdU94NXBmUmpDa2lZa0dmZ1R0ZS0?oc=5",
+      "created_at": "2026-08-31 08:36:27"
+    },
     {
       "source_site": "더퍼블릭",
       "title": "하나은행, ‘CJ ONE 내맘적금’ 가입 이벤트…연 5% 금리에 올리브영·커피 쿠폰까지",

@@ -19,15 +19,6 @@
       "created_at": "2026-08-31 23:20:51"
     },
     {
-      "source_site": "디자인정글",
-      "title": "[ABEXPO2026] 함께 만드는 경남 건강지도 프로젝트 「경남 건강명소 공모전」 모집중",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBZdkZvcmlEZnMxcE9LSExDUWtKQ091S29lbTU0cE1sUlFxWVJmblJuc0FNQ1hSSXRDYklVdlQtT01zX3hEMmQtX0Iwek5nMkNF?oc=5",
-      "created_at": "2026-08-03 07:00:00"
-    },
-    {
       "source_site": "AI포스트",
       "title": "전남정보문화산업진흥원, ‘2026년 전남광주통합특별시 이모티콘 공모전’ 모집 연장",
       "category": "공모전",
@@ -73,8 +64,32 @@
       "created_at": "2026-08-04 02:13:41"
     }
   ],
-  "last_updated": "2026-09-02 00:49:10",
+  "last_updated": "2026-09-03 00:56:34",
   "coffee": [
+    {
+      "source_site": "충청도민일보",
+      "title": "대전시, 도로명주소 퀴즈 풀고 커피 쿠폰 받으세요",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9pbnVSTzlxa1NsMGZNcG4zZW9Wd2RNMk9QZ0xETUVKakE4VlA2MngtS2Nwc3R5bGN2Vk55dXliYjN5ZXE4ZVVOaUNBejZlQmc5clE2amsyalhONFV1UjgyVFdObEpKelpWU1ctSg?oc=5",
+      "created_at": "2026-09-02 09:06:51"
+    },
+    {
+      "source_site": "뉴스충청인",
+      "title": "대전시, 가을맞이 도로명주소 퀴즈 이벤트…정답자 커피쿠폰 제공",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9URG1QM3dpLVk1Umc2N1NxcWJiUEF5c0x3RkxGVzFqUlNyWV9iTnRkSGhPSzJPeWRJS29ucV90WlpXVDZnNUE?oc=5",
+      "created_at": "2026-09-02 01:25:43"
+    },
     {
       "source_site": "농민신문",
       "title": "안 쓰는 휴대전화 활용해 커피 쿠폰 받아볼까?",
@@ -398,33 +413,18 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE91ajhwNlU4Z1dhRmRHYU1JZ3pCRXhSSTN4NE5TTXU2dHdqekZWUlZZOG0wdUZ3TVU2UEE3UV85ZGM1OEVyZGtzaW9NUTRHREhEUHJZMDR2QWFkN3dKeDRIR2hZY1Q4cXlpS0s4?oc=5",
       "created_at": "2026-08-05 00:54:43"
-    },
-    {
-      "source_site": "주간함양",
-      "title": "고향사랑기부제 여름 이벤트…기부자 전원 커피쿠폰 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5TYW5KbWxpMGJlX3pEMVdxeWRHT20yTGtUdWF1SnNFME9IYURVU0hnUU90eHN2WUpmVHFCMDVfc05fd1RCQ2NZOVZjWE1WWE9Jd1RXWjVLeWI?oc=5",
-      "created_at": "2026-08-03 02:11:38"
-    },
-    {
-      "source_site": "뉴스N연합",
-      "title": "투썸플레이스, NOL 손잡고 역대급 여름휴가 할인 쿠폰 쏜다",
-      "category": "커피",
-      "region": "국내",
-      "brand": "투썸플레이스",
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE5FTVc4Q1NneWljMTNoTXMzWm5Fc0diXzdxQU1ublI4bGFjdTlpRjJxWXZSbUxCSFdNMUNSVWs5SC1FUVBsQ2p3bFBn?oc=5",
-      "created_at": "2026-08-03 20:48:10"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방시설공사 착공신고 시 공사대금 지급보증 제출 의무화",
+      "detail": "소방방재신문",
+      "action": null,
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9MY0M4ZGJlZlp2QUpEanQzUHZLV2s3SzFqS3lvamhOMERCdU5EVENCZ0FZNjZkdDVBSS14cWw0Z3pEelExcnc?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-06-23 07:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "국가 소방용품 인증 심의위원회 운영 규정 제정안 행정예고",

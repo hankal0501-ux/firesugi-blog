@@ -12,7 +12,7 @@
     "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1nSGZ0aTdzYktxVXdCSEdkVFl4ZVNlZ1IyVE4xSXhDYU1ERE5LaDlBejJNTEhRX2Y4MnRxcWZGclRxdGFwQzZDVFJQdmlaMEtzN1NKbVJvMkFNY1o1aUk1X1AwQXB5MEI2MVRQdHBYWdIBc0FVX3lxTE5KeE00cG4yNVVndlZDSUZQX2s4dnh0NXhScGMzdEJqMDZTNWhQMHpkZDhFTjZPejg3azlUUTFuLUZreDZZU3ZXVDhteWhXbWI5Z090U0o5dWlyUld5M0VNRWxtZkhDNDdUX0N6dk0yMnVhX1k?oc=5",
     "date": "2026.09.01",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-09-04T02:24:16.964Z",
     "pubDate": "2026-09-01T09:53:22.000Z"
   },
@@ -29,7 +29,7 @@
     "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE0zOWMzVUV3NkZMa250Ujd6bWdoY3VCcmgtem1ZZWF3NHY5aHgtQ3FwVVhzVmo4NmZRdld2NHRVOF9OU0pmbFowVmp1TGhPQzBhbTdldDNvX1E?oc=5",
     "date": "2026.04.23",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-09-04T02:24:19.605Z",
     "pubDate": "2026-04-23T07:00:00.000Z"
   },
@@ -46,7 +46,7 @@
     "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9mYmFIeWtmZWJZSG9WVnJMd21DSWJ3UTBGMnQwVFFmTS1qTlFCQl9pSlQxQXA3QmY1THVFLUVVdHBRZ2RkMXZBUmltTG9xQkNGVVRJek1QYnlPTjZraUp2NnJHbDVFR3VhX1M1bw?oc=5",
     "date": "2025.07.07",
     "autoAdded": true,
-    "isNew": true,
+    "isNew": false,
     "collectedAt": "2026-09-04T02:24:21.825Z",
     "pubDate": "2025-07-07T07:00:00.000Z"
   },

@@ -55,7 +55,7 @@
       "created_at": "2026-08-31 23:20:51"
     }
   ],
-  "last_updated": "2026-09-10 00:50:59",
+  "last_updated": "2026-09-11 00:49:45",
   "coffee": [
     {
       "source_site": "굿모닝충청",
@@ -419,6 +419,15 @@
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방장비기술심의위원회 역할 커진다… ‘소방장비관리법 시행령’ 입법 예고",
+      "detail": "fpn119.co.kr",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTFA5d0hvMWdTOUVTRXpVdW5ZQWVxQTRMRXcwOWhSeGIxaldNUHRmaEN0VVJVWEpYczZad0RpakYzU21BMTlFNUE?oc=5",
+      "site": "gnews_fpn119.co.kr",
+      "created_at": "2026-09-10 07:55:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방시설공사 착공신고 시 공사대금 지급보증 제출 의무화",

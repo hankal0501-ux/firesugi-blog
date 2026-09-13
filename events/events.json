@@ -55,7 +55,7 @@
       "created_at": "2026-08-31 23:20:51"
     }
   ],
-  "last_updated": "2026-09-12 00:54:57",
+  "last_updated": "2026-09-13 00:37:13",
   "coffee": [
     {
       "source_site": "굿모닝충청",
@@ -703,19 +703,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-05-27 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방시설 설치 및 관리에 관한 법률 시행규칙 일부개정령안 입법예고",
-      "detail": "부령 · 공고 2026-84",
-      "action": "입법예고",
-      "status": null,
-      "period": "의견제출 ~2026-06-26",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/86708",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-05-15 09:00:00"
     },
     {
       "kind": "🚒 소방 법령",

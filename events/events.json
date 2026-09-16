@@ -55,8 +55,44 @@
       "created_at": "2026-08-31 23:20:51"
     }
   ],
-  "last_updated": "2026-09-15 01:09:54",
+  "last_updated": "2026-09-16 01:05:28",
   "coffee": [
+    {
+      "source_site": "gukjenews.com",
+      "title": "강원특별자치도, 고향사랑기부 이벤트 개최…10만 원 이상 기부자에 상품권·커피쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5NUnA4T05PYV9CbXpzM205bEFKTDNzekF0YmV0aWhPekZUYXVla0dNdklJXzNvVDFzRFZ4N05TZUhqTUVSUExQWlcxNGFjeGJtYmdsQ2xqOFYxUUdxWllQQ2pIVkdaNVl4SktTaFpn?oc=5",
+      "created_at": "2026-09-15 02:01:52"
+    },
+    {
+      "source_site": "뉴스핌",
+      "title": "스타벅스, 가을 케이크 신제품 3종 출시·'디저트 위크' 이벤트도",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFB4RkFFMElncjFBT3VFZExGT0N1LXRjd3BnSU45LXZpU3FQWHRHYVZraWxtU2VaeVhHdWNuUHhfSm9UMUpNRkdwOU9mVVZtYjFfdG13WTZqWm5uR2Ja?oc=5",
+      "created_at": "2026-09-15 23:48:00"
+    },
+    {
+      "source_site": "헤럴드경제",
+      "title": "청자다방, 전남광주통합기념 아메리카노 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9RM0QtdHlLOUNQRmdJZC1vc1ZCcGlqMUNIM01kNFZvYzd2dVF5NDBfRVJZOXJqSTVTd3BIejNoc2tMeWhVbzRQTG92M1VZZVkyTDZ4cGVB?oc=5",
+      "created_at": "2026-09-15 04:11:59"
+    },
     {
       "source_site": "NANOOM ENERGY",
       "title": "대구 신천 프러포즈 새 이름 공모, 참여자 50명 추첨해 커피 쿠폰 증정",
@@ -380,42 +416,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9wdXlmY2s0NWtlS3dBWE1qaUl0X3FlY0VZOWhYa2dKdXNGYS1xa2VZSXU4bTFDY3NWemR1X28xWS03dVNXY2M4X2h0R2ViRXpBdXZwT0JRSEw3ODQ4YkZ3bGlmRER0eVVhdEdCX21KUVPSAXRBVV95cUxOUkVMOEFGcE5Tbk1ONDF1bFQ0ZDVkYW1uTFlNVHppQjJGVXpzckRjNmxpWU1nNE84VjVXX0NsQWl4ZTBrd2N0V3hYV0xXRVlaSjVzLXV1dnVveC1HWExEc2ZSY2otOEJPQXFtR3Judnd1X3RZNw?oc=5",
       "created_at": "2026-08-24 08:57:25"
-    },
-    {
-      "source_site": "cwn.kr",
-      "title": "백억커피 X 유플투쁠, 아메리카노·팝콘 무료 혜택 제공",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9pUGNuWWJYSERiLV9aTDgzTVRMSVZSN0I5cGZidnFVcDkzZmszT1lEZjJITmRwSXZKZGRQYmo1eE9kenZPZkEyWXUxODFhVVA2R1ZPSjB6NjV2TjlMalZ3cGRB?oc=5",
-      "created_at": "2026-08-19 04:38:13"
-    },
-    {
-      "source_site": "핀포인트뉴스",
-      "title": "KB캐피탈, KB스타픽 상담만 해도 커피쿠폰 준다",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5TQzVBUWU4dkpoSlpKSU5DZklCTjg1WjRUWkNKR2dvWGJIRlU0UVdLM01Rci0wbDJfYnhLdS1YcjBzaGUtclZFQlNLMFd3bUhkQkNiOWxmOXctTTlSZmJLVENEcWIzTGNqbjRKYkxwdXJvS0pIdFB30gF3QVVfeXFMTlNDNUFRZTh2SmhKWkpJTkNmSUJOODVaNFRaQ0pHZ29YYkhGVTRRV0szTVFyLTBsMl9ieEt1LVhyMHNoZS1yVkVCU0swV3dtSGRCQ2I5bGY5dy1NOVJmYktUQ0RxYjNMY2puNEpiTHB1cm9LSkh0UHc?oc=5",
-      "created_at": "2026-08-18 06:55:16"
-    },
-    {
-      "source_site": "글로벌이코노믹",
-      "title": "KB캐피탈 “KB스타픽 온라인 상담 고객에 커피쿠폰 제공”",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNNW5adTcwVXRxYXNubTRzVk80VUIxM3JicnlNNHRkcXE5ZHQwWnlrbFBzczhfRy1fWUlNNHlEQi0zbHBHUXZEQ0xOd3hhczlhVl9sZmR4ejh1WEFBWS1hT2puTkQ2T1ZIQ0dLWFNGLU1uMFhFS1g3U0tJNy1pUVNyb29wa2Y?oc=5",
-      "created_at": "2026-08-18 05:27:36"
     }
   ],
   "firelaw": [

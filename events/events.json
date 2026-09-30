@@ -73,8 +73,32 @@
       "created_at": "2026-08-31 23:20:51"
     }
   ],
-  "last_updated": "2026-09-29 02:28:51",
+  "last_updated": "2026-09-30 01:49:51",
   "coffee": [
+    {
+      "source_site": "글로벌이코노믹",
+      "title": "LG전자, 스타벅스와 '마이컵스타' 이벤트…다회용컵 확산 나선다",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxONnBQcG5wendZTDI5cVN5SkZrTkZsT2g3WlMyVWhuRlRTbFRERzAwcl9tazRBX0E0aEljOUh0ZHZwNmhad1NrclFWd3dYRGlxNG81WVVsSmxEUi1YaURVSkxGS3BqMktWTzFsSC1mT3o1UUpLY1UySFpBX1U1THR0QWh3RE9RZw?oc=5",
+      "created_at": "2026-09-30 01:12:06"
+    },
+    {
+      "source_site": "서울경제",
+      "title": "LG전자 “스타벅스서 텀블러 세척기 쓰고 경품 응모하세요”",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": "텀블러",
+      "prize_class": "goods",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9ZcGZIRkVaRDVhRzhxMW5XY0lvM1RaaUNWazJnOGdVblN3czI2WnpBd2xLRU1XOFY5VTB0cGh0OWtxbnUzMGZON1RNNGQ0XzRRS3fSAVNBVV95cUxNQjRZMHFwekNONTFMSkV2THlfOW94NElqQV9YMTh2dnhIeVBGbGIxRnNlQ1l4dE41X1cwLWduZlpEZEs4bWFhNVowVll4MzJvSWZBbw?oc=5",
+      "created_at": "2026-09-30 01:00:10"
+    },
     {
       "source_site": "머니투데이",
       "title": "광주시 에너지 줄이면 커피 쿠폰 쏜다…'탄소중립 포인트' 이벤트 - 머니투데이",
@@ -410,33 +434,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFAxMFg0LUhWdmVvMHJnVEx2eE5NLVhEaTFncW9GQnYtX3ZublhYTFdVZVpMNmFab2p3LUV0RXR4Z3lhODVVUlhIeEFXMEZVMXgyTVBxS19IMlA2QmNsYlE?oc=5",
       "created_at": "2026-09-01 09:00:00"
-    },
-    {
-      "source_site": "코리아이글뉴스",
-      "title": "QR코드 한 번 찍으면 커피쿠폰…거제시, 선착순 450명 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5WcnkyYUZVX2JMSlR3ZWRtSjhpdHhETzlyYVFCNW9Ya1dZVkg5ckE5R3NOdU5ZclZ6NTdKUDU1c1R0NUxXVThxVXNkWWswMXcxaHpwaVUwWEstSEJ6TTg1WDRkN21zOVpjTDNXLUt1bERoTWM?oc=5",
-      "created_at": "2026-09-01 06:48:00"
-    },
-    {
-      "source_site": "v.daum.net",
-      "title": "'여보, 휴대폰 버렸어?' '나눔폰' 기부하면 3천명 커피 쿠폰",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE4wLXFJVEtSNWxhallMZFdvLUZUTjA1Y3dEdG92WjRqaUNfNm5ocjBkWHQ4Zjk0eDY2VnFjdVZma3JXTlpfZkVCRktsYzdWMUE?oc=5",
-      "created_at": "2026-09-01 04:33:04"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방전원공급장치의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-125",
+      "action": "행정예고",
+      "status": null,
+      "period": "의견제출 ~2026-07-27",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46942?announceType=TYPE6&mappingAdmRulSeq=2000000328668",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-07-06 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "자동차압급기댐퍼의 성능인증 및 제품검사의 기술기준 개정안 재행정예고",
@@ -769,19 +782,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-06-04 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "과압배출구의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
-      "detail": "고시 · 공고 2026-124",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-07-27",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46944?announceType=TYPE6&mappingAdmRulSeq=2000000328670",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-07-06 09:00:00"
     }
   ]
 }

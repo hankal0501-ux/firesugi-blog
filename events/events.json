@@ -62,19 +62,46 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBXMU5yU0dfNEMzeFY5d3JtWFRPN3RhdFRxVmVSRzNHeWRZZ3MwXzc0R081RVhCUkc2RkU4cnFXODBJOXdpTUt5VkxERzBQeHFrSjVtVjJRMTdUX1lWRVBDOWdxS0tNUHc?oc=5",
       "created_at": "2026-09-01 07:29:11"
-    },
-    {
-      "source_site": "한스경제",
-      "title": "중기부·중진공, AI 우수사례 공모전 모집",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9UWVlYSDRNdVdETTJzT29seUVyRXZLX1RJc3lKSDF4bVhFN0xTc1dtWjRNUGgtS2VfUmt3bHI1QnZYYlJCNG9jTUoycDhQZEUwRWhPaEJiWGNnYzA0WlJDa3o3aTRhSXhicVpZ0gFvQVVfeXFMUHl4VHFFeXppYW00RTBnMTZMWElfbl82ekM5SlYyWkN3QmdjemtkNTcyaEc2TFhNaXBlNGN0X3RoVDZJSU14djJJTmpIVHR4dTV6ZzJEMjhPd1JidWNrR1RWSWJGQTdZTEx2ZFJQRVcw?oc=5",
-      "created_at": "2026-08-31 23:20:51"
     }
   ],
-  "last_updated": "2026-09-30 01:49:51",
+  "last_updated": "2026-10-01 01:48:32",
   "coffee": [
+    {
+      "source_site": "유스연합",
+      "title": "스타벅스, 세계 커피의 날 맞아 매장별 선착순 27명에 브루드 커피 무료 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1Oc0ZiSHJlckROWnZMS20zLUFhbTlOVXZKYjNEUjRJZldaODdBNThzeVhLWW5Jc291c2Y5bVIwUkdUcXg0WHBfeUtRM3hNa3V4WVAw?oc=5",
+      "created_at": "2026-09-30 23:02:28"
+    },
+    {
+      "source_site": "팍스경제TV",
+      "title": "LG전자, 스타벅스와 '마이컵스타' 이벤트…\"공공기관·공군기지까지 마이컵 공급 확대\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5UdTVvWFFGMkpKckR1cWcweERfb3JueUFBX3JNdHF1RXpOU205NmZaaVhwUWZrdWhxSXNacEZXaUdtZkhfcGtnUUZVNC1xSVR2aWViQ1QtSEpCck9QNzZUV0NUSW0yQ080?oc=5",
+      "created_at": "2026-09-30 08:33:23"
+    },
+    {
+      "source_site": "스페셜타임스",
+      "title": "LG전자, 스타벅스서 마이컵 3회 세척하면 최대 50만 원권 응모",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBXM2E2S2pGZUxybWlEN0plQlJERlZqcURPWnNiRGNMY2g4Yk1zQ3VBekh4bEpTZDFseFVwSkI3QXNGVTcxX2c0RzJNMVN1WkYtbzFFRHNXZDZKaXg0VE1qLW04T2xoZnBiT1Z1U3ZrTHc3UQ?oc=5",
+      "created_at": "2026-09-30 08:03:36"
+    },
     {
       "source_site": "글로벌이코노믹",
       "title": "LG전자, 스타벅스와 '마이컵스타' 이벤트…다회용컵 확산 나선다",
@@ -398,45 +425,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9pbnVSTzlxa1NsMGZNcG4zZW9Wd2RNMk9QZ0xETUVKakE4VlA2MngtS2Nwc3R5bGN2Vk55dXliYjN5ZXE4ZVVOaUNBejZlQmc5clE2amsyalhONFV1UjgyVFdObEpKelpWU1ctSg?oc=5",
       "created_at": "2026-09-02 09:06:51"
-    },
-    {
-      "source_site": "뉴스충청인",
-      "title": "대전시, 가을맞이 도로명주소 퀴즈 이벤트…정답자 커피쿠폰 제공",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9URG1QM3dpLVk1Umc2N1NxcWJiUEF5c0x3RkxGVzFqUlNyWV9iTnRkSGhPSzJPeWRJS29ucV90WlpXVDZnNUE?oc=5",
-      "created_at": "2026-09-02 01:25:43"
-    },
-    {
-      "source_site": "농민신문",
-      "title": "안 쓰는 휴대전화 활용해 커피 쿠폰 받아볼까?",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBuNFk0UXprbXdFa0pfYkxRa190ZlhpNTg3eDF5MHZ4bFJ2bk51N3Q1alJuUURnWW5Xb0tZZWdOd0ZpNHFndjJfazFZczRkM0pMZ0dYTjZ6U2RFQQ?oc=5",
-      "created_at": "2026-09-01 11:53:00"
-    },
-    {
-      "source_site": "YTN",
-      "title": "\"커피 쿠폰 70만원에 팔아요\"",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFAxMFg0LUhWdmVvMHJnVEx2eE5NLVhEaTFncW9GQnYtX3ZublhYTFdVZVpMNmFab2p3LUV0RXR4Z3lhODVVUlhIeEFXMEZVMXgyTVBxS19IMlA2QmNsYlE?oc=5",
-      "created_at": "2026-09-01 09:00:00"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "과압배출구의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-124",
+      "action": "행정예고",
+      "status": null,
+      "period": "의견제출 ~2026-07-27",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46944?announceType=TYPE6&mappingAdmRulSeq=2000000328670",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-07-06 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방전원공급장치의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
@@ -769,19 +773,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-07-02 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방청과 그 소속기관 직제 시행규칙 일부개정령안 입법예고",
-      "detail": "부령 · 공고 2026-97",
-      "action": "입법예고",
-      "status": null,
-      "period": "의견제출 ~2026-06-11",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/86944",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-06-04 09:00:00"
     }
   ]
 }

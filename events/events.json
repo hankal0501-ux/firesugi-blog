@@ -53,19 +53,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5EbXcxbzN6Ykd2aFZZZ2x2bjQ0TWRFdnVVc2laQVlGVGRMcW5xSkNBcHBOclJCMzhBdnR5Y3EzLUZnaU1yc2JRcG54VGEzLW0xZUlVcGUyd24zQjkxWmdacDRVRmMtSkhKTXJKakN4X08?oc=5",
       "created_at": "2026-09-03 04:05:32"
-    },
-    {
-      "source_site": "youthdaily.co.kr",
-      "title": "\"연금 넣고 긁어볼까\"...우리투자증권, MTS서 즉석 경품 추첨 이벤트",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBXMU5yU0dfNEMzeFY5d3JtWFRPN3RhdFRxVmVSRzNHeWRZZ3MwXzc0R081RVhCUkc2RkU4cnFXODBJOXdpTUt5VkxERzBQeHFrSjVtVjJRMTdUX1lWRVBDOWdxS0tNUHc?oc=5",
-      "created_at": "2026-09-01 07:29:11"
     }
   ],
-  "last_updated": "2026-10-01 01:48:32",
+  "last_updated": "2026-10-02 02:00:30",
   "coffee": [
+    {
+      "source_site": "경상일보",
+      "title": "광주수산 노량진수산시장 회크닉 방문시, 커피쿠폰 2개 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE11QjUxQzFrRVVZUWw4dDdBUVFreDJyb1RETnVEcS1ORktQNEI1cHVubE5HNjkydHJENGxSOE1RWmhYWm1TdVdMc2lDNmJVTWV2S1JEUTlmUG1ybDBtdVZWOWdWU01oWG9LOUJ4RQ?oc=5",
+      "created_at": "2026-10-01 07:18:18"
+    },
     {
       "source_site": "유스연합",
       "title": "스타벅스, 세계 커피의 날 맞아 매장별 선착순 27명에 브루드 커피 무료 증정",
@@ -355,18 +358,6 @@
       "created_at": "2026-09-08 04:32:33"
     },
     {
-      "source_site": "news-home.co.kr",
-      "title": "대전시, 가을맞이 ‘도로명주소 퀴즈’ 이벤트…커피 쿠폰 쏜다 - news-home.co.kr",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1KZEhuaVhiV3NGN2tBaFh4ZUkyczA5MXA4bHdzSGRTT2d2QUptZXNESnZ6UUdmUE4xNjhvcFhrME5XSGVQMTRfaUthWE9wZ0xER3lrNERTVmRKVGx4bkxYSnFVbmVMT3RxZnhFNG1B?oc=5",
-      "created_at": "2026-09-02 00:46:17"
-    },
-    {
       "source_site": "catchnews.kr",
       "title": "‘스타벅스 700여개 매장, 배민서 조건없이 무료’ 배달앱 생존경쟁",
       "category": "커피",
@@ -389,18 +380,6 @@
       "period": null,
       "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=118190",
       "created_at": "2026-09-05 22:58:07"
-    },
-    {
-      "source_site": "애드뉴스인천",
-      "title": "폐휴대전화 ‘나눔폰’에 버리면 커피 쿠폰 받는다",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1zblhqU0N3ZmNfVV92c3libDMzMWdsVXh2b1JNeWNCM0UwbjA2VGZyTjVRV3EyenhISDMzamFFNzNacGxyU0ZYbXJtYW1HQ2VfREJjYmt6VE11STVqQkJqcXRHUW4tVXJnQ0hN?oc=5",
-      "created_at": "2026-09-02 00:07:00"
     },
     {
       "source_site": "더글로벌기빙뉴스",

@@ -55,8 +55,20 @@
       "created_at": "2026-09-03 04:05:32"
     }
   ],
-  "last_updated": "2026-10-02 02:00:30",
+  "last_updated": "2026-10-03 01:42:56",
   "coffee": [
+    {
+      "source_site": "제주교통복지신문",
+      "title": "10월 1일 스타벅스, 디카페인 1+1·커피 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5HZmppV2tKNFhsVHNvMGZxc0UzYWdxUHRVM29BWV91QW5JY1RhRzRxc0hKUzBzMmQyNDFaWHIzR19pejVnYkJfWnZBQl80U2FZLTVwOWZiTllLUER3Y2tVZQ?oc=5",
+      "created_at": "2026-10-01 04:26:46"
+    },
     {
       "source_site": "경상일보",
       "title": "광주수산 노량진수산시장 회크닉 방문시, 커피쿠폰 2개 증정",
@@ -392,18 +404,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE9HMm9WX1NkRTNiSG5xMmVCNHhZWFNfbzJTVnE1ekJRRTNBSEJ3QjFnR3M3UkZJaC1HWDVacDYzZWhqQmI5Y1p0UmF3LWgxOHptVEFNag?oc=5",
       "created_at": "2026-09-03 08:56:00"
-    },
-    {
-      "source_site": "충청도민일보",
-      "title": "대전시, 도로명주소 퀴즈 풀고 커피 쿠폰 받으세요",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9pbnVSTzlxa1NsMGZNcG4zZW9Wd2RNMk9QZ0xETUVKakE4VlA2MngtS2Nwc3R5bGN2Vk55dXliYjN5ZXE4ZVVOaUNBejZlQmc5clE2amsyalhONFV1UjgyVFdObEpKelpWU1ctSg?oc=5",
-      "created_at": "2026-09-02 09:06:51"
     }
   ],
   "firelaw": [

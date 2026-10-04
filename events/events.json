@@ -35,28 +35,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBvVG5fRnNUU3h3ZTZvMERkNjBBRFlvTjhaYm5aTzIyZDR5ZWdZcmkwRDB6UFJESlYxVVljeFBkOUNVREJ1elJyZ281aEZWNmp0WjhPYmI5UjdGcGV6ckZHR0NVWDZCdWo4?oc=5",
       "created_at": "2026-09-08 01:30:27"
-    },
-    {
-      "source_site": "매일일보",
-      "title": "서영커 챌린지 팀 공모전 모집 성황…가을학기 경쟁률 10.8대1",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBkMUkxT0pqNHFEQV8wT21aVXk2dHNoLW5IeVhBcnZ5Z2tOSkxlZHFPWTFzVVMxVXlGQk9VN2ZzUE4wOG16MjhDU3owUjZHVFNvdkNUaVhuX1oyWERYZ3FXRmVhMNIBaEFVX3lxTFBhUVI3dmItajM1TG5OamlMeU1aZHNYSGdJUWJ3eFY1RHBybnFlSldpTzA0MkpEc0ZLN2JmUjJGNG1nd0FYcldfVDB3d0ZjZWd6d0JpWGpGQ3htc0U4R00zUTdFdzRLUnFT?oc=5",
-      "created_at": "2026-09-03 07:44:09"
-    },
-    {
-      "source_site": "프레스뉴스",
-      "title": "서울시, 서영커 챌린지(팀 공모전) 모집 성황…청년 취업 지원 박차",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5EbXcxbzN6Ykd2aFZZZ2x2bjQ0TWRFdnVVc2laQVlGVGRMcW5xSkNBcHBOclJCMzhBdnR5Y3EzLUZnaU1yc2JRcG54VGEzLW0xZUlVcGUyd24zQjkxWmdacDRVRmMtSkhKTXJKakN4X08?oc=5",
-      "created_at": "2026-09-03 04:05:32"
     }
   ],
-  "last_updated": "2026-10-03 01:42:56",
+  "last_updated": "2026-10-04 02:24:01",
   "coffee": [
+    {
+      "source_site": "대한청년일보",
+      "title": "스타벅스 ‘커피콩 베어리스타 키링’ 화제…3만원 이상 구매 시 랜덤 증정 이벤트 시작",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE9kZnh6X3piX3ltNDVYRVVZQm9DQjhmekFocEZRQ0xHSkpyOHdLcHhabWdRc3QtNm5xNl9xMU84YVlnZFk?oc=5",
+      "created_at": "2026-10-03 04:56:07"
+    },
     {
       "source_site": "제주교통복지신문",
       "title": "10월 1일 스타벅스, 디카페인 1+1·커피 증정",
@@ -392,18 +386,6 @@
       "period": null,
       "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=118190",
       "created_at": "2026-09-05 22:58:07"
-    },
-    {
-      "source_site": "더글로벌기빙뉴스",
-      "title": "제주 스타벅스, 개인컵 사용 고객에 ‘재활용 메모패드’ 추가 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE9HMm9WX1NkRTNiSG5xMmVCNHhZWFNfbzJTVnE1ekJRRTNBSEJ3QjFnR3M3UkZJaC1HWDVacDYzZWhqQmI5Y1p0UmF3LWgxOHptVEFNag?oc=5",
-      "created_at": "2026-09-03 08:56:00"
     }
   ],
   "firelaw": [
@@ -665,15 +647,6 @@
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5VNnVCNGc2UGlIZ2dsS2hGcloxU29venBKSmRzeWhHNWdHNTVrVy1rNzljRTV2UkRrV1BCMk9FdkxxZnlFNXFRYVBZVGl0LW9LdHBOR3BMLU9NeFo2WC1aUU9nckZKQ055VWtId3RqMUdTZw?oc=5",
       "site": "gnews_에너지데일리",
       "created_at": "2026-06-17 07:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방시설 기준 손질한다… ‘소방시설법 시행령’ 입법 예고",
-      "detail": "소방방재신문",
-      "action": "입법예고",
-      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9OaEg2b29sMlV0dzV3S2NiYndSZkplVkdCbERGbVFvRWZXeXpCQWhJc2M4Z1JoMFNsTXJIZFpYcEJnaS02SGc?oc=5",
-      "site": "gnews_소방방재신문",
-      "created_at": "2026-06-05 07:00:00"
     },
     {
       "kind": "🚒 소방 법령",

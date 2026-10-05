@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "지이코노미",
+      "title": "넷마블 엠엔비, ‘쿵야 레스토랑즈’ 활용 로블록스 게임 공모전 개최",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBZc0tjcWVkdXVEN0Rwc0FKQWc1UFRBOVdlT1QySDZfWlF1UVBoX292RnRNeGgzLXRoUS1ETDkwN0pGemduRlVseldCLUpuOEN1dElOMk5hQzBWYmdUNW1VQVhldV8?oc=5",
+      "created_at": "2026-09-11 07:00:00"
+    },
+    {
       "source_site": "에이빙",
       "title": "에이서, 'Hot Summer Cool Festival' 3000만원 상당 경품추첨 이벤트 진행",
       "category": "공모전",
@@ -37,7 +46,7 @@
       "created_at": "2026-09-08 01:30:27"
     }
   ],
-  "last_updated": "2026-10-04 02:24:01",
+  "last_updated": "2026-10-05 01:35:48",
   "coffee": [
     {
       "source_site": "대한청년일보",

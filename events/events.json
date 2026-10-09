@@ -37,8 +37,32 @@
       "created_at": "2026-09-09 05:24:32"
     }
   ],
-  "last_updated": "2026-10-08 02:30:34",
+  "last_updated": "2026-10-09 02:46:34",
   "coffee": [
+    {
+      "source_site": "금강일보",
+      "title": "컴포즈커피, 아메리카노 무료…일정·혜택 대상은?",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1LTnEzbHRnU2NZVncwOG1tU0FvQmhOdFFEQWJMcGFMYWFBZGlmaEhWVVdUbUsyMjhaWFdIS2kzRWFKVkgtU2N6Q2JOY083NE56ZV9MUmhPRDZTYV8zU3p1QVQyZmh6WmRUNWc?oc=5",
+      "created_at": "2026-10-08 11:24:57"
+    },
+    {
+      "source_site": "베타뉴스",
+      "title": "이디야커피, '한글날 제정 100주년 기념' 캠페인...인스타서 참여형 이벤트 진행",
+      "category": "커피",
+      "region": "국내",
+      "brand": "이디야",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1scGg1MXg1STVKSnhIYzNDaDVNVXJnRld0QVlIR2VRUnNtblFGc2RSVS1JcUhLRkdvY1MzQ2ZLRW9vRmoxbGZHS0cxNU5VOUhrZ1JSN2RzWl9zMEw5OEpFaE00b1I?oc=5",
+      "created_at": "2026-10-08 10:12:53"
+    },
     {
       "source_site": "마이데일리",
       "title": "“이 메뉴 이름 뭐라고 지을까”…이디야커피, 한글날 ‘우리말 작명소’ 이벤트",
@@ -374,30 +398,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFB4RkFFMElncjFBT3VFZExGT0N1LXRjd3BnSU45LXZpU3FQWHRHYVZraWxtU2VaeVhHdWNuUHhfSm9UMUpNRkdwOU9mVVZtYjFfdG13WTZqWm5uR2Ja?oc=5",
       "created_at": "2026-09-15 23:48:00"
-    },
-    {
-      "source_site": "헤럴드경제",
-      "title": "청자다방, 전남광주통합기념 아메리카노 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9RM0QtdHlLOUNQRmdJZC1vc1ZCcGlqMUNIM01kNFZvYzd2dVF5NDBfRVJZOXJqSTVTd3BIejNoc2tMeWhVbzRQTG92M1VZZVkyTDZ4cGVB?oc=5",
-      "created_at": "2026-09-15 04:11:59"
-    },
-    {
-      "source_site": "NANOOM ENERGY",
-      "title": "대구 신천 프러포즈 새 이름 공모, 참여자 50명 추첨해 커피 쿠폰 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1wR0pNTGNZaW41MUF5dVF5b1hURzUxQ2NUVmNjOVFfbGlVX2ZaWlBNa3VmX0NQYVFfWTVSSGVkSHlXZ0lqdUtHWWI5enQ4LWkzdlJ6LVFRYzBLYXdxbVNDOU5PMEY0aVF0TUpWNA?oc=5",
-      "created_at": "2026-09-14 01:26:14"
     }
   ],
   "firelaw": [

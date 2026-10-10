@@ -26,19 +26,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1kMEpCZWtkaXJiaXc2M29Kanh5cjZ3WGhQcURfMG5nRXcxRDZMemR6b3pMWUc5cDlhZHQwVEI1bHBvNzlyWllmczJHUXlaTWF6M29UY2xGOGJyZUdGMGRKMHU4QkQzaFU2N21zZNIBb0FVX3lxTE10czI2aG1wM05yN1FldEhrWUZYbzJndTl0SzhUX0hDNEFCbVZ3OUcwQ05UOHZLRll5em54UklsMXhpbHJNUEZ6eUhSRkVoN0FNMUVuLW80b1VlMXFLalhBUlYyd20yR0xXRl9KQnFXbw?oc=5",
       "created_at": "2026-09-15 14:22:21"
-    },
-    {
-      "source_site": "세이프머니",
-      "title": "KB국민은행, 모임통장 고객 파크골프 경품 추첨 이벤트",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9KQVJSRHJ6b1pVTWlDaGdnSmtCRHNrNE5jUnlxMTd1dnhaMEVHTkdsemtXcjhTUHppSjkydXB1YS12MmdyVHZqbTRvOTBkT3FFMkpzUXMtdEVSd19yN3VxTDdrRDBYejJaTVVvd1VR?oc=5",
-      "created_at": "2026-09-09 05:24:32"
     }
   ],
-  "last_updated": "2026-10-09 02:46:34",
+  "last_updated": "2026-10-10 02:04:23",
   "coffee": [
+    {
+      "source_site": "헤럴드경제",
+      "title": "청자다방, 전남광주통합기념 아메리카노 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9RM0QtdHlLOUNQRmdJZC1vc1ZCcGlqMUNIM01kNFZvYzd2dVF5NDBfRVJZOXJqSTVTd3BIejNoc2tMeWhVbzRQTG92M1VZZVkyTDZ4cGVB?oc=5",
+      "created_at": "2026-09-15 07:00:00"
+    },
     {
       "source_site": "금강일보",
       "title": "컴포즈커피, 아메리카노 무료…일정·혜택 대상은?",
@@ -386,18 +389,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5NUnA4T05PYV9CbXpzM205bEFKTDNzekF0YmV0aWhPekZUYXVla0dNdklJXzNvVDFzRFZ4N05TZUhqTUVSUExQWlcxNGFjeGJtYmdsQ2xqOFYxUUdxWllQQ2pIVkdaNVl4SktTaFpn?oc=5",
       "created_at": "2026-09-15 02:01:52"
-    },
-    {
-      "source_site": "뉴스핌",
-      "title": "스타벅스, 가을 케이크 신제품 3종 출시·'디저트 위크' 이벤트도",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFB4RkFFMElncjFBT3VFZExGT0N1LXRjd3BnSU45LXZpU3FQWHRHYVZraWxtU2VaeVhHdWNuUHhfSm9UMUpNRkdwOU9mVVZtYjFfdG13WTZqWm5uR2Ja?oc=5",
-      "created_at": "2026-09-15 23:48:00"
     }
   ],
   "firelaw": [

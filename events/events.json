@@ -10,15 +10,6 @@
       "created_at": "2026-09-11 07:00:00"
     },
     {
-      "source_site": "에이빙",
-      "title": "에이서, 'Hot Summer Cool Festival' 3000만원 상당 경품추첨 이벤트 진행",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE13RmQwWGs2bHR1RGY5SGdrVkE0YklGUTh4WVNFdVNlTlk2ZzFxWXhPb3FCVjY2REZ2Xzk0U2ZTNHQzX0xlWWVCX1hlLXhweW0xYzlPNzZRMnJ2b2I5RFNsTEo3cWt6Z9IBakFVX3lxTE52VmF2T2pIWUI3MXpBWEx3N2dJSVZZV1gtYmlUSjJBS0pmcWxvOFYzRzBkZGlSdXQ3QWp2SC1oWmpnSjc5WWV3c0M5UXBDVjNxekVIRFIyVWVtSlZka0lPYkdtMmZtOHlYaEE?oc=5",
-      "created_at": "2026-09-10 07:00:00"
-    },
-    {
       "source_site": "한스경제",
       "title": "'총상금 400만원' 스포츠토토 숏폼 공모전 모집",
       "category": "공모전",
@@ -28,7 +19,7 @@
       "created_at": "2026-09-15 14:22:21"
     }
   ],
-  "last_updated": "2026-10-10 02:04:23",
+  "last_updated": "2026-10-11 01:33:16",
   "coffee": [
     {
       "source_site": "헤럴드경제",
@@ -394,6 +385,15 @@
   "firelaw": [
     {
       "kind": "🚒 소방 법령",
+      "title": "국민 목소리 담은 화재안전기술기준, 개정 마무리 단계 접어들어",
+      "detail": "뉴스데일리",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5BdnoyNEpWclJHcFFWNGNvVk5qZjE3T1RWa0pJUDdJcVdyUWplendCdlMzVjBHM3B5QUpwZTdDSEYwSXQtcm9yWlhNLUVvQWFvaUp4MlA4U0tGZlRnVEpNT2RWODJCbjdSb25v?oc=5",
+      "site": "gnews_뉴스데일리",
+      "created_at": "2026-08-26 00:27:27"
+    },
+    {
+      "kind": "🚒 소방 법령",
       "title": "스프링클러설비의 화재안전성능기준(NFPC 103) 일부개정안 행정예고",
       "detail": "고시 · 공고 2026-193",
       "action": "행정예고",
@@ -732,19 +732,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-06-23 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방시설공사업법 시행규칙 일부개정령안 입법예고",
-      "detail": "부령 · 공고 2026-106",
-      "action": "입법예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-07-27",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/87204",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-06-17 09:00:00"
     }
   ]
 }

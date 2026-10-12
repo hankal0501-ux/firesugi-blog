@@ -1,15 +1,6 @@
 {
   "giveaways": [
     {
-      "source_site": "지이코노미",
-      "title": "넷마블 엠엔비, ‘쿵야 레스토랑즈’ 활용 로블록스 게임 공모전 개최",
-      "category": "공모전",
-      "prize": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBZc0tjcWVkdXVEN0Rwc0FKQWc1UFRBOVdlT1QySDZfWlF1UVBoX292RnRNeGgzLXRoUS1ETDkwN0pGemduRlVseldCLUpuOEN1dElOMk5hQzBWYmdUNW1VQVhldV8?oc=5",
-      "created_at": "2026-09-11 07:00:00"
-    },
-    {
       "source_site": "한스경제",
       "title": "'총상금 400만원' 스포츠토토 숏폼 공모전 모집",
       "category": "공모전",
@@ -19,8 +10,44 @@
       "created_at": "2026-09-15 14:22:21"
     }
   ],
-  "last_updated": "2026-10-11 01:33:16",
+  "last_updated": "2026-10-12 02:03:15",
   "coffee": [
+    {
+      "source_site": "뉴스핌",
+      "title": "스타벅스 장충라운지R점, '서울 카페·디저트 50선' 선정 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9VajJIVEVBel90Z05MWlVlb05TcjJidG16WUo5TGJfMFU2enBiZV92b0ZKS1JrZXhKMXdFWnJjcXpseHVFNlIwOHpHN1FzUEZVaWF6ckNsTC13VG11?oc=5",
+      "created_at": "2026-10-11 23:58:00"
+    },
+    {
+      "source_site": "위키트리",
+      "title": "스타벅스 다시 1위 찍었다...10월 14일까지 '가을 이벤트'",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": "~2026-10-14",
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBnYURTVWUwTUFOakxrZWtrN2dmZmZlWm43MEVTTTV1TEVDeVhOUEVaNG9MQmM0ZWc5czVEOEphczl2RFdPRTI2QnpSVk1xSVJkci00aEd3?oc=5",
+      "created_at": "2026-10-11 02:22:00"
+    },
+    {
+      "source_site": "뽐뿌 쿠폰·이벤트",
+      "title": "[네이버페이] 카페 2000원이상 500원 적립",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=119546",
+      "created_at": "2026-10-11 23:58:16"
+    },
     {
       "source_site": "헤럴드경제",
       "title": "청자다방, 전남광주통합기념 아메리카노 이벤트",
@@ -344,45 +371,18 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1BTVB0Ti1hNUEwQUhGcE9JMlFNY0d4ejY3N0o0SF9nS0NzQUUtYXdDc25DaXN5NWFwSzdNMnpKd2hVWElIWHZZU3dWMUZzeWlMUmNLX3FrYTRjQzQzNDVFbEREN25tNzNlSDY0?oc=5",
       "created_at": "2026-09-17 04:51:53"
-    },
-    {
-      "source_site": "더퍼블릭",
-      "title": "스타벅스, 27일까지 추석 이벤트…모바일 상품권 선물 시 1+1",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9lNENxb0xmZlFvaHF3cnJaNF9tU1R5YWJOZXBobnFla1I1VkpnS0xVSmZwY3k4b0pKc0szZjBfenU3ZURGYjVhNmJ4RWdLMDBaeGl5QjZ6WDdoWEhqNmFBa0syVTFCNHJ1Zk1N0gFvQVVfeXFMUFZxWE9uQ1RRczZzWmZPY0U3X0FQY1BSX3BzbUdlc2F1SUZOa2JhSy1Vek0tMXRxeFlubmhLX0RpRmdXV3JJalRSMFdjQnFISE42R05oR2NEZUR6VFdfSEVzU1ZsSnpacnJEUGpDRDRR?oc=5",
-      "created_at": "2026-09-17 22:35:51"
-    },
-    {
-      "source_site": "shinsegaegroupnewsroom.com",
-      "title": "스타벅스, 카카오톡 선물하기에서 모바일 상품권 선물하면 제조 음료 1+1 쿠폰 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQU2hPVGRwLUpWWGo2TmRWVzcwVXAza1FRa1Q2Rml4OXBEWTNpckVidXd4TVJReTBXejhSQnpnWFc1MUxSZ25QeUprMjRqeDBXMkxJVC1wb1Zmd2FiYTcyVGFaWUd5ZHNaTjBKN1IzM0xDT0J3UWZmTENkYlpPWWxFMnlwZV9aU1plWmhXMQ?oc=5",
-      "created_at": "2026-09-17 00:59:25"
-    },
-    {
-      "source_site": "gukjenews.com",
-      "title": "강원특별자치도, 고향사랑기부 이벤트 개최…10만 원 이상 기부자에 상품권·커피쿠폰",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5NUnA4T05PYV9CbXpzM205bEFKTDNzekF0YmV0aWhPekZUYXVla0dNdklJXzNvVDFzRFZ4N05TZUhqTUVSUExQWlcxNGFjeGJtYmdsQ2xqOFYxUUdxWllQQ2pIVkdaNVl4SktTaFpn?oc=5",
-      "created_at": "2026-09-15 02:01:52"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "(보도자료) 화재예방법과 소방시설법 하위법령 제·개정안 입법예고",
+      "detail": "서울Pn",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNWTRzaXNYUXBjNEY2RnZFYW1WZFpBOU5NeTBlaE5hY0t6RTk1U1NESl8yUVppUlQ1ZnVVTVdTazlvUDF2a3VSWUcxTEdVSU1GQndCUTJCNDVGenktd1ROdHVvNS1FV09oVGJTVnlNN3g0VFk3Sm4wZkhLN3MwTUVBT0JWcWFKR21aakExSQ?oc=5",
+      "site": "gnews_서울Pn",
+      "created_at": "2026-10-10 19:55:32"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "국민 목소리 담은 화재안전기술기준, 개정 마무리 단계 접어들어",
@@ -719,19 +719,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-07-03 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방시설 설치 및 관리에 관한 법률 시행령 일부개정령안 입법예고",
-      "detail": "대통령령 · 공고 2026-122",
-      "action": "입법예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-08-03",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/87274",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-06-23 09:00:00"
     }
   ]
 }

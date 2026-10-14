@@ -10,8 +10,32 @@
       "created_at": "2026-09-15 14:22:21"
     }
   ],
-  "last_updated": "2026-10-13 03:21:21",
+  "last_updated": "2026-10-14 01:35:26",
   "coffee": [
+    {
+      "source_site": "데일리안",
+      "title": "'커피쿠폰서 상품권까지'…신한투자증권, 4분기 IRP·연금저축 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMirgJBVV95cUxOR0ZrZkJpb016ZW1XZkN4RlpDNlo3cFdCZHVPN1VQRlhzanQ1UjVyODZyZE0xZk9nNG9ZckZCRl9ZZmZ6cnZoLW10cS1Jek4xX2lBbHd0WlhLNUI4Z1JQbjAzMmJjYmpxZDRmOGFYV0VBNzV0ZmZzNzVmQS0yeW1iR1F6US0wX0kyN3RmWGtQTG5TN3FGMWRsMklmSGg0am95U2xxTmgxRG5sb3JQaGl4QlpHSnJTaDdXc2hscmIwenNsVFFGTElnLWlRX055eHhRVzB4WThRSnRXZlo3TVdXd2wwVGk5WS1Jb21VVlhSZXMtdFZKall0dnhoU1pWcmJMbjVWaWVpRG1pWkFrdmxIYVZ5bVdqaXJTWUdjbmxQYjRMdUxTZHhTdW41YWt3Zw?oc=5",
+      "created_at": "2026-10-13 08:20:00"
+    },
+    {
+      "source_site": "더글로벌기빙뉴스",
+      "title": "스타벅스, 리워드 1600만명 기념 혜택 확대…신규 별 쿠폰 선보여",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE9mNEpnRF9idW56dEhKTnNTN1FTeUx0MGVfRUpZR3lUSW5HM1VmalFHZjF4N3c2NHhVcWFkYU56NDBZelhhMWs4Uk5FSGx2eklWdlI0ZA?oc=5",
+      "created_at": "2026-10-13 10:59:00"
+    },
     {
       "source_site": "뉴스핌",
       "title": "스타벅스 장충라운지R점, '서울 카페·디저트 50선' 선정 이벤트",
@@ -347,30 +371,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9NSlN3MDc2Zm5LOTBxUk4yRUhuRGpjSU4xYUxNSy03RDN1c2RNRFpRbGpZR0UtNlRSLTFTdmJBTW1Mc3NRUHV0bzhOblhqRndTOGhIRHFYTnRTQQ?oc=5",
       "created_at": "2026-09-19 04:54:09"
-    },
-    {
-      "source_site": "gukjenews.com",
-      "title": "코레일관광개발, 10월 기획전 상품 고객 커피 쿠폰 증정 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1ELUc0a0RpS1lwVERldE9oam5VWnZ5eDF5N0hNN0dNU050bWJuU3BsaWtPREZmWm9TSEl5ZE9nQlJsbjB5Z1g2ZXpkZ1NmbzZVSVdFeDdNNkNKYXJDVVMtZkg0MTVXZmJnTGt0Q25n?oc=5",
-      "created_at": "2026-09-17 08:37:07"
-    },
-    {
-      "source_site": "프레시안",
-      "title": "코레일관광개발, 10월 가을 기차여행 기획전…커피 쿠폰 제공",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1BTVB0Ti1hNUEwQUhGcE9JMlFNY0d4ejY3N0o0SF9nS0NzQUUtYXdDc25DaXN5NWFwSzdNMnpKd2hVWElIWHZZU3dWMUZzeWlMUmNLX3FrYTRjQzQzNDVFbEREN25tNzNlSDY0?oc=5",
-      "created_at": "2026-09-17 04:51:53"
     }
   ],
   "firelaw": [
@@ -649,15 +649,6 @@
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFB0VUZLTU9GVDUya0JDWmpXMHZLZ2h1YXRKaWlnUVVNcFJnSlRuUXB0QlUzSHFiQnJ1MVRRV2pTblU1QlRnWURBemtDX3RNUlFoSWk5TkpIcy05ZFRvbmIzdTE4X2o5WXkwaHfSAW5BVV95cUxQQWc1dEtKeElRQXdYd2N0UGFFRTJpVnI2a2Y0NTlLczFiSkVrY1l2NWxIOHdLRUJOVVJ1QkFLZVoyM3ZRVjZaYm5RUU9pb1A2UGtwYmg2MmhyZWdfeUpvcDFVTl9paE9uZ0lpZ0wzQQ?oc=5",
       "site": "gnews_세이프투데이",
       "created_at": "2026-07-02 07:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방관 배상책임보험 의무화·리튬이온전지 정보 사전 확보… 소방기본법 하위법령 입법예고",
-      "detail": "에너지데일리",
-      "action": "입법예고",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1qbTJXNTJoeU80cWRRR09rSlE3N2tPemhYMG40VUF0VUw5S1QxaEd4eHBEaTNXUTFhRXNnd1U5YXhLSWhGRnJIQkpBWUVhVDl4ZWItS2Z5TkZoUDJnMGhxRkFMTFd0b2FqVFFReGlpLXU5QQ?oc=5",
-      "site": "gnews_에너지데일리",
-      "created_at": "2026-06-15 07:00:00"
     },
     {
       "kind": "🚒 소방 법령",

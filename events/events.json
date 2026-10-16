@@ -1,17 +1,29 @@
 {
   "giveaways": [
     {
-      "source_site": "한스경제",
-      "title": "'총상금 400만원' 스포츠토토 숏폼 공모전 모집",
+      "source_site": "피앤피뉴스",
+      "title": "트리피언, 추석 맞이 경품 추첨 이벤트 진행",
       "category": "공모전",
       "prize": null,
       "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1kMEpCZWtkaXJiaXc2M29Kanh5cjZ3WGhQcURfMG5nRXcxRDZMemR6b3pMWUc5cDlhZHQwVEI1bHBvNzlyWllmczJHUXlaTWF6M29UY2xGOGJyZUdGMGRKMHU4QkQzaFU2N21zZNIBb0FVX3lxTE10czI2aG1wM05yN1FldEhrWUZYbzJndTl0SzhUX0hDNEFCbVZ3OUcwQ05UOHZLRll5em54UklsMXhpbHJNUEZ6eUhSRkVoN0FNMUVuLW80b1VlMXFLalhBUlYyd20yR0xXRl9KQnFXbw?oc=5",
-      "created_at": "2026-09-15 14:22:21"
+      "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9LeEwzMWtUaHhIcE9PQ3hRODAzYW9abUMzc05Oa2dUQ3hnbXVVbElzY2JqSXNoN2JhU2dFQWU0d0E5N0ROWVlLWGtYbUdIdm9raHBhbnZKYThPNHNkMUE?oc=5",
+      "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-15 01:12:42",
+  "last_updated": "2026-10-16 00:59:56",
   "coffee": [
+    {
+      "source_site": "뉴스후플러스",
+      "title": "[단독] ③ 메가커피, 할인 공세 뒤 쿠폰 수수료 8.4%…점주 부담에 본사 분담은?",
+      "category": "커피",
+      "region": "국내",
+      "brand": "메가커피",
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBnemNfQnhmX0ItN3Z5ZVRteF83WUVKY0JzVjBmcU4yNFVYTW9qMTVWSFhva1I3THoxMEFJUE41ellxcmlCR25PaldsZDAyNUJxOHhqYV9ETWRFQ0xtOVE5bnhJaElQSjZVa01jcmdn?oc=5",
+      "created_at": "2026-10-14 20:00:00"
+    },
     {
       "source_site": "싱글리스트",
       "title": "스타벅스, 겨울 e-프리퀀시 진행...스피커·가방·플래너 증정",
@@ -83,18 +95,6 @@
       "period": null,
       "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=119546",
       "created_at": "2026-10-11 23:58:16"
-    },
-    {
-      "source_site": "헤럴드경제",
-      "title": "청자다방, 전남광주통합기념 아메리카노 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9RM0QtdHlLOUNQRmdJZC1vc1ZCcGlqMUNIM01kNFZvYzd2dVF5NDBfRVJZOXJqSTVTd3BIejNoc2tMeWhVbzRQTG92M1VZZVkyTDZ4cGVB?oc=5",
-      "created_at": "2026-09-15 07:00:00"
     },
     {
       "source_site": "금강일보",
@@ -688,15 +688,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-07-23 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방시설공사 대금지급보증 관리 강화… 착공신고 때 증빙서류 제출 의무화",
-      "detail": "에너지데일리",
-      "action": null,
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5VNnVCNGc2UGlIZ2dsS2hGcloxU29venBKSmRzeWhHNWdHNTVrVy1rNzljRTV2UkRrV1BCMk9FdkxxZnlFNXFRYVBZVGl0LW9LdHBOR3BMLU9NeFo2WC1aUU9nckZKQ055VWtId3RqMUdTZw?oc=5",
-      "site": "gnews_에너지데일리",
-      "created_at": "2026-06-17 07:00:00"
     },
     {
       "kind": "🚒 소방 법령",

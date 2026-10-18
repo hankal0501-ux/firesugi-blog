@@ -10,7 +10,7 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-17 01:02:59",
+  "last_updated": "2026-10-18 00:38:27",
   "coffee": [
     {
       "source_site": "Chosunbiz",
@@ -374,6 +374,15 @@
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "점검인력 배치 확인서 제출 기간 단축… ‘소방시설법 시행규칙’ 개정 추진:FPN Daily - FPN-소방방재신문",
+      "detail": "FPN-소방방재신문",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPcTJjWG13RzFZZFp5ZjltY2tabkExdWZuNXVpT3lscEFfV3hhUTQzYUFYSlAxMExmRU5KZXotUWxJaTNBbUowM3F2VEtJdzNuUmRKWnJrd1RHV2R3MmZnSDloN2hJcEktay1PWk9uQk5OMHNpX3ZQcUduMXlrQWVrd195M25xR25UMTRaak1rY0hjYUlQMy1HZ2R1eWFSeWdiMFJEU1pWcXUtY1FfTmRFaXFmcnFBNmZROWRablc0RWlrOEhqQk1oMmdCNTY?oc=5",
+      "site": "gnews_FPN-소방방재신문",
+      "created_at": "2026-10-01 09:11:04"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "(보도자료) 화재예방법과 소방시설법 하위법령 제·개정안 입법예고",

@@ -10,7 +10,7 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-19 00:50:03",
+  "last_updated": "2026-10-20 01:34:40",
   "coffee": [
     {
       "source_site": "Chosunbiz",
@@ -376,6 +376,45 @@
   "firelaw": [
     {
       "kind": "🚒 소방 법령",
+      "title": "화재의 예방 및 안전관리에 관한 법률 시행령 일부개정령안 입법예고",
+      "detail": "대통령령 · 공고 2026-199",
+      "action": "입법예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-11-23",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/88966",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-10-12 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방청과 그 소속기관 직제 시행규칙 일부개정령안 입법예고",
+      "detail": "부령 · 공고 2026-126",
+      "action": "입법예고",
+      "status": null,
+      "period": "의견제출 ~2026-07-09",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/87412",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-07-02 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방시설 설치 및 관리에 관한 법률 시행령 일부개정령안 입법예고",
+      "detail": "대통령령 · 공고 2026-122",
+      "action": "입법예고",
+      "status": null,
+      "period": "의견제출 ~2026-08-03",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/87274",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-06-23 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
       "title": "점검인력 배치 확인서 제출 기간 단축… ‘소방시설법 시행규칙’ 개정 추진:FPN Daily - FPN-소방방재신문",
       "detail": "FPN-소방방재신문",
       "action": "개정",
@@ -684,32 +723,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-07-23 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "예방소방업무처리규정 훈령 일부개정안행정예고",
-      "detail": "훈령 · 공고 2026-139",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-08-12",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47052?announceType=TYPE6&mappingAdmRulSeq=2000000329210",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-07-23 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "공공기관의 소방안전관리에 관한 규정 전부개정령안 재입법예고",
-      "detail": "대통령령 · 공고 2026-129",
-      "action": "입법예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-07-24",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/87352",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-07-03 09:00:00"
     }
   ]
 }

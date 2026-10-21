@@ -10,7 +10,7 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-20 01:34:40",
+  "last_updated": "2026-10-21 01:16:45",
   "coffee": [
     {
       "source_site": "Chosunbiz",
@@ -543,19 +543,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-06-30 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방 신기술·신제품 심의 운영규정 일부개정안 행정예고",
-      "detail": "고시 · 공고 2026-116",
-      "action": "행정예고",
-      "status": null,
-      "period": "의견제출 ~2026-07-13",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46890?announceType=TYPE6&mappingAdmRulSeq=2000000328252",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-06-22 09:00:00"
     },
     {
       "kind": "🚒 소방 법령",

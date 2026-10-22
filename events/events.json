@@ -10,7 +10,7 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-21 01:16:45",
+  "last_updated": "2026-10-22 01:12:40",
   "coffee": [
     {
       "source_site": "Chosunbiz",
@@ -376,6 +376,15 @@
   "firelaw": [
     {
       "kind": "🚒 소방 법령",
+      "title": "“입법 예고까지 했는데”… 소방공사 대금 지급보증서 제출 의무화 ‘물거품’",
+      "detail": "소방방재신문",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMiREFVX3lxTE5aaDdQYzk4Z0VDVDhGeG1DakJidGJQZkoxRlljNGRoZXBCY05pVlJSVWt2ZXBNUEJWWmhHYlF1Z0xjV0pL?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-10-21 12:33:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
       "title": "화재의 예방 및 안전관리에 관한 법률 시행령 일부개정령안 입법예고",
       "detail": "대통령령 · 공고 2026-199",
       "action": "입법예고",
@@ -399,19 +408,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-07-02 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방시설 설치 및 관리에 관한 법률 시행령 일부개정령안 입법예고",
-      "detail": "대통령령 · 공고 2026-122",
-      "action": "입법예고",
-      "status": null,
-      "period": "의견제출 ~2026-08-03",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/87274",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-06-23 09:00:00"
     },
     {
       "kind": "🚒 소방 법령",
@@ -587,15 +583,6 @@
       "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTFA5d0hvMWdTOUVTRXpVdW5ZQWVxQTRMRXcwOWhSeGIxaldNUHRmaEN0VVJVWEpYczZad0RpakYzU21BMTlFNUE?oc=5",
       "site": "gnews_fpn119.co.kr",
       "created_at": "2026-09-10 07:55:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방시설공사 착공신고 시 공사대금 지급보증 제출 의무화",
-      "detail": "소방방재신문",
-      "action": null,
-      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9MY0M4ZGJlZlp2QUpEanQzUHZLV2s3SzFqS3lvamhOMERCdU5EVENCZ0FZNjZkdDVBSS14cWw0Z3pEelExcnc?oc=5",
-      "site": "gnews_소방방재신문",
-      "created_at": "2026-06-23 07:00:00"
     },
     {
       "kind": "🚒 소방 법령",

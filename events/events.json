@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "경남도민일보",
+      "title": "창원시 어린이 불조심 포스터 공모전",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9KYkVzampKWFpQRE5pbGctWU9JTFZKaVBtMTk3UnpwSUlXZnpTNUphWjJSU29vZWhMcVprVzVGa3VTaGV4UmkyYTZkSldJUm5pLUVDc0F3UUpDYU5OVnNaLWJNZHFGcDFTSFE?oc=5",
+      "created_at": "2026-10-23 01:35:00"
+    },
+    {
       "source_site": "피앤피뉴스",
       "title": "트리피언, 추석 맞이 경품 추첨 이벤트 진행",
       "category": "공모전",
@@ -10,8 +19,32 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-25 00:49:18",
+  "last_updated": "2026-10-26 00:58:36",
   "coffee": [
+    {
+      "source_site": "오늘경제",
+      "title": "이디야커피, 가치소비 앞장서…‘맛있는 저탄소 한 잔’ 이벤트 진행",
+      "category": "커피",
+      "region": "국내",
+      "brand": "이디야",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1DZXdFeEVxM1ZwVmE2dngtcnFfVWpiNXkwZDdmVzhwR1o1WWkySVR0ei1Sb3dibGNMTTBCUUd4U2JQQklNVlphVUJCbnFqZ3Z0VFczM1VpTXpQUlBRRHVTOG1BZ3lUSFVCUlZnUzZKOWk0dVE?oc=5",
+      "created_at": "2026-10-23 04:36:01"
+    },
+    {
+      "source_site": "뽐뿌 쿠폰·이벤트",
+      "title": "[네이버페이] 카페 할인",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120028",
+      "created_at": "2026-10-25 22:20:45"
+    },
     {
       "source_site": "리버티코리아포스트",
       "title": "이디야커피, 친환경 음료 마시고 환경도 지키는 ‘저탄소 한 잔’ 이벤트 진행",

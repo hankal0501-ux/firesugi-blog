@@ -19,8 +19,56 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-28 02:00:42",
+  "last_updated": "2026-10-29 02:05:16",
   "coffee": [
+    {
+      "source_site": "타임뉴스",
+      "title": "“탄소중립포인트제 가입하고 커피쿠폰 받자!” 거제시, 신규 가입자 200명에 혜택 쏜다",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1RTTkzSXNsdzRsdHB5QzQ0bk56bG5Fd00wdmxLQzhXMEZrUm9WWEdCM09vM0RzRVRIVHFXaWpBajVRQS03eDdfM090NE8weGdKM29RMg?oc=5",
+      "created_at": "2026-10-28 09:02:01"
+    },
+    {
+      "source_site": "새거제신문",
+      "title": "거제시, 탄소중립포인트 신규 가입자 200명에 커피쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBRLVB5Zk9yYzU1eThnXzZuWnRDYmZHX19pWmp1MXN4cVo5cWMzOXd3QTlhUEhDY3UyZDZiRTJpblEtOFdfd2x0a01ZV0JhbWFrSUJFRVVORWlLbVFCSlViVWZwbjRORzBkSFdN?oc=5",
+      "created_at": "2026-10-28 08:06:38"
+    },
+    {
+      "source_site": "거제타임즈",
+      "title": "에너지 아끼는 탄소중립포인트 가입하면 커피쿠폰…거제 선착순 200명",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFB2aWtIcTZ1UnVwRnd5dE1MN01PM1IwQlEwZjdMNkUzemVfcEM2Q3F5N1QzQ05zeFZpRnZ4TklocDV5R3RReWJnODZhMUtfenJMWU5hZGFzazNlb2RJN1BCYk54d19ncGxuSGNzcVJscw?oc=5",
+      "created_at": "2026-10-28 08:02:53"
+    },
+    {
+      "source_site": "거제저널",
+      "title": "거제시, 탄소중립포인트 신규가입 이벤트…선착순 200명 커피쿠폰 제공",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE8tWjVDNkYtU21sZlZGSk1saHBQYk9CM2FsczR3UnlYNG1RTWhSb3d2MS02R1FXb2FhOGpNbDVFc211M3hTWExVLXBBajVCbk1oZ2l5X05Qb2xnVDY3cElMYVlzc1huWWhaSVU5WDVBUDE4QlU?oc=5",
+      "created_at": "2026-10-28 07:18:01"
+    },
     {
       "source_site": "오늘경제",
       "title": "이디야커피, 가치소비 앞장서…‘맛있는 저탄소 한 잔’ 이벤트 진행",
@@ -310,18 +358,6 @@
       "created_at": "2026-09-30 01:00:10"
     },
     {
-      "source_site": "머니투데이",
-      "title": "광주시 에너지 줄이면 커피 쿠폰 쏜다…'탄소중립 포인트' 이벤트 - 머니투데이",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1zcjlBZkxUUEJCb19JdzdKeUM2RUZCWlpyazItUW1CTUFyaWQwazdXVDdTSDhrcFZDX2llZjI1Y3FSd3RYd1JZYngyQkxYT1pFQWJsNW5INmRleEFYMnpPcVpGOFhINkZhOFHSAW9BVV95cUxNSVo5TklhX3hkZkdWS3psX2liT2NaVUFoSE9lYUlBUGZKWEdWZzA3d2ZYWHNORkRWUEdDQTNnNGxYWlZQLXppR1g4U3VDdzlYMmtOSTV5dFZyMk56cXBVcDJSemg3VlAtZXoxT04yblE?oc=5",
-      "created_at": "2026-09-28 02:27:11"
-    },
-    {
       "source_site": "산경투데이",
       "title": "스타벅스, 세계 커피의 날 맞아 디카페인 커피 ‘1+1’ 이벤트",
       "category": "커피",
@@ -332,18 +368,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9HLXZJcjFVNDA2UEdSckR1YmZEdkVwNm9WN0xyZktQNTRwVEU1LXBsMmZXcXBoZy1SckpJUmNVeDVURVBKN0EwQW5UT1c2SEw0ZDhzQzU2dlUtQjdSQVVHTlFGemh6U1UxOGk0M05YNTHSAXRBVV95cUxQV0NxS211eEt6OGYzN01NbDBqS2VXZHNtLWU3UENLdEM2cS1vM0JBdXFSX2FjaHZveThlOXZoeXpRYnNic3paN1BPc1pCN2dIY2ExN0V3aE1rZkRBelNaZEJmQllMUkhUM1Z6WnlPSzJxaHpobg?oc=5",
       "created_at": "2026-09-29 02:06:30"
-    },
-    {
-      "source_site": "금강일보",
-      "title": "스타벅스, ‘커피의 날’ 기념 1+1 이벤트... 대상 메뉴는?",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBYXzBiNGVNZzZoRllsQkZZTGU0anoyVVgycTZxNl83Z3pqNlVkcklpWTF6QlhwQk1hZ1hhZDJvaXFJMjdhWFhiQWlQbjBOTHFpN2YyN0xwUGlITUZ2eVYwdHV5V3lROHVycWc?oc=5",
-      "created_at": "2026-09-29 01:44:21"
     }
   ],
   "firelaw": [
@@ -512,19 +536,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-07-06 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "자동차압급기댐퍼의 성능인증 및 제품검사의 기술기준 개정안 재행정예고",
-      "detail": "고시 · 공고 2026-123",
-      "action": "행정예고",
-      "status": null,
-      "period": "의견제출 ~2026-07-20",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/46916?announceType=TYPE6&mappingAdmRulSeq=2000000328450",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-06-30 09:00:00"
     },
     {
       "kind": "🚒 소방 법령",

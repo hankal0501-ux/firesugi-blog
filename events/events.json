@@ -19,8 +19,56 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-29 02:05:16",
+  "last_updated": "2026-10-30 02:24:30",
   "coffee": [
+    {
+      "source_site": "미디어투데이",
+      "title": "남동구도시관리공단, “적극행정 우수사례 투표하고 커피쿠폰 받으세요”",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE1IdWJCTzJDU2pnUVBEbVlfdmNjTDcwdnR5Tmtrdmc5R3FYYkJRZTJHeHQxR0g4TGx6WmF4Qml3Rjc5LWxYdDFPNGd3?oc=5",
+      "created_at": "2026-10-30 00:51:00"
+    },
+    {
+      "source_site": "프레시안",
+      "title": "\"거제시민, 탄소중립포인트제 가입 커피쿠폰 받아요\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9DcnRXWmtXVWZ4a25Ea1pVWC13QU1neDhTU0FrYzFqU3FEaWZ5WlpkZnhBMDlkOTE1Ylk5eDBzMkZia0hidmFaWHhrbnJvMDJfYWVFTlYzRzAycHpEUDFmV0NLMkduUzV1TmRZ?oc=5",
+      "created_at": "2026-10-29 02:34:23"
+    },
+    {
+      "source_site": "컨슈머타임스",
+      "title": "빽다방, 당근페이 결제 시 '아이스 아메리카노 500원' 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": "빽다방",
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5EdkJ3cUdHLVVMajlfRmlTc0NOamZOLVJVV0xrdUZqZXZ5V29WTThiWEFTaE9pc2gtRGpIM3ZKNUhWaXpsUmpEMC1MMG13Y19oZjR5LThSd0tFU2Y5WDNkUVBZSkY3a1FVdXc?oc=5",
+      "created_at": "2026-10-29 07:30:41"
+    },
+    {
+      "source_site": "뽐뿌 쿠폰·이벤트",
+      "title": "전원 메가 아이스 아메리카노 즉시 발송) 티머니GO 가입",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120176",
+      "created_at": "2026-10-29 21:55:50"
+    },
     {
       "source_site": "타임뉴스",
       "title": "“탄소중립포인트제 가입하고 커피쿠폰 받자!” 거제시, 신규 가입자 200명에 혜택 쏜다",
@@ -332,45 +380,22 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBXM2E2S2pGZUxybWlEN0plQlJERlZqcURPWnNiRGNMY2g4Yk1zQ3VBekh4bEpTZDFseFVwSkI3QXNGVTcxX2c0RzJNMVN1WkYtbzFFRHNXZDZKaXg0VE1qLW04T2xoZnBiT1Z1U3ZrTHc3UQ?oc=5",
       "created_at": "2026-09-30 08:03:36"
-    },
-    {
-      "source_site": "글로벌이코노믹",
-      "title": "LG전자, 스타벅스와 '마이컵스타' 이벤트…다회용컵 확산 나선다",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxONnBQcG5wendZTDI5cVN5SkZrTkZsT2g3WlMyVWhuRlRTbFRERzAwcl9tazRBX0E0aEljOUh0ZHZwNmhad1NrclFWd3dYRGlxNG81WVVsSmxEUi1YaURVSkxGS3BqMktWTzFsSC1mT3o1UUpLY1UySFpBX1U1THR0QWh3RE9RZw?oc=5",
-      "created_at": "2026-09-30 01:12:06"
-    },
-    {
-      "source_site": "서울경제",
-      "title": "LG전자 “스타벅스서 텀블러 세척기 쓰고 경품 응모하세요”",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": "텀블러",
-      "prize_class": "goods",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9ZcGZIRkVaRDVhRzhxMW5XY0lvM1RaaUNWazJnOGdVblN3czI2WnpBd2xLRU1XOFY5VTB0cGh0OWtxbnUzMGZON1RNNGQ0XzRRS3fSAVNBVV95cUxNQjRZMHFwekNONTFMSkV2THlfOW94NElqQV9YMTh2dnhIeVBGbGIxRnNlQ1l4dE41X1cwLWduZlpEZEs4bWFhNVowVll4MzJvSWZBbw?oc=5",
-      "created_at": "2026-09-30 01:00:10"
-    },
-    {
-      "source_site": "산경투데이",
-      "title": "스타벅스, 세계 커피의 날 맞아 디카페인 커피 ‘1+1’ 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9HLXZJcjFVNDA2UEdSckR1YmZEdkVwNm9WN0xyZktQNTRwVEU1LXBsMmZXcXBoZy1SckpJUmNVeDVURVBKN0EwQW5UT1c2SEw0ZDhzQzU2dlUtQjdSQVVHTlFGemh6U1UxOGk0M05YNTHSAXRBVV95cUxQV0NxS211eEt6OGYzN01NbDBqS2VXZHNtLWU3UENLdEM2cS1vM0JBdXFSX2FjaHZveThlOXZoeXpRYnNic3paN1BPc1pCN2dIY2ExN0V3aE1rZkRBelNaZEJmQllMUkhUM1Z6WnlPSzJxaHpobg?oc=5",
-      "created_at": "2026-09-29 02:06:30"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소화전의 형식승인 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-208",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-11-20",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47620?announceType=TYPE6&mappingAdmRulSeq=2000000332374",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-10-30 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "공공기관의 소방안전관리에 관한 규정 전부개정령안 재입법예고",

@@ -19,8 +19,20 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-30 02:24:30",
+  "last_updated": "2026-10-31 02:00:29",
   "coffee": [
+    {
+      "source_site": "헤드라인제주",
+      "title": "유효기간 지난 커피 기프티콘, 환급받을 수 있을까",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "기프티콘",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1Cd3l6OG53Um5sdmxEM3R4dzRNUThVdFNrZVBjWlVwT2tKYkVaSThYMVVsemU3QnBidzh1LUtuYXpsNHU0MEVXUHNTNm5nVnY2ZFZmem1hNVNKWUY2YWdyaVNJRzNrQTRISVBGMGNWWWdPNGM?oc=5",
+      "created_at": "2026-10-28 04:30:00"
+    },
     {
       "source_site": "미디어투데이",
       "title": "남동구도시관리공단, “적극행정 우수사례 투표하고 커피쿠폰 받으세요”",
@@ -344,42 +356,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE11QjUxQzFrRVVZUWw4dDdBUVFreDJyb1RETnVEcS1ORktQNEI1cHVubE5HNjkydHJENGxSOE1RWmhYWm1TdVdMc2lDNmJVTWV2S1JEUTlmUG1ybDBtdVZWOWdWU01oWG9LOUJ4RQ?oc=5",
       "created_at": "2026-10-01 07:18:18"
-    },
-    {
-      "source_site": "유스연합",
-      "title": "스타벅스, 세계 커피의 날 맞아 매장별 선착순 27명에 브루드 커피 무료 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1Oc0ZiSHJlckROWnZMS20zLUFhbTlOVXZKYjNEUjRJZldaODdBNThzeVhLWW5Jc291c2Y5bVIwUkdUcXg0WHBfeUtRM3hNa3V4WVAw?oc=5",
-      "created_at": "2026-09-30 23:02:28"
-    },
-    {
-      "source_site": "팍스경제TV",
-      "title": "LG전자, 스타벅스와 '마이컵스타' 이벤트…\"공공기관·공군기지까지 마이컵 공급 확대\"",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5UdTVvWFFGMkpKckR1cWcweERfb3JueUFBX3JNdHF1RXpOU205NmZaaVhwUWZrdWhxSXNacEZXaUdtZkhfcGtnUUZVNC1xSVR2aWViQ1QtSEpCck9QNzZUV0NUSW0yQ080?oc=5",
-      "created_at": "2026-09-30 08:33:23"
-    },
-    {
-      "source_site": "스페셜타임스",
-      "title": "LG전자, 스타벅스서 마이컵 3회 세척하면 최대 50만 원권 응모",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBXM2E2S2pGZUxybWlEN0plQlJERlZqcURPWnNiRGNMY2g4Yk1zQ3VBekh4bEpTZDFseFVwSkI3QXNGVTcxX2c0RzJNMVN1WkYtbzFFRHNXZDZKaXg0VE1qLW04T2xoZnBiT1Z1U3ZrTHc3UQ?oc=5",
-      "created_at": "2026-09-30 08:03:36"
     }
   ],
   "firelaw": [
@@ -430,19 +406,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-10-12 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방청과 그 소속기관 직제 시행규칙 일부개정령안 입법예고",
-      "detail": "부령 · 공고 2026-126",
-      "action": "입법예고",
-      "status": null,
-      "period": "의견제출 ~2026-07-09",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/87412",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-07-02 09:00:00"
     },
     {
       "kind": "🚒 소방 법령",
@@ -684,15 +647,6 @@
       "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE85eGVxX2xZNFdBbTlNTDRadk9aTy1nVDQ5M2lOekhIYmxqUkJMZEVHX0J0VmJiUGZHcUVtdjdLdldmcEhLd2VMWnVOc1I1U1k?oc=5",
       "site": "gnews_v.daum.net",
       "created_at": "2026-07-07 07:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "용혜인 의원 ‘소방시설 최초점검 내실화’ 소방시설법 개정안 발의",
-      "detail": "세이프투데이",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFB0VUZLTU9GVDUya0JDWmpXMHZLZ2h1YXRKaWlnUVVNcFJnSlRuUXB0QlUzSHFiQnJ1MVRRV2pTblU1QlRnWURBemtDX3RNUlFoSWk5TkpIcy05ZFRvbmIzdTE4X2o5WXkwaHfSAW5BVV95cUxQQWc1dEtKeElRQXdYd2N0UGFFRTJpVnI2a2Y0NTlLczFiSkVrY1l2NWxIOHdLRUJOVVJ1QkFLZVoyM3ZRVjZaYm5RUU9pb1A2UGtwYmg2MmhyZWdfeUpvcDFVTl9paE9uZ0lpZ0wzQQ?oc=5",
-      "site": "gnews_세이프투데이",
-      "created_at": "2026-07-02 07:00:00"
     },
     {
       "kind": "🚒 소방 법령",

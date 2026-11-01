@@ -19,7 +19,7 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-10-31 02:00:29",
+  "last_updated": "2026-11-01 01:50:31",
   "coffee": [
     {
       "source_site": "헤드라인제주",
@@ -310,18 +310,6 @@
       "created_at": "2026-10-06 08:25:33"
     },
     {
-      "source_site": "BRIC",
-      "title": "🎁 [Corning ] 10월 Corning Matrigel Matrix 리워드 캠페인 (최대 5만원 커피쿠폰 증정! ☕)",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxON0xRaFJPYXdTeUVfUlJ6SGE2WjMxanJlWFdvV1ZYeVV2MW81dnpUUGxMYnRkbEhZNTZWRHozeERYSF9lREZGWXBPRHpmcTJlcGR1RFFrUTRKcWZZZmlUQm5KUjA0bWRrMGRlR084SHRSQ1VuQ1ZtbmhKX0VCNFZodlZZbS15V00?oc=5",
-      "created_at": "2026-10-01 08:13:20"
-    },
-    {
       "source_site": "대한청년일보",
       "title": "스타벅스 ‘커피콩 베어리스타 키링’ 화제…3만원 이상 구매 시 랜덤 증정 이벤트 시작",
       "category": "커피",
@@ -332,30 +320,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiQ0FVX3lxTE9kZnh6X3piX3ltNDVYRVVZQm9DQjhmekFocEZRQ0xHSkpyOHdLcHhabWdRc3QtNm5xNl9xMU84YVlnZFk?oc=5",
       "created_at": "2026-10-03 04:56:07"
-    },
-    {
-      "source_site": "제주교통복지신문",
-      "title": "10월 1일 스타벅스, 디카페인 1+1·커피 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5HZmppV2tKNFhsVHNvMGZxc0UzYWdxUHRVM29BWV91QW5JY1RhRzRxc0hKUzBzMmQyNDFaWHIzR19pejVnYkJfWnZBQl80U2FZLTVwOWZiTllLUER3Y2tVZQ?oc=5",
-      "created_at": "2026-10-01 04:26:46"
-    },
-    {
-      "source_site": "경상일보",
-      "title": "광주수산 노량진수산시장 회크닉 방문시, 커피쿠폰 2개 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE11QjUxQzFrRVVZUWw4dDdBUVFreDJyb1RETnVEcS1ORktQNEI1cHVubE5HNjkydHJENGxSOE1RWmhYWm1TdVdMc2lDNmJVTWV2S1JEUTlmUG1ybDBtdVZWOWdWU01oWG9LOUJ4RQ?oc=5",
-      "created_at": "2026-10-01 07:18:18"
     }
   ],
   "firelaw": [
@@ -371,19 +335,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-10-30 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "공공기관의 소방안전관리에 관한 규정 전부개정령안 재입법예고",
-      "detail": "대통령령 · 공고 2026-129",
-      "action": "입법예고",
-      "status": null,
-      "period": "의견제출 ~2026-07-24",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/87352",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-07-03 09:00:00"
     },
     {
       "kind": "🚒 소방 법령",

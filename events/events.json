@@ -19,8 +19,32 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-11-04 02:54:38",
+  "last_updated": "2026-11-05 03:08:14",
   "coffee": [
+    {
+      "source_site": "SR타임스",
+      "title": "스타벅스, 겨울 e-프리퀀시 스티커 두배 적립 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1CYk1PRWVrTm1yMWtUX09BS3VwQ0hDLW1XYWg2M3cyZzJHeVpPTV8zM2xKQ0pvVEFFS0pIOFFXQmNONHpMbkVxbk9QWHhKcC1NZ0I4QUptazEzQjlXLU9mLXZkaWxiR1Qz?oc=5",
+      "created_at": "2026-11-05 01:36:21"
+    },
+    {
+      "source_site": "전자신문",
+      "title": "스타벅스, 겨울 e-프리퀀시 더블 적립…고객 감사 이벤트 진행",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE8zTlhJWHBYbnpVV2RnUEFDTlNsbXo3NGJDdGdLZWFRZHgtYXZySXhEckVRRTdsY3JEVS1aTzc2ejlhdWFKa3ZaZmIyY2FSZw?oc=5",
+      "created_at": "2026-11-05 01:14:23"
+    },
     {
       "source_site": "강릉넷TV",
       "title": "강원 고향사랑기부 10만 원 이상, 5~6일 커피쿠폰 2만 원",
@@ -356,30 +380,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1scGg1MXg1STVKSnhIYzNDaDVNVXJnRld0QVlIR2VRUnNtblFGc2RSVS1JcUhLRkdvY1MzQ2ZLRW9vRmoxbGZHS0cxNU5VOUhrZ1JSN2RzWl9zMEw5OEpFaE00b1I?oc=5",
       "created_at": "2026-10-08 10:12:53"
-    },
-    {
-      "source_site": "마이데일리",
-      "title": "“이 메뉴 이름 뭐라고 지을까”…이디야커피, 한글날 ‘우리말 작명소’ 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": "이디야",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5BTU93TnBtSGlTQ2I5OFduOEpnTWxQcmE5Q204ZG8telRSMV82NGRUZTlURVVOdG1IZ3ZYaEdaV2hGbVpKREpNRnJlbkZxOUdUODRvY1Q5ZXNqUjgzYmU5UGlzU3hnQQ?oc=5",
-      "created_at": "2026-10-07 23:50:39"
-    },
-    {
-      "source_site": "국제뉴스",
-      "title": "구리시, '홈페이지 이용자 설문 조사' 100명에 커피 쿠폰 증정",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE14bWZsbmVXVlRWemVNU0NCOUFqTUFaclpkRVlyNWd3X0h3R1FVd2g0TFIwNFFSbkhBWmdZbnp2UlVkWVNZRjFNQUJyV1ZSWUdranBUcS1jWnpCbk1QNEZqY19mM2FqZXpvOFJhLUNR?oc=5",
-      "created_at": "2026-10-06 08:25:33"
     }
   ],
   "firelaw": [
@@ -632,15 +632,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-08-07 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "서범수 국회의원, 소방기본법 일부개정법률안 대표발의",
-      "detail": "v.daum.net",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE85eGVxX2xZNFdBbTlNTDRadk9aTy1nVDQ5M2lOekhIYmxqUkJMZEVHX0J0VmJiUGZHcUVtdjdLdldmcEhLd2VMWnVOc1I1U1k?oc=5",
-      "site": "gnews_v.daum.net",
-      "created_at": "2026-07-07 07:00:00"
     },
     {
       "kind": "🚒 소방 법령",

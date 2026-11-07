@@ -19,8 +19,32 @@
       "created_at": "2026-10-09 13:18:24"
     }
   ],
-  "last_updated": "2026-11-06 03:09:54",
+  "last_updated": "2026-11-07 02:32:07",
   "coffee": [
+    {
+      "source_site": "금강일보",
+      "title": "컴포즈커피, 아메리카노 무료…일정·혜택 대상은?",
+      "category": "커피",
+      "region": "국내",
+      "brand": "컴포즈커피",
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1LTnEzbHRnU2NZVncwOG1tU0FvQmhOdFFEQWJMcGFMYWFBZGlmaEhWVVdUbUsyMjhaWFdIS2kzRWFKVkgtU2N6Q2JOY083NE56ZV9MUmhPRDZTYV8zU3p1QVQyZmh6WmRUNWc?oc=5",
+      "created_at": "2026-10-08 07:00:00"
+    },
+    {
+      "source_site": "뽐뿌 쿠폰·이벤트",
+      "title": "티머니GO) 전원증정 메가 아이스 아메리카노 쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120487",
+      "created_at": "2026-11-07 01:42:46"
+    },
     {
       "source_site": "스마트경제",
       "title": "“아이 첫 통장 만들고 네이버페이·커피 쿠폰 챙긴다”… NH농협은행, 대고객 이벤트 개시",
@@ -356,33 +380,18 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9VajJIVEVBel90Z05MWlVlb05TcjJidG16WUo5TGJfMFU2enBiZV92b0ZKS1JrZXhKMXdFWnJjcXpseHVFNlIwOHpHN1FzUEZVaWF6ckNsTC13VG11?oc=5",
       "created_at": "2026-10-11 23:58:00"
-    },
-    {
-      "source_site": "위키트리",
-      "title": "스타벅스 다시 1위 찍었다...10월 14일까지 '가을 이벤트'",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": "~2026-10-14",
-      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBnYURTVWUwTUFOakxrZWtrN2dmZmZlWm43MEVTTTV1TEVDeVhOUEVaNG9MQmM0ZWc5czVEOEphczl2RFdPRTI2QnpSVk1xSVJkci00aEd3?oc=5",
-      "created_at": "2026-10-11 02:22:00"
-    },
-    {
-      "source_site": "뽐뿌 쿠폰·이벤트",
-      "title": "[네이버페이] 카페 2000원이상 500원 적립",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=119546",
-      "created_at": "2026-10-11 23:58:16"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방시설 기준 손질한다… ‘소방시설법 시행령’ 입법 예고:FPN Daily",
+      "detail": "소방방재신문",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNTDN5X3FRaFJoYW43OVZyc0lGdV9peWxaMFpzWmdqYzlXd0M4Ync3dTdEUWRJOFphaFptelB4R3VacXI3dWEzOXQySkQzUjFaZXhYa3JiQjJjNnhfYVdtdGZOTVpqOGprTktYVkR5MmdCekVHU29iX1JuUHR5eFpKLTZBbHlUWm1kX2pmblp4VkpvS1p2MkhVdXQ1WW0zSm9Zc2JiX3RMWWVTN0paaU13RXNCYWxZWjBJRWI1WkRnLWVLeVdFaFk2OVUzekdSc3Bqbmc?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-11-05 11:08:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "건축내화재 KS 개정…샌드위치패널 두께 다양화·화재안전 기준 강화",

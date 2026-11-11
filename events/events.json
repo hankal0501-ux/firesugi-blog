@@ -10,8 +10,32 @@
       "created_at": "2026-10-23 01:35:00"
     }
   ],
-  "last_updated": "2026-11-10 04:29:15",
+  "last_updated": "2026-11-11 02:31:56",
   "coffee": [
+    {
+      "source_site": "대경일보",
+      "title": "별 8개면 무료인데 10개에 결제까지…스타벅스 행사에 소비자 혼란",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBoXzdlRkdCTURYX2c3el9oaXVTRjRVeVFDTEkyR0xtUmx4aU85Q1MwekxFZ1dVVUdObUkyVnVLaGdDdmg3eWk4bjVvc2Jzb2hvdm13YjEwZ2RnMWlpUjBSamJJUmNFUkh5?oc=5",
+      "created_at": "2026-11-10 05:49:50"
+    },
+    {
+      "source_site": "뽐뿌 쿠폰·이벤트",
+      "title": "티머니 GO] 메가 커피 쿠폰 100% 즉시 지급",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120628",
+      "created_at": "2026-11-10 16:21:21"
+    },
     {
       "source_site": "네이트뷰",
       "title": "스타벅스 크리스마스 이벤트 미니백 8,900원 그린 레드",
@@ -347,33 +371,48 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMirgJBVV95cUxOR0ZrZkJpb016ZW1XZkN4RlpDNlo3cFdCZHVPN1VQRlhzanQ1UjVyODZyZE0xZk9nNG9ZckZCRl9ZZmZ6cnZoLW10cS1Jek4xX2lBbHd0WlhLNUI4Z1JQbjAzMmJjYmpxZDRmOGFYV0VBNzV0ZmZzNzVmQS0yeW1iR1F6US0wX0kyN3RmWGtQTG5TN3FGMWRsMklmSGg0am95U2xxTmgxRG5sb3JQaGl4QlpHSnJTaDdXc2hscmIwenNsVFFGTElnLWlRX055eHhRVzB4WThRSnRXZlo3TVdXd2wwVGk5WS1Jb21VVlhSZXMtdFZKall0dnhoU1pWcmJMbjVWaWVpRG1pWkFrdmxIYVZ5bVdqaXJTWUdjbmxQYjRMdUxTZHhTdW41YWt3Zw?oc=5",
       "created_at": "2026-10-13 08:20:00"
-    },
-    {
-      "source_site": "더글로벌기빙뉴스",
-      "title": "스타벅스, 리워드 1600만명 기념 혜택 확대…신규 별 쿠폰 선보여",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE9mNEpnRF9idW56dEhKTnNTN1FTeUx0MGVfRUpZR3lUSW5HM1VmalFHZjF4N3c2NHhVcWFkYU56NDBZelhhMWs4Uk5FSGx2eklWdlI0ZA?oc=5",
-      "created_at": "2026-10-13 10:59:00"
-    },
-    {
-      "source_site": "뉴스핌",
-      "title": "스타벅스 장충라운지R점, '서울 카페·디저트 50선' 선정 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9VajJIVEVBel90Z05MWlVlb05TcjJidG16WUo5TGJfMFU2enBiZV92b0ZKS1JrZXhKMXdFWnJjcXpseHVFNlIwOHpHN1FzUEZVaWF6ckNsTC13VG11?oc=5",
-      "created_at": "2026-10-11 23:58:00"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방공무원 승진임용 규정 일부개정령안 입법예고",
+      "detail": "대통령령 · 공고 2026-216",
+      "action": "입법예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-21",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/89406",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-09 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방공무원 임용령 일부개정령안 입법예고",
+      "detail": "대통령령 · 공고 2026-217",
+      "action": "입법예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-21",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/89404",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-09 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "119구조·구급에 관한 법률 시행령 일부개정령안 입법예고",
+      "detail": "대통령령 · 공고 2026-213",
+      "action": "입법예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-16",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/89378",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-06 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방시설 기준 손질한다… ‘소방시설법 시행령’ 입법 예고:FPN Daily",

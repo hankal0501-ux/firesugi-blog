@@ -10,8 +10,20 @@
       "created_at": "2026-10-23 01:35:00"
     }
   ],
-  "last_updated": "2026-11-13 03:08:08",
+  "last_updated": "2026-11-14 02:54:19",
   "coffee": [
+    {
+      "source_site": "연합뉴스TV",
+      "title": "스타벅스, 겨울 프리퀀시 재개…스피커·가방·플래너 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1CemJDMHFUODYweC1SN01qUUkxWjlCS1J1SGlGZnJ1a3JDT19GV1Y3SUtnZjlEMXQ4dW5iME1nMENnSEJTd1lxWUdNOGMyOURlRUplTDRyd0lGQmJLOEd6OUJEdE9pTE0?oc=5",
+      "created_at": "2026-10-15 07:00:00"
+    },
     {
       "source_site": "한국경제",
       "title": "50명 한정 NCT 팬사인회…메가커피 프리퀀시 이벤트",
@@ -359,21 +371,61 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPUVdJd3dSazBvekdWY2dwZ0pmNkRVQzhtOWI0emRBVzNGSGU5a0hnNFhkblIzekk4T3FkZGtpS2tvaUx4Z2tXQUF6MGkwS2pNc1lhT3Z6aEk4WHRIdzQzZ2dHWXpuMEVoWGtWOWtzcXU3UmtpM2tvZ1JSM2ViclFTLURwd2NRdzFfanBoSNIBoAFBVV95cUxOb0RIRTBJSjM2WEZOTEFXMXhyc1B5VzZnbkxiWUUxcENCeFpvRkZjWjVydWpGWGdZVGxUdHIxaWRCbm1mY210ZU1DMWc5ZDNQTDVzMUFmMTRMaXVUY05pdnZIcUQ5TXBORnNyMF9udjJNMlY0TFMxUi1xdVUta3lyeVpLdUJEc19URVliRTVYTG1Dbm9ieUhEZm5pY21kTjJy?oc=5",
       "created_at": "2026-10-16 05:05:00"
-    },
-    {
-      "source_site": "뉴스후플러스",
-      "title": "[단독] ③ 메가커피, 할인 공세 뒤 쿠폰 수수료 8.4%…점주 부담에 본사 분담은?",
-      "category": "커피",
-      "region": "국내",
-      "brand": "메가커피",
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBnemNfQnhmX0ItN3Z5ZVRteF83WUVKY0JzVjBmcU4yNFVYTW9qMTVWSFhva1I3THoxMEFJUE41ellxcmlCR25PaldsZDAyNUJxOHhqYV9ETWRFQ0xtOVE5bnhJaElQSjZVa01jcmdn?oc=5",
-      "created_at": "2026-10-14 20:00:00"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방용품의 품질관리 등에 관한 규칙 일부개정령안 입법예고",
+      "detail": "부령 · 공고 2026-218",
+      "action": "입법예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-22",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/89456",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-12 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방시설 설치 및 관리에 관한 법률 시행령 일부개정령안 재입법예고",
+      "detail": "대통령령 · 공고 2026-219",
+      "action": "입법예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-22",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/89480",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-12 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "유수제어밸브의 형식승인 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-214",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-02",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47710?announceType=TYPE6&mappingAdmRulSeq=2000000332790",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-12 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "성능인증의 대상이 되는 소방용품의 품목에 관한 고시 폐지안 행정예고",
+      "detail": "고시 · 공고 2026-215",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-02",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47696?announceType=TYPE6&mappingAdmRulSeq=2000000332818",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-12 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방공무원 승진임용 규정 일부개정령안 입법예고",
@@ -671,32 +723,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-08-07 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방 신기술·신제품 심의 운영규정 일부개정안 재행정예고",
-      "detail": "고시 · 공고 2026-143",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-08-19",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47164?announceType=TYPE6&mappingAdmRulSeq=2000000329382",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-07-30 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방 공사감리원 업무대행자 지정 등에 관한 기준 고시 제정안행정예고",
-      "detail": "고시 · 공고 2026-138",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-08-12",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47054?announceType=TYPE6&mappingAdmRulSeq=2000000329212",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-07-23 09:00:00"
     }
   ]
 }

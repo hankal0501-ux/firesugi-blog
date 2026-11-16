@@ -10,8 +10,20 @@
       "created_at": "2026-10-23 01:35:00"
     }
   ],
-  "last_updated": "2026-11-15 02:23:03",
+  "last_updated": "2026-11-16 02:33:09",
   "coffee": [
+    {
+      "source_site": "신아일보",
+      "title": "배민클럽 회원이라면…백억커피, 전용 메뉴 주문 시 아메리카노 무료",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE8td0dkMlU3d213LTdUeWYtNHQ5WnR3TGxQSUEtNFZYcEt4ZEMxQzFrTmNPTU9zSHc2Q1ppMEFFUmpWTGwxdDc3MWQtTklaQnR5aUlCTXZMTVN6OERRRkM4MVhEQXlSZlJMbEdQT01tTm0?oc=5",
+      "created_at": "2026-11-16 00:10:00"
+    },
     {
       "source_site": "싱글리스트",
       "title": "스타벅스, 크리스마스 홀케이크 사전예약...할인부터 산타캔들 증정",
@@ -359,21 +371,18 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBNTDFVNzJPNmd2aFY3RkVfRE1MbXVUZS1lc1Z3NkQxYW91dDI5MVU1VGVOWVBXSnQwNUVvWjhKZVU1bnRWQUd6NFZTRGJVRXdpZ2VSd3p3dnB6ZDlONVpVczhJb3RLRHfSAWdBVV95cUxQTUwxVTcyTzZndmhWN0ZFX0RNTG11VGUtZXNWdzZEMWFvdXQyOTFVNVRlTllQV0p0MDVFb1o4SmVVNW50VkFHejRWU0RiVUV3aWdlUnd6d3ZwemQ5TjVaVXM4SW90S0R3?oc=5",
       "created_at": "2026-10-23 06:09:49"
-    },
-    {
-      "source_site": "Chosunbiz",
-      "title": "그린라이트, SBS골프와 골프장 리뷰 이벤트 진행… 아이스 아메리카노 증정 - 조선비즈",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPUVdJd3dSazBvekdWY2dwZ0pmNkRVQzhtOWI0emRBVzNGSGU5a0hnNFhkblIzekk4T3FkZGtpS2tvaUx4Z2tXQUF6MGkwS2pNc1lhT3Z6aEk4WHRIdzQzZ2dHWXpuMEVoWGtWOWtzcXU3UmtpM2tvZ1JSM2ViclFTLURwd2NRdzFfanBoSNIBoAFBVV95cUxOb0RIRTBJSjM2WEZOTEFXMXhyc1B5VzZnbkxiWUUxcENCeFpvRkZjWjVydWpGWGdZVGxUdHIxaWRCbm1mY210ZU1DMWc5ZDNQTDVzMUFmMTRMaXVUY05pdnZIcUQ5TXBORnNyMF9udjJNMlY0TFMxUi1xdVUta3lyeVpLdUJEc19URVliRTVYTG1Dbm9ieUhEZm5pY21kTjJy?oc=5",
-      "created_at": "2026-10-16 05:05:00"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방기본법 개정 발맞춰 소방 지휘관 1400명 '산불 특별교육'",
+      "detail": "노컷뉴스",
+      "action": "개정",
+      "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBPcU42NTU5eWxvMEdiNXVSMFZZcVFWSEx2ZTZ2T2ZzQV9vdjNDSTJfV2FSSGY0dDF3UTlvSkotS0RwaHg5ZERVNWszbkpDcFlPU3c?oc=5",
+      "site": "gnews_노컷뉴스",
+      "created_at": "2026-11-15 03:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방용품의 품질관리 등에 관한 규칙 일부개정령안 입법예고",
@@ -710,19 +719,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-08-11 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소화약제의 형식승인 및 제품검사의 기술기준 개정안 행정예고",
-      "detail": "고시 · 공고 2026-149",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-08-27",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47128?announceType=TYPE6&mappingAdmRulSeq=2000000329630",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-08-07 09:00:00"
     }
   ]
 }

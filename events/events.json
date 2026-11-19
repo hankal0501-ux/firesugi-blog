@@ -10,8 +10,92 @@
       "created_at": "2026-10-23 01:35:00"
     }
   ],
-  "last_updated": "2026-11-18 04:01:22",
+  "last_updated": "2026-11-19 03:58:04",
   "coffee": [
+    {
+      "source_site": "뉴스타운",
+      "title": "인천시, ‘걷고 줄이고’ 캠페인…참여자 1,000명에 커피 쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBYY1dSWnZvck54d1A1OFYtNGEzQlM4eDU5U3YycHBKOGk0MUQyd2dHQmwwb1FIVEV5cHp6bkhvNDNCX1doemxEM05uX2ZyRnJvQVEyOFdRVFNKbmtacmhLZmZSc1hlRGw0NDdsZjlR?oc=5",
+      "created_at": "2026-11-18 05:49:19"
+    },
+    {
+      "source_site": "애드뉴스인천",
+      "title": "인천시, 미세먼지 걷기 챌린지…1천명에 커피 쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1GMFV0dHFwWXFaQ0ZVdUk1d0tyLVRnSXlEMXB1RHAtTUZTYXI1cTFRakpKX1ktVDVOLU1VV3VEdmQyRmRpbG9CSmcwZlNNLVg3d2NhelN1WHdfdkFIYXNOR2RJWnl4N3FHY3lV?oc=5",
+      "created_at": "2026-11-18 02:13:00"
+    },
+    {
+      "source_site": "프레시안",
+      "title": "인천시, 걷기 챌린지로 미세먼지 줄이기…시민 1000명에 커피 쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE8tNDlVNlNxQUNDOHpteDhza0Z5R28yWVF5dGF3TTVlcmJkUk1jUnZVb1lNN2w1SFJITjhPSkx3czJYMV83TVFYN2o2cWtnZFlkY3ZZOVJXWUxOU0hxNy1vcWFXSjkzbHY5N3hR?oc=5",
+      "created_at": "2026-11-18 00:59:00"
+    },
+    {
+      "source_site": "메트로신문",
+      "title": "인천시, '걷고 줄이고' 챌린지 22일 개막...14만 보 걷고 경보 문자 가입하면 ‘커피 쿠폰’ 제공",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1kWkpOODJkRk1mVEhCVWxRUS1SLVY1S1RrRTdjdHFvN0FsbEhfZGtfUkk5X3dRZE5pWkhRaXVrMkhYUVlfY09jenB0dnl4UUVQODJnT1NxREZ5ZGMtYmxnMg?oc=5",
+      "created_at": "2026-11-18 00:49:14"
+    },
+    {
+      "source_site": "중앙이코노미뉴스",
+      "title": "NH농협생명, 앱서 '돌잡이' 응모하면 상품권·커피 쿠폰",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE9zYlZ6cUxWcnVtam81d09DWjg4cmRMY2NlRTF2WkZGM1RDTHBqTFZsVU91cnZxR1I2X2J3Qlh2OEhfc3oxcFBCcnVkeGgyQktoZU52S28xNG52ei1wNExsdzl1WjdweVVaZ1l5enMycUx5dw?oc=5",
+      "created_at": "2026-11-17 23:45:03"
+    },
+    {
+      "source_site": "웹이코노미",
+      "title": "[스타벅스] 연말 기업 선물 혜택 확대·헬로키티 협업…독립유공자 후손 1억 원 지원·비즈몰 카드 구매액 최대 5% 추가 증정…크리스마스 상품·홀케이크 예약 판매",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE4wRDh0ak02VkxKa1ZXNzRaeXFvVkxmNklDWjloLS1Mb1RxdDhWZEdhTVVWS1dhUFp2TEd4Ujk4NnN4VE5PbXh3UUNkTDM1bElZME9OZ2RmU2xHc08yUlItMTFFNm1CV1JRVVNWNVBYQ0xBZw?oc=5",
+      "created_at": "2026-11-18 15:23:10"
+    },
+    {
+      "source_site": "스포츠서울",
+      "title": "임직원 선물도 스타벅스…비즈몰서 카드 최대 5% 추가 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBYQkMtazZJOGlDaTRScDFFTlVnMDZuaHphTV9pTlYyTVhpZnpKMzBfcER4VkZOUU5FRzRSeTZrLWhtVHlNMUxUbm91YU1oTkExYURveXVfNk0?oc=5",
+      "created_at": "2026-11-18 06:57:40"
+    },
     {
       "source_site": "푸드투데이",
       "title": "더벤티, 20일 '더벤티데이' 할인…신규 회원 아메리카노 무료",
@@ -287,90 +371,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE9DcnRXWmtXVWZ4a25Ea1pVWC13QU1neDhTU0FrYzFqU3FEaWZ5WlpkZnhBMDlkOTE1Ylk5eDBzMkZia0hidmFaWHhrbnJvMDJfYWVFTlYzRzAycHpEUDFmV0NLMkduUzV1TmRZ?oc=5",
       "created_at": "2026-10-29 02:34:23"
-    },
-    {
-      "source_site": "컨슈머타임스",
-      "title": "빽다방, 당근페이 결제 시 '아이스 아메리카노 500원' 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": "빽다방",
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5EdkJ3cUdHLVVMajlfRmlTc0NOamZOLVJVV0xrdUZqZXZ5V29WTThiWEFTaE9pc2gtRGpIM3ZKNUhWaXpsUmpEMC1MMG13Y19oZjR5LThSd0tFU2Y5WDNkUVBZSkY3a1FVdXc?oc=5",
-      "created_at": "2026-10-29 07:30:41"
-    },
-    {
-      "source_site": "뽐뿌 쿠폰·이벤트",
-      "title": "전원 메가 아이스 아메리카노 즉시 발송) 티머니GO 가입",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120176",
-      "created_at": "2026-10-29 21:55:50"
-    },
-    {
-      "source_site": "타임뉴스",
-      "title": "“탄소중립포인트제 가입하고 커피쿠폰 받자!” 거제시, 신규 가입자 200명에 혜택 쏜다",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1RTTkzSXNsdzRsdHB5QzQ0bk56bG5Fd00wdmxLQzhXMEZrUm9WWEdCM09vM0RzRVRIVHFXaWpBajVRQS03eDdfM090NE8weGdKM29RMg?oc=5",
-      "created_at": "2026-10-28 09:02:01"
-    },
-    {
-      "source_site": "새거제신문",
-      "title": "거제시, 탄소중립포인트 신규 가입자 200명에 커피쿠폰",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBRLVB5Zk9yYzU1eThnXzZuWnRDYmZHX19pWmp1MXN4cVo5cWMzOXd3QTlhUEhDY3UyZDZiRTJpblEtOFdfd2x0a01ZV0JhbWFrSUJFRVVORWlLbVFCSlViVWZwbjRORzBkSFdN?oc=5",
-      "created_at": "2026-10-28 08:06:38"
-    },
-    {
-      "source_site": "거제타임즈",
-      "title": "에너지 아끼는 탄소중립포인트 가입하면 커피쿠폰…거제 선착순 200명",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFB2aWtIcTZ1UnVwRnd5dE1MN01PM1IwQlEwZjdMNkUzemVfcEM2Q3F5N1QzQ05zeFZpRnZ4TklocDV5R3RReWJnODZhMUtfenJMWU5hZGFzazNlb2RJN1BCYk54d19ncGxuSGNzcVJscw?oc=5",
-      "created_at": "2026-10-28 08:02:53"
-    },
-    {
-      "source_site": "거제저널",
-      "title": "거제시, 탄소중립포인트 신규가입 이벤트…선착순 200명 커피쿠폰 제공",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE8tWjVDNkYtU21sZlZGSk1saHBQYk9CM2FsczR3UnlYNG1RTWhSb3d2MS02R1FXb2FhOGpNbDVFc211M3hTWExVLXBBajVCbk1oZ2l5X05Qb2xnVDY3cElMYVlzc1huWWhaSVU5WDVBUDE4QlU?oc=5",
-      "created_at": "2026-10-28 07:18:01"
-    },
-    {
-      "source_site": "오늘경제",
-      "title": "이디야커피, 가치소비 앞장서…‘맛있는 저탄소 한 잔’ 이벤트 진행",
-      "category": "커피",
-      "region": "국내",
-      "brand": "이디야",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1DZXdFeEVxM1ZwVmE2dngtcnFfVWpiNXkwZDdmVzhwR1o1WWkySVR0ei1Sb3dibGNMTTBCUUd4U2JQQklNVlphVUJCbnFqZ3Z0VFczM1VpTXpQUlBRRHVTOG1BZ3lUSFVCUlZnUzZKOWk0dVE?oc=5",
-      "created_at": "2026-10-23 04:36:01"
     }
   ],
   "firelaw": [

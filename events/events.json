@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "농업인신문",
+      "title": "aT, ‘2027 NEXT K-푸드’ 협업기업·영상 공모전 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBuXy1HWUJTTnF4dHdPWVJBVG5qa0J3Wk4waXJsMHkyeHVDUzYzSXoxb0JQMzlxT2pWa0FON0Y3VURQMUtLNUJVUmc2b0VFdmluRTZLT1hlSDRLX3Exdk5ablZtQnJwR19CRHBYdw?oc=5",
+      "created_at": "2026-11-20 03:05:59"
+    },
+    {
       "source_site": "경남도민일보",
       "title": "창원시 어린이 불조심 포스터 공모전",
       "category": "공모전",
@@ -10,7 +19,7 @@
       "created_at": "2026-10-23 01:35:00"
     }
   ],
-  "last_updated": "2026-11-19 03:58:04",
+  "last_updated": "2026-11-20 03:52:03",
   "coffee": [
     {
       "source_site": "뉴스타운",

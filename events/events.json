@@ -10,8 +10,92 @@
       "created_at": "2026-11-20 03:05:59"
     }
   ],
-  "last_updated": "2026-11-22 02:48:30",
+  "last_updated": "2026-11-23 03:29:50",
   "coffee": [
+    {
+      "source_site": "일간경기",
+      "title": "광주시의회, 유튜브 구독 이벤트 참여하면 1만원 커피쿠폰 쏜다",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5wN25EWW04ZWJEeTc4ODBPTUpfUDg4VVNlM1ZyYXA1dkVxVmZZNFFSWHBRQ3V1XzdjVEhvdERyVzRFaUNuVHpHTHBKYmt3d0s4UUh0S1NxNmNkUEZDQ1plYTd6dWs4cEc1?oc=5",
+      "created_at": "2026-11-23 00:33:15"
+    },
+    {
+      "source_site": "한국사회복지저널",
+      "title": "광주시의회, 유튜브 구독 이벤트…총 100명에 커피 쿠폰 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBBc2hNLThPM1NXaFdWekR5RGloQTV0X1c5VTRneWZzcUVNZnB0Nk1nckNVSlNkTGI3QnV0cTAwMUN5bHlUR2JiOGdRZnhOWkFUSXI1Zkt2MXRkMTBjaGxmTnM1a3VMS25HQ2ZV?oc=5",
+      "created_at": "2026-11-23 00:29:44"
+    },
+    {
+      "source_site": "나눔경제뉴스",
+      "title": "케이뱅크, 소상공인 연말 이벤트…2027년 달력 증정·커피 쿠폰 제공",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5WOGtEQTZWMk1WczY1a21vY3FYTzZma0Qya04zd0gtNlVOcmtHRVhHX1hQYUUzam1MMW16QURHNU5mM3NwMkRQUHJDWFY4aXlhUzR6azNsX3MyQXVtZmxYdlNuckdPM1dyb3MtUQ?oc=5",
+      "created_at": "2026-11-22 21:57:58"
+    },
+    {
+      "source_site": "핀포인트뉴스",
+      "title": "스타벅스, 기업∙단체 고객 대상 연말 기프트 프로모션…카드 최대 5% 추가 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBoNnNDVm1vWEczOEZfYlFwZmRUN09TZFJDVlBSbUtBRWFKNjQ3UUlKaW00dkEwS012UUJXMmFIT3lwX21PTEgwczJ5QWlMN29MWmtjVzh3dVBCMXl0MFZXcldHTHpPQUJSNTJSelQ1aWF6WlHSAXdBVV95cUxPZ3VGeGJtcWluN3NWM09nTmxPQkdTOEdBVmtEVzd6STJVbmtjdm5iNlY5Ny1uRENjR3NGNXR2WVkxeTVZNFgwZEZ4MDg3SDZxMVRwRzc1emhOQmdwbXJmS2FMdXlfeHhJeXRicjlvQndUU1hWY2hMSQ?oc=5",
+      "created_at": "2026-11-18 06:12:53"
+    },
+    {
+      "source_site": "시장경제신문",
+      "title": "스타벅스, 법인 선물 구매 문턱 낮춘다... 카드 증정률 최대 5%",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE0tWTBNcHNvRUFiMWNBX2FPSnVGZkRZYWE5dWRaSlVGRlhXQlRUbm9VejBCVWpFNHJTVURYQ09qdlZJUm9CSXJkNHVHdE8yX28ybXJfSHhCVlY1WDlLN0VNOF91dWVyQkdXS1NIakpiNy0?oc=5",
+      "created_at": "2026-11-18 05:49:57"
+    },
+    {
+      "source_site": "비즈니스포스트",
+      "title": "스타벅스 기업·단체 고객 연말 선물 행사, 카드 금액 추가 증정 및 굿즈 할인",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": "goods",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1oY211TlJxYXktWjdPYVcwRUh5NW4zbW9Cd2NCdkUtZkdSLUQxSjBDVFVrZTYtYzdTQzF0OHo4SkFhZ3pOU2RNN1QwUFEwR1JQMnBkcjlRWlByZmlrTDVNWVZYVVZ5TWdFb1VPSV9EUFljOTQ?oc=5",
+      "created_at": "2026-11-18 02:17:45"
+    },
+    {
+      "source_site": "신아일보",
+      "title": "백억커피, LG유플러스 멤버십 제휴…아메리카노·팝콘 무료 제공",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1jT3M1RzBzUk9RZkpEQlJiWDVQWVIyRnRPVXhULV83ZG9ubWV5ZmlXUXZacktyUUJVbHhrazRVbWxjbEhJYlBMMEs1OXNLdnVTNHdaRzMzTjlnTFZ1ZUZkd0dsZjNiU3MtM0VBVFBCOEI?oc=5",
+      "created_at": "2026-11-23 02:10:00"
+    },
     {
       "source_site": "아이러브PC방",
       "title": "케이뱅크, 개인사업자 연말 프로모션… 달력·커피쿠폰 증정",
@@ -287,90 +371,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE8zRXd3NlZlWG81QWNycEdRTUZDZEttWmtDSjZ5WEctRnV3R1J6OWxQVHZ1MEZBMmlpU3Jnb0RhVzI5TzZBYVRONzk4VkMyTV9ZR3lENklZOHZXZDNxTHYwR2Zsc3djZmRnS0E?oc=5",
       "created_at": "2026-11-03 08:56:36"
-    },
-    {
-      "source_site": "산경일보",
-      "title": "강원특별자치도, 고향사랑기부금 25.8% 증가…커피쿠폰 2만원 증정 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE82ZENRTTk2T3lvRWJTazcyYkxJdkdVeUc2ZWZhbExRMlVQVUZyT1ZrTGV6VjZzUks0WUc1TmlSaGZod3VjRjBYMTNRczBjS2h5YWVTMExiWGs5OFdwOUJpd010N1QxVXkxM3FDM3pzbm0?oc=5",
-      "created_at": "2026-11-03 03:02:21"
-    },
-    {
-      "source_site": "동아일보",
-      "title": "IBK연금보험, 홈페이지 개편 기념 이벤트…보험료 계산만 해도 커피 쿠폰",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBnbmZ1MVA5MFBZakVvVVBmUzIzZFRjSHdTWHlOeU5wcTJfTkdLLUJEbTJvXzdxVk9TSnZ2bGNkR1htNC1jUVV4eEZyZ2xPcVc3b2YtYzVqcVZmV2l2d3N6VjBNZXQwNmgyRHNLOHRTTTFVbGx5OWfSAWZBVV95cUxPSVZVVjZVNC15YWxzZVB0WkExdTUzZ3IyWV9IZm5YZEk5STY5WUt4ODZaV1JLZTZCSFpCYm1jcFBYSkhfMldwWmwwTE5uZUVSdlJCSWU2cDlfM1ZpZk1xZDNMMEt2bkE?oc=5",
-      "created_at": "2026-11-03 02:59:00"
-    },
-    {
-      "source_site": "문화일보",
-      "title": "강원도, 올해 고향사랑기부금액 25.8% 증가…커피쿠폰 증정 감사 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1hNHo2NFZvWGtDN1lVV0NySFM2RlNMY2FHdFF3TlVpaUlnOG02NEU0b2pVMWw2NnQxc0stbV9CcXhfR1FKNDNLVzJMRXdDVUhR?oc=5",
-      "created_at": "2026-11-02 23:22:58"
-    },
-    {
-      "source_site": "이투뉴스",
-      "title": "백억커피, 배민클럽 아메리카노 무료 증정 프로모션 진행",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1BeGNyaUhuRldsQ29RWGJtVlJQMll6M3Nyc2o4WXVURDVhcHpBdXVqX1h2MWwxTVV5MXB0eWZfVWdpVU1nX2tzaE5BeExPdHZ2UVJnbjRITnN0U3BqMHh4UHYyRkd5OG5fSUow0gFrQVVfeXFMTUF4Y3JpSG5GV2xDb1FYYm1WUlAyWXozc3JzajhZdVRENWFwekF1dWpfWHYxbDFNVXkxcHR5Zl9VZ2lVTWdfa3NoTkF4TE90dnZRUmduNEhOc3RTcGoweHhQdjJGR3k4bl9JSjA?oc=5",
-      "created_at": "2026-11-02 16:11:03"
-    },
-    {
-      "source_site": "교육을 비추다",
-      "title": "담임 상담에 커피·기프티콘은 안 된다…기말 뒤엔 질문 세 개부터 적어 가야",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "기프티콘",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5GLTNKQm5vLXdCMGtXbVI2Q2JwU3k4R0ctNnFLVG5ZRE13VFotVkhNSWtGcE9EZjNTenRGcl9FdXFiaVBQY3YtQnZSdHp3RUdVOGNLSXhkak50bERoT0dvcjRDUFIxZw?oc=5",
-      "created_at": "2026-10-31 13:27:30"
-    },
-    {
-      "source_site": "헤드라인제주",
-      "title": "유효기간 지난 커피 기프티콘, 환급받을 수 있을까",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "기프티콘",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1Cd3l6OG53Um5sdmxEM3R4dzRNUThVdFNrZVBjWlVwT2tKYkVaSThYMVVsemU3QnBidzh1LUtuYXpsNHU0MEVXUHNTNm5nVnY2ZFZmem1hNVNKWUY2YWdyaVNJRzNrQTRISVBGMGNWWWdPNGM?oc=5",
-      "created_at": "2026-10-28 04:30:00"
-    },
-    {
-      "source_site": "미디어투데이",
-      "title": "남동구도시관리공단, “적극행정 우수사례 투표하고 커피쿠폰 받으세요”",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE1IdWJCTzJDU2pnUVBEbVlfdmNjTDcwdnR5Tmtrdmc5R3FYYkJRZTJHeHQxR0g4TGx6WmF4Qml3Rjc5LWxYdDFPNGd3?oc=5",
-      "created_at": "2026-10-30 00:51:00"
     }
   ],
   "firelaw": [

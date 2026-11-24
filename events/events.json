@@ -10,8 +10,44 @@
       "created_at": "2026-11-20 03:05:59"
     }
   ],
-  "last_updated": "2026-11-23 03:29:50",
+  "last_updated": "2026-11-24 06:44:32",
   "coffee": [
+    {
+      "source_site": "핫콘뉴스",
+      "title": "연제구, '홈페이지 의견 이벤트' 진행…'커피 쿠폰' 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBYLWhoWEZzakZCSk1RWE1vQ3FRdzFtM0tYTmU1T3BUWjhXM2tHU0pzUzVNRC01RFJYSVpmd1k3U2s3ZHVibGhJdFhmeUQwRWlQYWVqV3JpTG12LXk5R3M4WGtseGlKLXNyWHpr0gFvQVVfeXFMT2tfc0wwSV8yU09pTmhBUnpVdDVUUGMyMThhZ0c3N21LU19pU0tNa21VdHZKXy1XS080UkZyTjhPM1BGVjM0Z3BrRk9ndmZyT2xVN1ZiZ1BKSmNWbHNtTExNQ0dGemlZSHRQeDRWRGI4?oc=5",
+      "created_at": "2026-11-23 08:38:02"
+    },
+    {
+      "source_site": "컨슈머뉴스",
+      "title": "Sh수협은행, 출범 10주년 대고객 감사이벤트...남산뷰 5성급호텔 숙박권부터 커피 쿠폰까지 경품 ‘와르르’",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBVSlY1cTJtTWd2bUVBVkNnX2VxUTJYMzdkcFlUZkdyQjh0TGIwRmVfYWNKYWRiUzk4c0MwTG5hM21BakdvZHpyN1VDb3hjQkVxY1VzZEJCeW9zMVFLQk9wQUtwLUwxYWExSEJ0SEY2bWo?oc=5",
+      "created_at": "2026-11-20 08:00:00"
+    },
+    {
+      "source_site": "브릿지경제",
+      "title": "스타벅스, 기업 연말 선물 수요 잡는다… 카드 최대 5% 추가 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9FR2NCWEpvY2xvV1loMXVoZjB0Y0ZXNWx5eTV5OExLR0paMWRPR2FpeEpuZnVhWkliRkpsUDd4RDZSendmcFdub3M2bnB0dnY5aGJNTmJaMmFXZw?oc=5",
+      "created_at": "2026-11-17 23:54:00"
+    },
     {
       "source_site": "일간경기",
       "title": "광주시의회, 유튜브 구독 이벤트 참여하면 1만원 커피쿠폰 쏜다",
@@ -335,45 +371,31 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1CcGxzOGc5QlpRMHdzNDhxOVd3Nm83dms5Q0tqM2NjdlhGWUh1SGtUakFqQVhUdEFqd2hjVFJ6R1NZU1VjYVBDbEs1Mk5VNDZNZkc4Qk02QjFmeGo5OW91cGQyWHJIRGtnWklF?oc=5",
       "created_at": "2026-11-05 07:23:05"
-    },
-    {
-      "source_site": "SR타임스",
-      "title": "스타벅스, 겨울 e-프리퀀시 스티커 두배 적립 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1CYk1PRWVrTm1yMWtUX09BS3VwQ0hDLW1XYWg2M3cyZzJHeVpPTV8zM2xKQ0pvVEFFS0pIOFFXQmNONHpMbkVxbk9QWHhKcC1NZ0I4QUptazEzQjlXLU9mLXZkaWxiR1Qz?oc=5",
-      "created_at": "2026-11-05 01:36:21"
-    },
-    {
-      "source_site": "전자신문",
-      "title": "스타벅스, 겨울 e-프리퀀시 더블 적립…고객 감사 이벤트 진행",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE8zTlhJWHBYbnpVV2RnUEFDTlNsbXo3NGJDdGdLZWFRZHgtYXZySXhEckVRRTdsY3JEVS1aTzc2ejlhdWFKa3ZaZmIyY2FSZw?oc=5",
-      "created_at": "2026-11-05 01:14:23"
-    },
-    {
-      "source_site": "강릉넷TV",
-      "title": "강원 고향사랑기부 10만 원 이상, 5~6일 커피쿠폰 2만 원",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE8zRXd3NlZlWG81QWNycEdRTUZDZEttWmtDSjZ5WEctRnV3R1J6OWxQVHZ1MEZBMmlpU3Jnb0RhVzI5TzZBYVRONzk4VkMyTV9ZR3lENklZOHZXZDNxTHYwR2Zsc3djZmRnS0E?oc=5",
-      "created_at": "2026-11-03 08:56:36"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "119구조·구급에 관한 법률 시행규칙 일부개정령안 입법예고",
+      "detail": "부령 · 공고 2026-222",
+      "action": "입법예고",
+      "status": "진행",
+      "period": "의견제출 ~2027-01-04",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/89552",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-23 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방시설 기준 손질… ‘소방시설법 시행령’ 개정안 재입법 예고",
+      "detail": "소방방재신문",
+      "action": "입법예고",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1uVjdFQVljLVJsWHI0UE16UGpwczBLYkF0clBPOU9jS2VvN1ZUWDRKUnFXaG91Y3EzcUVDbzdTaWJXdVZuM3c?oc=5",
+      "site": "gnews_소방방재신문",
+      "created_at": "2026-11-23 06:25:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "소방기본법 개정 발맞춰 소방 지휘관 1400명 '산불 특별교육'",
@@ -697,28 +719,6 @@
       "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQXzdkWEE3emdtT05pcmU4a1BGVWtLeHo4a3ptWmZ0ZVBjd1VIMVJ1bWZoU3BXY3Z4RHh2UkwwLUVVWW1XMVo2S1I5b0czOXgxaHVWYVhwVWJUdW9zV24tUGd4eFd1MzhSenBpZExhZUdOUE03YnQwY2oxZVRXdnNmZ3E2ZnRUSVdCR1dj?oc=5",
       "site": "gnews_대한민국 정책브리핑",
       "created_at": "2026-08-10 07:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "[칼럼] 물류창고 화재안전기준, 법률 개정과 별개로 지속 강화돼야",
-      "detail": "정필",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE1IWHNIT1lRSlFYVm9LU0hCbVhhSmVWSGRzNmV2SWhCUkY5Q0ZaR1h1QWZfUUZjQWJmNmE5VFUtZFNqMXQzcWZF?oc=5",
-      "site": "gnews_정필",
-      "created_at": "2026-08-14 13:49:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방청과 그 소속기관 직제 시행규칙 일부개정령안 입법예고",
-      "detail": "부령 · 공고 2026-153",
-      "action": "입법예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-08-18",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/88064",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-08-11 09:00:00"
     }
   ]
 }

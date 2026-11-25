@@ -10,8 +10,56 @@
       "created_at": "2026-11-20 03:05:59"
     }
   ],
-  "last_updated": "2026-11-24 06:44:32",
+  "last_updated": "2026-11-25 05:13:35",
   "coffee": [
+    {
+      "source_site": "한국일보",
+      "title": "민주노총 위원장 선거서 \"커피 쿠폰\" 약속… \"최고 수준 제재\"",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBDZ1huVV8zeEZzVW1RTEI5eEl6VDJzYXA3SmtTX1ZqeC1mRmlyclBIVTZKMFZ5ZzFubXJmbnIzSHdQNFhwdHRyOHlERlZqWm9YV25LUlhpd0hqOU9Tc1ZXcUU0bUtHeGl5RTFFc2RFWmh5NE3SAXNBVV95cUxQQ2dYblVfM3hGc1VtUUxCOXhJelQyc2FwN0prU19WangtZkZpcnJQSFU2SjBWeWcxbm1yZm5yM0h3UDRYcHR0cjh5REZWalpvWFduS1JYaXdIajlPU3NWV3FFNG1LR3hpeUUxRXNkRVpoeTRN?oc=5",
+      "created_at": "2026-11-24 13:09:00"
+    },
+    {
+      "source_site": "재경일보",
+      "title": "민주노총 선관위, 커피쿠폰 배포 지부에 최고 수준 제재 방침 : 사회",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9oN1h6N1ppQzVzU2dlNXlOaGVrV25VWGF5QjBRRDBQLXUxbDN1UVhzQ1VibFM4REk3NDg2Zl9SX0VULWJoaFJURjFBcw?oc=5",
+      "created_at": "2026-11-24 09:58:26"
+    },
+    {
+      "source_site": "재경일보",
+      "title": "민주노총 선거에 커피 쿠폰 약속…선관위 긴급 제재 논의 : 사회",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBIeVh3TUtaajJGa056Y08ta25yYmhQcGxNcVJfSjB0TDBRaVhDd3Z1aVZzTkdteTJHWFNYMmUtekhBUF9EN0VoRXRlUQ?oc=5",
+      "created_at": "2026-11-24 09:50:30"
+    },
+    {
+      "source_site": "신아일보",
+      "title": "스타벅스, 기업 선물 구매 혜택 확대…비즈몰서 카드 5% 증정",
+      "category": "커피",
+      "region": "국내",
+      "brand": "스타벅스",
+      "prize": null,
+      "prize_class": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBvWTRHUzBoa0RUcHpTOVZYUWprNmRWLUVJaTIzYm1HZWRvZ29la3phZDVHRkpTTnlteFBULXlqaDhpR01uY2tLM2h2NUh1Z3BCblpjb01ldV9hZGJPRzRhV2k1bkpoUV85ZjFXMi14UFg?oc=5",
+      "created_at": "2026-11-24 07:10:00"
+    },
     {
       "source_site": "핫콘뉴스",
       "title": "연제구, '홈페이지 의견 이벤트' 진행…'커피 쿠폰' 증정",
@@ -323,54 +371,6 @@
       "period": null,
       "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120628",
       "created_at": "2026-11-10 16:21:21"
-    },
-    {
-      "source_site": "네이트뷰",
-      "title": "스타벅스 크리스마스 이벤트 미니백 8,900원 그린 레드",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9oRkVMUFY4X1VidHlHa01FRWNQaDZxOGtYa1VpWkppNUJXVGhwbTIxN2pQR2Z6eTBuT0p0dkZ6VFBqVC1TV1B1YzVPOF94NV9kOThn0gFYQVVfeXFMT1ZiV09wejNTWTJPLWkxX3NVUjdtYzBKNmlDcUE0eWZnQXZkR1pqYjByUTNXNUc4aDVRNDBLV3lwR3AtMGtweENIRzhDeVI3ZHI1b1d3TTJpMg?oc=5",
-      "created_at": "2026-11-07 11:15:00"
-    },
-    {
-      "source_site": "뽐뿌 쿠폰·이벤트",
-      "title": "티머니GO) 전원증정 메가 아이스 아메리카노 쿠폰",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120487",
-      "created_at": "2026-11-07 01:42:46"
-    },
-    {
-      "source_site": "스마트경제",
-      "title": "“아이 첫 통장 만들고 네이버페이·커피 쿠폰 챙긴다”… NH농협은행, 대고객 이벤트 개시",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBDVEM5WHZKcUZnYUp1VXhUalBHMTdCS0NrdFZqbjRMTi0tTm9ndDlzMk9MeG9WNkl0R1NtWV9jQkc4eUdJR2tRVmZpcUFYXzNlUTJNVjdzY0dLNUVOVlB5eEJ4eHR0NERENF9JOVV0dw?oc=5",
-      "created_at": "2026-11-06 00:30:00"
-    },
-    {
-      "source_site": "퍼블릭뉴스통신",
-      "title": "스타벅스 코리아, 제조 음료 구매 시 e-프리퀀시 스티커 두 배 적립 이벤트",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": "coupon",
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1CcGxzOGc5QlpRMHdzNDhxOVd3Nm83dms5Q0tqM2NjdlhGWUh1SGtUakFqQVhUdEFqd2hjVFJ6R1NZU1VjYVBDbEs1Mk5VNDZNZkc4Qk02QjFmeGo5OW91cGQyWHJIRGtnWklF?oc=5",
-      "created_at": "2026-11-05 07:23:05"
     }
   ],
   "firelaw": [

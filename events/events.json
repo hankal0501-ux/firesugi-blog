@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "뉴스클레임",
+      "title": "하나금융그룹 제6회 하나 아트버스 공모전 모집",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBEQVcyZExhcFk2cXEwRGUzTFZIdHpXUkRfcGpIczNUcG82eFoyMElSLVptelFvVU5GV1NBMzhRbmI5MWpEbVVDWld6UEVjSmRMZklDTUZYRFpFaTdOcmFMUVBxRkpRSUVNUXRvU1ZTekvSAXRBVV95cUxOOU5qd1RXb0JlOWl3TjBDbFA5TXpOUm9Cb1BHT2JxSFAzX2NyOGMtZEgxQlVGaUV4RXIxaC13MHl1eWVzS09heTc2aGtPMlJQdkRjX1FuWGVDWUVSajFqTFRYWjc4VXB2VXNsaG9vdlprMXhFbQ?oc=5",
+      "created_at": "2026-11-26 00:31:55"
+    },
+    {
       "source_site": "농업인신문",
       "title": "aT, ‘2027 NEXT K-푸드’ 협업기업·영상 공모전 모집",
       "category": "공모전",
@@ -10,8 +19,20 @@
       "created_at": "2026-11-20 03:05:59"
     }
   ],
-  "last_updated": "2026-11-25 05:13:35",
+  "last_updated": "2026-11-26 04:42:27",
   "coffee": [
+    {
+      "source_site": "OhmyNews",
+      "title": "민주노총 임원 선거 '투표하면 커피 쿠폰' 파문",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "커피 쿠폰",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBaNnVnc2FuMzh6MlVwQTRWLW5HQWpHaWkzSDBOQmdNSkd5b2k2LTlpY0lSVjZtZzBiRXR2VGMtalNDS0FRU1YwV2k1WXk2ZkFDblJiY1k1dExpVXRrbkh2VGFsenRpbmtXaWY0Mzh6LWxJaUpZMXVJ?oc=5",
+      "created_at": "2026-11-25 08:27:00"
+    },
     {
       "source_site": "한국일보",
       "title": "민주노총 위원장 선거서 \"커피 쿠폰\" 약속… \"최고 수준 제재\"",
@@ -359,18 +380,6 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBoXzdlRkdCTURYX2c3el9oaXVTRjRVeVFDTEkyR0xtUmx4aU85Q1MwekxFZ1dVVUdObUkyVnVLaGdDdmg3eWk4bjVvc2Jzb2hvdm13YjEwZ2RnMWlpUjBSamJJUmNFUkh5?oc=5",
       "created_at": "2026-11-10 05:49:50"
-    },
-    {
-      "source_site": "뽐뿌 쿠폰·이벤트",
-      "title": "티머니 GO] 메가 커피 쿠폰 100% 즉시 지급",
-      "category": "커피",
-      "region": "국내",
-      "brand": null,
-      "prize": "커피 쿠폰",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120628",
-      "created_at": "2026-11-10 16:21:21"
     }
   ],
   "firelaw": [

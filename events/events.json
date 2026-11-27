@@ -1,6 +1,15 @@
 {
   "giveaways": [
     {
+      "source_site": "여성소비자신문",
+      "title": "하나금융·하나증권, 발달장애 예술가 대상 ‘하나 아트버스’ 공모전 모집·‘하나증권V 태권브이 이벤트’ 진행",
+      "category": "공모전",
+      "prize": null,
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1PQXhvTmhQNklNNnBieGx1Wnp2c3M5dUFfTVZnMmttQkxIMFhfU3FRVFNCV3RGbHJUM1kzWnNTVmlVLU1CZy1yOXRNWEdEZG9oR3RUZ0tnRC1FdzRFbGo3VS14Sk9IQQ?oc=5",
+      "created_at": "2026-11-26 01:22:41"
+    },
+    {
       "source_site": "뉴스클레임",
       "title": "하나금융그룹 제6회 하나 아트버스 공모전 모집",
       "category": "공모전",
@@ -19,7 +28,7 @@
       "created_at": "2026-11-20 03:05:59"
     }
   ],
-  "last_updated": "2026-11-26 04:42:27",
+  "last_updated": "2026-11-27 04:46:48",
   "coffee": [
     {
       "source_site": "OhmyNews",

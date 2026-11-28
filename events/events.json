@@ -28,8 +28,32 @@
       "created_at": "2026-11-20 03:05:59"
     }
   ],
-  "last_updated": "2026-11-27 04:46:48",
+  "last_updated": "2026-11-28 04:29:57",
   "coffee": [
+    {
+      "source_site": "문화일보",
+      "title": "강원도, 올해 고향사랑기부금액 25.8% 증가…커피쿠폰 증정 감사 이벤트",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": null,
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1hNHo2NFZvWGtDN1lVV0NySFM2RlNMY2FHdFF3TlVpaUlnOG02NEU0b2pVMWw2NnQxc0stbV9CcXhfR1FKNDNLVzJMRXdDVUhR?oc=5",
+      "created_at": "2026-11-03 08:00:00"
+    },
+    {
+      "source_site": "이투뉴스",
+      "title": "백억커피, 배민클럽 아메리카노 무료 증정 프로모션 진행",
+      "category": "커피",
+      "region": "국내",
+      "brand": null,
+      "prize": "아메리카노",
+      "prize_class": "coupon",
+      "period": null,
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9WUWtPQkloMmpsNlQ0LTZGU1FWS29FcUk4UnZ5SUVRR1FWQ1FOSURlU0xTeTFNQzJqR3gtQ2gwN280Q28yeHNvcEk1eUE3ZkxCYUcwTHVIUGNvYW9OZ2tVUlVhY185LVnSAWtBVV95cUxNQXhjcmlIbkZXbENvUVhibVZSUDJZejNzcnNqOFl1VEQ1YXB6QXV1al9YdjFsMU1VeTFwdHlmX1VnaVVNZ19rc2hOQXhMT3R2dlFSZ240SE5zdFNwajB4eFB2MkZHeThuX0lKMA?oc=5",
+      "created_at": "2026-11-02 08:00:00"
+    },
     {
       "source_site": "OhmyNews",
       "title": "민주노총 임원 선거 '투표하면 커피 쿠폰' 파문",
@@ -365,33 +389,126 @@
       "period": null,
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE12N09kbFI3VHNmYjE4d2hxZE8teld3WkQ0MFc4Q2FwNnRLQXQtWmdPRXhyemJTcEczYnJYWVJ5ek9MM3FTOHJmbjJSdWFFakdQeEhHOWc0bUhHdw?oc=5",
       "created_at": "2026-11-12 23:26:36"
-    },
-    {
-      "source_site": "뽐뿌 쿠폰·이벤트",
-      "title": "[KB Pay] 오늘의 퀴즈 11/13일자 정답 (& 쇼핑라이브 18시 1개, 19시 2개, 20시 2개)",
-      "category": "커피",
-      "region": "국내",
-      "brand": "메가커피",
-      "prize": "아메리카노",
-      "prize_class": "coupon",
-      "period": null,
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=coupon&no=120710",
-      "created_at": "2026-11-13 01:00:23"
-    },
-    {
-      "source_site": "대경일보",
-      "title": "별 8개면 무료인데 10개에 결제까지…스타벅스 행사에 소비자 혼란",
-      "category": "커피",
-      "region": "국내",
-      "brand": "스타벅스",
-      "prize": null,
-      "prize_class": null,
-      "period": null,
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBoXzdlRkdCTURYX2c3el9oaXVTRjRVeVFDTEkyR0xtUmx4aU85Q1MwekxFZ1dVVUdObUkyVnVLaGdDdmg3eWk4bjVvc2Jzb2hvdm13YjEwZ2RnMWlpUjBSamJJUmNFUkh5?oc=5",
-      "created_at": "2026-11-10 05:49:50"
     }
   ],
   "firelaw": [
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방청과 그 소속기관 직제 시행규칙 일부개정령안 입법예고",
+      "detail": "부령 · 공고 2026-153",
+      "action": "입법예고",
+      "status": null,
+      "period": "의견제출 ~2026-08-18",
+      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/88064",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-08-11 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "간이형수신기의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-223",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-15",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47796?announceType=TYPE6&mappingAdmRulSeq=2000000333144",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-25 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "비상경보설비의 축전지의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-224",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-15",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47794?announceType=TYPE6&mappingAdmRulSeq=2000000333142",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-25 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "소방전원공급장치의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-225",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-15",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47786?announceType=TYPE6&mappingAdmRulSeq=2000000333128",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-25 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "예비전원의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-226",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-15",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47784?announceType=TYPE6&mappingAdmRulSeq=2000000333126",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-25 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "자동폐쇄장치의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-227",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-15",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47792?announceType=TYPE6&mappingAdmRulSeq=2000000333140",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-25 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "자동화재속보설비의 속보기의 성능인증 및 제품검사 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-228",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-15",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47790?announceType=TYPE6&mappingAdmRulSeq=2000000333138",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-25 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "중계기의 형식승인 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-229",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-15",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47788?announceType=TYPE6&mappingAdmRulSeq=2000000333136",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-25 09:00:00"
+    },
+    {
+      "kind": "🚒 소방 법령",
+      "title": "휴대용비상조명등의 성능인증 및 제품검사의 기술기준 개정안 행정예고",
+      "detail": "고시 · 공고 2026-230",
+      "action": "행정예고",
+      "status": "진행",
+      "period": "의견제출 ~2026-12-15",
+      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47746?announceType=TYPE6&mappingAdmRulSeq=2000000333094",
+      "site": "nfa",
+      "source_site": "소방청",
+      "official": true,
+      "created_at": "2026-11-25 09:00:00"
+    },
     {
       "kind": "🚒 소방 법령",
       "title": "119구조·구급에 관한 법률 시행규칙 일부개정령안 입법예고",
@@ -632,111 +749,6 @@
       "source_site": "소방청",
       "official": true,
       "created_at": "2026-10-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "건설현장의 화재안전성능기준(NFPC 606) 일부개정안 행정예고",
-      "detail": "고시 · 공고 2026-196",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-10-28",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47508?announceType=TYPE6&mappingAdmRulSeq=2000000331766",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-10-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "전기저장시설의 화재안전성능기준(NFPC 607) 일부개정안 행정예고",
-      "detail": "고시 · 공고 2026-197",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-10-28",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47504?announceType=TYPE6&mappingAdmRulSeq=2000000331784",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-10-08 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방시설 설치 및 관리에 관한 법률 시행령 일부개정령안 입법예고",
-      "detail": "대통령령 · 공고 2026-177",
-      "action": "입법예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-10-23",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/88416",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-09-11 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방장비관리법 시행령 일부개정령안 입법예고",
-      "detail": "대통령령 · 공고 2026-171",
-      "action": "입법예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-10-20",
-      "url": "https://opinion.lawmaking.go.kr/gcom/ogLmPp/88496",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-09-10 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "산불 대응, ‘지원’ 아닌 소방 고유업무로… ‘소방기본법’ 개정 추진",
-      "detail": "소방방재신문",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTE5FLW1fNEFsdThIOWxlQTBUUlNFZVhTYjJSVGQ2c2pGaGFRbWItRlRzRjQ1emlwbVo1bVgzUjBGYw?oc=5",
-      "site": "gnews_소방방재신문",
-      "created_at": "2026-09-16 08:32:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "소방장비기술심의위원회 역할 커진다… ‘소방장비관리법 시행령’ 입법 예고",
-      "detail": "fpn119.co.kr",
-      "action": "입법예고",
-      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTFA5d0hvMWdTOUVTRXpVdW5ZQWVxQTRMRXcwOWhSeGIxaldNUHRmaEN0VVJVWEpYczZad0RpakYzU21BMTlFNUE?oc=5",
-      "site": "gnews_fpn119.co.kr",
-      "created_at": "2026-09-10 07:55:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "국가 소방용품 인증 심의위원회 운영 규정 제정안 행정예고",
-      "detail": "고시 · 공고 2026-160",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-09-21",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47288?announceType=TYPE6&mappingAdmRulSeq=2000000330234",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-08-31 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "위험물안전관리에 관한 세부기준 일부개정고시안 행정예고",
-      "detail": "고시 · 공고 2026-158",
-      "action": "행정예고",
-      "status": "진행",
-      "period": "의견제출 ~2026-09-09",
-      "url": "https://opinion.lawmaking.go.kr/gcom/admpp/47222?announceType=TYPE6&mappingAdmRulSeq=2000000329930",
-      "site": "nfa",
-      "source_site": "소방청",
-      "official": true,
-      "created_at": "2026-08-20 09:00:00"
-    },
-    {
-      "kind": "🚒 소방 법령",
-      "title": "(설명자료) 물류창고 화재안전기준은 법률 개정과 별개로 지속 강화해 왔습니다",
-      "detail": "대한민국 정책브리핑",
-      "action": "개정",
-      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQXzdkWEE3emdtT05pcmU4a1BGVWtLeHo4a3ptWmZ0ZVBjd1VIMVJ1bWZoU3BXY3Z4RHh2UkwwLUVVWW1XMVo2S1I5b0czOXgxaHVWYVhwVWJUdW9zV24tUGd4eFd1MzhSenBpZExhZUdOUE03YnQwY2oxZVRXdnNmZ3E2ZnRUSVdCR1dj?oc=5",
-      "site": "gnews_대한민국 정책브리핑",
-      "created_at": "2026-08-10 07:00:00"
     }
   ]
 }
